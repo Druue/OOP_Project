@@ -50,7 +50,7 @@ These are features that do not necessarily have to be implemented, but would be 
 Some buildings on campus have a cafeteria in them, in which a user could order some food that would be brought to their room on their time of reservation.
 
 ## Filter search
-Users could have the ability to search for a particular room with the use of filters: A user could specify how many seats they would like to have in a room, 
+Users could have the ability to search for a particular room with the use of filters. An Example: A user could specify the minumum amount of seats they would like to have in a room.
 
 
 # Users
