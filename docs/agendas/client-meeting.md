@@ -4,7 +4,12 @@ The client has asked us to make a desktop application for managing the buildings
 
 # Requirements
 
-The client has provided a list of requirements that are necessary for the application
+The client has provided a list of requirements that are necessary for the application.
+
+## Tools
+
+The client has stated that the application must be written in Java. 
+Furthermore, the usage of Websockets is **not** allowed.
 
 ## Functionality
 
@@ -36,18 +41,19 @@ The application should include an administrative side, in which an administrator
 - Cancel a reservation for a certain timeslot.
 - See an overview of all current reservations. 
 
-## Tools
 
-The client has stated that the application must be written in Java. 
-Furthermore, the usage of Websockets is **not** allowed.
 
 
 # Users
 Most interaction with the application will be done via users. These require an account, and depending on their permission level are able to interact with different parts of the application.
 
 ## Authentication & Signup
+A person is able to create an account. This can only be done using a TU Delft mail address, as the application is intended for internal use only. When signing up, a person must provide the following information:
 
-
+- First and Last name
+- Their TU Delft email address
+- Their NetID
+- A password
 
 ## Roles
 There are three roles a user can have, each with its own level of permissions.
