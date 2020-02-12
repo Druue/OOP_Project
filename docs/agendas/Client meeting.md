@@ -1,0 +1,63 @@
+# Introduction
+The client has asked us to make a desktop application for managing the buildings around the TU Delft campus. This application will focus specifically on room (and bike) reservations that are within the campus, and make sure that different people can use the application to reserve certain rooms at certain times.
+
+
+# Requirements
+
+The client has provided a list of requirements that are necessary for the application
+
+## Functionality
+
+The main features that this campus software should provide are:
+
+- The ability for someone to create an account.
+    This should be done via an authentication system, which is described in the 'Authentication and Signup' section.
+- A list of buildings that have rooms, opening and closing times, and bikes to rent.
+    The attributes of these entities are described later in the document.
+
+
+### User
+Once authenticated, a user should be able to:
+- View all rooms and timeslots per building, and see the availibility for each room.
+- Reserve a timeslot for a room, in a specific building.
+- Cancel an ongoing reservation.
+- See a list of all timeslots currently reserved by the user.
+- See a list of all past timeslots reserved by the user.
+- Reserve a bike from a specific building.
+
+
+### Administration
+The application should include an administrative side, in which an administrator is able to perform the following tasks:
+
+- Add, edit or remove buildings.
+- Add, edit or remove rooms from buildings.
+- Add or remove bikes from buildings.
+- Change the opening and closing times for a building.
+- Cancel a reservation for a certain timeslot.
+- See an overview of all current reservations. 
+
+## Tools
+
+The client has stated that the application must be written in Java. 
+Furthermore, the usage of Websockets is **not** allowed.
+
+
+# Users
+Most interaction with the application will be done via users. These require an account, and depending on their permission level are able to interact with different parts of the application.
+
+## Authentication & Signup
+
+
+
+## Roles
+There are three roles a user can have, each with its own level of permissions.
+Users that are either Students or Employees have no interaction with each other, as only an administrator can see who has reserved what.
+
+### Student
+A student is only able to reserve timeslots in rooms that are open for student booking and bikes. 
+
+### Employee
+An employee is able to reserve timeslots in rooms that are open for employees only, and rooms that are open to both students and employees. An employee is also able to reserve a bike.
+
+### Admin
+An admin has all permissions, and can do anything within the application. These accounts should only be given to the administrators of the application, and not to anyone else.
