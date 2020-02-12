@@ -21,7 +21,7 @@ The main features that this campus software should provide are:
     The attributes of these entities are described later in the document.
 
 
-### User
+### Users
 Once authenticated, a user should be able to:
 - View all rooms and timeslots per building, and see the availibility for each room.
 - Reserve a timeslot for a room, in a specific building.
@@ -42,6 +42,15 @@ The application should include an administrative side, in which an administrator
 - See an overview of all current reservations. 
 
 
+# Additional Features
+
+These are features that do not necessarily have to be implemented, but would be considered a good addition to the application.
+
+## Food reservation
+Some buildings on campus have a cafeteria in them, in which a user could order some food that would be brought to their room on their time of reservation.
+
+## Filter search
+Users could have the ability to search for a particular room with the use of filters: A user could specify how many seats they would like to have in a room, 
 
 
 # Users
