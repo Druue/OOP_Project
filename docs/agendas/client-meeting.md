@@ -50,7 +50,7 @@ The application should contain a database of all availible buildings. The main a
 - The opening and closing times and dates. (This also includes holidays)
 - A list of rooms that are located in the building.
 - The amount of bikes that are assigned to the building.
-- A { } stating whether or not the building contains a cafeteria.
+- A check stating whether or not the building contains a cafeteria.
 
 
 ## Rooms
@@ -60,7 +60,7 @@ Each room in the application has the following attributes:
 - (Optional) A short description.
 - A maximum capacity (or: the amount of seats availible).
 - A permission level: The room should list who can reserve it. This can be employees only, students only, or both.
-- A { } stating whether or not the room contains a projector.
+- A check stating whether or not the room contains a projector.
 
 # Additional Features
 
@@ -72,6 +72,8 @@ Some buildings on campus have a cafeteria in them, in which a user could order s
 ## Filter search
 Users could have the ability to search for a particular room with the use of filters. An Example: A user could specify the minumum amount of seats they would like to have in a room.
 
+## Calendar view
+Users could have the capability to look at their ongoing reservations in a calendar view. This would give a clear overview of when a user has reserved timeslots.
 
 # Users
 Most interaction with the application will be done via it's users. These require an account, and depending on their permission level are able to interact with different parts of the application.
