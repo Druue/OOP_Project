@@ -41,7 +41,7 @@ The application should include an administrative side, in which an administrator
 - Cancel a reservation for a certain timeslot.
 - See an overview of all current reservations. 
 
-# Buildings
+## Buildings
 The application should contain a database of all availible buildings. The main attributes of a building that are stored in the application are:
 
 - The name.
@@ -53,7 +53,7 @@ The application should contain a database of all availible buildings. The main a
 - A check stating whether or not the building contains a cafeteria.
 
 
-## Rooms
+### Rooms
 Each room in the application has the following attributes:
 
 - A name.
@@ -62,8 +62,10 @@ Each room in the application has the following attributes:
 - A permission level: The room should list who can reserve it. This can be employees only, students only, or both.
 - A check stating whether or not the room contains a projector.
 
-## Timeslots
+### Timeslots
 As described above, each building has an opening and closing time. When a building is open, fixed timeslots are availible for reservation. Each timeslot is 30 minutes long, and cannot be moved. Example: A timeslot will always start at 9:00, and cannot be moved to start at 9:02.
+
+Furthermore, a timeslot can only be reserved by one user at a time, and only 3 weeks in advance.
 
 A timeslot can have three different statuses: Available, unavailable, and reserved.
 - Available: Any user is able to reserve this timeslot.
