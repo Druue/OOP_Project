@@ -50,7 +50,7 @@ The application should contain a database of all availible buildings. The main a
 - The opening and closing times and dates. (This also includes holidays)
 - A list of rooms that are located in the building.
 - The amount of bikes that are assigned to the building.
-- A { } stating whether or not the room contains a projector.
+- A { } stating whether or not the building contains a cafeteria.
 
 
 ## Rooms
