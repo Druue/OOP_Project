@@ -8,7 +8,7 @@ The client has provided a list of requirements that are necessary for the applic
 
 ## Tools
 
-The client has stated that the application must be written in Java. 
+The client has stated that the application must be written in Java, and that there is no requirement for how the interface should look.
 Furthermore, the usage of Websockets is **not** allowed.
 
 ## Functionality
@@ -41,6 +41,26 @@ The application should include an administrative side, in which an administrator
 - Cancel a reservation for a certain timeslot.
 - See an overview of all current reservations. 
 
+# Buildings
+The application should contain a database of all availible buildings. The main attributes of a building that are stored in the application are:
+
+- The name.
+- (Optional) A short description.
+- It's location.
+- The opening and closing times and dates. (This also includes holidays)
+- A list of rooms that are located in the building.
+- The amount of bikes that are assigned to the building.
+- A { } stating whether or not the room contains a projector.
+
+
+## Rooms
+Each room in the application has the following attributes:
+
+- A name.
+- (Optional) A short description.
+- A maximum capacity (or: the amount of seats availible).
+- A permission level: The room should list who can reserve it. This can be employees only, students only, or both.
+- A { } stating whether or not the room contains a projector.
 
 # Additional Features
 
@@ -54,7 +74,7 @@ Users could have the ability to search for a particular room with the use of fil
 
 
 # Users
-Most interaction with the application will be done via users. These require an account, and depending on their permission level are able to interact with different parts of the application.
+Most interaction with the application will be done via it's users. These require an account, and depending on their permission level are able to interact with different parts of the application.
 
 ## Authentication & Signup
 A person is able to create an account. This can only be done using a TU Delft mail address, as the application is intended for internal use only. When signing up, a person must provide the following information:
