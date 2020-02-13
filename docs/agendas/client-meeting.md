@@ -65,7 +65,7 @@ Each room in the application has the following attributes:
 ### Timeslots
 As described above, each building has an opening and closing time. When a building is open, fixed timeslots are availible for reservation. Each timeslot is 30 minutes long, and cannot be moved. Example: A timeslot will always start at 9:00, and cannot be moved to start at 9:02.
 
-Furthermore, a timeslot can only be reserved by one user at a time, and only 3 weeks in advance.
+Furthermore, a timeslot can only be reserved by one user at a time, and only 3 weeks in advance. Lastly, a user cannot reserve two different rooms during the same timeslot.
 
 A timeslot can have three different statuses: Available, unavailable, and reserved.
 - Available: Any user is able to reserve this timeslot.
