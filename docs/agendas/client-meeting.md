@@ -62,6 +62,16 @@ Each room in the application has the following attributes:
 - A permission level: The room should list who can reserve it. This can be employees only, students only, or both.
 - A check stating whether or not the room contains a projector.
 
+## Timeslots
+As described above, each building has an opening and closing time. When a building is open, fixed timeslots are availible for reservation. Each timeslot is 30 minutes long, and cannot be moved. Example: A timeslot will always start at 9:00, and cannot be moved to start at 9:02.
+
+A timeslot can have three different statuses: Available, unavailable, and reserved.
+- Available: Any user is able to reserve this timeslot.
+- Unavailable: No user is able to reserve this timeslot.
+- Reserved: A user has reserved this timeslot.
+
+The key difference between an unavailable and reserved timeslot is that a reserved timeslot can be made availible once the user who reserved the timeslot cancels his/her reservation. An unavailible timeslot means that that room most likely will never be availible at that time, or that a holiday is occuring.
+
 # Additional Features
 
 These are features that do not necessarily have to be implemented, but would be considered a good addition to the application.
