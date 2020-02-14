@@ -40,6 +40,7 @@ The application should include an administrative side, in which an administrator
 - Change the opening and closing times for a building.
 - Cancel a reservation for a certain timeslot.
 - See an overview of all current reservations. 
+- Change the availability of a building for a specific date.
 
 ## Buildings
 The application should contain a database of all availible buildings. The main attributes of a building that are stored in the application are:
