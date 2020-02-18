@@ -15,6 +15,7 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'checkstyle'
     apply plugin: 'application'
+    apply plugin: 'eclipse'
 
     ext {
         set('snippetsDir', file("build/generated-snippets"))
