@@ -1,6 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -9,9 +9,10 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
+import javafx.event.ActionEvent;
 import java.io.IOException;
 
-public class MainSceneController {
+public class ReservationsController {
 
     /**
      * Handles clicking the button.
@@ -24,18 +25,17 @@ public class MainSceneController {
         alert.showAndWait();
     }
 
-    public void goToReservations(ActionEvent event) {
+    public void goToHomepage(ActionEvent event) {
         try {
-            Parent reservationsParent = FXMLLoader.load(getClass().getResource("/reservations.fxml"));
-            Scene reservationsScene = new Scene(reservationsParent);
-            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
+            Scene homepageScene = new Scene(homepageParent);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
-            primaryStage.setScene(reservationsScene);
+            primaryStage.setScene(homepageScene);
             primaryStage.show();
-
         }catch (IOException e) {
-            System.out.println("IOException in MainSceneController");
+            System.out.println("IOException in ReservationsController");
         }
     }
 }

@@ -2,9 +2,12 @@ plugins {
 	id 'org.springframework.boot' version '2.2.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'org.asciidoctor.convert' version '1.5.8'
+	id 'application'
 }
 
-mainClassName = 'nl.tudelft.oopp.demo.DemoApplication'
+application {
+	mainClassName = 'nl.tudelft.oopp.demo.DemoApplication'
+}
 
 configurations {
 	developmentOnly
@@ -33,4 +36,3 @@ asciidoctor {
 	inputs.dir snippetsDir
 	dependsOn test
 }
-
