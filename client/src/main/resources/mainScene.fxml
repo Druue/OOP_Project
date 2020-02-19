@@ -12,8 +12,14 @@
     <Label text="Hello world!"/>
     <Label text="This is a simple demo application."/>
     <Button fx:id="button" text="Click me!" onAction="#buttonClicked"/>
+
+    <!-- Button that calls the buttonPing() function in MainSceneController.java -->
     <Button fx:id="requestButton" text="Send a ping" onAction="#buttonPing"/>
+
+
     <Text text="Send some info, and get it relayed back"/>
+    <!-- Text field called 'userInput' -->
     <TextField fx:id="userInput"/>
+    <!-- Button that sends the text within 'userInput'-->
     <Button text="Send information" onAction="#TestPostRequest"/>
 </VBox>
