@@ -10,4 +10,5 @@
     <Label text="Hello world!"/>
     <Label text="This is a simple demo application."/>
     <Button fx:id="button" text="Click me!" onAction="#buttonClicked"/>
+    <Button fx:id="requestButton" text="Send a ping" onAction="#buttonPing"/>
 </VBox>

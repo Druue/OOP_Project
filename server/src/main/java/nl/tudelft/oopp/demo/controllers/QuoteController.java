@@ -43,4 +43,11 @@ public class QuoteController {
 
         return quotes.get(new Random().nextInt(quotes.size()));
     }
+
+    @GetMapping("ping")
+    @ResponseBody
+    public String getPing() {
+        return "Pong";
+    }
+
 }

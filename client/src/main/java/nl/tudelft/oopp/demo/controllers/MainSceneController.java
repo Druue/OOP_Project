@@ -15,4 +15,12 @@ public class MainSceneController {
         alert.setContentText(ServerCommunication.getQuote());
         alert.showAndWait();
     }
+
+    public void buttonPing() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("A response");
+        alert.setHeaderText(null);
+        alert.setContentText(ServerCommunication.ping());
+        alert.showAndWait();
+    }
 }
