@@ -1,65 +1,44 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import org.springframework.http.server.ServerHttpRequest;
-import org.springframework.http.server.ServerHttpResponse;
+import nl.tudelft.oopp.demo.database_queries.LoginQuery;
+import nl.tudelft.oopp.demo.models.LoginDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.sql.*;
+import javax.naming.AuthenticationException;
+import java.util.ArrayList;
 
 @Controller
 public class LoginController {
+
     /*
-    * GET endpoint to validate authentication of a user
-    * The class has one method sendLoginPage() that sends the login.fxml page through
+    * POST endpoint to validate authentication of a user
+    * The class provides a method to find the user-provided details in the database
+    * 1) If it finds them , it notifies the user that the login with message true
+    * 2) If it does not find it, it sends a message false
     * */
 
-    @GetMapping("login")
+    @PostMapping("login")
     @ResponseBody
-    public String validateAuthentication(ServerHttpRequest request , ServerHttpResponse response) {
+    public boolean validateAuthentication(@RequestBody LoginDetails loginDetails ) {
+
         // Connect to the database and establish
         // whether a user with that NetID and password exists
-        // 1) The user exists - send response "Authentication Successful"
-        // 2) There is no such password or NetID - send response "Authentication Failed"
-        String answer = null;
+        // 1) The user exists - send response true
+        // 2) There is no such password or NetID - send response false
 
-        try {
+        // Get the login details
+        String NetID = loginDetails.getNetID();
+        String password = loginDetails.getPassword();
 
-            ObjectInputStream input = new ObjectInputStream( request.getBody());
-            String receivedInfo = (String) input.readObject();
-            String[] details = receivedInfo.split(";");
-            String NetID = details[0];
-            String password = details[1];
-            String database = "jdbc:postgresql://localhost:5432/users";
-
-            try(Connection con =  DriverManager.getConnection(database , "postgres" , "Mitashki");
-                Statement userQuery = con.createStatement();
-                ResultSet databaseResponse =  userQuery.executeQuery("SELECT * FROM users " +
-                                                                         "WHERE NetID = " + NetID + " AND password = " + password);) {
-
-                if(databaseResponse.getFetchSize() == 0) answer = "Authentication Failed";
-                else answer = "Authentication Successful";
-
-            }
-            catch (SQLException e) {
-                System.out.println(e.getMessage());
-                // This part should never happen if the code is correctly written
-            }
-        }
-        catch (Exception e) {
-            System.out.println(e);
-            // This part should never happen if the code is written correctly
-        }
-
-        return answer;
-
+       try {
+           LoginQuery.userValidate(NetID , password);
+       }
+       catch (AuthenticationException e) {
+           System.out.println("Authentication failed for user with NetID: " + NetID + " and password " + password );
+           return false;
+       }
+        return true;
     }
-
 
 }
