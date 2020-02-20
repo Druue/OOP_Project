@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="nl.tudelft.oopp.demo.controllers.ReservationsController">
+    <Label text="This is the reservations panel"/>
+    <Label text="Hellloooooooooo"/>
+    <Button fx:id="button" text="Don't click me!" onAction="#buttonClicked"/>
+    <Button fx:id="goToHomepage" text="Go to homepage" onAction="#goToHomepage"/>
+</VBox>
+
+
