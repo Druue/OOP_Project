@@ -1,0 +1,517 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.2
+-- Dumped by pg_dump version 11.2
+
+-- Started on 2020-02-21 19:36:11 CET
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 204 (class 1259 OID 55050)
+-- Name: reservable; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.reservable (
+    name character varying NOT NULL,
+    building_number bigint NOT NULL,
+    reservable_id bigint NOT NULL,
+    is_available boolean NOT NULL
+);
+
+
+ALTER TABLE public.reservable OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 55084)
+-- Name: bike; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.bike (
+)
+INHERITS (public.reservable);
+
+
+ALTER TABLE public.bike OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 54952)
+-- Name: buildings; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.buildings (
+    name character varying,
+    opening_hours time with time zone,
+    has_food_court boolean,
+    availability_slot boolean,
+    building_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.buildings OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 55035)
+-- Name: buildings_building_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.buildings_building_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.buildings_building_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3255 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: buildings_building_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.buildings_building_id_seq OWNED BY public.buildings.building_id;
+
+
+--
+-- TOC entry 206 (class 1259 OID 55067)
+-- Name: foodcourt; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.foodcourt (
+    food_list character varying,
+    building_number bigint NOT NULL
+);
+
+
+ALTER TABLE public.foodcourt OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 55065)
+-- Name: foodcourt_building_number_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.foodcourt_building_number_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.foodcourt_building_number_seq OWNER TO postgres;
+
+--
+-- TOC entry 3256 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: foodcourt_building_number_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.foodcourt_building_number_seq OWNED BY public.foodcourt.building_number;
+
+
+--
+-- TOC entry 202 (class 1259 OID 55046)
+-- Name: reservable_building_number_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.reservable_building_number_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reservable_building_number_seq OWNER TO postgres;
+
+--
+-- TOC entry 3257 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: reservable_building_number_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.reservable_building_number_seq OWNED BY public.reservable.building_number;
+
+
+--
+-- TOC entry 203 (class 1259 OID 55048)
+-- Name: reservable_reservable_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.reservable_reservable_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reservable_reservable_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3258 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: reservable_reservable_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.reservable_reservable_id_seq OWNED BY public.reservable.reservable_id;
+
+
+--
+-- TOC entry 199 (class 1259 OID 54946)
+-- Name: reservations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.reservations (
+    reservation_id bigint NOT NULL,
+    starting_time time with time zone,
+    ending_time time with time zone,
+    date date
+);
+
+
+ALTER TABLE public.reservations OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 54944)
+-- Name: reservations_reservation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.reservations_reservation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reservations_reservation_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3259 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: reservations_reservation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.reservations_reservation_id_seq OWNED BY public.reservations.reservation_id;
+
+
+--
+-- TOC entry 208 (class 1259 OID 55093)
+-- Name: room; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.room (
+    is_for_employee boolean
+)
+INHERITS (public.buildings);
+
+
+ALTER TABLE public.room OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 54935)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    user_id bigint NOT NULL,
+    email character varying NOT NULL,
+    password character varying NOT NULL,
+    type character varying NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 54933)
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3260 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
+
+
+--
+-- TOC entry 3101 (class 2604 OID 55087)
+-- Name: bike building_number; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.bike ALTER COLUMN building_number SET DEFAULT nextval('public.reservable_building_number_seq'::regclass);
+
+
+--
+-- TOC entry 3102 (class 2604 OID 55088)
+-- Name: bike reservable_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.bike ALTER COLUMN reservable_id SET DEFAULT nextval('public.reservable_reservable_id_seq'::regclass);
+
+
+--
+-- TOC entry 3097 (class 2604 OID 55037)
+-- Name: buildings building_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.buildings ALTER COLUMN building_id SET DEFAULT nextval('public.buildings_building_id_seq'::regclass);
+
+
+--
+-- TOC entry 3100 (class 2604 OID 55070)
+-- Name: foodcourt building_number; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.foodcourt ALTER COLUMN building_number SET DEFAULT nextval('public.foodcourt_building_number_seq'::regclass);
+
+
+--
+-- TOC entry 3098 (class 2604 OID 55053)
+-- Name: reservable building_number; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reservable ALTER COLUMN building_number SET DEFAULT nextval('public.reservable_building_number_seq'::regclass);
+
+
+--
+-- TOC entry 3099 (class 2604 OID 55054)
+-- Name: reservable reservable_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reservable ALTER COLUMN reservable_id SET DEFAULT nextval('public.reservable_reservable_id_seq'::regclass);
+
+
+--
+-- TOC entry 3096 (class 2604 OID 54949)
+-- Name: reservations reservation_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reservations ALTER COLUMN reservation_id SET DEFAULT nextval('public.reservations_reservation_id_seq'::regclass);
+
+
+--
+-- TOC entry 3103 (class 2604 OID 55096)
+-- Name: room building_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.room ALTER COLUMN building_id SET DEFAULT nextval('public.buildings_building_id_seq'::regclass);
+
+
+--
+-- TOC entry 3095 (class 2604 OID 54938)
+-- Name: users user_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 3248 (class 0 OID 55084)
+-- Dependencies: 207
+-- Data for Name: bike; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3241 (class 0 OID 54952)
+-- Dependencies: 200
+-- Data for Name: buildings; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3247 (class 0 OID 55067)
+-- Dependencies: 206
+-- Data for Name: foodcourt; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3245 (class 0 OID 55050)
+-- Dependencies: 204
+-- Data for Name: reservable; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3240 (class 0 OID 54946)
+-- Dependencies: 199
+-- Data for Name: reservations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3249 (class 0 OID 55093)
+-- Dependencies: 208
+-- Data for Name: room; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3238 (class 0 OID 54935)
+-- Dependencies: 197
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 3261 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: buildings_building_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.buildings_building_id_seq', 1, false);
+
+
+--
+-- TOC entry 3262 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: foodcourt_building_number_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.foodcourt_building_number_seq', 1, false);
+
+
+--
+-- TOC entry 3263 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: reservable_building_number_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.reservable_building_number_seq', 1, false);
+
+
+--
+-- TOC entry 3264 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: reservable_reservable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.reservable_reservable_id_seq', 1, false);
+
+
+--
+-- TOC entry 3265 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: reservations_reservation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.reservations_reservation_id_seq', 1, false);
+
+
+--
+-- TOC entry 3266 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_user_id_seq', 1, false);
+
+
+--
+-- TOC entry 3109 (class 2606 OID 55045)
+-- Name: buildings buildings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.buildings
+    ADD CONSTRAINT buildings_pkey PRIMARY KEY (building_id);
+
+
+--
+-- TOC entry 3113 (class 2606 OID 55075)
+-- Name: foodcourt foodcourt_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.foodcourt
+    ADD CONSTRAINT foodcourt_pkey PRIMARY KEY (building_number);
+
+
+--
+-- TOC entry 3111 (class 2606 OID 55059)
+-- Name: reservable reservable_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reservable
+    ADD CONSTRAINT reservable_pkey PRIMARY KEY (reservable_id);
+
+
+--
+-- TOC entry 3107 (class 2606 OID 54951)
+-- Name: reservations reservations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reservations
+    ADD CONSTRAINT reservations_pkey PRIMARY KEY (reservation_id);
+
+
+--
+-- TOC entry 3105 (class 2606 OID 54943)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- TOC entry 3114 (class 2606 OID 55060)
+-- Name: reservable building_number; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reservable
+    ADD CONSTRAINT building_number FOREIGN KEY (building_number) REFERENCES public.buildings(building_id);
+
+
+--
+-- TOC entry 3115 (class 2606 OID 55076)
+-- Name: foodcourt building_number; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.foodcourt
+    ADD CONSTRAINT building_number FOREIGN KEY (building_number) REFERENCES public.buildings(building_id);
+
+
+-- Completed on 2020-02-21 19:36:11 CET
+
+--
+-- PostgreSQL database dump complete
+--
+
