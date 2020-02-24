@@ -15,11 +15,10 @@ public class ServerCommunication {
     /**
      * Retrieves a quote from the server.
      * @return the body of a get request to the server.
-     * @throws Exception if communication with the server fails.
      */
     public static String getQuote() {
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/quote")).build();
-        HttpResponse<String> response = null;
+        HttpResponse<String> response;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
@@ -38,17 +37,21 @@ public class ServerCommunication {
      */
     public static String ping() {
         // Send GET request to host at path /ping
-        HttpResponse<String> response = HTTPRequestHandler.get(host,"ping");
+        HttpResponse<String> response = HttpRequestHandler.get(host,"ping");
         return response.body();
     }
 
+    /** Sends the server a simple POST request.
+     * @param input the input parameter to be relayed back.
+     * @return "Your input: " plus the body of the POST request.
+     */
     public static String relay(String input) {
 
         // Put parameters into Map.
-        Map<String, String> paramMap = new HashMap<String,String>();
+        Map<String, String> paramMap = new HashMap<>();
         paramMap.put("input",input);
         // Send POST request to host at path /relay
-        HttpResponse<String> response = HTTPRequestHandler.post(host, "relay", paramMap);
+        HttpResponse<String> response = HttpRequestHandler.post(host, "relay", paramMap);
         return response.body();
     }
 }
