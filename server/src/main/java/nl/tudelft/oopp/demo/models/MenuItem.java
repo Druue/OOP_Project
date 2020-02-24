@@ -1,6 +1,8 @@
 package nl.tudelft.oopp.demo.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -10,4 +12,8 @@ import javax.persistence.Table;
 @Table(name = "MenuItem")
 public class MenuItem { // Do we want to store this as an entity?
 	public String Name;
+
+	@Id
+	@Column(name = "id")
+	public long id;
 }
