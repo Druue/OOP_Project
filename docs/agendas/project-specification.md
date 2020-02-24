@@ -87,7 +87,15 @@ Furthermore, it is assumed that a user returns his/her reserved bike to the buil
 These are features that do not necessarily have to be implemented, but would be considered a good addition to the application.
 
 ## Food reservation
-Some buildings on campus have a cafeteria in them, in which a user could order some food that would be brought to their room on their time of reservation.
+
+Some buildings on campus have a cafeteria in them, in which a user could order some food.
+
+The food can be
+- ordered instantly or reserved for a later time
+- delivered to a room or picked up from a food court
+
+
+
 
 ## Filter search
 Users could have the ability to search for a particular room with the use of filters. An Example: A user could specify the minumum amount of seats they would like to have in a room.
