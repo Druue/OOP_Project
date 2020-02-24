@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
-import java.io.IOException;
 
 public class MainSceneController {
 
@@ -31,9 +31,9 @@ public class MainSceneController {
 
 
     /**
-     * Handles the Test POST Request
+     * Handles the Test POST Request.
      */
-    public void TestPostRequest() {
+    public void testPostRequest() {
 
         // Get the text from the TextField
         String userInputText = userInput.getText();
@@ -46,6 +46,10 @@ public class MainSceneController {
         alert.showAndWait();
     }
 
+    /**
+     * Handles switching from one scene to another.
+     * @param event the scene from where the function was called.
+     */
     public void goToReservations(ActionEvent event) {
         try {
             Parent reservationsParent = FXMLLoader.load(getClass().getResource("/reservations.fxml"));
@@ -56,7 +60,7 @@ public class MainSceneController {
             primaryStage.setScene(reservationsScene);
             primaryStage.show();
 
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("IOException in MainSceneController");
         }
     }

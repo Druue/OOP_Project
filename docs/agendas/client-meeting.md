@@ -23,7 +23,7 @@ The main features that this campus software should provide are:
 
 ### Users
 Once authenticated, a user should be able to:
-- View all rooms and timeslots per building, and see the availibility for each room.
+- View all rooms and timeslots per building, and see the availability for each room.
 - Reserve a timeslot for a room, in a specific building.
 - Cancel an ongoing reservation.
 - See a list of all timeslots currently reserved by the user.
@@ -43,7 +43,7 @@ The application should include an administrative side, in which an administrator
 - Change the availability of a building for a specific date.
 
 ## Buildings
-The application should contain a database of all availible buildings. The main attributes of a building that are stored in the application are:
+The application should contain a database of all available buildings. The main attributes of a building that are stored in the application are:
 
 - The name.
 - (Optional) A short description.
@@ -59,12 +59,12 @@ Each room in the application has the following attributes:
 
 - A name.
 - (Optional) A short description.
-- A maximum capacity (or: the amount of seats availible).
+- A maximum capacity (or: the amount of seats available).
 - A permission level: The room should list who can reserve it. This can be employees only, students only, or both.
 - A check stating whether or not the room contains a projector.
 
 ### Timeslots
-As described above, each building has an opening and closing time. When a building is open, fixed timeslots are availible for reservation. Each timeslot is 30 minutes long, and cannot be moved. Example: A timeslot will always start at 9:00, and cannot be moved to start at 9:02.
+As described above, each building has an opening and closing time. When a building is open, fixed timeslots are available for reservation. Each timeslot is 30 minutes long, and cannot be moved. Example: A timeslot will always start at 9:00, and cannot be moved to start at 9:02.
 
 Furthermore, a timeslot can only be reserved by one user at a time, and only 3 weeks in advance. Lastly, a user cannot reserve two different rooms during the same timeslot.
 
@@ -73,11 +73,11 @@ A timeslot can have three different statuses: Available, unavailable, and reserv
 - Unavailable: No user is able to reserve this timeslot.
 - Reserved: A user has reserved this timeslot.
 
-The key difference between an unavailable and reserved timeslot is that a reserved timeslot can be made availible once the user who reserved the timeslot cancels his/her reservation. An unavailible timeslot means that that room most likely will never be availible at that time, or that a holiday is occuring.
+The key difference between an unavailable and reserved timeslot is that a reserved timeslot can be made available once the user who reserved the timeslot cancels his/her reservation. An unavailable timeslot means that that room most likely will never be available at that time, or that a holiday is occurring.
 
 ### Bikes
 
-A user is able to reserve a bike from a building, if that building is open and has bikes availible.
+A user is able to reserve a bike from a building, if that building is open and has bikes available.
 Since a building will (most likely) contain multiple bikes, it is possible that two (or more) users reserve a bike from a building during the same timeslot. 
 
 Furthermore, it is assumed that a user returns his/her reserved bike to the building he/she got it from. 
@@ -90,7 +90,7 @@ These are features that do not necessarily have to be implemented, but would be 
 Some buildings on campus have a cafeteria in them, in which a user could order some food that would be brought to their room on their time of reservation.
 
 ## Filter search
-Users could have the ability to search for a particular room with the use of filters. An Example: A user could specify the minumum amount of seats they would like to have in a room.
+Users could have the ability to search for a particular room with the use of filters. An Example: A user could specify the minimum amount of seats they would like to have in a room.
 
 ## Calendar view
 Users could have the capability to look at their ongoing reservations in a calendar view. This would give a clear overview of when a user has reserved timeslots.
