@@ -46,4 +46,7 @@ public class Building {
 	 */
 	@Column(name = "availablereservations")
 	Map<Reservable, Iterable<Period>> AvailableReservations;
+
+	@Column(name = "availablereservables")
+	Iterable<Reservable> reservables;
 }
