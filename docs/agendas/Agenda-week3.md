@@ -2,10 +2,10 @@
 
 ---
 
-Date:           {24/02}\
-Main focus:     {Establishing roadmap}\
-Chair:          {Insert Here}\
-Note taker:     {Insert Here}
+Date:           24/02\
+Main focus:     Establishing roadmap\
+Chair:          Thomas Koppelaar\
+Note taker:     Sophie Ibbs
 
 
 
@@ -35,9 +35,6 @@ Changelist:
 *If anybody has something that should be discussed but came up with that after the agenda was finalized (in point 2), he/she should bring that up now so that it can be discussed after all.*
 
 
-# Questions for the TA
-*Your TA will visit you in the second half of the lab session. Note down all questions that you have so that you can ask them then.*
-
 # Question round
 *If there are any questions, now is the time to ask them.*
 
@@ -47,7 +44,8 @@ Changelist:
 - A:
 - Q: What does the email address of an employee look like? @teacher.tudelft.nl ?
 - A:
-
+- Q: Where can we host a postgres database?
+- A:
 
 # Closing
 
