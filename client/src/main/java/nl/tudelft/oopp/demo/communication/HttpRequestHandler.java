@@ -19,11 +19,11 @@ public class HttpRequestHandler {
      * @param parameters a map containing all parameters in the request, mapped as 'name,value'.
      * @return An HttpResponse object.
      */
-    public static HttpResponse<String> post(String url, String path, Map<String,String> parameters) {
+    public static <T> HttpResponse<String> post(String url, String path, Map<String,T> parameters) {
 
         // Encode all parameters
         StringBuilder encParams = new StringBuilder();
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+        for (Map.Entry<String, T> entry : parameters.entrySet()) {
             if (encParams.length() > 0) {
                 encParams.append("&");
             }

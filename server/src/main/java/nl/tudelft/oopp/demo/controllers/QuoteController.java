@@ -54,7 +54,7 @@ public class QuoteController {
 
 
 
-    @PostMapping(value = "relay")
+    @PostMapping(value = "relay", produces = "application/json")
     @ResponseBody
     public String relay(@RequestParam(required = false) String input) {
 
