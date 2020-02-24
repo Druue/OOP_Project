@@ -5,8 +5,7 @@ import java.util.Random;
 
 import nl.tudelft.oopp.demo.entities.Quote;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class QuoteController {
@@ -43,4 +42,21 @@ public class QuoteController {
 
         return quotes.get(new Random().nextInt(quotes.size()));
     }
+
+    @GetMapping("ping")
+    @ResponseBody
+    public String getPing() {
+        return "Pong";
+    }
+
+
+
+    @PostMapping(value = "relay")
+    @ResponseBody
+    public String relay(@RequestParam(required = false) String input) {
+
+        return "Your input: "+ input;
+    }
+
+
 }
