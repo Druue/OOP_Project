@@ -25,7 +25,7 @@ For every meeting: the agenda should be made
 - What roles should be added?
     - student, staff, admin, etc
 
-- Should the product be availible offline?
+- Should the product be available offline?
 
 - Do certain parts need to be shareable with other (non authenticated) people?
 

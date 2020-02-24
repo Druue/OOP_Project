@@ -1,9 +1,7 @@
 package nl.tudelft.oopp.demo.views;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
