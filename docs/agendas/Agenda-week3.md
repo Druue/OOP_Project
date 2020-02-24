@@ -12,9 +12,13 @@ Note taker:     Sophie Ibbs
 # Opening
 Present: 
 
-- 
-- 
-- 
+- Sophie
+- Thomas
+- Dimitar
+- Nikolay
+- Ayhem
+- Mylene
+- Justin
 
 # Approval of the agenda
 
@@ -46,6 +50,11 @@ Changelist:
 - A:
 - Q: Where can we host a postgres database?
 - A:
+- Q: Should email verification be required?
+- A: 
+- Q: What do guest accounts look like?
+- A: 
+
 
 # Closing
 
