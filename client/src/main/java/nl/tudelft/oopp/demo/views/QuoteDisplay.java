@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.views;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 
@@ -19,8 +20,16 @@ public class QuoteDisplay extends Application {
         URL xmlUrl = getClass().getResource("/mainScene.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
+        Scene homepage = new Scene(root);
 
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setWidth(1000);
+        primaryStage.setHeight(500);
+
+
+
+        primaryStage.setTitle("Test");
+        primaryStage.setScene(homepage);
+
         primaryStage.show();
     }
 
