@@ -88,11 +88,11 @@ These are features that do not necessarily have to be implemented, but would be 
 
 ## Food reservation
 
-Some buildings on campus have a cafeteria in them, in which a user could order some food.
+Some buildings on campus have a food court in them, in which a user could order some food.
 
 The food can be
-- ordered instantly or reserved for a later time
-- delivered to a room or picked up from a food court
+- Ordered to be picked up at the it's food court.
+- Ordered for a certain reservation.
 
 
 
