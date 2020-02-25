@@ -12,6 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class LoginController {
 
+    private LoginService service;
+
+    @Autowired
+    public LoginController(LoginService service) {
+        this.service = service;
+    }
+
     /*
     * POST endpoint to validate authentication of a user
     * The class uses a method userValidate of the LoginQuery class to find the user-provided details in the database
@@ -20,16 +27,15 @@ public class LoginController {
     * */
     @PostMapping("/login")
     @ResponseBody
-    public String validateAuthentication(
-            @RequestParam("NetID") String NetID ,
-            @RequestParam("password") String password,
-            HttpServletResponse response
-            ) {
+    public String validateAuthentication( @RequestParam("NetID") String NetID ,
+                                          @RequestParam("password") String password,
+                                          HttpServletResponse response )  {
 
+        // The role of the user to be returned of the authentication was successful
         String role = null;
 
         try {
-           role = LoginService.userValidate(NetID , password);
+           role = service.userValidate(NetID , password);
         }
         catch (AuthenticationException e) {
            System.out.println("Authentication failed for user with NetID: " + NetID + " and password " + password );
@@ -39,6 +45,7 @@ public class LoginController {
 
         // Set the Cookie NetID="Provided NetID" if the login was successful
         response.addCookie(new Cookie("NetID" , NetID));
+
         return role;
     }
 

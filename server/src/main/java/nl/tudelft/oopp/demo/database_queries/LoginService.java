@@ -10,6 +10,13 @@ import javax.naming.AuthenticationException;
 @Service
 public class LoginService {
 
+    final
+    QuoteRepository repository;
+
+    public LoginService(QuoteRepository repository) {
+        this.repository = repository;
+    }
+
     public static String userValidate(String NetID, String password) throws AuthenticationException {
 
 
