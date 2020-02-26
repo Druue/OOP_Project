@@ -1,0 +1,27 @@
+.root{
+    tuDelftBlue: #00A6D6
+}
+
+#loginWrapper {
+    -fx-background-color: white;
+}
+
+#loginContainer {
+    -fx-alignment: center;
+}
+
+#loginBackground {
+    -fx-background-image: url("/images/LoginBackground.jpeg");
+}
+
+#logo {
+    -fx-background-image: url("/images/Logo.png");
+}
+
+.loginButton {
+    -fx-background-color: tuDelftBlue;
+    -fx-text-fill: white;
+}
+
+
+

@@ -20,8 +20,8 @@ public class QuoteDisplay extends Application {
         Parent root = loader.load();
         Scene homepage = new Scene(root);
 
-        primaryStage.setWidth(1000);
-        primaryStage.setHeight(500);
+//        primaryStage.setWidth(1000);
+//        primaryStage.setHeight(500);
 
 
 
