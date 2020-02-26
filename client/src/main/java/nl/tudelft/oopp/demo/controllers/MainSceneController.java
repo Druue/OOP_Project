@@ -65,7 +65,7 @@ public class MainSceneController {
     }
 
     /**
-     * Handles switching from one scene to another.
+     * Handles going to the reservation page.
      * @param event the scene from where the function was called.
      */
     public void goToReservations(ActionEvent event) {
@@ -76,6 +76,25 @@ public class MainSceneController {
 
             primaryStage.hide();
             primaryStage.setScene(reservationsScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in MainSceneController");
+        }
+    }
+
+    /**
+     * Handles going to the login page.
+     * @param event the scene from where the function was called.
+     */
+    public void goToLogin(ActionEvent event) {
+        try {
+            Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
+            Scene loginScene = new Scene(loginParent);
+            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(loginScene);
             primaryStage.show();
 
         } catch (IOException e) {

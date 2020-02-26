@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+
+<?import javafx.scene.text.Text?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="nl.tudelft.oopp.demo.controllers.LoginSceneController">
+
+    <TextField fx:id="inputNetID" text="Netid"/>
+    <TextField fx:id="inputPassword" text="Password"/>
+    <Button text="Login" onAction="#tryLogin"/>
+</VBox>
+
+

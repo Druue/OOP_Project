@@ -52,4 +52,9 @@ public class ServerCommunication {
         HttpResponse<String> response = HttpRequestHandler.post(host, "relay", parameters);
         return new JSONObject(response.body());
     }
+
+    public static JSONObject login(JSONObject parameters) throws JSONException {
+        HttpResponse<String> response = HttpRequestHandler.post(host, "login", parameters);
+        return new JSONObject(response.body());
+    }
 }
