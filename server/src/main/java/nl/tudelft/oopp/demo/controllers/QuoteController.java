@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import nl.tudelft.oopp.demo.entities.Quote;
+import nl.tudelft.oopp.demo.entities.TestObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,9 +57,9 @@ public class QuoteController {
 
     @PostMapping(value = "relay", produces = "application/json")
     @ResponseBody
-    public String relay(@RequestParam(required = false) String input) {
+    public TestObject relay(@RequestParam(required = false) String input) {
 
-        return "Your input: " + input;
+        return new TestObject("Name",6, new String[]{"Bruh", "Moment"});
     }
 
 

@@ -29,7 +29,7 @@ public class HttpRequestHandler {
             }
             encParams.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8));
             encParams.append("=");
-            encParams.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8));
+            encParams.append(URLEncoder.encode((String) entry.getValue(), StandardCharsets.UTF_8));
         }
 
         // Build HTTP request
