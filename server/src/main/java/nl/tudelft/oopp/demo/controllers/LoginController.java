@@ -9,9 +9,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LoginController {
+    /**
+     * A function that handles the login requests.
+     * @param requestbody the request that contains the login information.
+     * @return a JSONObject response that contains a status and a message.
+     */
 
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
-    public @ResponseBody String relay (@RequestBody String requestbody) throws JSONException {
+    public @ResponseBody String relay(@RequestBody String requestbody) throws JSONException {
         System.out.println("Request received!");
 
         // Copy the JSON request.
