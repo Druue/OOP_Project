@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,8 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
-import nl.tudelft.oopp.demo.entities.TestObject;
-import org.json.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainSceneController {
 
@@ -38,19 +39,27 @@ public class MainSceneController {
         // Get the text from the TextField
         String userInputText = userInput.getText();
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("A response");
-        alert.setHeaderText(null);
-        // Call the relay() function in Servercommunication.java with the user's input
 
+        // Call the relay() function in Servercommunication.java with the user's input
         try {
-            JSONObject json =  new JSONObject(ServerCommunication.relay(userInputText));
-            //TestObject test = new TestObject(json.getString("name"),json.getInt("value"),json.getJSONArray("list").);
-            alert.setContentText(ServerCommunication.relay(userInputText));
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("A response");
+            alert.setHeaderText(null);
+            if (userInputText.isEmpty()) {
+                alert.setContentText("Please provide some input.");
+            } else {
+                JSONObject json = ServerCommunication.relay(userInputText);
+                alert.setContentText(json.toString());
+            }
             alert.showAndWait();
         } catch (JSONException e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error!");
+            alert.setHeaderText(null);
+            alert.setContentText("A server error has occurred.");
         }
+
+
 
 
     }
