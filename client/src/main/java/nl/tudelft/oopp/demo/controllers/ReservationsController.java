@@ -1,6 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javafx.fxml.FXML;
+import java.io.IOException;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -9,8 +11,8 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
-import javafx.event.ActionEvent;
-import java.io.IOException;
+
+
 
 public class ReservationsController {
 
@@ -25,6 +27,10 @@ public class ReservationsController {
         alert.showAndWait();
     }
 
+    /**
+     * Handles going back to the Homepage.
+     * @param event the event from where the function was called.
+     */
     public void goToHomepage(ActionEvent event) {
         try {
             Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
@@ -34,7 +40,7 @@ public class ReservationsController {
             primaryStage.hide();
             primaryStage.setScene(homepageScene);
             primaryStage.show();
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("IOException in ReservationsController");
         }
     }
