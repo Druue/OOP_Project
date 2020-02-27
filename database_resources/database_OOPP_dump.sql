@@ -98,10 +98,9 @@ DROP TABLE IF EXISTS `Foodcourt`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `Foodcourt` (
-  `Foodcourt_ID` varchar(45) COLLATE utf8_bin NOT NULL,
   `food_list` int NOT NULL,
   `building_number` int DEFAULT NULL,
-  PRIMARY KEY (`FoodcourtID`),
+  PRIMARY KEY (`food_list`),
   KEY `building_number_idx` (`building_number`),
   CONSTRAINT `building_number` FOREIGN KEY (`building_number`) REFERENCES `Building` (`buildingID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
