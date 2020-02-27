@@ -48,6 +48,7 @@ DROP TABLE IF EXISTS `Bike`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `Bike` (
   `reservableID` int NOT NULL,
+  `name` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `isAvailable` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `buildingID` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`reservableID`)
@@ -74,7 +75,7 @@ CREATE TABLE `Building` (
   `buildingID` int NOT NULL,
   `name` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `opening_hours` datetime DEFAULT NULL,
-  `hasFoodCourt` boolean DEFAULT FALSE,
+  `hasFoodCourt` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `available_time_slots` datetime DEFAULT NULL,
   PRIMARY KEY (`buildingID`),
   CONSTRAINT `buildingID` FOREIGN KEY (`buildingID`) REFERENCES `Reservables` (`reservableID`)
@@ -98,10 +99,9 @@ DROP TABLE IF EXISTS `Foodcourt`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `Foodcourt` (
-  `Foodcourt_ID` varchar(45) COLLATE utf8_bin NOT NULL,
   `food_list` int NOT NULL,
   `building_number` int DEFAULT NULL,
-  PRIMARY KEY (`FoodcourtID`),
+  PRIMARY KEY (`food_list`),
   KEY `building_number_idx` (`building_number`),
   CONSTRAINT `building_number` FOREIGN KEY (`building_number`) REFERENCES `Building` (`buildingID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -124,10 +124,9 @@ DROP TABLE IF EXISTS `FoodReservation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `FoodReservation` (
-  `FoodReservationID` int NOT NULL,
   `userID` int NOT NULL,
   `reservationID` int DEFAULT NULL,
-  PRIMARY KEY (`FoodReservationID`),
+  PRIMARY KEY (`userID`),
   KEY `reservationID_idx` (`reservationID`),
   CONSTRAINT `reservationID` FOREIGN KEY (`reservationID`) REFERENCES `Reservation` (`reservationID`),
   CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `User` (`userID`)
@@ -153,7 +152,7 @@ DROP TABLE IF EXISTS `Reservable`;
 CREATE TABLE `Reservable` (
   `idReservable` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `isAvailable` boolean DEFAULT TRUE,
+  `isAvailable` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `buildingId` int DEFAULT NULL,
   PRIMARY KEY (`idReservable`),
   UNIQUE KEY `idReservable_UNIQUE` (`idReservable`)
@@ -227,11 +226,8 @@ DROP TABLE IF EXISTS `Room`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `Room` (
-  `reservableID` int NOT NULL,
-  `isAvailable` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `buildingID` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `isForEmployee` int NOT NULL,
-  PRIMARY KEY (`reservableID`)
+  PRIMARY KEY (`isForEmployee`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -252,7 +248,7 @@ DROP TABLE IF EXISTS `User`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `User` (
-  `userID` varchar(45) COLLATE utf8_bin NOT NULL,
+  `userID` int NOT NULL,
   `name` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `email` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `password` varchar(45) COLLATE utf8_bin DEFAULT NULL,
