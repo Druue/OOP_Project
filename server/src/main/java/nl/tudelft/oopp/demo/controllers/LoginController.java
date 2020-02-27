@@ -1,15 +1,22 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import nl.tudelft.oopp.demo.database_queries.LoginService;
+import nl.tudelft.oopp.demo.services.LoggerService;
+import nl.tudelft.oopp.demo.services.LoginService;
+import nl.tudelft.oopp.demo.models.LoginDetails;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.naming.AuthenticationException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@Controller
+
+// This class contains the method to answer to a login request from the client
+// It receives as input the provided by the user NetID and a hashed password.
+@RestController
 public class LoginController {
 
     private LoginService service;
@@ -19,34 +26,41 @@ public class LoginController {
         this.service = service;
     }
 
-    /*
-    * POST endpoint to validate authentication of a user
-    * The class uses a method userValidate of the LoginQuery class to find the user-provided details in the database
-    * 1) If the method finds the user in the database, it returns its role to be sent through the server response
-    * 2) If it does not find it, it throws AuthenticationException and this method catches it and sends "None"
-    * */
+    /**
+     * This method logs in a user to the application with provided
+     * NetID and password. It calls the method userValidate() of the LoginService class to
+     * query the database for the user.
+     * @param providedDetails - The provided by the user details mapped to a
+     *                          LoginDetails object through the @RequestBody annotation
+     * @param newUserSession  - The user session, which is automatically created by the Spring Session module
+     * @return An instance of ResponseEntity<String> with status code 200 if the user is successfully authenticated.
+     * Otherwise returns Bad Request response.
+     */
     @PostMapping("/login")
-    @ResponseBody
-    public String validateAuthentication( @RequestParam("NetID") String NetID ,
-                                          @RequestParam("password") String password,
-                                          HttpServletResponse response )  {
+    public ResponseEntity<String> validateAuthentication(@RequestBody LoginDetails providedDetails,
+                                                              HttpSession newUserSession) {
 
-        // The role of the user to be returned of the authentication was successful
-        String role = null;
+        String NetID = providedDetails.getNetID();
+        String password = providedDetails.getPassword();
 
         try {
-           role = service.userValidate(NetID , password);
+            String role = service.userValidate(NetID , password);
+
+            LoggerService.info(LoginController.class , "User successfully authenticated with NetID: "
+                    + NetID + " and role: " + role);
+            newUserSession.setAttribute("NetID" , NetID);
+            newUserSession.setAttribute("Role" , role);
+
+            return ResponseEntity.status(200).build();
         }
         catch (AuthenticationException e) {
-           System.out.println("Authentication failed for user with NetID: " + NetID + " and password " + password );
-           System.out.println("No such user.");
-           return "None";
+
+           LoggerService.info(LoginController.class ,"Authentication failed for user with NetID: "
+                   + NetID + " and password " + password + " : No such user registered." );
+
+           return ResponseEntity.badRequest().header("Reason" , "No such user").build();
         }
 
-        // Set the Cookie NetID="Provided NetID" if the login was successful
-        response.addCookie(new Cookie("NetID" , NetID));
-
-        return role;
     }
 
 }

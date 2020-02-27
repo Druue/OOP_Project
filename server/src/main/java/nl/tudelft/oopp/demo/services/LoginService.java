@@ -1,8 +1,6 @@
-package nl.tudelft.oopp.demo.database_queries;
+package nl.tudelft.oopp.demo.services;
 
 import nl.tudelft.oopp.demo.repositories.QuoteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
@@ -17,7 +15,7 @@ public class LoginService {
         this.repository = repository;
     }
 
-    public static String userValidate(String NetID, String password) throws AuthenticationException {
+    public String userValidate(String NetID, String password) throws AuthenticationException {
 
 
         /*
