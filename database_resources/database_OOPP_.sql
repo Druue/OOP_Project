@@ -224,7 +224,7 @@ DROP TABLE IF EXISTS `Room`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `Room` (
-  `isForEmployee` int DEFAULT NULL,
+  `isForEmployee` tinyint DEFAULT '0',
   `reservableID` int NOT NULL,
   `isAvailable` tinyint DEFAULT '0',
   `buildingID` int DEFAULT NULL,
@@ -301,4 +301,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-28  0:58:18
+-- Dump completed on 2020-02-28  1:11:14
