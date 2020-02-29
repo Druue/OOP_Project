@@ -20,8 +20,8 @@
     <!-- Button that sends the text within 'userInput'-->
     <Button text="Send information" onAction="#testPostRequest"/>
     <Button text="Go to reservations" onAction="#goToReservations"/>
-    <Button text="Go to login" onAction="#goToLogin"/>
 
+    <Button text="Go to the login page" onAction="#goToLogin"/>
 </VBox>
 
 

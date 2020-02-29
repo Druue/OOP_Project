@@ -4,8 +4,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ServerCommunication {
 
@@ -45,13 +45,16 @@ public class ServerCommunication {
      * @param input the input parameter to be relayed back.
      * @return "Your input: " plus the body of the POST request.
      */
-    public static String relay(String input) {
-
-        // Put parameters into Map.
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("input",input);
+    public static JSONObject relay(String input) throws JSONException {
+        JSONObject parameters = new JSONObject();
+        parameters.put("input",input);
         // Send POST request to host at path /relay
-        HttpResponse<String> response = HttpRequestHandler.post(host, "relay", paramMap);
-        return response.body();
+        HttpResponse<String> response = HttpRequestHandler.post(host, "relay", parameters);
+        return new JSONObject(response.body());
+    }
+
+    public static JSONObject login(JSONObject parameters) throws JSONException {
+        HttpResponse<String> response = HttpRequestHandler.post(host, "login", parameters);
+        return new JSONObject(response.body());
     }
 }
