@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -7,8 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class RegistrationController {
 
@@ -31,7 +31,7 @@ public class RegistrationController {
     }
 
     /**
-     * Handles going to the Login.
+     * Handles going to the login page.
      * @param event the event from where the function was called.
      */
     public void goToLogin(MouseEvent event) {
