@@ -4,37 +4,27 @@ package nl.tudelft.oopp.demo.models;
 // This class represents the user information provided at registration time
 public class RegistrationDetails {
 
-    private String firstName;
-    private String lastName;
+    private String name;
     private String netID;
     private String email;
-    private int password;
+    private String password;
     private String role;
 
 
-    public RegistrationDetails(String firstName, String lastName, String netID, String email, int password, String role) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public RegistrationDetails(String name, String netID, String email, String password, String role) {
+        this.name = name;
         this.netID = netID;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getNetID() {
@@ -42,7 +32,7 @@ public class RegistrationDetails {
     }
 
     public void setNetID(String netID) {
-        netID = netID;
+        this.netID = netID;
     }
 
     public String getEmail() {
@@ -53,11 +43,11 @@ public class RegistrationDetails {
         this.email = email;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

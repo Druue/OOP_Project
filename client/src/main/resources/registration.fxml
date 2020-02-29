@@ -26,15 +26,15 @@
                          </ImageView>
                      </FlowPane>
 
-                     <Label text="First Name"><FlowPane.margin>
+                     <Label text="Name"><FlowPane.margin>
                          <Insets top="10.0" />
                      </FlowPane.margin></Label>
-                     <TextField fx:id="registrationFirstNameInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="First Name" styleClass="registrationInputField"/>
+                     <TextField fx:id="registrationNameInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="First Name" styleClass="registrationInputField"/>
 
-                     <Label text="Last Name"><FlowPane.margin>
+                     <Label text="NetID"><FlowPane.margin>
                          <Insets top="10.0" />
                      </FlowPane.margin></Label>
-                     <TextField fx:id="registrationLastNameInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="Last Name" styleClass="registrationInputField"/>
+                     <TextField fx:id="registrationNetIdInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="Last Name" styleClass="registrationInputField"/>
 
                      <Label text="Email"><FlowPane.margin>
                          <Insets top="10.0" />
@@ -46,7 +46,7 @@
                      </FlowPane.margin></Label>
                      <PasswordField fx:id="registrationPasswordInput" layoutX="50.0" layoutY="169.0" prefHeight="40.0" prefWidth="400.0" promptText="Password" styleClass="registrationInputField"/>
 
-                     <Button layoutX="50.0" layoutY="244.0" mnemonicParsing="false" onAction="#goToHomepage" prefHeight="45.0" prefWidth="300.0" styleClass="registrationButton" text="Create account">
+                     <Button layoutX="50.0" layoutY="244.0" mnemonicParsing="false" onAction="#attemptRegistration" prefHeight="45.0" prefWidth="300.0" styleClass="registrationButton" text="Create account">
                           <FlowPane.margin>
                              <Insets top="15.0" />
                          </FlowPane.margin></Button>
