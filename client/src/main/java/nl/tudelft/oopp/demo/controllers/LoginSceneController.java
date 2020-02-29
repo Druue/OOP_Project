@@ -82,6 +82,22 @@ public class LoginSceneController {
     }
 
     /**
+     * Handles going the the homepage, without any event occurring.
+     */
+    public void goToHomepage() {
+        try {
+            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
+            Scene homepageScene = new Scene(homepageParent);
+            Stage primaryStage = (Stage) (inputNetID.getScene().getWindow());
+            primaryStage.hide();
+            primaryStage.setScene(homepageScene);
+            primaryStage.show();
+        } catch (IOException e) {
+            System.out.println("IOException in ReservationsController");
+        }
+    }
+
+    /**
      * Handles going to the registration page.
      * @param event the event from where the function was called.
      */
@@ -97,22 +113,6 @@ public class LoginSceneController {
             primaryStage.show();
         } catch (IOException e) {
             System.out.println("IOException in LoginController");
-        }
-    }
-
-    /**
-     * Handles going the the homepage, without any event occurring.
-     */
-    public void goToHomepage() {
-        try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) (inputNetID.getScene().getWindow());
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
-        } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
         }
     }
 }

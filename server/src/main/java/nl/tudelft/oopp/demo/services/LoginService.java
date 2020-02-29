@@ -1,23 +1,29 @@
 package nl.tudelft.oopp.demo.services;
 
+import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.demo.models.LoginDetails;
 import nl.tudelft.oopp.demo.repositories.QuoteRepository;
 import org.springframework.stereotype.Service;
 
-import javax.naming.AuthenticationException;
+
 
 @Service
 public class LoginService {
 
-    final
-    QuoteRepository repository;
+    final QuoteRepository repository;
 
     public LoginService(QuoteRepository repository) {
         this.repository = repository;
     }
 
+    /**
+     * Validates whether or not a user provided valid login credentials.
+     * @param providedDetails the object containing the user's login credentials.
+     * @return the role of the authenticated user.
+     * @throws AuthenticationException thrown if the login credentials are invalid.
+     */
     public String userValidate(LoginDetails providedDetails) throws AuthenticationException {
-        String NetID = providedDetails.getNetID();
+        String netID = providedDetails.getNetID();
         String password = providedDetails.getPassword();
 
         /*

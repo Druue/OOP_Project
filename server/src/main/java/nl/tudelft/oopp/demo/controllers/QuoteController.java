@@ -34,7 +34,7 @@ public class QuoteController {
                 "Bill Gates"
         );
 
-        Quote q3= new Quote(
+        Quote q3 = new Quote(
                 3,
                 "Tell me and I forget.  Teach me and I remember.  Involve me and I learn.",
                 "Benjamin Franklin"
