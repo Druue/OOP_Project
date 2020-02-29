@@ -11,9 +11,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "MenuItem")
 public class MenuItem { // Do we want to store this as an entity?
-	public String Name;
-
 	@Id
 	@Column(name = "id")
 	public long id;
+
+	@Column(name = "name")
+	public String Name;
 }

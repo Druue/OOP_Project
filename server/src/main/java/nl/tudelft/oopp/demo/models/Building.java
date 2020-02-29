@@ -4,8 +4,10 @@ import java.time.Period;
 import java.util.Map;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -44,9 +46,11 @@ public class Building {
 	 * A map of available reservation slots for each reservable entity at/in the
 	 * building.
 	 */
+	@OneToMany
 	@Column(name = "availablereservations")
 	Map<Reservable, Iterable<Period>> AvailableReservations;
 
+	@ElementCollection
 	@Column(name = "availablereservables")
 	Iterable<Reservable> reservables;
 }
