@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginController {
+public class RegistrationController {
 
     /**
      * Handles going back to the Homepage.
@@ -31,21 +31,22 @@ public class LoginController {
     }
 
     /**
-     * Handles going back to the Homepage.
+     * Handles going to the Login.
      * @param event the event from where the function was called.
      */
-    public void goToRegistration(MouseEvent event) {
+    public void goToLogin(MouseEvent event) {
         try {
-            Parent registrationParent = FXMLLoader.load(getClass().getResource("/registration.fxml"));
-            Scene registrationScene = new Scene(registrationParent);
-            registrationScene.getStylesheets().addAll(this.getClass().getResource("/registration.css").toExternalForm());
+            Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
+            Scene loginScene = new Scene(loginParent);
+            loginScene.getStylesheets().addAll(this.getClass().getResource("/login.css").toExternalForm());
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+
             primaryStage.hide();
-            primaryStage.setScene(registrationScene);
+            primaryStage.setScene(loginScene);
             primaryStage.show();
         } catch (IOException e) {
-            System.out.println("IOException in LoginController");
+            System.out.println("IOException in ReservationsController");
         }
     }
 }

@@ -2,16 +2,16 @@
     tuDelftBlue: #00A6D6
 }
 
-#loginWrapper {
+#registrationWrapper {
     -fx-background-color: white;
 }
 
-#loginContainer, #loginWrapper, #loginBackground, #loginLogoWrapper{
+#registrationContainer, #registrationWrapper, #registrationBackground, #registrationLogoWrapper{
     -fx-alignment: center;
 }
 
 
-#loginBackground {
+#registrationBackground {
     -fx-background-image: url("/images/LoginBackground.jpeg");
 }
 
@@ -19,7 +19,7 @@
     -fx-background-image: url("/images/Logo.png");
 }
 
-.loginButton {
+.registrationButton {
     -fx-background-color: tuDelftBlue;
     -fx-text-fill: white;
 }
