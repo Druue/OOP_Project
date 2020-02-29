@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
-//<<<<<<< HEAD
+
+import nl.tudelft.oopp.demo.models.LoginResponse;
 import nl.tudelft.oopp.demo.services.LoggerService;
 import nl.tudelft.oopp.demo.services.LoginService;
 import nl.tudelft.oopp.demo.models.LoginDetails;
@@ -37,67 +38,30 @@ public class LoginController {
      * @return An instance of ResponseEntity<String> with status code 200 if the user is successfully authenticated.
      * Otherwise returns Bad Request response.
      */
-    @PostMapping("/login")
-    public ResponseEntity<String> validateAuthentication(@RequestBody LoginDetails providedDetails,
-                                                              HttpSession newUserSession) {
-
-        String NetID = providedDetails.getNetID();
-        String password = providedDetails.getPassword();
+    @PostMapping(value ="login", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<LoginResponse> validateAuthentication(@RequestBody LoginDetails providedDetails,
+                                                                HttpSession newUserSession) {
 
         try {
-            String role = service.userValidate(NetID , password);
+            String role = service.userValidate(providedDetails);
+            LoggerService.info(LoginController.class , "User successfully authenticated.");
 
-            LoggerService.info(LoginController.class , "User successfully authenticated with NetID: "
-                    + NetID + " and role: " + role);
-            newUserSession.setAttribute("NetID" , NetID);
+            //TODO: Work with sessions
+            newUserSession.setAttribute("NetID" , providedDetails.getNetID());
             newUserSession.setAttribute("Role" , role);
 
-            return ResponseEntity.status(200).build();
+            // Send a response containing a success message, and the user's role.
+            LoginResponse a = new LoginResponse("Successful login!", "CONFIRMATION", role);
+            return ResponseEntity.ok().body(a);
         }
         catch (AuthenticationException e) {
 
            LoggerService.info(LoginController.class ,"Authentication failed for user with NetID: "
-                   + NetID + " and password " + password + " : No such user registered." );
+                   + providedDetails.getNetID() + " and password " + providedDetails.getPassword() + " : No such user registered." );
 
-           return ResponseEntity.badRequest().header("Reason" , "No such user").build();
+           // Send a response containing an error message.
+           LoginResponse a = new LoginResponse("Invalid user/password combination.", "ERROR", null);
+           return ResponseEntity.badRequest().body(a);
         }
-
     }
-
-//=======
-//import org.json.JSONException;
-//import org.json.JSONObject;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.ResponseBody;
-//
-//@Controller
-//public class LoginController {
-//    /**
-//     * A function that handles the login requests.
-//     * @param requestbody the request that contains the login information.
-//     * @return a JSONObject response that contains a status and a message.
-//     */
-//
-//    @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
-//    public @ResponseBody String relay(@RequestBody String requestbody) throws JSONException {
-//        System.out.println("Request received!");
-//
-//        // Copy the JSON request.
-//        JSONObject jsonRequest = new JSONObject(requestbody);
-//        String netID = jsonRequest.getString("NetID");
-//        String password = jsonRequest.getString("Password");
-//
-//        JSONObject response = new JSONObject();
-//        if (netID.equals("123") && password.equals("badpass")) {
-//            response.put("status","OK");
-//            response.put("message","Login Successful!");
-//        } else {
-//            response.put("status", "ERROR");
-//            response.put("message", "Invalid username/password combination.");
-//        }
-//        return response.toString();
-//    }
-//>>>>>>> dev/frontend-login-requests
 }

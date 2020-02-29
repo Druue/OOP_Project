@@ -46,16 +46,20 @@ public class LoginSceneController {
             JSONObject response = ServerCommunication.login(parameters);
 
             Alert alert = new Alert(Alert.AlertType.NONE);
-
-            if (response.getString("status").equals("ERROR")) {
-                alert.setAlertType(Alert.AlertType.ERROR);
-            } else {
-                alert.setAlertType(Alert.AlertType.CONFIRMATION);
-            }
             alert.setTitle("Response");
             alert.setHeaderText(null);
             alert.setContentText(response.getString("message"));
-            alert.showAndWait();
+
+            if (response.getString("alertType").equals("CONFIRMATION")) {
+                alert.setAlertType(Alert.AlertType.CONFIRMATION);
+                alert.showAndWait();
+                //TODO: Add logic to go to new scene
+                //For now, goes back to the homepage.
+                goToHomepage();
+            } else {
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.showAndWait();
+            }
         }
     }
 
@@ -93,6 +97,22 @@ public class LoginSceneController {
             primaryStage.show();
         } catch (IOException e) {
             System.out.println("IOException in LoginController");
+        }
+    }
+
+    /**
+     * Handles going the the homepage, without any event occurring.
+     */
+    public void goToHomepage() {
+        try {
+            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
+            Scene homepageScene = new Scene(homepageParent);
+            Stage primaryStage = (Stage) (inputNetID.getScene().getWindow());
+            primaryStage.hide();
+            primaryStage.setScene(homepageScene);
+            primaryStage.show();
+        } catch (IOException e) {
+            System.out.println("IOException in ReservationsController");
         }
     }
 }

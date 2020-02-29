@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.services;
 
+import nl.tudelft.oopp.demo.models.LoginDetails;
 import nl.tudelft.oopp.demo.repositories.QuoteRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,9 @@ public class LoginService {
         this.repository = repository;
     }
 
-    public String userValidate(String NetID, String password) throws AuthenticationException {
-
+    public String userValidate(LoginDetails providedDetails) throws AuthenticationException {
+        String NetID = providedDetails.getNetID();
+        String password = providedDetails.getPassword();
 
         /*
         * Here goes the code that checks whether a user

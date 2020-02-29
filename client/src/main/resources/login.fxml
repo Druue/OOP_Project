@@ -2,15 +2,8 @@
 
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.canvas.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.text.Text?>
 
 <FlowPane id="loginBackground" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.LoginSceneController">
    <children>
@@ -26,12 +19,12 @@
                        </ImageView>
                    </FlowPane>
 
-                   <TextField layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="300.0" promptText="Email" styleClass="loginInputField">
+                   <TextField fx:id="inputNetID" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="300.0" promptText="Email" styleClass="loginInputField">
                      <FlowPane.margin>
                         <Insets top="10.0" />
                      </FlowPane.margin></TextField>
 
-                   <PasswordField layoutX="50.0" layoutY="169.0" prefHeight="40.0" prefWidth="300.0" promptText="Password" styleClass="loginInputField">
+                   <PasswordField fx:id="inputPassword" layoutX="50.0" layoutY="169.0" prefHeight="40.0" prefWidth="300.0" promptText="Password" styleClass="loginInputField">
                        <FlowPane.margin>
                            <Insets top="10.0" />
                        </FlowPane.margin></PasswordField>
