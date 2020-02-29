@@ -64,4 +64,24 @@ public class MainSceneController {
             System.out.println("IOException in MainSceneController");
         }
     }
+
+    /**
+     * Handles switching from one scene to another.
+     * @param event the scene from where the function was called.
+     */
+    public void goToLogin(ActionEvent event) {
+        try {
+            Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
+            Scene loginScene = new Scene(loginParent);
+            loginScene.getStylesheets().addAll(this.getClass().getResource("/login.css").toExternalForm());
+            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(loginScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in MainSceneController");
+        }
+    }
 }
