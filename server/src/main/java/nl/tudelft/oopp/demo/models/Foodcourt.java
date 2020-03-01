@@ -7,19 +7,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Foodcourt
+ * Foodcourt.
  */
 @Entity
 @Table(name = "foodcourt")
 public class Foodcourt {
-	/**
-	 * The menu of items available at the foodcourt.
-	 */
-	@Id
-	@Column(name = "id")
-	public long id;
+    /**
+     * The menu of items available at the foodcourt.
+     */
+    @Id
+    @Column(name = "id")
+    public long id;
 
-	@ElementCollection
-	@Column(name = "menu")
-	public Iterable<MenuItem> Menu;
+    @ElementCollection
+    @Column(name = "menu")
+    public Iterable<MenuItem> menu;
 }

@@ -6,15 +6,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * FoodItem
+ * FoodItem.
  */
 @Entity
 @Table(name = "MenuItem")
 public class MenuItem { // Do we want to store this as an entity?
-	@Id
-	@Column(name = "id")
-	public long id;
+    @Id
+    @Column(name = "id")
+    public long id;
 
-	@Column(name = "name")
-	public String Name;
+    @Column(name = "name")
+    public String name;
 }

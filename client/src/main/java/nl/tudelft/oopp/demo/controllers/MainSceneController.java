@@ -48,13 +48,16 @@ public class MainSceneController {
 
     /**
      * Handles switching from one scene to another.
+     * 
      * @param event the scene from where the function was called.
      */
     public void goToReservations(ActionEvent event) {
         try {
-            Parent reservationsParent = FXMLLoader.load(getClass().getResource("/reservations.fxml"));
+            Parent reservationsParent =
+                    FXMLLoader.load(getClass().getResource("/reservations.fxml"));
             Scene reservationsScene = new Scene(reservationsParent);
-            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            Stage primaryStage =
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
             primaryStage.setScene(reservationsScene);

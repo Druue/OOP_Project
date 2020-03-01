@@ -14,12 +14,14 @@ public class HttpRequestHandler {
 
     /**
      * Sends a POST request with some given parameters.
-     * @param url the URL to send the POST request to.
-     * @param path the path on the server where the request should be sent.
+     * 
+     * @param url        the URL to send the POST request to.
+     * @param path       the path on the server where the request should be sent.
      * @param parameters a map containing all parameters in the request, mapped as 'name,value'.
      * @return An HttpResponse object.
      */
-    public static HttpResponse<String> post(String url, String path, Map<String,String> parameters) {
+    public static HttpResponse<String> post(String url, String path,
+            Map<String, String> parameters) {
 
         // Encode all parameters
         StringBuilder encParams = new StringBuilder();
@@ -33,11 +35,9 @@ public class HttpRequestHandler {
         }
 
         // Build HTTP request
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url + "/" + path))
-                .setHeader("Content-Type","application/x-www-form-urlencoded")
-                .POST(HttpRequest.BodyPublishers.ofString(encParams.toString()))
-                .build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url + "/" + path))
+                .setHeader("Content-Type", "application/x-www-form-urlencoded")
+                .POST(HttpRequest.BodyPublishers.ofString(encParams.toString())).build();
 
         HttpResponse<String> response = null;
         try {
@@ -51,17 +51,15 @@ public class HttpRequestHandler {
 
     /**
      * Sends a GET request.
-     * @param url the URL to send the GET request to.
+     * 
+     * @param url  the URL to send the GET request to.
      * @param path the path on the server where the request should be sent.
      * @return An HttpResponse object.
      */
     public static HttpResponse<String> get(String url, String path) {
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url + "/" + path))
-                .setHeader("Content-Type","application/x-www-form-urlencoded")
-                .GET()
-                .build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url + "/" + path))
+                .setHeader("Content-Type", "application/x-www-form-urlencoded").GET().build();
 
         HttpResponse<String> response = null;
         try {
