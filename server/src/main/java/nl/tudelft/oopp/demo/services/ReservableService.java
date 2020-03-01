@@ -1,5 +1,5 @@
 package nl.tudelft.oopp.demo.services;
-import nl.tudelft.oopp.demo.entities.Quote;
+import nl.tudelft.oopp.demo.entities.Reservable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public class ReservableService {
