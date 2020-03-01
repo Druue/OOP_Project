@@ -9,8 +9,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "Building")
-public class Building {
+@Table(name = "Users")
+public class Users {
 
     @Column(name = "id")
     private long id;
