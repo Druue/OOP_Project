@@ -10,22 +10,27 @@ package nl.tudelft.oopp.demo.models;
 
 public class LoginDetails {
 
-    private String NetID;
+    private String netID;
     private String password;
 
 
-    public LoginDetails(String NetID , String password) {
+    /**
+     * An object containing a user's login information. Only used during the login process.
+     * @param netID the user's NetID.
+     * @param password the user's password.
+     */
+    public LoginDetails(String netID, String password) {
 
-        this.NetID = NetID;
+        this.netID = netID;
         this.password = password;
     }
 
     public String getNetID() {
-        return NetID;
+        return netID;
     }
 
     public void setNetID(String netID) {
-        NetID = netID;
+        netID = netID;
     }
 
     public String getPassword() {

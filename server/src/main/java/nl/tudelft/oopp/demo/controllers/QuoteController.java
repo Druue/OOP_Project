@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import nl.tudelft.oopp.demo.entities.Quote;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -32,7 +34,7 @@ public class QuoteController {
                 "Bill Gates"
         );
 
-        Quote q3= new Quote(
+        Quote q3 = new Quote(
                 3,
                 "Tell me and I forget.  Teach me and I remember.  Involve me and I learn.",
                 "Benjamin Franklin"
@@ -52,14 +54,21 @@ public class QuoteController {
         return "Pong";
     }
 
-
-
-    @PostMapping(value = "relay")
-    @ResponseBody
-    public String relay(@RequestParam(required = false) String input) {
-
-        return "Your input: " + input;
+    /**
+     * A function that relays it's request back, adding a status indicator.
+     * @param requestbody the request to relay back.
+     * @return the request and a status indicator.
+     */
+    @PostMapping(value = "relay", consumes = "application/json", produces = "application/json")
+    public @ResponseBody String relay(@RequestBody String requestbody) {
+        try {
+            // Copy the JSON request.
+            JSONObject response = new JSONObject(requestbody);
+            // Add a status parameter.
+            response.put("status", "OK");
+            return response.toString();
+        } catch (JSONException e) {
+            return "{ \"status\": \"ERROR\"}";
+        }
     }
-
-
 }

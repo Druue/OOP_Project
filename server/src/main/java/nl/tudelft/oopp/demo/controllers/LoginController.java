@@ -38,7 +38,7 @@ public class LoginController {
      */
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ServerResponse> validateAuthentication(@RequestBody LoginDetails providedDetails,
-                                                                 HttpSession newUserSession) {
+                                                                HttpSession newUserSession) {
 
         try {
             String role = service.userValidate(providedDetails);
@@ -53,8 +53,8 @@ public class LoginController {
             return ResponseEntity.ok().body(a);
         } catch (AuthenticationException e) {
             LoggerService.info(LoginController.class,"Authentication failed for user with NetID: "
-                                                     + providedDetails.getNetID() + " and password " + providedDetails.getPassword()
-                                                     + " : No such user registered.");
+                   + providedDetails.getNetID() + " and password " + providedDetails.getPassword()
+                                                    + " : No such user registered.");
 
             // Send a response containing an error message.
             ServerResponse a = new ServerResponse("Invalid user/password combination.", "ERROR");
