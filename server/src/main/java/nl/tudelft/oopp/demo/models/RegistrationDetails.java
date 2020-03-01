@@ -9,16 +9,14 @@ public class RegistrationDetails {
     private String netID;
     private String email;
     private int password;
-    private String role;
 
 
-    public RegistrationDetails(String firstName, String lastName, String netID, String email, int password, String role) {
+    public RegistrationDetails(String firstName, String lastName, String netID, String email, int password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.netID = netID;
         this.email = email;
         this.password = password;
-        this.role = role;
     }
 
     public String getFirstName() {
@@ -61,11 +59,4 @@ public class RegistrationDetails {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

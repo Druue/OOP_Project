@@ -3,6 +3,8 @@ package nl.tudelft.oopp.demo.controllers;
 
 import nl.tudelft.oopp.demo.models.RegistrationDetails;
 import nl.tudelft.oopp.demo.services.LoggerService;
+import nl.tudelft.oopp.demo.services.RegistrationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +16,12 @@ import java.util.logging.Logger;
 
 @RestController
 public class RegistrationController {
+
+    private final RegistrationService service;
+
+    public RegistrationController(RegistrationService service) {
+        this.service = service;
+    }
 
     /* This method is the entry point for the registration procedure. It accepts as input
        the provided by the user registration details encapsulated in a RegistrationDetails
@@ -29,12 +37,7 @@ public class RegistrationController {
         LoggerService.info(RegistrationController.class , "Received registration details");
 
         try {
-            /*
-               Use a method to search the database for the NetID. If found,
-               the method will throw InstanceAlreadyExistsException() for catching.
-               If not, use another method to insert the new user.
-            * */
-
+            service.registerUser(registrationDetails);
         }
 
         catch (Exception /* InstanceAlreadyExistsException */ e) {
