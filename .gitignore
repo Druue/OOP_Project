@@ -149,6 +149,7 @@ build
 
 
 ### VisualStudioCode ###
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -158,3 +159,4 @@ build
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+.vscode/settings.json
