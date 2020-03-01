@@ -27,7 +27,7 @@ public class LoginSceneController {
 
 
     /**
-     * Handles the Test POST Request.
+     * Sends a login request to the backend, using the information stored in the text fields.
      */
     public void tryLogin() throws JSONException {
 

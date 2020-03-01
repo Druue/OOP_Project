@@ -1,9 +1,10 @@
 package nl.tudelft.oopp.demo.services;
 
+import javax.management.InstanceAlreadyExistsException;
 import nl.tudelft.oopp.demo.models.RegistrationDetails;
 import org.springframework.stereotype.Service;
 
-import javax.management.InstanceAlreadyExistsException;
+
 
 @Service
 public class RegistrationService {

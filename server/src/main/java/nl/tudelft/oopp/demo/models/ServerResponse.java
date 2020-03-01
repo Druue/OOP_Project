@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.models;
 public class ServerResponse {
     String message;
     String alertType;
+
     /**
      * A Response object sent after a login attempt by a user.
      * @param message the message that should be sent back.

@@ -10,7 +10,14 @@ public class RegistrationDetails {
     private String password;
     private String role;
 
-
+    /**
+     * An Object used during the registration process, containing all of the user's details.
+     * @param name The user's name.
+     * @param netID The user's netID.
+     * @param email the user's email.
+     * @param password the user's password.
+     * @param role the user's role: Either employee or student.
+     */
     public RegistrationDetails(String name, String netID, String email, String password, String role) {
         this.name = name;
         this.netID = netID;
