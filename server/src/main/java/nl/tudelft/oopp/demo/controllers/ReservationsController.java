@@ -30,7 +30,7 @@ public class ReservationsController {
      * information about every one of them.
      */
     @GetMapping("/")
-    public ResponseEntity<String> requestUserReservations(HttpServletRequest request, HttpSession session) {
+    public ResponseEntity requestUserReservations(HttpSession session) {
 
         // Get the user's session and get the NetID attribute stored in it
         // to query the database for the user's reservations.
@@ -38,15 +38,15 @@ public class ReservationsController {
         // and sends
 
         try {
-            if (session.isNew()) {
-                throw new IllegalAccessException();
-            }
+            if (session.isNew()) throw new IllegalAccessException();
 
             String userNetID = (String) session.getAttribute("NetID");
             LoggerService.info(ReservationsController.class,"Client with NetID: " + userNetID
                                                             + " requested his current reservations.");
             return ResponseEntity.ok().build();
-        } catch (IllegalAccessException e) {
+        }
+
+        catch (IllegalAccessException e) {
             session.invalidate();
             LoggerService.error(ReservationsController.class,"Unauthorized attempt to view reservations -"
                                                              + " no existing session found for the client.");

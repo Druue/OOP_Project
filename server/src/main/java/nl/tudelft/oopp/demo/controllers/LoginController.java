@@ -4,7 +4,7 @@ import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpSession;
 
 import nl.tudelft.oopp.demo.models.LoginDetails;
-import nl.tudelft.oopp.demo.models.LoginResponse;
+import nl.tudelft.oopp.demo.models.ServerResponse;
 import nl.tudelft.oopp.demo.services.LoggerService;
 import nl.tudelft.oopp.demo.services.LoginService;
 
@@ -37,7 +37,7 @@ public class LoginController {
      *              Otherwise returns Bad Request response.
      */
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<LoginResponse> validateAuthentication(@RequestBody LoginDetails providedDetails,
+    public ResponseEntity<ServerResponse> validateAuthentication(@RequestBody LoginDetails providedDetails,
                                                                 HttpSession newUserSession) {
 
         try {
@@ -49,7 +49,7 @@ public class LoginController {
             newUserSession.setAttribute("Role", role);
 
             // Send a response containing a success message, and the user's role.
-            LoginResponse a = new LoginResponse("Successful login!", "CONFIRMATION", role);
+            ServerResponse a = new ServerResponse("Successful login!", "CONFIRMATION");
             return ResponseEntity.ok().body(a);
         } catch (AuthenticationException e) {
             LoggerService.info(LoginController.class,"Authentication failed for user with NetID: "
@@ -57,7 +57,7 @@ public class LoginController {
                                                     + " : No such user registered.");
 
             // Send a response containing an error message.
-            LoginResponse a = new LoginResponse("Invalid user/password combination.", "ERROR", null);
+            ServerResponse a = new ServerResponse("Invalid user/password combination.", "ERROR");
             return ResponseEntity.badRequest().body(a);
         }
     }
