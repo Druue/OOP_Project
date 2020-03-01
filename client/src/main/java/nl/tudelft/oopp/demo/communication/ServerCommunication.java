@@ -57,4 +57,9 @@ public class ServerCommunication {
         HttpResponse<String> response = HttpRequestHandler.post(host, "login", parameters);
         return new JSONObject(response.body());
     }
+
+    public static JSONObject register(JSONObject parameters) throws JSONException {
+        HttpResponse<String> response = HttpRequestHandler.post(host, "register", parameters);
+        return new JSONObject(response.body());
+    }
 }
