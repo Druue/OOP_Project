@@ -27,10 +27,10 @@ public class LoginService {
         String password = providedDetails.getPassword();
 
         /*
-        * Here goes the code that checks whether a user
-        * exists in the database with the provided NetID , password and role.
-        * If it does not, the method should throw new AuthenticationException()
-        * */
+         * Here goes the code that checks whether a user
+         * exists in the database with the provided NetID , password and role.
+         * If it does not, the method should throw new AuthenticationException()
+         * */
 
         // Return the user's email to be processed by the controller
 
