@@ -1,0 +1,28 @@
+.root{
+    tuDelftBlue: #00A6D6
+}
+
+#registrationWrapper {
+    -fx-background-color: white;
+}
+
+#registrationContainer, #registrationWrapper, #registrationBackground, #registrationLogoWrapper{
+    -fx-alignment: center;
+}
+
+
+#registrationBackground {
+    -fx-background-image: url("/images/LoginBackground.jpeg");
+}
+
+#logo {
+    -fx-background-image: url("/images/Logo.png");
+}
+
+.registrationButton {
+    -fx-background-color: tuDelftBlue;
+    -fx-text-fill: white;
+}
+
+
+

@@ -7,7 +7,7 @@
 
 <?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
+      xmlns:fx="http://javafreservationsx.com/fxml"
       fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
 
     <!-- Button that calls the buttonPing() function in MainSceneController.java -->
@@ -20,6 +20,8 @@
     <!-- Button that sends the text within 'userInput'-->
     <Button text="Send information" onAction="#testPostRequest"/>
     <Button text="Go to reservations" onAction="#goToReservations"/>
+
+    <Button text="Go to the login page" onAction="#goToLogin"/>
 </VBox>
 
 
