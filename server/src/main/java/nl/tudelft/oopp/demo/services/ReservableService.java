@@ -20,7 +20,7 @@ public class ReservableService {
     }
 
     public void addTopic(Reservable reservable) {
-        return reservableRepository.save(topic);
+        return reservableRepository.save(reservable);
     }
 
     public void updateTopic(String id, Reservable reservable) {

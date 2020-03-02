@@ -30,9 +30,6 @@ public class Users {
     @Column(name = "imageID")
     private long imageID;
 
-    public Building() {
-
-    }
 
     /**
      * Create a new Building instance.
@@ -44,7 +41,11 @@ public class Users {
      * @param the amount of available time slots in the building
      * @param the image id that will be shown of the building
      */
-    public Building(long id, String name, long dateTime, boolean hasFoodCourt, double availableTimeSlots, long imageID){
+
+    public Users() {
+
+    }
+    public Users(long id, String name, long dateTime, boolean hasFoodCourt, double availableTimeSlots, long imageID){
         this.id = id;
         this.name = name;
         this.dateTime = dateTime;
