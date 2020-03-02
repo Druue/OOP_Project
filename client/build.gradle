@@ -7,7 +7,9 @@ mainClassName = "nl.tudelft.oopp.demo.MainApp"
 dependencies {
     testCompile("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+    compile 'org.json:json:20171018'
 }
+
 
 javafx {
     version = "13"
