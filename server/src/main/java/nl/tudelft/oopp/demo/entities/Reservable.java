@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "Reservable")
@@ -32,7 +33,7 @@ public class Reservable {
      * @param the availability of the item.
      * @param this identifies which building the reservable item is in.
      */
-    public Resrvable(String name, long id, boolean isAvailable, long buildingID) {
+    public Reservable(String name, long id, boolean isAvailable, long buildingID) {
         this.name = name;
         this.id = id;
         this.isAvailable = isAvailable;
