@@ -1,11 +1,10 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Reservable")
 public class Reservable {
 
@@ -33,7 +32,6 @@ public class Reservable {
      * @param this identifies which building the reservable item is in.
      */
     public Reservable(String name, long id, boolean isAvailable, long buildingID) {
-        super();
         this.name = name;
         this.id = id;
         this.isAvailable = isAvailable;
