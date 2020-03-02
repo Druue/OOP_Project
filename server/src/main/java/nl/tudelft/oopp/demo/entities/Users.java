@@ -30,9 +30,6 @@ public class Users {
     @Column(name = "imageID")
     private long imageID;
 
-    public Building() {
-
-    }
 
     /**
      * Create a new Building instance.

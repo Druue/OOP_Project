@@ -1,12 +1,10 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Reservable")
 public class Reservable {
 
