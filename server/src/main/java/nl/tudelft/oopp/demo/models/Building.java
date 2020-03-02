@@ -1,12 +1,17 @@
 package nl.tudelft.oopp.demo.models;
 
-import java.time.Period;
+import java.util.Collection;
 import java.util.Map;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -15,6 +20,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "building")
 public class Building {
+
+    /**
+     * Initialises a new instance of {@link Building}.
+     */
+    public Building() {
+    }
+
 
     /**
      * The building's campus number.
@@ -33,22 +45,24 @@ public class Building {
      * The hours during which the building is open during the week.
      */
     @Column(name = "openinghours")
-    public Period openingHours;
+    public TimeSlot openingHours;
 
     /**
      * OPTIONAL: The foodcourt within the building.
      */
-    @Column(name = "foodcourt")
+    @OneToOne
+    @JoinColumn(name = "number", referencedColumnName = "building_number")
     public Foodcourt foodCourt;
 
     /**
      * A map of available reservation slots for each reservable entity at/in the building.
      */
-    @OneToMany
-    @Column(name = "availablereservations")
-    Map<Reservable, Iterable<Period>> availableReservations;
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL, orphanRemoval = true)
+    @CollectionTable(name = "available_reserverations")
+    @MapKeyColumn(name = "reservable")
+    Map<Reservable, Collection<TimeSlot>> availableReservations;
 
     @ElementCollection
     @Column(name = "availablereservables")
-    Iterable<Reservable> reservables;
+    Collection<Reservable> reservables;
 }

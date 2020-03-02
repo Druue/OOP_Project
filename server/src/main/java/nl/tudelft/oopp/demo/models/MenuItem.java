@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * FoodItem.
  */
 @Entity
-@Table(name = "MenuItem")
+@Table(name = "menu_item")
 public class MenuItem { // Do we want to store this as an entity?
     @Id
     @Column(name = "id")

@@ -11,6 +11,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "reservable")
 abstract class Reservable {
+
+    /**
+     * Initialises a new instance of {@link Reservable}.
+     */
+    public Reservable() {
+    }
+
     /**
      * The reservable's unique Id.
      */

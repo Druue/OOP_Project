@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.models;
 
+import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -12,14 +13,21 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "foodcourt")
 public class Foodcourt {
+
+    /**
+     * Initialises a new instance of {@link Foodcourt}.
+     */
+    public Foodcourt() {
+    }
+
     /**
      * The menu of items available at the foodcourt.
      */
     @Id
-    @Column(name = "id")
-    public long id;
+    @Column(name = "building_number")
+    public int buildingNumber;
 
     @ElementCollection
     @Column(name = "menu")
-    public Iterable<MenuItem> menu;
+    public Collection<MenuItem> menu;
 }
