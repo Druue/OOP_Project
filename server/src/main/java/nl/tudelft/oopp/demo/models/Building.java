@@ -27,7 +27,6 @@ public class Building {
     public Building() {
     }
 
-
     /**
      * The building's campus number.
      */
@@ -54,13 +53,15 @@ public class Building {
     @JoinColumn(name = "number", referencedColumnName = "building_number")
     public Foodcourt foodCourt;
 
-    /**
-     * A map of available reservation slots for each reservable entity at/in the building.
-     */
-    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL, orphanRemoval = true)
-    @CollectionTable(name = "available_reserverations")
-    @MapKeyColumn(name = "reservable")
-    Map<Reservable, Collection<TimeSlot>> availableReservations;
+    // /**
+    // * A map of available reservation slots for each reservable entity at/in the
+    // building.
+    // */
+    // @OneToMany(mappedBy = "building", cascade = CascadeType.ALL, orphanRemoval =
+    // true)
+    // @CollectionTable(name = "available_reserverations")
+    // @MapKeyColumn(name = "reservable")
+    // Map<Reservable, TimeSlots> availableReservations;
 
     @ElementCollection
     @Column(name = "availablereservables")

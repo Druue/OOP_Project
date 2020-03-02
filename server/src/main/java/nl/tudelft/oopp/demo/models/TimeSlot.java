@@ -11,20 +11,20 @@ import javax.persistence.Id;
  */
 public class TimeSlot {
 
-	/**
-	 * Initialises a new instance of {@link TimeSlot}.
-	 */
-	public TimeSlot() {
-	}
+    /**
+     * Initialises a new instance of {@link TimeSlot}.
+     */
+    public TimeSlot() {
+    }
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    long id;
 
-	@Column(name = "start")
-	Timestamp startTime;
+    @Column(name = "start")
+    Timestamp startTime;
 
-	@Column(name = "end")
-	Timestamp endTime;
+    @Column(name = "end")
+    Timestamp endTime;
 }
