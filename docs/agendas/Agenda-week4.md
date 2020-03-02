@@ -18,9 +18,7 @@ Present:
 - Nikolay
 - Ayhem
 - Mylene
-<!--
 - Justin
--->
 # Approval of the agenda
 
 Changelist:
