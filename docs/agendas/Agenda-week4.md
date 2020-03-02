@@ -11,13 +11,14 @@ Note taker:
 
 # Opening
 Present: 
-<!--
+
 - Sophie
 - Thomas
 - Dimitar
 - Nikolay
 - Ayhem
 - Mylene
+<!--
 - Justin
 -->
 # Approval of the agenda
@@ -47,8 +48,10 @@ Changelist:
 # Question round
 *If there are any questions, now is the time to ask them.*
 
-- Q:
+- Q: Can we ask for more detailed help regarding technical issues?
 - A:
+- Q: 
+- A: 
 
 
 # Closing
