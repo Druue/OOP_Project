@@ -9,10 +9,12 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.ManyToAny;
 
 /**
  * Building.
@@ -43,14 +45,15 @@ public class Building {
     /**
      * The hours during which the building is open during the week.
      */
-    @Column(name = "openinghours")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "openinghours", referencedColumnName = "id")
     public TimeSlot openingHours;
 
     /**
      * OPTIONAL: The foodcourt within the building.
      */
     @OneToOne
-    @JoinColumn(name = "number", referencedColumnName = "building_number")
+    @JoinColumn(name = "foodcourt", referencedColumnName = "building_number")
     public Foodcourt foodCourt;
 
     // /**
