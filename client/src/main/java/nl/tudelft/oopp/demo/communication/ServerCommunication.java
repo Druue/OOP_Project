@@ -4,8 +4,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ServerCommunication {
 
@@ -15,11 +15,10 @@ public class ServerCommunication {
     /**
      * Retrieves a quote from the server.
      * @return the body of a get request to the server.
-     * @throws Exception if communication with the server fails.
      */
     public static String getQuote() {
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/quote")).build();
-        HttpResponse<String> response = null;
+        HttpResponse<String> response;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
@@ -38,17 +37,29 @@ public class ServerCommunication {
      */
     public static String ping() {
         // Send GET request to host at path /ping
-        HttpResponse<String> response = HTTPRequestHandler.get(host,"ping");
+        HttpResponse<String> response = HttpRequestHandler.get(host,"ping");
         return response.body();
     }
 
-    public static String relay(String input) {
-
-        // Put parameters into Map.
-        Map<String, String> paramMap = new HashMap<String,String>();
-        paramMap.put("input",input);
+    /** Sends the server a simple POST request.
+     * @param input the input parameter to be relayed back.
+     * @return "Your input: " plus the body of the POST request.
+     */
+    public static JSONObject relay(String input) throws JSONException {
+        JSONObject parameters = new JSONObject();
+        parameters.put("input",input);
         // Send POST request to host at path /relay
-        HttpResponse<String> response = HTTPRequestHandler.post(host, "relay", paramMap);
-        return response.body();
+        HttpResponse<String> response = HttpRequestHandler.post(host, "relay", parameters);
+        return new JSONObject(response.body());
+    }
+
+    public static JSONObject login(JSONObject parameters) throws JSONException {
+        HttpResponse<String> response = HttpRequestHandler.post(host, "login", parameters);
+        return new JSONObject(response.body());
+    }
+
+    public static JSONObject register(JSONObject parameters) throws JSONException {
+        HttpResponse<String> response = HttpRequestHandler.post(host, "register", parameters);
+        return new JSONObject(response.body());
     }
 }
