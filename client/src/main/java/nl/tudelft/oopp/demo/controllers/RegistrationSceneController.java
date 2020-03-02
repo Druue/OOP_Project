@@ -16,7 +16,7 @@ import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegistrationController {
+public class RegistrationSceneController {
     @FXML
     public TextField registrationNameInput;
     public TextField registrationNetIdInput;

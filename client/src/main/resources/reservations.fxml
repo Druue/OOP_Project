@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="nl.tudelft.oopp.demo.controllers.ReservationsController">
-    <Label text="This is the reservations panel"/>
-    <Label text="Hellloooooooooo"/>
-    <Button text="Don't click me!" onAction="#buttonClicked"/>
-    <Button text="Go to homepage" onAction="#goToHomepage"/>
-</VBox>
+<?import com.sun.javafx.scene.control.ContextMenuContent.MenuBox?>
+<FlowPane fx:id="mainPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.ReservationsSceneController">
+     <children>
+         <ChoiceBox fx:id="datesList">
 
-
+         </ChoiceBox>
+         <Button onAction="#goToHomepage" text="Go to homepage" />
+         <ScrollPane  prefHeight="200.0" prefWidth="200.0">
+            <VBox fx:id="buildingsList" >
+<!--The buildings here are filled in by the controller-->
+            </VBox>
+         </ScrollPane>
+     </children>
+</FlowPane>
