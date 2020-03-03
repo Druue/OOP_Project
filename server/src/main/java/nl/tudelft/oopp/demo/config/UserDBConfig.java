@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("application.properties")
 @EnableTransactionManagement
 public class UserDBConfig {
-
     @Autowired
     private Environment environment;
 
