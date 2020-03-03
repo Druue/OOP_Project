@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafreservationsx.com/fxml"
-      fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
+      fx:controller="nl.tudelft.oopp.client.controllers.MainSceneController">
 
     <!-- Button that calls the buttonPing() function in MainSceneController.java -->
     <Button text="Send a ping" onAction="#buttonPing"/>
