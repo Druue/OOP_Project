@@ -25,7 +25,7 @@ public class Foodcourt {
      */
     @Id
     @Column(name = "building_number")
-    public int buildingNumber;
+    public Integer buildingNumber;
 
     @ElementCollection
     @Column(name = "menu")

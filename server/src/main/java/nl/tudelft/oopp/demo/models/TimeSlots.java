@@ -25,7 +25,7 @@ public class TimeSlots {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "timeslots_id", insertable = false, updatable = false)
-    private long id;
+    private Long id;
 
     @ElementCollection
     @Column(name = "timeslots_view")

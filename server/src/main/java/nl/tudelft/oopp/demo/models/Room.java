@@ -17,7 +17,7 @@ public class Room extends Reservable {
     @Column(name = "employeeonly")
     public boolean employeeOnly;
 
-    public Room(long id, String name, boolean isAvailable, boolean employeeOnly) {
+    public Room(Long id, String name, boolean isAvailable, boolean employeeOnly) {
         super(id, name, isAvailable);
         this.employeeOnly = employeeOnly;
     }

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class MenuItem { // Do we want to store this as an entity?
     @Id
     @Column(name = "id")
-    public long id;
+    public Long id;
 
     @Column(name = "name")
     public String name;

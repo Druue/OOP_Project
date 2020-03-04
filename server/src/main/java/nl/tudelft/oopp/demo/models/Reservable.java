@@ -23,7 +23,7 @@ abstract class Reservable {
      */
     @Id
     @Column(name = "reservable_id")
-    public long id;
+    public Long id;
 
     /**
      * The name of the building. EXAMPLE: "Ewi"
@@ -37,7 +37,7 @@ abstract class Reservable {
     @Column(name = "isavailable")
     public boolean isAvailable;
 
-    public Reservable(long id, String name, boolean isAvailable) {
+    public Reservable(Long id, String name, boolean isAvailable) {
         this.id = id;
         this.name = name;
         this.isAvailable = isAvailable;

@@ -30,7 +30,7 @@ public class Building {
      */
     @Id
     @Column(name = "number")
-    public int number;
+    public Integer number;
 
     /**
      * The name of the building.
