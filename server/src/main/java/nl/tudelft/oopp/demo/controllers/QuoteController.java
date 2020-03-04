@@ -47,6 +47,7 @@ public class QuoteController {
 
     /**
      * A function that relays it's request back, adding a status indicator.
+     * 
      * @param requestbody the request to relay back.
      * @return the request and a status indicator.
      */

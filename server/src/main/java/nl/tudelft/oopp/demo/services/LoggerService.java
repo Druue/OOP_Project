@@ -1,19 +1,18 @@
 package nl.tudelft.oopp.demo.services;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LoggerService {
 
-    public static void info(Class source, String message) {
+    public static <T> void info(Class<T> source, String message) {
         LoggerFactory.getLogger(source).info(message);
     }
 
-    public static void warn(Class source, String message) {
+    public static <T> void warn(Class<T> source, String message) {
         LoggerFactory.getLogger(source).warn(message);
     }
 
-    public static void error(Class source, String message) {
+    public static <T> void error(Class<T> source, String message) {
         LoggerFactory.getLogger(source).error(message);
     }
 }

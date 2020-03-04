@@ -16,7 +16,8 @@ public class LoginDetails {
 
     /**
      * An object containing a user's login information. Only used during the login process.
-     * @param netID the user's NetID.
+     * 
+     * @param netID    the user's NetID.
      * @param password the user's password.
      */
     public LoginDetails(String netID, String password) {
@@ -30,7 +31,7 @@ public class LoginDetails {
     }
 
     public void setNetID(String netID) {
-        netID = netID;
+        this.netID = netID;
     }
 
     public String getPassword() {

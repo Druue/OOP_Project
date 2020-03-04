@@ -61,11 +61,11 @@ public class MainSceneController {
 
 
 
-
     }
 
     /**
      * Handles going to the reservation page.
+     * 
      * @param event the scene from where the function was called.
      */
     public void goToReservations(ActionEvent event) {
@@ -87,6 +87,7 @@ public class MainSceneController {
 
     /**
      * Handles going to the login page.
+     * 
      * @param event the scene from where the function was called.
      */
     public void goToLogin(ActionEvent event) {
@@ -94,8 +95,10 @@ public class MainSceneController {
             Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
             Scene loginScene = new Scene(loginParent);
 
-            loginScene.getStylesheets().addAll(this.getClass().getResource("/login.css").toExternalForm());
-            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            loginScene.getStylesheets()
+                    .addAll(this.getClass().getResource("/login.css").toExternalForm());
+            Stage primaryStage =
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
             primaryStage.setScene(loginScene);
