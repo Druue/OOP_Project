@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 public class ServerCommunicationTest {
 
-    @Test
+    /*@Test
     public void testPing() {
         assertNotNull(HttpRequestHandler.get("ping", String.class));
-    }
+    }*/
 }
