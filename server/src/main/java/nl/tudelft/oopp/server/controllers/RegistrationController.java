@@ -1,6 +1,8 @@
 package nl.tudelft.oopp.server.controllers;
 
-import nl.tudelft.oopp.api.models.RegistrationDetails;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import nl.tudelft.oopp.api.models.RegistrationRequest;
 import nl.tudelft.oopp.api.models.ServerResponse;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.RegistrationService;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RegistrationController {
-
+    public static final Gson gson = new Gson();
     final RegistrationService registrationService;
 
     public RegistrationController(RegistrationService registrationService) {
@@ -27,11 +29,12 @@ public class RegistrationController {
        and sends a response that informs the user he has been successfully registered.
     * */
     @PostMapping("/register")
-    public ResponseEntity<ServerResponse> registerUser(@RequestBody RegistrationDetails registrationDetails) {
+    public ResponseEntity<ServerResponse> registerUser(@RequestBody JsonObject jsonRequest) {
         LoggerService.info(RegistrationController.class, "Received registration details");
 
+        RegistrationRequest registrationRequest = gson.fromJson(jsonRequest, RegistrationRequest.class);
         try {
-            registrationService.registerUser(registrationDetails);
+            registrationService.registerUser(registrationRequest);
         } catch (Exception /* InstanceAlreadyExistsException */ e) {
             LoggerService.error(RegistrationController.class, "Invalid details provided. User with that "
                                                                + "NetID already exists in the database.");

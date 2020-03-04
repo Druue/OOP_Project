@@ -2,7 +2,7 @@ package nl.tudelft.oopp.api.models;
 
 
 // This class represents the user information provided at registration time
-public class RegistrationDetails {
+public class RegistrationRequest {
 
     private String name;
     private String netID;
@@ -18,7 +18,7 @@ public class RegistrationDetails {
      * @param password the user's password.
      * @param role the user's role: Either employee or student.
      */
-    public RegistrationDetails(String name, String netID, String email, String password, String role) {
+    public RegistrationRequest(String name, String netID, String email, String password, String role) {
         this.name = name;
         this.netID = netID;
         this.email = email;

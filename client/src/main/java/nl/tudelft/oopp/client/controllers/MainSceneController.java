@@ -1,8 +1,6 @@
 package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
-
-import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.client.communication.ServerCommunication;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.Building;
+import nl.tudelft.oopp.api.models.BuildingResponse;
 
 public class MainSceneController {
 
@@ -26,42 +26,8 @@ public class MainSceneController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("A response");
         alert.setHeaderText(null);
-        alert.setContentText(ServerCommunication.ping());
+        alert.setContentText(HttpRequestHandler.get("ping", String.class));
         alert.showAndWait();
-    }
-
-
-    /**
-     * Handles the Test POST Request.
-     */
-    public void testPostRequest() {
-
-        // Get the text from the TextField
-        String userInputText = userInput.getText();
-
-
-        // Call the relay() function in Servercommunication.java with the user's input
-        try {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("A response");
-            alert.setHeaderText(null);
-            if (userInputText.isEmpty()) {
-                alert.setContentText("Please provide some input.");
-            } else {
-                JsonObject json = ServerCommunication.relay(userInputText);
-                alert.setContentText(json.toString());
-            }
-            alert.showAndWait();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error!");
-            alert.setHeaderText(null);
-            alert.setContentText("A server error has occurred.");
-        }
-
-
-
-
     }
 
     /**
@@ -102,5 +68,31 @@ public class MainSceneController {
         } catch (IOException e) {
             System.out.println("IOException in MainSceneController");
         }
+    }
+
+    /**
+     * An example alert function, to showcase the use of the new API.
+     */
+    public void getBuildings() {
+
+        // Make a standard alert
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("A response");
+        alert.setHeaderText(null);
+
+        // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
+        BuildingResponse buildingResponse = HttpRequestHandler.get("getbuildings", BuildingResponse.class);
+
+        // Add all of the building names into a string
+        StringBuilder s = new StringBuilder("Building names: ");
+        if (buildingResponse != null) {
+            for (Building b: buildingResponse.getBuildingList()) {
+                s.append(b.getName()).append(", ");
+            }
+        }
+
+        // Show the alert with all the building names
+        alert.setContentText(s.toString());
+        alert.showAndWait();
     }
 }

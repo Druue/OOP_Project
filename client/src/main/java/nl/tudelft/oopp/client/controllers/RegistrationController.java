@@ -1,8 +1,7 @@
 package nl.tudelft.oopp.client.controllers;
 
-import java.io.IOException;
-
 import com.google.gson.JsonObject;
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,7 +12,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.client.communication.ServerCommunication;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.ServerResponse;
 
 public class RegistrationController {
     @FXML
@@ -70,23 +70,26 @@ public class RegistrationController {
             parameters.addProperty("email",email);
 
             // Send a register request to the server.
-            JsonObject response = ServerCommunication.register(parameters);
+            ServerResponse response = HttpRequestHandler.post("register", parameters, ServerResponse.class);
 
             // Create an alert, and show it to the user.
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.setTitle("Response");
             alert.setHeaderText(null);
-            alert.setContentText(response.get("message").getAsString());
-
-            if (response.get("alertType").getAsString().equals("CONFIRMATION")) {
-                alert.setAlertType(Alert.AlertType.CONFIRMATION);
-                alert.showAndWait();
-                //TODO: Add logic to go to new scene
-                //For now, goes back to the homepage.
-                goToHomepage();
+            if (response != null) {
+                if (response.getAlertType().equals("CONFIRMATION")) {
+                    alert.setAlertType(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText(response.getMessage());
+                    alert.showAndWait();
+                    //For now, goes back to the homepage.
+                    goToHomepage();
+                } else {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.showAndWait();
+                }
             } else {
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.showAndWait();
+                alert.setContentText("Invalid response from server.");
             }
         }
     }

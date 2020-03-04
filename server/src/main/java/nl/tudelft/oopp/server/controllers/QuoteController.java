@@ -1,9 +1,8 @@
 package nl.tudelft.oopp.server.controllers;
 
+import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Random;
-
-import com.google.gson.JsonObject;
 import nl.tudelft.oopp.server.entities.Quote;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

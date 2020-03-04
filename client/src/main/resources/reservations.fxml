@@ -9,7 +9,6 @@
       fx:controller="nl.tudelft.oopp.client.controllers.ReservationsController">
     <Label text="This is the reservations panel"/>
     <Label text="Hellloooooooooo"/>
-    <Button text="Don't click me!" onAction="#buttonClicked"/>
     <Button text="Go to homepage" onAction="#goToHomepage"/>
 </VBox>
 

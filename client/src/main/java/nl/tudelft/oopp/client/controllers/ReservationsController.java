@@ -7,23 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.client.communication.ServerCommunication;
 
 
 public class ReservationsController {
 
-    /**
-     * Handles clicking the button.
-     */
-    public void buttonClicked() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Quote for you");
-        alert.setHeaderText(null);
-        alert.setContentText(ServerCommunication.getQuote());
-        alert.showAndWait();
-    }
 
     /**
      * Handles going back to the Homepage.

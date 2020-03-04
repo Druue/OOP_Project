@@ -2,7 +2,7 @@ package nl.tudelft.oopp.server.services;
 
 import javax.naming.AuthenticationException;
 
-import nl.tudelft.oopp.api.models.LoginDetails;
+import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.server.repositories.QuoteRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class LoginService {
      * @return the role of the authenticated user.
      * @throws AuthenticationException thrown if the login credentials are invalid.
      */
-    public String userValidate(LoginDetails providedDetails) throws AuthenticationException {
+    public String userValidate(LoginRequest providedDetails) throws AuthenticationException {
         String netID = providedDetails.getNetID();
         String password = providedDetails.getPassword();
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservationsController {
 
     // Connection with the methods for querying the database for the reservations
-    private ReservationService service;
+    private final ReservationService service;
 
     public ReservationsController(ReservationService service) {
         this.service = service;

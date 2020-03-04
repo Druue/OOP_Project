@@ -1,10 +1,6 @@
 package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,10 +10,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-//import nl.tudelft.oopp.demo.apimodels.nl.tudelft.oopp.api.models.LoginDetails;
-import nl.tudelft.oopp.api.models.LoginDetails;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.ServerResponse;
-import nl.tudelft.oopp.client.communication.ServerCommunication;
 
 
 public class LoginSceneController {
@@ -43,49 +38,27 @@ public class LoginSceneController {
             alert.setContentText("Please provide a NetID and password.");
             alert.showAndWait();
         } else {
-            LoginDetails loginDetails = new LoginDetails(netID, password);
-            System.out.println(loginDetails.getNetID());
-            //nl.tudelft.oopp.api.models.LoginDetails loginDetails = new nl.tudelft.oopp.api.models.LoginDetails(netID,password);
-            JsonObject parameters = new JsonObject();
-            parameters.addProperty("NetID", netID);
-            parameters.addProperty("Password", password);
-            Gson gson = new Gson();
+            LoginRequest loginRequest = new LoginRequest(netID, password);
+            ServerResponse response = HttpRequestHandler.post("login", loginRequest, ServerResponse.class);
 
-            String response = gson.toJson(ServerCommunication.loginJson(loginDetails));
-            System.out.println("Login Scene Response: " + response);
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.setTitle("Response");
             alert.setHeaderText(null);
-            alert.setContentText(response);
-
-            if (response.equals("CONFIRMATION")) {
-                alert.setAlertType(Alert.AlertType.CONFIRMATION);
-                alert.showAndWait();
-                //TODO: Add logic to go to new scene
-                //For now, goes back to the homepage.
-                goToHomepage();
+            if (response != null) {
+                if (response.getAlertType().equals("CONFIRMATION")) {
+                    alert.setAlertType(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText(response.getMessage());
+                    alert.showAndWait();
+                    //For now, goes back to the homepage.
+                    goToHomepage();
+                } else {
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.showAndWait();
+                }
             } else {
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.showAndWait();
+                alert.setContentText("Invalid response from server.");
             }
-        }
-    }
-
-    /**
-     * Handles going back to the Homepage.
-     * @param event the event from where the function was called.
-     */
-    public void goToHomepage(ActionEvent event) {
-        try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
-        } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
         }
     }
 
