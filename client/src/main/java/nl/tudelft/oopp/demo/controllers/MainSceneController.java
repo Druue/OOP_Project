@@ -10,7 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainSceneController {
 
@@ -38,16 +39,32 @@ public class MainSceneController {
         // Get the text from the TextField
         String userInputText = userInput.getText();
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("A response");
-        alert.setHeaderText(null);
+
         // Call the relay() function in Servercommunication.java with the user's input
-        alert.setContentText(ServerCommunication.relay(userInputText));
-        alert.showAndWait();
+        try {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("A response");
+            alert.setHeaderText(null);
+            if (userInputText.isEmpty()) {
+                alert.setContentText("Please provide some input.");
+            } else {
+                JSONObject json = ServerCommunication.relay(userInputText);
+                alert.setContentText(json.toString());
+            }
+            alert.showAndWait();
+        } catch (JSONException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error!");
+            alert.setHeaderText(null);
+            alert.setContentText("A server error has occurred.");
+        }
+
+
+
     }
 
     /**
-     * Handles switching from one scene to another.
+     * Handles going to the reservation page.
      * 
      * @param event the scene from where the function was called.
      */
@@ -61,6 +78,30 @@ public class MainSceneController {
 
             primaryStage.hide();
             primaryStage.setScene(reservationsScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in MainSceneController");
+        }
+    }
+
+    /**
+     * Handles going to the login page.
+     * 
+     * @param event the scene from where the function was called.
+     */
+    public void goToLogin(ActionEvent event) {
+        try {
+            Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
+            Scene loginScene = new Scene(loginParent);
+
+            loginScene.getStylesheets()
+                    .addAll(this.getClass().getResource("/login.css").toExternalForm());
+            Stage primaryStage =
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(loginScene);
             primaryStage.show();
 
         } catch (IOException e) {
