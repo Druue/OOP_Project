@@ -10,6 +10,6 @@ public class ServerCommunicationTest {
 
     @Test
     public void testRandomQuote() {
-        assertNotNull(HttpRequestHandler.get("quote", String.class));
+        assertNotNull(HttpRequestHandler.get("ping", String.class));
     }
 }
