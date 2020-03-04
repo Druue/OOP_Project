@@ -8,12 +8,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 
 public class MainSceneController {
+
+    
 
     // the TextField object from mainScene.fxml
     @FXML
