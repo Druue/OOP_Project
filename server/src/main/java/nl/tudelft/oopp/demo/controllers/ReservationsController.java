@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import nl.tudelft.oopp.demo.services.LoggerService;
 import nl.tudelft.oopp.demo.services.ReservationService;
@@ -16,21 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservationsController {
 
     // Connection with the methods for querying the database for the reservations
-    private ReservationService service;
+    // private ReservationService service;
 
     public ReservationsController(ReservationService service) {
-        this.service = service;
+        // this.service = service;
     }
 
 
     /**
-     * This method calls the ReservationService getReservations( NetID ) method
-     * with the provided by the cookie value NetID to find all the current reservations
-     * of a particular user. The result is then sent as a list of reservation objects with
-     * information about every one of them.
+     * This method calls the ReservationService getReservations( NetID ) method with the provided by
+     * the cookie value NetID to find all the current reservations of a particular user. The result
+     * is then sent as a list of reservation objects with information about every one of them.
      */
     @GetMapping("/")
-    public ResponseEntity requestUserReservations(HttpSession session) {
+    public <T> ResponseEntity<T> requestUserReservations(HttpSession session) {
 
         // Get the user's session and get the NetID attribute stored in it
         // to query the database for the user's reservations.
@@ -43,13 +41,14 @@ public class ReservationsController {
             }
 
             String userNetID = (String) session.getAttribute("NetID");
-            LoggerService.info(ReservationsController.class,"Client with NetID: " + userNetID
-                                                            + " requested his current reservations.");
+            LoggerService.info(ReservationsController.class,
+                    "Client with NetID: " + userNetID + " requested his current reservations.");
             return ResponseEntity.ok().build();
         } catch (IllegalAccessException e) {
             session.invalidate();
-            LoggerService.error(ReservationsController.class,"Unauthorized attempt to view reservations -"
-                                                             + " no existing session found for the client.");
+            LoggerService.error(ReservationsController.class,
+                    "Unauthorized attempt to view reservations -"
+                            + " no existing session found for the client.");
             return ResponseEntity.badRequest().build();
         }
 
