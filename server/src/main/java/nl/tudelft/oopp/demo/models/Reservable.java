@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Reservable.
+ * Initialises a new {@link Reservable}.
  */
 @Entity
 @Table(name = "reservable")
@@ -22,7 +22,7 @@ abstract class Reservable {
      * The reservable's unique Id.
      */
     @Id
-    @Column(name = "id")
+    @Column(name = "reservable_id")
     public long id;
 
     /**

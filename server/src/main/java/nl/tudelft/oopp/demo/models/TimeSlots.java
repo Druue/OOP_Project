@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.models;
 
-import java.sql.Timestamp;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -25,7 +24,7 @@ public class TimeSlots {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", insertable = false, updatable = false)
+    @Column(name = "timeslots_id", insertable = false, updatable = false)
     private long id;
 
     @ElementCollection
