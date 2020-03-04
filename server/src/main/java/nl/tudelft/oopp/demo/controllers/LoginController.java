@@ -2,7 +2,6 @@ package nl.tudelft.oopp.demo.controllers;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpSession;
-
 import nl.tudelft.oopp.demo.models.LoginDetails;
 import nl.tudelft.oopp.demo.models.ServerResponse;
 import nl.tudelft.oopp.demo.services.LoggerService;

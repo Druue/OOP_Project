@@ -15,12 +15,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "timeslots")
-public class TimeSlots {
+public class AvailableTimeSlots {
 
     /**
      * Initialises a new {@link TimeSlots}.
      */
-    public TimeSlots() {
+    public AvailableTimeSlots() {
     }
 
     @Id
