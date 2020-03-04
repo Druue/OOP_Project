@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class ReservationsController {
+public class ReservationsSceneController {
 
 
     /**

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.ServerResponse;
 
-public class RegistrationController {
+public class RegistrationSceneController {
     @FXML
     public TextField registrationNameInput;
     public TextField registrationNetIdInput;
