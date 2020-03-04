@@ -1,6 +1,8 @@
-package nl.tudelft.oopp.demo.models;
+package nl.tudelft.oopp.demo.services;
 
 
+import nl.tudelft.oopp.demo.models.Reservable;
+import nl.tudelft.oopp.demo.repositories.ReservableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;

@@ -1,5 +1,7 @@
-package nl.tudelft.oopp.demo.models;
+package nl.tudelft.oopp.demo.services;
 
+import nl.tudelft.oopp.demo.models.TimeSlots;
+import nl.tudelft.oopp.demo.repositories.TimeSlotsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

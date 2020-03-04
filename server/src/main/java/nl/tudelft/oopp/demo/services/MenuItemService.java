@@ -1,5 +1,7 @@
-package nl.tudelft.oopp.demo.models;
+package nl.tudelft.oopp.demo.services;
 
+import nl.tudelft.oopp.demo.models.MenuItem;
+import nl.tudelft.oopp.demo.repositories.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

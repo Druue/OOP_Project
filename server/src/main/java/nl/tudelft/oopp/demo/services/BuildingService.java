@@ -1,5 +1,7 @@
-package nl.tudelft.oopp.demo.models;
+package nl.tudelft.oopp.demo.services;
 
+import nl.tudelft.oopp.demo.models.Building;
+import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.Optional;
 public class BuildingService {
 
     @Autowired
-    private BuidlingRepository buidlingRepository;
+    private BuildingRepository buidlingRepository;
 
     /**
      * @return a list of all buildings

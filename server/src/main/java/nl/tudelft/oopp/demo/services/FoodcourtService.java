@@ -1,5 +1,7 @@
-package nl.tudelft.oopp.demo.models;
+package nl.tudelft.oopp.demo.services;
 
+import nl.tudelft.oopp.demo.models.Foodcourt;
+import nl.tudelft.oopp.demo.repositories.FoodcourtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,7 @@ import java.util.Optional;
 public class FoodcourtService {
 
     @Autowired
-    private FoodCourtRepository foodCourtRepository;
+    private FoodcourtRepository foodCourtRepository;
 
     /**
      *

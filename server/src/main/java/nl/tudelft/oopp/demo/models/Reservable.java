@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "reservable")
-abstract class Reservable {
+public abstract class Reservable {
 
     /**
      * Initialises a new instance of {@link Reservable}.
