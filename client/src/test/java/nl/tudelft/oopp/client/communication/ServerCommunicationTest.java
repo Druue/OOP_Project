@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class ServerCommunicationTest {
 
     @Test
-    public void testRandomQuote() {
+    public void testPing() {
         assertNotNull(HttpRequestHandler.get("ping", String.class));
     }
 }
