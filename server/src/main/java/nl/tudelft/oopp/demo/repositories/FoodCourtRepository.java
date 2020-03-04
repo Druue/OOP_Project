@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface FoodCourtRepository extends JpaRepository<Foodcourt, Integer>{
+public interface FoodCourtRepository extends JpaRepository<Foodcourt, Long>{
 }
