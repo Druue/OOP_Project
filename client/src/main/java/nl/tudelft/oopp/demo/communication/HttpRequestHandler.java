@@ -1,12 +1,11 @@
 package nl.tudelft.oopp.demo.communication;
 
 import java.net.URI;
-import java.net.URLEncoder;
+
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
+import org.json.JSONObject;
 
 public class HttpRequestHandler {
 
@@ -20,33 +19,20 @@ public class HttpRequestHandler {
      * @param parameters a map containing all parameters in the request, mapped as 'name,value'.
      * @return An HttpResponse object.
      */
-    public static HttpResponse<String> post(String url, String path,
-            Map<String, String> parameters) {
-
-        // Encode all parameters
-        StringBuilder encParams = new StringBuilder();
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
-            if (encParams.length() > 0) {
-                encParams.append("&");
-            }
-            encParams.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8));
-            encParams.append("=");
-            encParams.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8));
-        }
-
+    public static HttpResponse<String> post(String url, String path, JSONObject parameters) {
         // Build HTTP request
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url + "/" + path))
-                .setHeader("Content-Type", "application/x-www-form-urlencoded")
-                .POST(HttpRequest.BodyPublishers.ofString(encParams.toString())).build();
-
-        HttpResponse<String> response = null;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/" + path))
+                .setHeader("Content-Type","application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(parameters.toString()))
+                .build();
         try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception ignored) {
             // Do nothing.
         }
 
-        return response;
+        return null;
     }
 
     /**
@@ -57,17 +43,18 @@ public class HttpRequestHandler {
      * @return An HttpResponse object.
      */
     public static HttpResponse<String> get(String url, String path) {
-
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url + "/" + path))
-                .setHeader("Content-Type", "application/x-www-form-urlencoded").GET().build();
-
-        HttpResponse<String> response = null;
+        // Build HTTP request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/" + path))
+                .setHeader("Content-Type","application/json")
+                .GET()
+                .build();
         try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception ignored) {
             // Do nothing.
         }
 
-        return response;
+        return null;
     }
 }
