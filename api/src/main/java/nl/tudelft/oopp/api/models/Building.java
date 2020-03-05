@@ -5,6 +5,7 @@ public class Building {
     String name;
     int buildingInt;
     int capacity;
+    TimeSlot openingHours;
 
     /**
      * An example model, to showcase the usage of the API. This will be deleted in the final product.
@@ -12,10 +13,11 @@ public class Building {
      * @param buildingInt the building number.
      * @param capacity The building capacity.
      */
-    public Building(String name, int buildingInt, int capacity) {
+    public Building(String name, int buildingInt, int capacity, TimeSlot openingHours) {
         this.name = name;
         this.buildingInt = buildingInt;
         this.capacity = capacity;
+        this.openingHours = openingHours;
     }
 
     public String getName() {
@@ -40,5 +42,9 @@ public class Building {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public TimeSlot getOpeningHours() {
+        return openingHours;
     }
 }

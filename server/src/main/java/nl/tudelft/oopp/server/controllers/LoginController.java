@@ -2,13 +2,13 @@ package nl.tudelft.oopp.server.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.AuthenticationException;
-import nl.tudelft.oopp.api.models.Building;
-import nl.tudelft.oopp.api.models.BuildingResponse;
-import nl.tudelft.oopp.api.models.LoginRequest;
-import nl.tudelft.oopp.api.models.ServerResponse;
+
+import nl.tudelft.oopp.api.models.*;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.LoginService;
 
@@ -71,10 +71,13 @@ public class LoginController {
     @GetMapping(value = "getbuildings", consumes = "application/json", produces = "application/json")
     public ResponseEntity<BuildingResponse> getBuildings() {
 
-        // Make some example buildings, and add them to a BuildingResponse object.
-        Building b = new Building("b",1, 500);
-        Building a = new Building("a", 2, 1000);
-        Building c = new Building("c", 3, 1500);
+
+
+        // Make some example buildings, and add them to a BuildingResponse object
+        TimeSlot timeSlot = new TimeSlot(new Timestamp(120, 3, 9, 9, 0, 0, 0), new Timestamp(120, 3, 9, 22, 0, 0, 0));
+        Building b = new Building("EEMCS",34, 500, timeSlot);
+        Building a = new Building("Drebbelweg", 35, 1000, timeSlot);
+        Building c = new Building("3ME", 8, 1500, timeSlot);
         List<Building> buildingList = new ArrayList<>();
         buildingList.add(a);
         buildingList.add(b);

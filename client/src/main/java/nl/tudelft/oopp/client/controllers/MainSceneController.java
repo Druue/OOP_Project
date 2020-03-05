@@ -41,6 +41,7 @@ public class MainSceneController {
         try {
             Parent reservationsParent = FXMLLoader.load(getClass().getResource("/reservations.fxml"));
             Scene reservationsScene = new Scene(reservationsParent);
+            reservationsScene.getStylesheets().addAll(this.getClass().getResource("/reservations.css").toExternalForm());
             Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
