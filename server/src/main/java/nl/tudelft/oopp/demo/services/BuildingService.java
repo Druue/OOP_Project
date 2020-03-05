@@ -7,6 +7,9 @@ import nl.tudelft.oopp.demo.models.Building;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BuildingService {
@@ -16,13 +19,11 @@ public class BuildingService {
 
     /**
      * Gets all buildings.
-     * 
+     *
      * @return a list of all buildings
      */
-    public List<Building> getAllBuildings() {
-        List<Building> buildings = new ArrayList<Building>();
-        buidlingRepository.findAll().forEach(buildings::add);
-        return buildings;
+    public List<Building>  getAllBuildings() {
+        return buidlingRepository.findAll();
     }
 
     /**
@@ -37,7 +38,7 @@ public class BuildingService {
 
     /**
      * Adds a building.
-     * 
+     *
      * @param building to be added to the list of buildings
      */
     public void addBuilding(Building building) {
@@ -46,7 +47,7 @@ public class BuildingService {
 
     /**
      * Updates a building.
-     * 
+     *
      * @param id       new one to be updated to
      * @param building to be updated
      */
