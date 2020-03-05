@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 @RestController
 @RequestMapping("/reservations")
 public class ReservationsController {
@@ -36,7 +34,7 @@ public class ReservationsController {
         // and sends
 
         try {
-            if (session.isNew()) {
+            if (session.getAttribute("NetID") == null) {
                 throw new IllegalAccessException();
             }
 
@@ -44,7 +42,10 @@ public class ReservationsController {
             LoggerService.info(ReservationsController.class,
                     "Client with NetID: " + userNetID + " requested his current reservations.");
             return ResponseEntity.ok().build();
-        } catch (IllegalAccessException e) {
+
+        }
+
+        catch (IllegalAccessException e) {
             session.invalidate();
             LoggerService.error(ReservationsController.class,
                     "Unauthorized attempt to view reservations -"
