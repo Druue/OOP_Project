@@ -46,6 +46,11 @@ public class ReservationsSceneController implements Initializable {
     @FXML
     TextField buildingSearchField;
 
+    /**
+     * Adds GUI that can only be generated at the moment of loading the page
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         populateDatesChoiceBox();
@@ -53,6 +58,10 @@ public class ReservationsSceneController implements Initializable {
         populateBuildingsScrollBox();
     }
 
+    /**
+     * Generates dates for the next 14(@MAX_DAYS_IN_ADVANCE) days and adds them to the GUI
+     * in the dropdown menu
+     */
     private void populateDatesChoiceBox() {
         LocalDate date = LocalDate.now();
 
@@ -66,6 +75,9 @@ public class ReservationsSceneController implements Initializable {
         }
     }
 
+    /**
+     * Generates boxes for each building and adds them to the GUI
+     */
     private void populateBuildingsScrollBox() {
         BuildingResponse buildingResponse = HttpRequestHandler.get("getbuildings", BuildingResponse.class);
 
@@ -97,6 +109,12 @@ public class ReservationsSceneController implements Initializable {
         }
     }
 
+    /**
+     * Polls each second whether the buildingList was received by the BuildingResponse
+     * until success or timeout
+     * @param buildingResponse
+     * @return boolean whether a (non-null)response was received
+     */
     private boolean waitForResponse(BuildingResponse buildingResponse) {
         int i = 0;
         while(i != RESPONSE_TIMEOUT) {
@@ -115,10 +133,17 @@ public class ReservationsSceneController implements Initializable {
         return false;
     }
 
+    /**
+     * Generates a user friendly date string from a LocalDate
+     * @param date
+     * @return String shows day of month, month and day of week
+     */
     private String getDateString(LocalDate date) {
         return date.getDayOfMonth() + " " +
                 date.getMonth().name().substring(0,1) +
-                date.getMonth().name().substring(1,3).toLowerCase();
+                date.getMonth().name().substring(1,3).toLowerCase() + " - " +
+                date.getDayOfWeek().name().substring(0,1) +
+                date.getDayOfWeek().name().substring(1).toLowerCase();
     }
 
     /**

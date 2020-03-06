@@ -55,10 +55,7 @@
                               <RowConstraints />
                            </rowConstraints>
                              </GridPane>
-                             <TextField fx:id="buildingSearchField" alignment="CENTER" maxHeight="20.0" maxWidth="260.0" prefHeight="20" prefWidth="260">
-                           <effect>
-                              <DropShadow />
-                           </effect></TextField>
+                             <TextField fx:id="buildingSearchField" alignment="CENTER" maxHeight="15.0" maxWidth="260.0" prefHeight="15" prefWidth="260"/>
                              <ScrollPane id="buildingsListWrapper" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="320.0">
                                  <content>
                                      <VBox id="buildingsList" fx:id="buildingsList" alignment="CENTER" spacing="15">
