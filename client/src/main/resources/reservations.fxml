@@ -55,7 +55,7 @@
                               <RowConstraints />
                            </rowConstraints>
                              </GridPane>
-                             <TextField id="buildingSearchField" alignment="CENTER" maxHeight="20.0" maxWidth="260.0" prefHeight="20" prefWidth="260">
+                             <TextField fx:id="buildingSearchField" alignment="CENTER" maxHeight="20.0" maxWidth="260.0" prefHeight="20" prefWidth="260">
                            <effect>
                               <DropShadow />
                            </effect></TextField>
