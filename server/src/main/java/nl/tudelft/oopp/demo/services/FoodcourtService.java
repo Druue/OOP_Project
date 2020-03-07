@@ -1,13 +1,12 @@
 package nl.tudelft.oopp.demo.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import nl.tudelft.oopp.demo.models.Foodcourt;
 import nl.tudelft.oopp.demo.repositories.FoodcourtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FoodcourtService {
@@ -16,6 +15,7 @@ public class FoodcourtService {
     private FoodcourtRepository foodCourtRepository;
 
     /**
+     * Gets all foodcourts.
      *
      * @return a new list of all foodcourts
      */
@@ -26,6 +26,7 @@ public class FoodcourtService {
     }
 
     /**
+     * Gets a foodcourt.
      *
      * @param id linked to a sertain foocourt
      * @return the foodcourt with that id
@@ -35,6 +36,7 @@ public class FoodcourtService {
     }
 
     /**
+     * Adds a foodcourt.
      *
      * @param foodcourt to be added to the list of foodcourts
      */
@@ -43,8 +45,9 @@ public class FoodcourtService {
     }
 
     /**
+     * Updates a foodcourt.
      *
-     * @param id new to be assigned to a foodcourt
+     * @param id        new to be assigned to a foodcourt
      * @param foodcourt to be updated
      */
     public void updateFoodcourt(Integer id, Foodcourt foodcourt) {
@@ -52,6 +55,7 @@ public class FoodcourtService {
     }
 
     /**
+     * Deletes a foodcourt.
      *
      * @param id linked to a foodcourt to be deleted from the list
      */

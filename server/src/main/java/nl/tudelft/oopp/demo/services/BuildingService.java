@@ -1,12 +1,12 @@
 package nl.tudelft.oopp.demo.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import nl.tudelft.oopp.demo.models.Building;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BuildingService {
@@ -15,15 +15,18 @@ public class BuildingService {
     private BuildingRepository buidlingRepository;
 
     /**
+     * Gets all buildings.
+     * 
      * @return a list of all buildings
      */
-    public List<Building>  getAllBuildings() {
-        List<Building> Buildings = new ArrayList<Building>();
-        buidlingRepository.findAll().forEach(Buildings::add);
-        return Buildings;
+    public List<Building> getAllBuildings() {
+        List<Building> buildings = new ArrayList<Building>();
+        buidlingRepository.findAll().forEach(buildings::add);
+        return buildings;
     }
 
     /**
+     * Gets a building.
      *
      * @param id we search for
      * @return the building with that exact id if it exists or null if not
@@ -33,6 +36,8 @@ public class BuildingService {
     }
 
     /**
+     * Adds a building.
+     * 
      * @param building to be added to the list of buildings
      */
     public void addBuilding(Building building) {
@@ -40,7 +45,9 @@ public class BuildingService {
     }
 
     /**
-     * @param id new one to be updated to
+     * Updates a building.
+     * 
+     * @param id       new one to be updated to
      * @param building to be updated
      */
     public void updateBuilding(Integer id, Building building) {
@@ -48,6 +55,7 @@ public class BuildingService {
     }
 
     /**
+     * Deletes a building.
      *
      * @param id to be deleted from the list of buildings
      */
