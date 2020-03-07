@@ -1,20 +1,29 @@
 package nl.tudelft.oopp.demo.controllers;
-import nl.tudelft.oopp.demo.repositories.ReservableRepository;
-import nl.tudelft.oopp.demo.models.Reservable;
-import nl.tudelft.oopp.demo.services.ReservableService;
 
+import java.util.List;
+
+import nl.tudelft.oopp.demo.models.Reservable;
+import nl.tudelft.oopp.demo.repositories.ReservableRepository;
+import nl.tudelft.oopp.demo.services.ReservableService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 public class ReservableController {
 
+    /**
+     * Importing the methods from the service class.
+     */
     @Autowired
     ReservableService service;
 
+
     /**
-     * @return every single reservable in the database
+     * @return all of the reservables.
      */
     @RequestMapping("/models/Reservable")
     public List<Reservable> getAllReservables() {
@@ -23,17 +32,14 @@ public class ReservableController {
 
     /**
      * @param id
-     * @return a single reservable from the database by id
+     * @return a reservable.
      */
     @RequestMapping("models/Reservable/{id}")
-    public Reservable getReservable(@PathVariable Long id ) {
+    public Reservable getReservable(@PathVariable Long id) {
         return service.getReservable(id).get();
     }
 
-    /**
-     * @param newReservable
-     * @return the newly cerated reservable
-     */
+
     @PostMapping("models/Reservable")
     public void create(@RequestBody Reservable newReservable) {
         service.addReservable(newReservable);
@@ -41,12 +47,11 @@ public class ReservableController {
 
     /**
      * @param id
-     * @param body
-     * @return updates an existing reservable inside of the database
+     * @return updates an existing reservable inside of the database.
      */
     @PutMapping("models/Reservable/{id}")
     public void update(@RequestBody Reservable newReservable, @PathVariable Long id) {
-       service.updateReservable(id, newReservable);
+        service.updateReservable(id, newReservable);
     }
 
     /**
@@ -54,11 +59,10 @@ public class ReservableController {
      * @return the deleted reservable accoridng to the reservable id.
      */
     @DeleteMapping("/Reservable/{id}")
-    public  void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
 
         service.deleteReservable(id);
     }
-
 
 
 }

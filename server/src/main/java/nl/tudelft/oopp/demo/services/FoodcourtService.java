@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.demo.models.Foodcourt;
-import nl.tudelft.oopp.demo.repositories.FoodcourtRepository;
+import nl.tudelft.oopp.demo.repositories.FoodCourtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class FoodcourtService {
 
     @Autowired
-    private FoodcourtRepository foodCourtRepository;
+    private FoodCourtRepository foodCourtRepository;
 
     /**
      * Gets all foodcourts.
@@ -31,7 +31,7 @@ public class FoodcourtService {
      * @param id linked to a sertain foocourt
      * @return the foodcourt with that id
      */
-    public Optional<Foodcourt> getFoodcourt(Integer id) {
+    public Optional<Foodcourt> getFoodcourt(Long id) {
         return foodCourtRepository.findById(id);
     }
 
@@ -59,7 +59,7 @@ public class FoodcourtService {
      *
      * @param id linked to a foodcourt to be deleted from the list
      */
-    public void deleteFoodcourt(Integer id) {
+    public void deleteFoodcourt(Long id) {
         foodCourtRepository.deleteById(id);
     }
 
