@@ -53,7 +53,7 @@ public class ReservableService {
     /**
      * @param id that identifies a reservable to be deleted
      */
-    public void deleteTopic(Long id) {
+    public void deleteReservable(Long id) {
         reservableRepository.deleteById(id);
     }
 
