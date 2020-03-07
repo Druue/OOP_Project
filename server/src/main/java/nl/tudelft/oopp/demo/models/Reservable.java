@@ -37,6 +37,9 @@ public abstract class Reservable {
     @Column(name = "isavailable")
     public boolean isAvailable;
 
+    /**
+     * Initialises a new {@link Reservable}.
+     */
     public Reservable(Long id, String name, boolean isAvailable) {
         this.id = id;
         this.name = name;

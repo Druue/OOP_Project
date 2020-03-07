@@ -10,7 +10,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
-@Configuration
+
 @PropertySource("classpath:application-dev.properties")
 @EnableTransactionManagement
 public class H2Config {
