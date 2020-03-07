@@ -11,17 +11,18 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -46,6 +47,13 @@ public class ReservationsSceneController implements Initializable {
     @FXML
     TextField buildingSearchField;
 
+    @FXML
+    TabPane roomsListWrapper;
+
+    @FXML
+    Tab roomsListTab;
+
+
     /**
      * Adds GUI that can only be generated at the moment of loading the page
      * @param location
@@ -56,6 +64,8 @@ public class ReservationsSceneController implements Initializable {
         populateDatesChoiceBox();
 
         populateBuildingsScrollBox();
+
+        roomsListWrapper.setVisible(false);
     }
 
     /**
@@ -105,6 +115,21 @@ public class ReservationsSceneController implements Initializable {
                 buildingEntry.setEffect(dropShadow);
 
                 buildingsList.getChildren().add(buildingEntry);
+
+
+                EventHandler<MouseEvent> mouseEventEventHandler = new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        try {
+                            FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
+                            roomsListWrapper.setVisible(true);
+                            roomsListTab.setContent(flowPane);
+                        } catch (IOException e) {
+                            System.out.println("File Not Found");
+                        }
+                    }
+                };
+                buildingEntry.setOnMouseClicked(mouseEventEventHandler);
             }
         }
     }

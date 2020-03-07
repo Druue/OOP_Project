@@ -24,7 +24,7 @@
          <children>
              <ImageView fitWidth="1080" preserveRatio="true">
                  <image>
-                     <Image url="images/Rooms-background.png" />
+                     <Image url="@images/Rooms-background.png" />
                  </image>
              </ImageView>
              <FlowPane alignment="CENTER_LEFT">
@@ -55,17 +55,14 @@
                               <RowConstraints />
                            </rowConstraints>
                              </GridPane>
-                             <TextField fx:id="buildingSearchField" alignment="CENTER" maxHeight="15.0" maxWidth="260.0" prefHeight="15" prefWidth="260"/>
-                             <ScrollPane id="buildingsListWrapper" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="320.0">
+                             <TextField fx:id="buildingSearchField" alignment="CENTER" maxHeight="15.0" maxWidth="260.0" prefHeight="15" prefWidth="260" />
+                             <ScrollPane id="buildingsListWrapper" styleClass="scroll-pane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="300.0">
                                  <content>
-                                     <VBox id="buildingsList" fx:id="buildingsList" alignment="CENTER" spacing="15">
+                                     <VBox id="buildingsList" fx:id="buildingsList" alignment="CENTER">
                                      </VBox>
                                  </content>
                              </ScrollPane>
-                             <Button id="buildingsCancelButton" alignment="CENTER" onAction="#goToHomepage" prefHeight="50" prefWidth="150" text="Cancel">
-                                 <VBox.margin>
-                                     <Insets right="20" />
-                                 </VBox.margin></Button>
+                             <Button id="buildingsCancelButton" alignment="CENTER" onAction="#goToHomepage" prefHeight="50" prefWidth="150" text="Cancel"/>
                          </children>
                          <FlowPane.margin>
                              <Insets left="50.0" />
@@ -74,6 +71,12 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                      </VBox>
+                     <TabPane fx:id="roomsListWrapper">
+                         <Tab fx:id="roomsListTab">
+
+                         </Tab>
+                     </TabPane>
+
                  </children>
              </FlowPane>
          </children>
