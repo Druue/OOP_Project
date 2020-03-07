@@ -18,7 +18,7 @@ public class ReservableController {
      */
     @RequestMapping("/models/Reservable")
     public List<Reservable> getAllReservables() {
-        return service.getAll();
+        return service.getAllReservables();
     }
 
     /**
@@ -56,7 +56,7 @@ public class ReservableController {
     @DeleteMapping("/Reservable/{id}")
     public  void delete(@PathVariable Long id) {
 
-        repository.deleteReservable(id);
+        service.deleteReservable(id);
     }
 
 
