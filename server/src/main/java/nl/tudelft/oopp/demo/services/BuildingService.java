@@ -1,15 +1,11 @@
 package nl.tudelft.oopp.demo.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.demo.models.Building;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BuildingService {
@@ -22,7 +18,7 @@ public class BuildingService {
      *
      * @return a list of all buildings
      */
-    public List<Building>  getAllBuildings() {
+    public List<Building> getAllBuildings() {
         return buidlingRepository.findAll();
     }
 

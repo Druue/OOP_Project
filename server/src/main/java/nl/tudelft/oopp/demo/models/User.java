@@ -25,7 +25,7 @@ public class User {
      */
     @Id
     @Column(name = "user_id")
-    public Integer userId;
+    public String netId;
 
     /**
      * The user's name...?

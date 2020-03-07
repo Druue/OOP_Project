@@ -29,17 +29,15 @@ public class RegistrationController {
      */
     @PostMapping("/register")
     public ResponseEntity<ServerResponse> registerUser(
-            @RequestBody RegistrationDetails registrationDetails) {
+        @RequestBody RegistrationDetails registrationDetails) {
         LoggerService.info(RegistrationController.class, "Received registration details");
 
         try {
             registrationService.registerUser(registrationDetails);
-        }
-
-        catch (Exception /* InstanceAlreadyExistsException */ e) {
+        } catch (Exception /* InstanceAlreadyExistsException */ e) {
             LoggerService.error(RegistrationController.class,
-                    "Invalid details provided. User with that "
-                            + "NetID already exists in the database.");
+                "Invalid details provided. User with that "
+                    + "NetID already exists in the database.");
 
             ServerResponse r = new ServerResponse("Invalid details provided!", "ERROR");
             return ResponseEntity.badRequest().body(r);
