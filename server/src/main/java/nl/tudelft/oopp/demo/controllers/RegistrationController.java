@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import javax.management.InstanceAlreadyExistsException;
 import nl.tudelft.oopp.demo.models.RegistrationDetails;
 import nl.tudelft.oopp.demo.models.ServerResponse;
 import nl.tudelft.oopp.demo.services.LoggerService;
@@ -34,7 +35,7 @@ public class RegistrationController {
 
         try {
             registrationService.registerUser(registrationDetails);
-        } catch (Exception /* InstanceAlreadyExistsException */ e) {
+        } catch (InstanceAlreadyExistsException e) {
             LoggerService.error(RegistrationController.class,
                 "Invalid details provided. User with that "
                     + "NetID already exists in the database.");

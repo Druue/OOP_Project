@@ -7,4 +7,9 @@ public interface UserRepository extends CrudRepository<User, String> {
 
     User findByNetIdAndPassword(String userID, String password);
 
+    boolean existsByEmail(String email);
+
+    boolean existsByNetId(String netID);
+
+
 }
