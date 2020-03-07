@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,8 +52,8 @@ public class LoginSceneController {
             if (response.getString("alertType").equals("CONFIRMATION")) {
                 alert.setAlertType(Alert.AlertType.CONFIRMATION);
                 alert.showAndWait();
-                //TODO: Add logic to go to new scene
-                //For now, goes back to the homepage.
+                // TODO: Add logic to go to new scene
+                // For now, goes back to the homepage.
                 goToHomepage();
             } else {
                 alert.setAlertType(Alert.AlertType.ERROR);
@@ -65,6 +64,7 @@ public class LoginSceneController {
 
     /**
      * Handles going back to the Homepage.
+     * 
      * @param event the event from where the function was called.
      */
     public void goToHomepage(ActionEvent event) {
@@ -99,13 +99,16 @@ public class LoginSceneController {
 
     /**
      * Handles going to the registration page.
+     * 
      * @param event the event from where the function was called.
      */
     public void goToRegistration(MouseEvent event) {
         try {
-            Parent registrationParent = FXMLLoader.load(getClass().getResource("/registration.fxml"));
+            Parent registrationParent =
+                    FXMLLoader.load(getClass().getResource("/registration.fxml"));
             Scene registrationScene = new Scene(registrationParent);
-            registrationScene.getStylesheets().addAll(this.getClass().getResource("/registration.css").toExternalForm());
+            registrationScene.getStylesheets()
+                    .addAll(this.getClass().getResource("/registration.css").toExternalForm());
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();

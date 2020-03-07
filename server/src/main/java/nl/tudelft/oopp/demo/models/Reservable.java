@@ -6,11 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Reservable.
+ * Initialises a new {@link Reservable}.
  */
 @Entity
 @Table(name = "reservable")
- public abstract class Reservable {
+public abstract class Reservable {
 
     /**
      * Initialises a new instance of {@link Reservable}.
@@ -22,8 +22,8 @@ import javax.persistence.Table;
      * The reservable's unique Id.
      */
     @Id
-    @Column(name = "id")
-    public long id;
+    @Column(name = "reservable_id")
+    public Long id;
 
     /**
      * The name of the building. EXAMPLE: "Ewi"
@@ -37,7 +37,7 @@ import javax.persistence.Table;
     @Column(name = "isavailable")
     public boolean isAvailable;
 
-    public Reservable(long id, String name, boolean isAvailable) {
+    public Reservable(Long id, String name, boolean isAvailable) {
         this.id = id;
         this.name = name;
         this.isAvailable = isAvailable;

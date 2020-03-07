@@ -24,7 +24,7 @@ public class TimeSlot {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    long id;
+    Long id;
 
     @Column(name = "start")
     Timestamp startTime;
