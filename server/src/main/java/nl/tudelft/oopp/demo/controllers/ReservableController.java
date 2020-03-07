@@ -35,8 +35,8 @@ public class ReservableController {
      * @return the newly cerated reservable
      */
     @PostMapping("models/Reservable")
-    public Reservable create(@RequestBody Reservable newReservable) {
-        return service.addReservable(newReservable);
+    public void create(@RequestBody Reservable newReservable) {
+        service.addReservable(newReservable);
     }
 
     /**
@@ -45,8 +45,8 @@ public class ReservableController {
      * @return updates an existing reservable inside of the database
      */
     @PutMapping("models/Reservable/{id}")
-    public Reservable update(@RequestBody Reservable newReservable, @PathVariable Long id) {
-        service.updateReservable(id, newReservable);
+    public void update(@RequestBody Reservable newReservable, @PathVariable Long id) {
+       service.updateReservable(id, newReservable);
     }
 
     /**

@@ -1,13 +1,12 @@
 package nl.tudelft.oopp.demo.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import nl.tudelft.oopp.demo.models.TimeSlot;
 import nl.tudelft.oopp.demo.repositories.TimeSlotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TimeSlotService {
@@ -16,7 +15,8 @@ public class TimeSlotService {
     private TimeSlotRepository timeSlotRepository;
 
     /**
-     *
+     * Returns a list of all Timeslots.
+     * 
      * @return a list of all timeslots
      */
     public List<TimeSlot> getAllTimeSlots() {
@@ -26,7 +26,8 @@ public class TimeSlotService {
     }
 
     /**
-     *
+     * Gets an optional Timeslot.
+     * 
      * @param id linked to a timeSlot
      * @return a timeSlot with that id
      */
@@ -35,7 +36,8 @@ public class TimeSlotService {
     }
 
     /**
-     *
+     * Adds a Timeslot.
+     * 
      * @param timeSlot to be added to the list of timeSlots
      */
     public void addTimeSlot(TimeSlot timeSlot) {
@@ -43,8 +45,9 @@ public class TimeSlotService {
     }
 
     /**
-     *
-     * @param id linked to a timeSlot
+     * Updates a Timeslot.
+     * 
+     * @param id       linked to a timeSlot
      * @param timeSlot to be updated
      */
     public void updateTimeSlot(Long id, TimeSlot timeSlot) {
@@ -52,7 +55,8 @@ public class TimeSlotService {
     }
 
     /**
-     *
+     * Deletes a Timeslot.
+     * 
      * @param id linked to a timeslot will be deleted
      */
     public void deleteTimeSlot(Long id) {

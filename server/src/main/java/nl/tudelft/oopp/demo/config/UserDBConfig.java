@@ -25,10 +25,10 @@ public class UserDBConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(environment.getProperty("com.mysql.cj.jdbc.Driver"));
-        dataSource.setUrl(environment.getProperty("jdbc:mysql://localhost:3306/database_OOPP?createDatabaseIfNotExist=true  "));
-        dataSource.setUsername(environment.getProperty("springuser"));
-        dataSource.setPassword(environment.getProperty("krabbypatty"));
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/database_OOPP");
+        dataSource.setUsername("springuser");
+        dataSource.setPassword("krabbypatty");
 
         return dataSource;
     }
