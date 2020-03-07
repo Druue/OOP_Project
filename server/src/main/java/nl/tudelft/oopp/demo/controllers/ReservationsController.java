@@ -34,17 +34,8 @@ public class ReservationsController {
         // and sends
 
         try {
-            if (session.getAttribute("NetID") == null) {
-                throw new IllegalAccessException();
-            }
-
-            String userNetID = (String) session.getAttribute("NetID");
-            LoggerService.info(ReservationsController.class,
-                    "Client with NetID: " + userNetID + " requested his current reservations.");
-            return ResponseEntity.ok().build();
-
+            sessionValidate(session);
         }
-
         catch (IllegalAccessException e) {
             session.invalidate();
             LoggerService.error(ReservationsController.class,
@@ -53,6 +44,22 @@ public class ReservationsController {
             return ResponseEntity.badRequest().build();
         }
 
+        String userNetID = (String) session.getAttribute("NetID");
+        LoggerService.info(ReservationsController.class,
+                "Client with NetID: " + userNetID + " requested his current reservations.");
+        return ResponseEntity.ok().build();
+
+    }
+
+
+    /** This method checks if a session for the corresponding user
+     *  is already existing.
+     * @param session The session object to check
+     * @throws IllegalAccessException Throws it if the session has not existed till now
+     *                                which means the user must first log in.
+     */
+    private void sessionValidate(HttpSession session) throws IllegalAccessException {
+        if(session.getAttribute("NetID") == null) throw new IllegalAccessException();
     }
 
 }

@@ -36,6 +36,7 @@ public class Buildings_Requests_Controller {
         }
 
         List<Building> buildings = service.getAllBuildings();
+
         return ResponseEntity.ok().body(buildings);
     }
 

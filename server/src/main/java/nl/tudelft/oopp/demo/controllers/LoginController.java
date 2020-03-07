@@ -41,15 +41,9 @@ public class LoginController {
 
         try {
             String role = service.userValidate(providedDetails);
-            LoggerService.info(LoginController.class, "User successfully authenticated.");
-
             // TODO: Work with sessions
             newUserSession.setAttribute("NetID", providedDetails.getNetID());
             newUserSession.setAttribute("Role", role);
-
-            // Send a response containing a success message, and the user's role.
-            ServerResponse a = new ServerResponse("Successful login!", "CONFIRMATION");
-            return ResponseEntity.ok().body(a);
         } catch (AuthenticationException e) {
             LoggerService.info(LoginController.class,
                     "Authentication failed for user with NetID: " + providedDetails.getNetID()
@@ -60,5 +54,11 @@ public class LoginController {
             ServerResponse a = new ServerResponse("Invalid user/password combination.", "ERROR");
             return ResponseEntity.badRequest().body(a);
         }
+
+        LoggerService.info(LoginController.class, "User successfully authenticated.");
+
+        // Send a response containing a success message, and the user's role.
+        ServerResponse a = new ServerResponse("Successful login!", "CONFIRMATION");
+        return ResponseEntity.ok().body(a);
     }
 }

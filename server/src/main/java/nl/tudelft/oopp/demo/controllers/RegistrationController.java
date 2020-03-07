@@ -34,7 +34,9 @@ public class RegistrationController {
 
         try {
             registrationService.registerUser(registrationDetails);
-        } catch (Exception /* InstanceAlreadyExistsException */ e) {
+        }
+
+        catch (Exception /* InstanceAlreadyExistsException */ e) {
             LoggerService.error(RegistrationController.class,
                     "Invalid details provided. User with that "
                             + "NetID already exists in the database.");
