@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
-import nl.tudelft.oopp.api.models.ServerResponse;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
 
 public class ReservationsSceneController implements Initializable {
@@ -190,6 +190,6 @@ public class ReservationsSceneController implements Initializable {
     }
 
     public void AddTestBuilding() {
-        HttpRequestHandler.put("buildings/insert/new_building", null, ServerResponse.class);
+        HttpRequestHandler.put("buildings/insert/new_building", null, ServerResponseAlert.class);
     }
 }

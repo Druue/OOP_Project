@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.server.services;
 
 import javax.naming.AuthenticationException;
-
 import nl.tudelft.oopp.api.models.LoginRequest;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +19,8 @@ public class LoginService {
      * @throws AuthenticationException thrown if the login credentials are invalid.
      */
     public String userValidate(LoginRequest providedDetails) throws AuthenticationException {
-        String netID = providedDetails.getNetID();
-        String password = providedDetails.getPassword();
+        // String netID = providedDetails.getNetID();
+        // String password = providedDetails.getPassword();
 
         /*
          * Here goes the code that checks whether a user exists in the database with the provided

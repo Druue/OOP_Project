@@ -42,7 +42,7 @@ public class LoginController {
      * Otherwise returns Bad Request response.
      */
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ServerResponse> validateAuthentication(@RequestBody JsonObject request) {
+    public ResponseEntity<ServerResponseAlert> validateAuthentication(@RequestBody String request) {
 
         Gson gson = new Gson();
         LoginRequest loginRequest = gson.fromJson(request, LoginRequest.class);
@@ -51,7 +51,7 @@ public class LoginController {
             LoggerService.info(LoginController.class, "User successfully authenticated.");
 
             // Send a response containing a success message, and the user's role.
-            ServerResponse a = new ServerResponse("Successful login!", "CONFIRMATION");
+            ServerResponseAlert a = new ServerResponseAlert("Successful login!", "CONFIRMATION");
             return ResponseEntity.ok().body(a);
         } catch (AuthenticationException e) {
             LoggerService.info(LoginController.class, "Authentication failed for user with NetID: "
@@ -60,7 +60,7 @@ public class LoginController {
                                                       + " : No such user registered.");
 
             // Send a response containing an error message.
-            ServerResponse a = new ServerResponse("Invalid user/password combination.", "ERROR");
+            ServerResponseAlert a = new ServerResponseAlert("Invalid user/password combination.", "ERROR");
             return ResponseEntity.badRequest().body(a);
         }
     }

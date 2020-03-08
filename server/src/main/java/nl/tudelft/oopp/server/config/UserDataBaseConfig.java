@@ -13,7 +13,7 @@
 //
 //@Configuration
 //@EnableJpaRepositories
-//@PropertySource("application.properties")
+//@PropertySource("classpath:application.properties")
 //@EnableTransactionManagement
 //public class UserDataBaseConfig {
 //    @Autowired

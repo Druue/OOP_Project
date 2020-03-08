@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @PropertySource("classpath:application-dev.properties")
 @EnableTransactionManagement
-@EnableJpaRepositories
+//@EnableJpaRepositories
 public class H2Config {
 
     @Autowired

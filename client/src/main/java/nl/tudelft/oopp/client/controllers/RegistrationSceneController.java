@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.ServerResponse;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
 public class RegistrationSceneController {
     @FXML
@@ -48,7 +48,7 @@ public class RegistrationSceneController {
      * Makes a request to the backend using the information that is present in the client's text
      * fields.
      */
-    public void attemptRegistration()  {
+    public void attemptRegistration() {
 
         // Get all text from text fields
         String netID = registrationNetIdInput.getText();
@@ -69,11 +69,12 @@ public class RegistrationSceneController {
             JsonObject parameters = new JsonObject();
             parameters.addProperty("NetID", netID);
             parameters.addProperty("Password", password);
-            parameters.addProperty("name",name);
-            parameters.addProperty("email",email);
+            parameters.addProperty("name", name);
+            parameters.addProperty("email", email);
 
             // Send a register request to the server.
-            ServerResponse response = HttpRequestHandler.post("register", parameters, ServerResponse.class);
+            ServerResponseAlert response =
+                    HttpRequestHandler.post("register", parameters, ServerResponseAlert.class);
 
             // Create an alert, and show it to the user.
             Alert alert = new Alert(Alert.AlertType.NONE);
@@ -84,7 +85,7 @@ public class RegistrationSceneController {
                     alert.setAlertType(Alert.AlertType.CONFIRMATION);
                     alert.setContentText(response.getMessage());
                     alert.showAndWait();
-                    //For now, goes back to the homepage.
+                    // For now, goes back to the homepage.
                     goToHomepage();
                 } else {
                     alert.setAlertType(Alert.AlertType.ERROR);

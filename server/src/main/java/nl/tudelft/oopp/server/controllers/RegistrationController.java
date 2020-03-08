@@ -3,7 +3,7 @@ package nl.tudelft.oopp.server.controllers;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import nl.tudelft.oopp.api.models.RegistrationRequest;
-import nl.tudelft.oopp.api.models.ServerResponse;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.RegistrationService;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class RegistrationController {
      * successfully registered.
      */
     @PostMapping("/register")
-    public ResponseEntity<ServerResponse> registerUser(@RequestBody JsonObject jsonRequest) {
+    public ResponseEntity<ServerResponseAlert> registerUser(@RequestBody String jsonRequest) {
         LoggerService.info(RegistrationController.class, "Received registration details");
 
         RegistrationRequest registrationRequest = gson.fromJson(jsonRequest, RegistrationRequest.class);
@@ -41,12 +41,12 @@ public class RegistrationController {
                     "Invalid details provided. User with that "
                             + "NetID already exists in the database.");
 
-            ServerResponse r = new ServerResponse("Invalid details provided!", "ERROR");
+            ServerResponseAlert r = new ServerResponseAlert("Invalid details provided!", "ERROR");
             return ResponseEntity.badRequest().body(r);
         }
 
         LoggerService.info(RegistrationController.class, "New user successfully registered.");
-        ServerResponse r = new ServerResponse("You've registered successfully!", "CONFIRMATION");
+        ServerResponseAlert r = new ServerResponseAlert("You've registered successfully!", "CONFIRMATION");
         return ResponseEntity.ok().body(r);
     }
 

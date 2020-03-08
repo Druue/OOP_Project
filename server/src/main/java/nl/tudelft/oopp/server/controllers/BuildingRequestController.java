@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
-import nl.tudelft.oopp.api.models.ServerResponse;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.services.BuildingService;
 import nl.tudelft.oopp.server.services.LoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class BuildingRequestController {
 //            LoggerService.error(BuildingRequestController.class,
 //                    "Unauthorized attempt to view all buildings. No session found for this user.");
 //            return ResponseEntity.badRequest().build();
-//        }
+////        }
 
         Gson gson = new GsonBuilder().serializeNulls().create();
         List<Building> buildings = new ArrayList<>();
@@ -63,31 +63,31 @@ public class BuildingRequestController {
     }
 
     @PutMapping("/insert/new_building")
-    ResponseEntity<ServerResponse> addBuilding(/*TODO*/) {
+    ResponseEntity<ServerResponseAlert> addBuilding(/*TODO*/) {
         service.addBuilding(new nl.tudelft.oopp.server.models.Building("Test", null, null, null, null));
-        return ResponseEntity.ok(new ServerResponse("Building added!", "CONFIRMATION"));
+        return ResponseEntity.ok(new ServerResponseAlert("Building added!", "CONFIRMATION"));
     }
 
     @PutMapping("/insert/foodcourt")
-    ResponseEntity<ServerResponse> addBuildingFoodCourt(/*TODO*/) {
+    ResponseEntity<ServerResponseAlert> addBuildingFoodCourt(/*TODO*/) {
         // TODO
         return null;
     }
 
     @PostMapping("/changeAvailability/closeForDay")
-    public ResponseEntity<ServerResponse> closeBuildingForDay(/*TODO*/) {
+    public ResponseEntity<ServerResponseAlert> closeBuildingForDay(/*TODO*/) {
         // TODO
         return null;
     }
 
     @PostMapping("changeAvailability/openForDay")
-    public ResponseEntity<ServerResponse> openBuildingForDay(/*TODO*/) {
+    public ResponseEntity<ServerResponseAlert> openBuildingForDay(/*TODO*/) {
         // TODO
         return null;
     }
 
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ServerResponse> deleteBuilding(/*TODO*/) {
+    ResponseEntity<ServerResponseAlert> deleteBuilding(/*TODO*/) {
         // TODO
         return null;
     }

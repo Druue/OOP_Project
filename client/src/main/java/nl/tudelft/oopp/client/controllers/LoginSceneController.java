@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.LoginRequest;
-import nl.tudelft.oopp.api.models.ServerResponse;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
 
 public class LoginSceneController {
@@ -40,7 +40,8 @@ public class LoginSceneController {
             alert.showAndWait();
         } else {
             LoginRequest loginRequest = new LoginRequest(netID, password);
-            ServerResponse response = HttpRequestHandler.post("login", loginRequest, ServerResponse.class);
+            ServerResponseAlert response =
+                    HttpRequestHandler.post("login", loginRequest, ServerResponseAlert.class);
 
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.setTitle("Response");
@@ -50,7 +51,7 @@ public class LoginSceneController {
                     alert.setAlertType(Alert.AlertType.CONFIRMATION);
                     alert.setContentText(response.getMessage());
                     alert.showAndWait();
-                    //For now, goes back to the homepage.
+                    // For now, goes back to the homepage.
                     goToHomepage();
                 } else {
                     alert.setAlertType(Alert.AlertType.ERROR);
@@ -64,8 +65,6 @@ public class LoginSceneController {
     }
 
     /**
-<<<<<<< HEAD:client/src/main/java/nl/tudelft/oopp/client/controllers/LoginSceneController.java
-=======
      * Handles going back to the Homepage.
      * 
      * @param event the event from where the function was called.
