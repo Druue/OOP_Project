@@ -27,17 +27,15 @@ public class LoginController {
     /**
      * This method logs in a user to the application with provided NetID and password. It calls the
      * method userValidate() of the LoginService class to query the database for the user.
-     * 
+     *
      * @param providedDetails - The provided by the user details mapped to a LoginDetails object
      *                        through the @RequestBody annotation.
-     * @param newUserSession  - The user session, which is automatically created by the Spring
-     *                        Session module
      * @return An instance of ResponseEntity with status code 200 if the user is successfully
-     *         authenticated. Otherwise returns Bad Request response.
+     *      authenticated. Otherwise returns Bad Request response.
      */
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ServerResponse> validateAuthentication(
-            @RequestBody LoginDetails providedDetails, HttpSession newUserSession) {
+        @RequestBody LoginDetails providedDetails, HttpSession newUserSession) {
 
         try {
             String role = service.userValidate(providedDetails);
@@ -52,9 +50,9 @@ public class LoginController {
             return ResponseEntity.ok().body(a);
         } catch (AuthenticationException e) {
             LoggerService.info(LoginController.class,
-                    "Authentication failed for user with NetID: " + providedDetails.getNetID()
-                            + " and password " + providedDetails.getPassword()
-                            + " : No such user registered.");
+                "Authentication failed for user with NetID: " + providedDetails.getNetID()
+                    + " and password " + providedDetails.getPassword()
+                    + " : No such user registered.");
 
             // Send a response containing an error message.
             ServerResponse a = new ServerResponse("Invalid user/password combination.", "ERROR");
