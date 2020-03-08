@@ -1,17 +1,18 @@
 package nl.tudelft.oopp.demo.models;
 
 public class ServerResponse {
-    String message;
-    String alertType;
+    private String message;
+    private String role;
 
     /**
      * A Response object sent after a login attempt by a user.
+     *
      * @param message the message that should be sent back.
-     * @param alertType the type of alert that should be used.
+     * @param role    the role of the user to be sent
      */
-    public ServerResponse(String message, String alertType) {
+    public ServerResponse(String message, String role) {
         this.message = message;
-        this.alertType = alertType;
+        this.role = role;
     }
 
     public String getMessage() {
@@ -22,12 +23,12 @@ public class ServerResponse {
         this.message = message;
     }
 
-    public String getAlertType() {
-        return alertType;
+
+    public String getRole() {
+        return role;
     }
 
-    public void setAlertType(String alertType) {
-        this.alertType = alertType;
+    public void setRole(String role) {
+        this.role = role;
     }
-
 }
