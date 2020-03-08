@@ -1,11 +1,16 @@
 package nl.tudelft.oopp.api.models;
 
+import java.util.Collection;
+import java.util.Map;
+
 public class Building {
 
     String name;
     int buildingInt;
     int capacity;
     TimeSlot openingHours;
+//    Collection<Reservable> reservables;
+//    Map<Reservable, TimeSlot> availableReservations;
 
     /**
      * An example model, to showcase the usage of the API. This will be deleted in the final product.
