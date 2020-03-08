@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import javax.naming.AuthenticationException;
+import javax.servlet.http.HttpSession;
 import nl.tudelft.oopp.demo.models.LoginDetails;
 import nl.tudelft.oopp.demo.models.ServerResponse;
 import nl.tudelft.oopp.demo.services.LoggerService;
@@ -30,29 +31,32 @@ public class LoginController {
      * @param providedDetails - The provided by the user details mapped to a LoginDetails object
      *                        through the @RequestBody annotation.
      * @return An instance of ResponseEntity with status code 200 if the user is successfully
-     *      authenticated. Otherwise returns Bad Request response. */
+     *      authenticated. Otherwise returns Bad Request response.
+     */
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ServerResponse> validateAuthentication(
-        @RequestBody LoginDetails providedDetails) {
-
-        String role = null;
+        @RequestBody LoginDetails providedDetails, HttpSession newUserSession) {
 
         try {
-            role = service.userValidate(providedDetails);
+            String role = service.userValidate(providedDetails);
+            LoggerService.info(LoginController.class, "User successfully authenticated.");
+
+            // TODO: Work with sessions
+            newUserSession.setAttribute("NetID", providedDetails.getNetID());
+            newUserSession.setAttribute("Role", role);
+
+            // Send a response containing a success message, and the user's role.
+            ServerResponse a = new ServerResponse("Successful login!", "CONFIRMATION");
+            return ResponseEntity.ok().body(a);
         } catch (AuthenticationException e) {
             LoggerService.info(LoginController.class,
                 "Authentication failed for user with NetID: " + providedDetails.getNetID()
                     + " and password " + providedDetails.getPassword()
                     + " : No such user registered.");
+
             // Send a response containing an error message.
-            ServerResponse a = new ServerResponse("Invalid user/password combination.", null);
+            ServerResponse a = new ServerResponse("Invalid user/password combination.", "ERROR");
             return ResponseEntity.badRequest().body(a);
         }
-
-        LoggerService.info(LoginController.class, "User successfully authenticated.");
-
-        // Send a response containing a success message, and the user's role.
-        ServerResponse a = new ServerResponse("Successful login!", role);
-        return ResponseEntity.ok().body(a);
     }
 }
