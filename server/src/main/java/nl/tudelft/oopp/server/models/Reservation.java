@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -15,23 +17,23 @@ import javax.persistence.Table;
 public class Reservation {
 
     /**
-     * Initialises a new isntance of {@link Reservation}.
-     */
-    public Reservation() {
-
-    }
-
-    /**
      * The reservation's unique ID.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "reservation_id")
     public Long reservationID;
-
     /**
      * The ID of the user who made the reservation.
      */
-    @Column(name = "user_id")
-    public Integer userID;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "netId")
+    public User userID;
+
+    /**
+     * Initialises a new isntance of {@link Reservation}.
+     */
+    public Reservation() {
+
+    }
 }

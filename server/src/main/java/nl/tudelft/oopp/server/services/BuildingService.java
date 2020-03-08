@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.server.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.server.models.Building;
@@ -16,13 +15,11 @@ public class BuildingService {
 
     /**
      * Gets all buildings.
-     * 
+     *
      * @return a list of all buildings
      */
     public List<Building> getAllBuildings() {
-        List<Building> buildings = new ArrayList<Building>();
-        buidlingRepository.findAll().forEach(buildings::add);
-        return buildings;
+        return buidlingRepository.findAll();
     }
 
     /**
@@ -37,7 +34,7 @@ public class BuildingService {
 
     /**
      * Adds a building.
-     * 
+     *
      * @param building to be added to the list of buildings
      */
     public void addBuilding(Building building) {
@@ -46,7 +43,7 @@ public class BuildingService {
 
     /**
      * Updates a building.
-     * 
+     *
      * @param id       new one to be updated to
      * @param building to be updated
      */
