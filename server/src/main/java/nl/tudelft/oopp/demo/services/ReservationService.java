@@ -26,11 +26,11 @@ public class ReservationService {
 
     /**method that returns a reservation if exists with this ID or null otherwise.
      *
-     * @param ID linked to a reservation.
+     * @param id linked to a reservation.
      * @return a reservation.
      */
-    public Optional<Reservation> getReservations(Long ID) {
-        return reservationRepository.findById(ID);
+    public Optional<Reservation> getReservations(Long id) {
+        return reservationRepository.findById(id);
     }
 
     /**method adds this reservation to the tabel reservations.
@@ -43,19 +43,19 @@ public class ReservationService {
 
     /**methods that updates this reservation id to the one in the parameter.
      *
-     * @param ID linked to a reservation
+     * @param id linked to a reservation
      * @param reservation to be updated
      */
-    public void updateReservation(Long ID, Reservation reservation) {
+    public void updateReservation(Long id, Reservation reservation) {
         reservationRepository.save(reservation);
     }
 
     /**method to delete a reservation with this ID.
      *
-     * @param ID linked to a reservation
+     * @param id linked to a reservation
      */
-    public void deleteReservation(Long ID) {
-        reservationRepository.deleteById(ID);
+    public void deleteReservation(Long id) {
+        reservationRepository.deleteById(id);
     }
 
 }
