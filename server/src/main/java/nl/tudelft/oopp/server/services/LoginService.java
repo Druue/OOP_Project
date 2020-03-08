@@ -3,7 +3,6 @@ package nl.tudelft.oopp.server.services;
 import javax.naming.AuthenticationException;
 
 import nl.tudelft.oopp.api.models.LoginRequest;
-import nl.tudelft.oopp.server.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 
@@ -11,11 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginService {
 
-    final UserRepository repository;
 
-    public LoginService(UserRepository repository) {
-        this.repository = repository;
-    }
 
     /**
      * Validates whether or not a user provided valid login credentials.

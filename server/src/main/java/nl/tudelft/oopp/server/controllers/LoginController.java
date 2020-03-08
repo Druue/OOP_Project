@@ -35,10 +35,11 @@ public class LoginController {
      * This method logs in a user to the application with provided
      * NetID and password. It calls the method userValidate() of the LoginService class to
      * query the database for the user.
+     *
      * @param request - The request provided by the user details mapped to a LoginDetails object
-     *                        through the @RequestBody annotation.
+     *                through the @RequestBody annotation.
      * @return An instance of ResponseEntity with status code 200 if the user is successfully authenticated.
-     *              Otherwise returns Bad Request response.
+     * Otherwise returns Bad Request response.
      */
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ServerResponse> validateAuthentication(@RequestBody JsonObject request) {
@@ -64,27 +65,5 @@ public class LoginController {
         }
     }
 
-    /**
-     * An example mapping to showcase the use of the new, refactored API.
-     * @return A response entity, with a {@link BuildingResponse} body.
-     */
-    @GetMapping(value = "getbuildings", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<BuildingResponse> getBuildings() {
 
-
-
-        // Make some example buildings, and add them to a BuildingResponse object
-
-        TimeSlot timeSlot = new TimeSlot(new Timestamp(120, 3, 9, 9, 0, 0, 0), new Timestamp(120, 3, 9, 22, 0, 0, 0));
-        List<Building> buildingList = new ArrayList<>();
-        Building b = new Building("EEMCS",34, 500, timeSlot, null, null);
-        Building a = new Building("Drebbelweg", 35, 1000, timeSlot, null, null);
-        Building c = new Building("3ME", 8, 1500, timeSlot, null, null);
-        buildingList.add(a);
-        buildingList.add(b);
-        buildingList.add(c);
-        BuildingResponse response = new BuildingResponse(buildingList);
-
-        return ResponseEntity.ok().body(response);
-    }
 }

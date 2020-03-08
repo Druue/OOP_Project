@@ -1,15 +1,17 @@
-package nl.tudelft.oopp.demo.repositories;
-
-import nl.tudelft.oopp.demo.models.User;
-import org.springframework.data.repository.CrudRepository;
-
-public interface UserRepository extends CrudRepository<User, String> {
-
-    User findByNetIdAndPassword(String userID, String password);
-
-    boolean existsByEmail(String email);
-
-    boolean existsByNetId(String netID);
-
-
-}
+//package nl.tudelft.oopp.server.repositories;
+//
+//import nl.tudelft.oopp.server.models.User;
+//import org.springframework.data.jpa.repository.JpaRepository;
+//import org.springframework.stereotype.Repository;
+//
+//@Repository
+//public interface UserRepository extends JpaRepository<User, String> {
+//
+//    User findByNetIdAndPassword(String userID, String password);
+//
+//    boolean existsByEmail(String email);
+//
+//    boolean existsByNetId(String netID);
+//
+//
+//}

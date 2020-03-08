@@ -6,7 +6,7 @@ import java.util.Map;
 public class Building {
 
     String name;
-    int buildingInt;
+    Integer number;
     int capacity;
     TimeSlot openingHours;
     Collection<Reservable> reservables;
@@ -15,13 +15,11 @@ public class Building {
     /**
      * An example model, to showcase the usage of the API. This will be deleted in the final product.
      * @param name The building name.
-     * @param buildingInt the building number.
      * @param capacity The building capacity.
      */
-    public Building(String name, int buildingInt, int capacity, TimeSlot openingHours,
+    public Building(String name, int capacity, TimeSlot openingHours,
                     Collection<Reservable> reservables, Map<Reservable, TimeSlot> availableReservations) {
         this.name = name;
-        this.buildingInt = buildingInt;
         this.capacity = capacity;
         this.openingHours = openingHours;
         this.reservables = reservables;
@@ -36,12 +34,12 @@ public class Building {
         this.name = name;
     }
 
-    public int getBuildingInt() {
-        return buildingInt;
+    public int getNumber() {
+        return number;
     }
 
-    public void setBuildingInt(int buildingInt) {
-        this.buildingInt = buildingInt;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public int getCapacity() {

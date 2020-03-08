@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
+import nl.tudelft.oopp.api.models.ServerResponse;
 
 
 public class ReservationsSceneController implements Initializable {
@@ -89,7 +90,7 @@ public class ReservationsSceneController implements Initializable {
      * Generates boxes for each building and adds them to the GUI
      */
     private void populateBuildingsScrollBox() {
-        BuildingResponse buildingResponse = HttpRequestHandler.get("getbuildings", BuildingResponse.class);
+        BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/all", BuildingResponse.class);
 
         DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0,0,0,0.1), 2,4,2, 2);
         buildingSearchField.setEffect(dropShadow);
@@ -101,7 +102,7 @@ public class ReservationsSceneController implements Initializable {
             for (Building building : buildingList) {
                 VBox buildingEntry = new VBox();
                 buildingEntry.getStyleClass().add("buildingEntry");
-                Label buildingName = new Label(building.getBuildingInt() + "," + building.getName());
+                Label buildingName = new Label(building.getNumber() + "," + building.getName());
                 buildingName.getStyleClass().add("buildingName");
                 Label buildingOpeningTime = new Label("09:00 - 22:00 //hardcoded");
                 buildingOpeningTime.getStyleClass().add("buildingOpeningTime");
@@ -186,5 +187,9 @@ public class ReservationsSceneController implements Initializable {
         } catch (IOException e) {
             System.out.println("IOException in ReservationsController");
         }
+    }
+
+    public void AddTestBuilding() {
+        HttpRequestHandler.put("buildings/insert/new_building", null, ServerResponse.class);
     }
 }

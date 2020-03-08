@@ -17,7 +17,7 @@
    <children>
       <ToolBar prefHeight="40.0" prefWidth="1080.0" StackPane.alignment="TOP_CENTER">
           <items>
-              <Button alignment="TOP_CENTER" mnemonicParsing="false" text="Reserve" />
+              <Button alignment="TOP_CENTER" mnemonicParsing="false" text="Add Test Building" onAction="#AddTestBuilding"/>
        </items>
       </ToolBar>
       <StackPane>

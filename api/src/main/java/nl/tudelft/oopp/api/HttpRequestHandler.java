@@ -34,6 +34,28 @@ public class HttpRequestHandler {
     }
 
     /**
+     * Sends a PUT request with some given parameters.
+     * @param path the path on the server where the request should be sent.
+     * @param parameters a map containing all parameters in the request, mapped as 'name,value'.
+     * @return An HttpResponse object.
+     */
+    public static <T, E> E put(String path, T parameters, Class<E> responseType) {
+        // Build HTTP request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(host + "/" + path))
+                .setHeader("Content-Type","application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(gson.toJson(parameters)))
+                .build();
+        try {
+            return gson.fromJson(client.send(request, HttpResponse.BodyHandlers.ofString()).body(), responseType);
+        } catch (Exception ignored) {
+            // Do nothing.
+        }
+
+        return null;
+    }
+
+    /**
      * Sends a GET request.
      * @param path the path on the server where the request should be sent.
      * @return An HttpResponse object.

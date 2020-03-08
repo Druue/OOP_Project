@@ -27,7 +27,7 @@ public class Reservation {
      * The ID of the user who made the reservation.
      */
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "netId")
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
     public User userID;
 
     /**
