@@ -1,20 +1,13 @@
 package nl.tudelft.oopp.server.controllers;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import javax.naming.AuthenticationException;
-
-import nl.tudelft.oopp.api.models.*;
+import nl.tudelft.oopp.api.models.LoginRequest;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.LoginService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,7 +32,7 @@ public class LoginController {
      * @param request - The request provided by the user details mapped to a LoginDetails object
      *                through the @RequestBody annotation.
      * @return An instance of ResponseEntity with status code 200 if the user is successfully authenticated.
-     * Otherwise returns Bad Request response.
+     *              Otherwise returns Bad Request response.
      */
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ServerResponseAlert> validateAuthentication(@RequestBody String request) {

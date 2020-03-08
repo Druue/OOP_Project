@@ -1,17 +1,13 @@
 package nl.tudelft.oopp.server.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import javax.servlet.http.HttpSession;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.ArrayList;
+import java.util.List;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.services.BuildingService;
-import nl.tudelft.oopp.server.services.LoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,23 +27,23 @@ public class BuildingRequestController {
     @GetMapping("/all")
     ResponseEntity<BuildingResponse> sendAllBuildings() {
 
-//        LoggerService.info(BuildingRequestController.class,
-//                "Request for all available buildings received. Processing ...");
-//        System.out.println(session);
-//        try {
-//            if (session.getAttribute("NetID") == null) {
-//                throw new IllegalAccessException();
-//            }
-//        } catch (IllegalAccessException exception) {
-//            LoggerService.error(BuildingRequestController.class,
-//                    "Unauthorized attempt to view all buildings. No session found for this user.");
-//            return ResponseEntity.badRequest().build();
-////        }
+        //        LoggerService.info(BuildingRequestController.class,
+        //                "Request for all available buildings received. Processing ...");
+        //        System.out.println(session);
+        //        try {
+        //            if (session.getAttribute("NetID") == null) {
+        //                throw new IllegalAccessException();
+        //            }
+        //        } catch (IllegalAccessException exception) {
+        //            LoggerService.error(BuildingRequestController.class,
+        //                    "Unauthorized attempt to view all buildings. No session found for this user.");
+        //            return ResponseEntity.badRequest().build();
+        //        }
 
         Gson gson = new GsonBuilder().serializeNulls().create();
         List<Building> buildings = new ArrayList<>();
-        for (nl.tudelft.oopp.server.models.Building B: service.getAllBuildings()) {
-            Building responseBuilding = gson.fromJson(gson.toJson(B), Building.class);
+        for (nl.tudelft.oopp.server.models.Building queryBuilding: service.getAllBuildings()) {
+            Building responseBuilding = gson.fromJson(gson.toJson(queryBuilding), Building.class);
             buildings.add(responseBuilding);
         }
 

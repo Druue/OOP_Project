@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class BuildingService {
 
     @Autowired
-    private BuildingRepository buidlingRepository;
+    private BuildingRepository buildingRepository;
 
     /**
      * Gets all buildings.
@@ -19,7 +19,7 @@ public class BuildingService {
      * @return a list of all buildings
      */
     public List<Building> getAllBuildings() {
-        return buidlingRepository.findAll();
+        return buildingRepository.findAll();
     }
 
     /**
@@ -29,7 +29,7 @@ public class BuildingService {
      * @return the building with that exact id if it exists or null if not
      */
     public Optional<Building> getBuilding(Long id) {
-        return buidlingRepository.findById(id);
+        return buildingRepository.findById(id);
     }
 
     /**
@@ -38,7 +38,7 @@ public class BuildingService {
      * @param building to be added to the list of buildings
      */
     public void addBuilding(Building building) {
-        buidlingRepository.save(building);
+        buildingRepository.save(building);
     }
 
     /**
@@ -48,7 +48,7 @@ public class BuildingService {
      * @param building to be updated
      */
     public void updateBuilding(Integer id, Building building) {
-        buidlingRepository.save(building);
+        buildingRepository.save(building);
     }
 
     /**
@@ -57,6 +57,6 @@ public class BuildingService {
      * @param id to be deleted from the list of buildings
      */
     public void delete(Long id) {
-        buidlingRepository.deleteById(id);
+        buildingRepository.deleteById(id);
     }
 }

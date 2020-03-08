@@ -24,7 +24,7 @@ public class RegistrationSceneController {
 
     /**
      * Handles going to the login page.
-     * 
+     *
      * @param event the event from where the function was called.
      */
     public void goToLogin(MouseEvent event) {

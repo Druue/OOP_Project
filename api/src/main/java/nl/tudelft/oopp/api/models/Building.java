@@ -14,7 +14,8 @@ public class Building {
 
     /**
      * An example model, to showcase the usage of the API. This will be deleted in the final product.
-     * @param name The building name.
+     *
+     * @param name     The building name.
      * @param capacity The building capacity.
      */
     public Building(String name, int capacity, TimeSlot openingHours,

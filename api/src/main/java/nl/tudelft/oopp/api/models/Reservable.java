@@ -6,10 +6,10 @@ public abstract class Reservable {
     private boolean isAvailable;
 
     /**
-     * Initializes new reservable
-     * @param id Unique id of the reservable
-     * @param name Name of the connected building
-     * @param isAvailable
+     * Initializes a new reservable.
+     * @param id Unique id of the reservable.
+     * @param name Name of the connected building.
+     * @param isAvailable a boolean stating the availability of the reservable.
      */
     public Reservable(Long id, String name, boolean isAvailable) {
         this.id = id;

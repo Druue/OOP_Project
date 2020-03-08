@@ -5,11 +5,8 @@ import nl.tudelft.oopp.api.models.LoginRequest;
 import org.springframework.stereotype.Service;
 
 
-
 @Service
 public class LoginService {
-
-
 
     /**
      * Validates whether or not a user provided valid login credentials.

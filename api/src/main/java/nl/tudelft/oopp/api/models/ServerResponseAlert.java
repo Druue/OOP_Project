@@ -6,7 +6,7 @@ public class ServerResponseAlert {
 
     /**
      * A Response object sent after a login attempt by a user.
-     * 
+     *
      * @param message   the message that should be sent back.
      * @param alertType the type of alert that should be used.
      */

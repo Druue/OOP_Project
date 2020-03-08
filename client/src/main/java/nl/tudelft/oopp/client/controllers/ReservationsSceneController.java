@@ -2,14 +2,10 @@ package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,13 +14,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -32,7 +30,6 @@ import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
-
 
 public class ReservationsSceneController implements Initializable {
 
@@ -56,9 +53,15 @@ public class ReservationsSceneController implements Initializable {
 
 
     /**
-     * Adds GUI that can only be generated at the moment of loading the page
+     * Adds GUI that can only be generated at the moment of loading the page.
+     * The parameter descriptions are from the official fxml javadoc.
      * @param location
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
      * @param resources
+     * The resources used to localize the root object, or {@code null} if
+     *              the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,7 +74,7 @@ public class ReservationsSceneController implements Initializable {
 
     /**
      * Generates dates for the next 14(@MAX_DAYS_IN_ADVANCE) days and adds them to the GUI
-     * in the dropdown menu
+     * in the dropdown menu.
      */
     private void populateDatesChoiceBox() {
         LocalDate date = LocalDate.now();
@@ -87,7 +90,7 @@ public class ReservationsSceneController implements Initializable {
     }
 
     /**
-     * Generates boxes for each building and adds them to the GUI
+     * Generates boxes for each building and adds them to the GUI.
      */
     private void populateBuildingsScrollBox() {
         BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/all", BuildingResponse.class);
@@ -97,7 +100,7 @@ public class ReservationsSceneController implements Initializable {
         buildingsList.setStyle("-fx-background-color: white;");
 
         List<Building> buildingList;
-        if(waitForResponse(buildingResponse)) {
+        if (waitForResponse(buildingResponse)) {
             buildingList = buildingResponse.getBuildingList();
             for (Building building : buildingList) {
                 VBox buildingEntry = new VBox();
@@ -136,14 +139,14 @@ public class ReservationsSceneController implements Initializable {
 
     /**
      * Polls each second whether the buildingList was received by the BuildingResponse
-     * until success or timeout
-     * @param buildingResponse
+     * until success or timeout.
+     * @param buildingResponse The response object.
      * @return boolean whether a (non-null)response was received
      */
     private boolean waitForResponse(BuildingResponse buildingResponse) {
         int i = 0;
-        while(i != RESPONSE_TIMEOUT) {
-            if(buildingResponse.getBuildingList() != null) {
+        while (i != RESPONSE_TIMEOUT) {
+            if (buildingResponse.getBuildingList() != null) {
                 return true;
             }
             try {
@@ -159,16 +162,17 @@ public class ReservationsSceneController implements Initializable {
     }
 
     /**
-     * Generates a user friendly date string from a LocalDate
-     * @param date
+     * Generates a user friendly date string from a LocalDate.
+     * @param date The {@link LocalDate} that needs to be transformed.
      * @return String shows day of month, month and day of week
      */
     private String getDateString(LocalDate date) {
-        return date.getDayOfMonth() + " " +
-                date.getMonth().name().substring(0,1) +
-                date.getMonth().name().substring(1,3).toLowerCase() + " - " +
-                date.getDayOfWeek().name().substring(0,1) +
-                date.getDayOfWeek().name().substring(1).toLowerCase();
+        return date.getDayOfMonth() + " "
+               + date.getMonth().name().substring(0,1)
+               + date.getMonth().name().substring(1,3).toLowerCase()
+               + " - "
+               + date.getDayOfWeek().name().substring(0,1)
+               + date.getDayOfWeek().name().substring(1).toLowerCase();
     }
 
     /**
@@ -189,7 +193,7 @@ public class ReservationsSceneController implements Initializable {
         }
     }
 
-    public void AddTestBuilding() {
+    public void addTestBuilding() {
         HttpRequestHandler.put("buildings/insert/new_building", null, ServerResponseAlert.class);
     }
 }

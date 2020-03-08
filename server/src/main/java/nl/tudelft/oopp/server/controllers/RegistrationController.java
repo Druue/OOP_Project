@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.server.controllers;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import nl.tudelft.oopp.api.models.RegistrationRequest;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.services.LoggerService;

@@ -1,7 +1,5 @@
 package nl.tudelft.oopp.api.models;
 
-
-// This class represents the user information provided at registration time
 public class RegistrationRequest {
 
     private String name;

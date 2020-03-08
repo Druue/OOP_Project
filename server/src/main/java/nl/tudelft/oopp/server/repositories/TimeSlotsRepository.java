@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * interface to implement curd operations for a list of time slots.
+ * interface to implement crud operations for a list of time slots.
  */
 @Repository
 public interface TimeSlotsRepository extends JpaRepository<TimeSlots, Long> {

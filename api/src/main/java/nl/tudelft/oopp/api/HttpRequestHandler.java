@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.api;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -74,5 +75,10 @@ public class HttpRequestHandler {
         }
 
         return null;
+    }
+
+    public static <T, E> E convertToApiModel(T input, Class<E> outputType) {
+        Gson gson = new GsonBuilder().serializeNulls().create();
+        return gson.fromJson(gson.toJson(input), outputType);
     }
 }

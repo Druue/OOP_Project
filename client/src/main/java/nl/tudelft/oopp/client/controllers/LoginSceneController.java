@@ -15,7 +15,6 @@ import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
-
 public class LoginSceneController {
 
     // the TextField object from mainScene.fxml
@@ -66,7 +65,7 @@ public class LoginSceneController {
 
     /**
      * Handles going back to the Homepage.
-     * 
+     *
      * @param event the event from where the function was called.
      */
     public void goToHomepage(ActionEvent event) {
@@ -84,7 +83,7 @@ public class LoginSceneController {
     }
 
     /**
->>>>>>> master:client/src/main/java/nl/tudelft/oopp/demo/controllers/LoginSceneController.java
+     * >>>>>>> master:client/src/main/java/nl/tudelft/oopp/demo/controllers/LoginSceneController.java
      * Handles going the the homepage, without any event occurring.
      */
     public void goToHomepage() {
@@ -102,7 +101,7 @@ public class LoginSceneController {
 
     /**
      * Handles going to the registration page.
-     * 
+     *
      * @param event the event from where the function was called.
      */
     public void goToRegistration(MouseEvent event) {
