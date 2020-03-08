@@ -12,12 +12,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "foodcourt")
-public class Foodcourt {
+public class FoodCourt {
 
     /**
-     * Initialises a new instance of {@link Foodcourt}.
+     * Initialises a new instance of {@link FoodCourt}.
      */
-    public Foodcourt() {
+    public FoodCourt() {
     }
 
     /**

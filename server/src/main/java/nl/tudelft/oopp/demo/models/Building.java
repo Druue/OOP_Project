@@ -50,7 +50,7 @@ public class Building {
      */
     @OneToOne
     @JoinColumn(name = "foodcourt", referencedColumnName = "building_number")
-    public Foodcourt foodCourt;
+    public FoodCourt foodCourt;
 
     /**
      * A map of available reservation slots for each reservable entity at/in the building.
