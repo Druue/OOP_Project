@@ -24,13 +24,15 @@ public class RegistrationSceneController {
 
     /**
      * Handles going to the login page.
+     * 
      * @param event the event from where the function was called.
      */
     public void goToLogin(MouseEvent event) {
         try {
             Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
             Scene loginScene = new Scene(loginParent);
-            loginScene.getStylesheets().addAll(this.getClass().getResource("/login.css").toExternalForm());
+            loginScene.getStylesheets()
+                    .addAll(this.getClass().getResource("/login.css").toExternalForm());
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
 
@@ -43,7 +45,8 @@ public class RegistrationSceneController {
     }
 
     /**
-     * Makes a request to the backend using the information that is present in the client's text fields.
+     * Makes a request to the backend using the information that is present in the client's text
+     * fields.
      */
     public void attemptRegistration()  {
 

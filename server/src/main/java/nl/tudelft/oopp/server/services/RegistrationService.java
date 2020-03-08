@@ -17,7 +17,6 @@ public class RegistrationService {
      */
     public void registerUser(RegistrationRequest registrationRequest) throws InstanceAlreadyExistsException {
 
-
     }
 
 }

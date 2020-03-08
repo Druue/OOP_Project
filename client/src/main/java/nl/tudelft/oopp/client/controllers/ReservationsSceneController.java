@@ -99,8 +99,6 @@ public class ReservationsSceneController implements Initializable {
         if(waitForResponse(buildingResponse)) {
             buildingList = buildingResponse.getBuildingList();
             for (Building building : buildingList) {
-                //            VBox buildingEntry = new VBox();
-                //            buildingEntry.getStyleClass().add("buildingEntry");
                 VBox buildingEntry = new VBox();
                 buildingEntry.getStyleClass().add("buildingEntry");
                 Label buildingName = new Label(building.getBuildingInt() + "," + building.getName());
