@@ -15,8 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories
 @PropertySource("application.properties")
 @EnableTransactionManagement
-public class UserDBConfig {
-
+public class UserDataBaseConfig {
     @Autowired
     private Environment environment;
 
@@ -26,10 +25,10 @@ public class UserDBConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
-        dataSource.setUrl(environment.getProperty("jdbc.url"));
-        dataSource.setUsername(environment.getProperty("jdbc.user"));
-        dataSource.setPassword(environment.getProperty("jdbc.pass"));
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/database_OOPP");
+        dataSource.setUsername("springuser");
+        dataSource.setPassword("krabbypatty");
 
         return dataSource;
     }

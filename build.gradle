@@ -9,6 +9,7 @@ allprojects {
 
 }
 
+
 subprojects {
 
     apply plugin: 'java'
@@ -39,7 +40,7 @@ subprojects {
     }
 
     checkstyle {
-        toolVersion "8.25"
+        toolVersion "8.29"
         configFile = rootProject.file('config/checkstyle/checkstyle.xml')
 
         ignoreFailures = false
