@@ -24,8 +24,8 @@ public class User {
      * The user's netID...?
      */
     @Id
-    @Column(name = "user_id")
-    public Integer userId;
+    @Column(name = "userId")
+    public Long userId;
 
     /**
      * The user's name...?
