@@ -9,8 +9,8 @@ public class Building {
     int buildingInt;
     int capacity;
     TimeSlot openingHours;
-//    Collection<Reservable> reservables;
-//    Map<Reservable, TimeSlot> availableReservations;
+    Collection<Reservable> reservables;
+    Map<Reservable, TimeSlot> availableReservations;
 
     /**
      * An example model, to showcase the usage of the API. This will be deleted in the final product.
@@ -18,11 +18,14 @@ public class Building {
      * @param buildingInt the building number.
      * @param capacity The building capacity.
      */
-    public Building(String name, int buildingInt, int capacity, TimeSlot openingHours) {
+    public Building(String name, int buildingInt, int capacity, TimeSlot openingHours,
+                    Collection<Reservable> reservables, Map<Reservable, TimeSlot> availableReservations) {
         this.name = name;
         this.buildingInt = buildingInt;
         this.capacity = capacity;
         this.openingHours = openingHours;
+        this.reservables = reservables;
+        this.availableReservations = availableReservations;
     }
 
     public String getName() {
@@ -51,5 +54,13 @@ public class Building {
 
     public TimeSlot getOpeningHours() {
         return openingHours;
+    }
+
+    public Collection<Reservable> getReservables() {
+        return reservables;
+    }
+
+    public Map<Reservable, TimeSlot> getAvailableReservations() {
+        return availableReservations;
     }
 }

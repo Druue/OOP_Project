@@ -122,6 +122,7 @@ public class ReservationsSceneController implements Initializable {
                             FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
                             roomsListWrapper.setVisible(true);
                             roomsListTab.setContent(flowPane);
+                            RoomsListController.generateInitialRooms(event);
                         } catch (IOException e) {
                             System.out.println("File Not Found");
                         }

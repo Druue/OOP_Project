@@ -74,6 +74,7 @@ public class LoginController {
 
 
         // Make some example buildings, and add them to a BuildingResponse object
+
         TimeSlot timeSlot = new TimeSlot(new Timestamp(120, 3, 9, 9, 0, 0, 0), new Timestamp(120, 3, 9, 22, 0, 0, 0));
         Building b = new Building("EEMCS",34, 500, timeSlot);
         Building a = new Building("Drebbelweg", 35, 1000, timeSlot);

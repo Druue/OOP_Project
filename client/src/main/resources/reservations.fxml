@@ -72,9 +72,7 @@
                      </padding>
                      </VBox>
                      <TabPane fx:id="roomsListWrapper">
-                         <Tab fx:id="roomsListTab">
-
-                         </Tab>
+                         <Tab fx:id="roomsListTab"/>
                      </TabPane>
 
                  </children>

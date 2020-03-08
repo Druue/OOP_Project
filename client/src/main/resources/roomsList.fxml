@@ -10,6 +10,12 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="nl.tudelft.oopp.client.controllers.RoomsListController"
             prefHeight="400.0" prefWidth="600.0">
-    <Label text="Loaded!"/>
+    <HBox>
+        <GridPane>
+            <Label text="Start time: "/>
+            <Label text="End time: " GridPane.rowIndex="1"/>
+        </GridPane>
+        <Label text="More filters..."/>
+    </HBox>
 
 </FlowPane>
