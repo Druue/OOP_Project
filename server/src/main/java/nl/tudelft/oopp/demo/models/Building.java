@@ -2,19 +2,15 @@ package nl.tudelft.oopp.demo.models;
 
 import java.util.Collection;
 import java.util.Map;
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.ManyToAny;
 
 /**
  * Building.
@@ -34,7 +30,7 @@ public class Building {
      */
     @Id
     @Column(name = "number")
-    public int number;
+    public Integer number;
 
     /**
      * The name of the building.
@@ -45,8 +41,8 @@ public class Building {
     /**
      * The hours during which the building is open during the week.
      */
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "openinghours", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "opening_hours", referencedColumnName = "id")
     public TimeSlot openingHours;
 
     /**
@@ -54,19 +50,17 @@ public class Building {
      */
     @OneToOne
     @JoinColumn(name = "foodcourt", referencedColumnName = "building_number")
-    public Foodcourt foodCourt;
+    public FoodCourt foodCourt;
 
-    // /**
-    // * A map of available reservation slots for each reservable entity at/in the
-    // building.
-    // */
-    // @OneToMany(mappedBy = "building", cascade = CascadeType.ALL, orphanRemoval =
-    // true)
-    // @CollectionTable(name = "available_reserverations")
-    // @MapKeyColumn(name = "reservable")
-    // Map<Reservable, TimeSlots> availableReservations;
+    /**
+     * A map of available reservation slots for each reservable entity at/in the building.
+     */
+    @OneToMany
+    @ElementCollection
+    @CollectionTable(name = "available_reserverations")
+    Map<Reservable, TimeSlots> availableReservations;
 
     @ElementCollection
-    @Column(name = "availablereservables")
+    @Column(name = "available_reservables")
     Collection<Reservable> reservables;
 }

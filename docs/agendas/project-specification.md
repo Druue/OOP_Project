@@ -76,18 +76,8 @@ A timeslot can have three different statuses: Available, unavailable, and reserv
 The key difference between an unavailable and reserved timeslot is that a reserved timeslot can be made availible once the user who reserved the timeslot cancels his/her reservation. An unavailible timeslot means that that room most likely will never be availible at that time, or that a holiday is occuring.
 
 ### Bikes
-<<<<<<< HEAD
-<<<<<<< HEAD:docs/agendas/project-specification.md
 Each bike has a unique ID. The ending digits of each bike are that of their assigned building.
 A user is able to reserve a bike from a building, if that building is open and has bikes availible.
-=======
-
-A user is able to reserve a bike from a building, if that building is open and has bikes available.
->>>>>>> c81d38c711ca727340d7457b297dd63dc997fb74:docs/agendas/client-meeting.md
-=======
-Each bike has a unique ID. The ending digits of each bike are that of their assigned building.
-A user is able to reserve a bike from a building, if that building is open and has bikes availible.
->>>>>>> dev/frontend-login-requests
 Since a building will (most likely) contain multiple bikes, it is possible that two (or more) users reserve a bike from a building during the same timeslot. 
 
 Furthermore, it is assumed that a user returns his/her reserved bike to the building he/she got it from. 

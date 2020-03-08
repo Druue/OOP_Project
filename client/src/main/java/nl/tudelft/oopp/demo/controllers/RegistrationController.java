@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -25,13 +24,15 @@ public class RegistrationController {
 
     /**
      * Handles going to the login page.
+     * 
      * @param event the event from where the function was called.
      */
     public void goToLogin(MouseEvent event) {
         try {
             Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
             Scene loginScene = new Scene(loginParent);
-            loginScene.getStylesheets().addAll(this.getClass().getResource("/login.css").toExternalForm());
+            loginScene.getStylesheets()
+                    .addAll(this.getClass().getResource("/login.css").toExternalForm());
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
 
@@ -44,7 +45,8 @@ public class RegistrationController {
     }
 
     /**
-     * Makes a request to the backend using the information that is present in the client's text fields.
+     * Makes a request to the backend using the information that is present in the client's text
+     * fields.
      */
     public void attemptRegistration() throws JSONException {
 
@@ -67,8 +69,8 @@ public class RegistrationController {
             JSONObject parameters = new JSONObject();
             parameters.put("NetID", netID);
             parameters.put("Password", password);
-            parameters.put("name",name);
-            parameters.put("email",email);
+            parameters.put("name", name);
+            parameters.put("email", email);
 
             // Send a register request to the server.
             JSONObject response = ServerCommunication.register(parameters);
@@ -82,8 +84,8 @@ public class RegistrationController {
             if (response.getString("alertType").equals("CONFIRMATION")) {
                 alert.setAlertType(Alert.AlertType.CONFIRMATION);
                 alert.showAndWait();
-                //TODO: Add logic to go to new scene
-                //For now, goes back to the homepage.
+                // TODO: Add logic to go to new scene
+                // For now, goes back to the homepage.
                 goToHomepage();
             } else {
                 alert.setAlertType(Alert.AlertType.ERROR);
