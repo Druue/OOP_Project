@@ -18,7 +18,7 @@ public class User {
      * The user's netID...?
      */
     @Id
-    @Column(name = "user_id")
+    @Column(name = "netid")
     public String netId;
     /**
      * The user's username...?

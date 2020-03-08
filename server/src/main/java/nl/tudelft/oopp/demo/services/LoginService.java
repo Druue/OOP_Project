@@ -7,7 +7,6 @@ import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 
-
 @Service
 public class LoginService {
 
@@ -19,7 +18,7 @@ public class LoginService {
 
     /**
      * Validates whether or not a user provided valid login credentials.
-     * 
+     *
      * @param providedDetails the object containing the user's login credentials.
      * @return the role of the authenticated user.
      * @throws AuthenticationException thrown if the login credentials are invalid.
@@ -30,7 +29,7 @@ public class LoginService {
 
         User userToBeValidated = repository.findByNetIdAndPassword(netID, password);
 
-        if (userToBeValidated == null)  {
+        if (userToBeValidated == null) {
             throw new AuthenticationException();
         }
         String userEmail = userToBeValidated.email;

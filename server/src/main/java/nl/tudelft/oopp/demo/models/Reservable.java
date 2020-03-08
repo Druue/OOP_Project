@@ -3,6 +3,8 @@ package nl.tudelft.oopp.demo.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 /**
@@ -10,6 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "reservable")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Reservable {
 
     /**
