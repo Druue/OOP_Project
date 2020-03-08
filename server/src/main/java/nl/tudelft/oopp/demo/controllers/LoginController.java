@@ -37,13 +37,13 @@ public class LoginController {
      */
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ServerResponse> validateAuthentication(
-            @RequestBody LoginDetails providedDetails, HttpSession newUserSession) {
+            @RequestBody LoginDetails providedDetails/*, HttpSession newUserSession*/) {
 
         try {
             String role = service.userValidate(providedDetails);
             // TODO: Work with sessions
-            newUserSession.setAttribute("NetID", providedDetails.getNetID());
-            newUserSession.setAttribute("Role", role);
+           /* newUserSession.setAttribute("NetID", providedDetails.getNetID());
+            newUserSession.setAttribute("Role", role);*/
         } catch (AuthenticationException e) {
             LoggerService.info(LoginController.class,
                     "Authentication failed for user with NetID: " + providedDetails.getNetID()
