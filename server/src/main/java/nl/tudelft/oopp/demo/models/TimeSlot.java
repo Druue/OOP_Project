@@ -31,4 +31,7 @@ public class TimeSlot {
 
     @Column(name = "end")
     Timestamp endTime;
+
+    @Column(name = "availability")
+    Boolean isAvailable;
 }
