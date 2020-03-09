@@ -2,6 +2,8 @@ package nl.tudelft.oopp.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import nl.tudelft.oopp.api.models.User;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -11,6 +13,12 @@ public class HttpRequestHandler {
     private static final String host = "http://localhost:8080";
     private static final HttpClient client = HttpClient.newHttpClient();
     private static final Gson gson = new Gson();
+
+    public static User user;
+
+    public static void saveUser(User input) {
+        user = input;
+    }
 
     /**
      * Sends a POST request with some given parameters.
