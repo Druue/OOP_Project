@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
+
+import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
@@ -43,8 +45,7 @@ public class BuildingRequestController {
         Gson gson = new GsonBuilder().serializeNulls().create();
         List<Building> buildings = new ArrayList<>();
         for (nl.tudelft.oopp.server.models.Building queryBuilding: service.getAllBuildings()) {
-            Building responseBuilding = gson.fromJson(gson.toJson(queryBuilding), Building.class);
-            buildings.add(responseBuilding);
+            buildings.add(HttpRequestHandler.convertToApiModel(queryBuilding, Building.class));
         }
 
         BuildingResponse response = new BuildingResponse(buildings);
