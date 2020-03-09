@@ -2,11 +2,19 @@ package nl.tudelft.oopp.server.services;
 
 import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.api.models.LoginRequest;
+import nl.tudelft.oopp.server.controllers.LoginController;
+import nl.tudelft.oopp.server.models.User;
+import nl.tudelft.oopp.server.repositories.ReservationRepository;
+import nl.tudelft.oopp.server.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class LoginService {
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * Validates whether or not a user provided valid login credentials.
@@ -28,5 +36,9 @@ public class LoginService {
         // Return the user's email to be processed by the controller
 
         return null;
+    }
+
+    public User getUserInformation(LoginRequest providedDetails) {
+        return userRepository.findByUsername(providedDetails.getUsername());
     }
 }

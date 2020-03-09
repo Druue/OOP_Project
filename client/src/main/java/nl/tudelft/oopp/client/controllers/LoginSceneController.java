@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.api.models.UserAuthResponse;
 
 public class LoginSceneController {
 
@@ -35,12 +36,12 @@ public class LoginSceneController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText(null);
-            alert.setContentText("Please provide a NetID and password.");
+            alert.setContentText("Please provide a username and password.");
             alert.showAndWait();
         } else {
             LoginRequest loginRequest = new LoginRequest(username, password);
-            ServerResponseAlert response =
-                    HttpRequestHandler.post("login", loginRequest, ServerResponseAlert.class);
+            UserAuthResponse response =
+                    HttpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
 
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.setTitle("Response");
@@ -54,6 +55,7 @@ public class LoginSceneController {
                     goToHomepage();
                 } else {
                     alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setContentText(response.getMessage());
                     alert.showAndWait();
                 }
             } else {

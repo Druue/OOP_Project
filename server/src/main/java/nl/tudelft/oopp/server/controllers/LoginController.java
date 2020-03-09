@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.api.models.User;
+import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,25 +37,26 @@ public class LoginController {
      *              Otherwise returns Bad Request response.
      */
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ServerResponseAlert> validateAuthentication(@RequestBody String request) {
+    public ResponseEntity<UserAuthResponse> validateAuthentication(@RequestBody String request) {
 
         Gson gson = new Gson();
         LoginRequest loginRequest = gson.fromJson(request, LoginRequest.class);
         try {
-            String type = service.userValidate(loginRequest);
+            User user = gson.fromJson(gson.toJson(service.getUserInformation(loginRequest)), User.class);
             LoggerService.info(LoginController.class, "User successfully authenticated.");
+            LoggerService.info(LoginController.class, user.username + user.email);
 
             // Send a response containing a success message, and the user's type.
-            ServerResponseAlert a = new ServerResponseAlert("Successful login!", "CONFIRMATION");
+            UserAuthResponse a = new UserAuthResponse("Successful login!", "CONFIRMATION", user);
             return ResponseEntity.ok().body(a);
-        } catch (AuthenticationException e) {
+        } catch (Exception /* AuthenticationException */ e) {
             LoggerService.info(LoginController.class, "Authentication failed for user with NetID: "
-                                                      + loginRequest.getNetID() + " and password "
+                                                      + loginRequest.getUsername() + " and password "
                                                       + loginRequest.getPassword()
                                                       + " : No such user registered.");
 
             // Send a response containing an error message.
-            ServerResponseAlert a = new ServerResponseAlert("Invalid user/password combination.", "ERROR");
+            UserAuthResponse a = new UserAuthResponse("Invalid user/password combination.", "ERROR", null);
             return ResponseEntity.badRequest().body(a);
         }
     }
