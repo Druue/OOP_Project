@@ -17,10 +17,11 @@ public class User {
     }
 
     /**
-     * The user's netID...?
+     * The user's id.
      */
     @Id
     @Column(name = "userId")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long userId;
 
     /**
@@ -53,4 +54,7 @@ public class User {
     @ElementCollection
     @Column(name = "reservations")
     public Collection<Reservation> reservations;
+
+    @Column(name = "type")
+    public String type;
 }
