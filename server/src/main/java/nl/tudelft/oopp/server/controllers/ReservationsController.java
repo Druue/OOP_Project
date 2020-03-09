@@ -34,6 +34,18 @@ public class ReservationsController {
             + username + " found");
     }
 
+    /** Sends all reservations in the database to the requesting administrator.
+     * @param request The request containing the admin's info.
+     * @return A {@link ResponseEntity} object containing all the current
+     *      reservations in the database.
+     */
+    @GetMapping("/all")
+    public ResponseEntity<List<Reservation>> getAllReservations(ClientRequest<String> request) {
+        LoggerService.info(ReservationsController.class,
+            "Received request for all reservations");
+        return ResponseEntity.ok(reservationService.getAllReservations());
+    }
+
     /**
      * Endpoint for the procedure of getting user reservations.
      * Receives the username in the {@link ClientRequest} object and uses
@@ -42,7 +54,7 @@ public class ReservationsController {
      * @param request The request object containing the username to be used.
      * @return A List of Reservations object representing all the current reservations of the user.
      */
-    @GetMapping("/find")
+    @GetMapping("/findForUser")
     public ResponseEntity<List<Reservation>> getUserReservations(ClientRequest<String> request) {
         LoggerService.info(ReservationsController.class,
             "Received request for user reservations. Processing ...");

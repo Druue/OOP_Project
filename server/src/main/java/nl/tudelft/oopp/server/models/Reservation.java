@@ -34,10 +34,9 @@ public class Reservation {
     @OneToOne
     @JoinColumn(name = "reservable_id", referencedColumnName = "reservable_id")
     public Reservable reservableId;
+
     /**
      * Initialises a new isntance of {@link Reservation}.
      */
-    public Reservation() {
-
-    }
+    public Reservation() {}
 }
