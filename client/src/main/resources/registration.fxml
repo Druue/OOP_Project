@@ -22,12 +22,12 @@
                      <Label text="Name"><FlowPane.margin>
                          <Insets top="10.0" />
                      </FlowPane.margin></Label>
-                     <TextField fx:id="registrationNameInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="First Name" styleClass="registrationInputField"/>
+                     <TextField fx:id="registrationNameInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="Full name" styleClass="registrationInputField"/>
 
-                     <Label text="NetID"><FlowPane.margin>
+                     <Label text="Username"><FlowPane.margin>
                          <Insets top="10.0" />
                      </FlowPane.margin></Label>
-                     <TextField fx:id="registrationNetIdInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="Last Name" styleClass="registrationInputField"/>
+                     <TextField fx:id="registrationUsernameInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="Username" styleClass="registrationInputField"/>
 
                      <Label text="Email"><FlowPane.margin>
                          <Insets top="10.0" />
