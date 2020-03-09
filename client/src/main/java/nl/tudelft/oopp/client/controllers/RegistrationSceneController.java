@@ -21,7 +21,7 @@ import nl.tudelft.oopp.api.models.User;
 public class RegistrationSceneController {
     @FXML
     public TextField registrationNameInput;
-    public TextField registrationNetIdInput;
+    public TextField registrationUsernameInput;
     public TextField registrationEmailInput;
     public PasswordField registrationPasswordInput;
 
@@ -54,7 +54,7 @@ public class RegistrationSceneController {
     public void attemptRegistration() {
 
         // Get all text from text fields
-        String username = registrationNetIdInput.getText();
+        String username = registrationUsernameInput.getText();
         String password = registrationPasswordInput.getText();
         String name = registrationNameInput.getText();
         String email = registrationEmailInput.getText();
