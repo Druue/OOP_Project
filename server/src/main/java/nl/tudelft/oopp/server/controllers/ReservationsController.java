@@ -1,8 +1,14 @@
 package nl.tudelft.oopp.server.controllers;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
+import javassist.NotFoundException;
+import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.server.models.Reservation;
+import nl.tudelft.oopp.server.models.User;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.ReservationService;
+import nl.tudelft.oopp.server.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,43 +19,45 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservationsController {
 
     // Connection with the methods for querying the database for the reservations
-    private ReservationService service;
+    private ReservationService reservationService;
+    private UserService userService;
 
-    public ReservationsController(ReservationService service) {
-        this.service = service;
+    public ReservationsController(ReservationService reservationService, UserService userService) {
+        this.reservationService = reservationService;
+        this.userService = userService;
     }
 
 
-    /**
-     * This method calls the ReservationService getReservations( NetID ) method
-     * with the provided by the cookie value NetID to find all the current reservations
-     * of a particular user. The result is then sent as a list of reservation objects with
-     * information about every one of them.
+    /** Endpoint for the procedure of getting user reservations.
+     *  Receives the username in the {@link ClientRequest} object and uses
+     *  to find the user in the database and then use his userID to find his reservations.
+     * @param request The request object containing the username to be used.
+     * @return A List of Reservations object representing all the current reservations of the user.
      */
     @GetMapping("/")
-    public ResponseEntity requestUserReservations(HttpSession session) {
+    public ResponseEntity<List<Reservation>> getUserReservations(ClientRequest<String> request) {
+        LoggerService.info(ReservationsController.class,
+            "Received request for user reservations. Processing ...");
 
-        // Get the user's session and get the NetID attribute stored in it
-        // to query the database for the user's reservations.
-        // If the user does not have an existing session, the method logs an error message
-        // and sends
+        String username = request.getUsername();
+        User foundUser = null;
 
         try {
-            if (session.isNew()) {
-                throw new IllegalAccessException();
-            }
-
-            String userNetID = (String) session.getAttribute("NetID");
-            LoggerService.info(ReservationsController.class,"Client with NetID: " + userNetID
-                                                            + " requested his current reservations.");
-            return ResponseEntity.ok().build();
-        } catch (IllegalAccessException e) {
-            session.invalidate();
-            LoggerService.error(ReservationsController.class,"Unauthorized attempt to view reservations -"
-                                                             + " no existing session found for the client.");
+            foundUser = userService.getUserByUsername(username);
+        } catch (NotFoundException e) {
+            LoggerService.error(ReservationsController.class, "No user with username: "
+                + username + " found");
             return ResponseEntity.badRequest().build();
         }
 
+        LoggerService.info(ReservationsController.class, "User with username: "
+            + username + " successfully found.");
+        Long userID = foundUser.userId;
+
+        List<Reservation> foundReservations = reservationService.getReservationsByUserID(userID);
+        return new ResponseEntity<List<Reservation>>(foundReservations, HttpStatus.ACCEPTED);
     }
+
+
 
 }

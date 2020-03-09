@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import nl.tudelft.oopp.server.models.Reservation;
 import nl.tudelft.oopp.server.repositories.ReservationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import nl.tudelft.oopp.server.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ReservationService {
 
-    @Autowired
-    private ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
+
+    public ReservationService(ReservationRepository reservationRepository, UserRepository userRepository) {
+        this.reservationRepository = reservationRepository;
+    }
 
     /**
      * returns a list with all reservations in the table.
@@ -31,7 +34,7 @@ public class ReservationService {
      * @param userID The id of the user whose reservations should be fetched from the database
      * @return A List of all the reservations of user with id = userID
      */
-    public List<Reservation> getReservations(Long userID) {
+    public List<Reservation> getReservationsByUserID(Long userID) {
         return reservationRepository.findByUserID(userID);
     }
 
