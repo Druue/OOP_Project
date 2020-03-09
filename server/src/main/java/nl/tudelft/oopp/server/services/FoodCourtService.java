@@ -31,7 +31,7 @@ public class FoodCourtService {
      * @param id linked to a sertain foocourt
      * @return the foodcourt with that id
      */
-    public Optional<FoodCourt> getFoodcourt(Long id) {
+    public Optional<FoodCourt> getFoodcourt(Integer id) {
         return foodCourtRepository.findById(id);
     }
 
@@ -59,7 +59,7 @@ public class FoodCourtService {
      *
      * @param id linked to a foodcourt to be deleted from the list
      */
-    public void deleteFoodcourt(Long id) {
+    public void deleteFoodcourt(Integer id) {
         foodCourtRepository.deleteById(id);
     }
 
