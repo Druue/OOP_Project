@@ -11,9 +11,13 @@ import javafx.scene.Scene;
 
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.Reservation;
+import nl.tudelft.oopp.api.models.ReservationResponse;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class HomepageController implements Initializable {
@@ -38,15 +42,18 @@ public class HomepageController implements Initializable {
         list.removeAll(list);
 
 
+        HttpRequestHandler.get("reservations/all", ReservationResponse.class);
+
+        //HttpRequestHandler
 
         //Add rooms here
-        list.add();
+        //list.add();
 
 
 
 
-        todayRes.getItems().addAll(list);
-        allRes.getItems().addAll(list);
+        //todayRes.getItems().addAll(list);
+        //allRes.getItems().addAll(list);
     }
 
     /**
