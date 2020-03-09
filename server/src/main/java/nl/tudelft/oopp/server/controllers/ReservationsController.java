@@ -1,8 +1,12 @@
 package nl.tudelft.oopp.server.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.Gson;
 import javassist.NotFoundException;
 import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.ReservationResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.Reservation;
 import nl.tudelft.oopp.server.models.User;
@@ -40,10 +44,16 @@ public class ReservationsController {
      *      reservations in the database.
      */
     @GetMapping("/all")
-    public ResponseEntity<List<Reservation>> getAllReservations(ClientRequest<String> request) {
+    public ResponseEntity<ReservationResponse> getAllReservations(ClientRequest<String> request) {
         LoggerService.info(ReservationsController.class,
             "Received request for all reservations");
-        return ResponseEntity.ok(reservationService.getAllReservations());
+
+        Gson gson = new Gson();
+        List<nl.tudelft.oopp.api.models.Reservation> responseList = new ArrayList<>();
+        for (Reservation responseReservation: reservationService.getAllReservations()) {
+            responseList.add(gson.fromJson(gson.toJson(responseReservation), nl.tudelft.oopp.api.models.Reservation.class));
+        }
+        return ResponseEntity.ok(new ReservationResponse(responseList));
     }
 
     /**

@@ -39,21 +39,13 @@ public class HomepageController implements Initializable {
      * Handles loading the reserved rooms to the ListView item in Homepage.fxml
      */
     private void loadData() {
-        list.removeAll(list);
 
+        List<Reservation> reservationList = HttpRequestHandler.get("reservations/all", ReservationResponse.class).getReservationList();
 
-        HttpRequestHandler.get("reservations/all", ReservationResponse.class);
+        for (Reservation s : reservationList) {
+            todayRes.getItems().add(s.getReservationID().toString());
+        }
 
-        //HttpRequestHandler
-
-        //Add rooms here
-        //list.add();
-
-
-
-
-        //todayRes.getItems().addAll(list);
-        //allRes.getItems().addAll(list);
     }
 
     /**
