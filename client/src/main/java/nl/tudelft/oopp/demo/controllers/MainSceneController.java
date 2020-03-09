@@ -87,7 +87,7 @@ public class MainSceneController {
 
     /**
      * Handles going to the login page.
-     * 
+     *
      * @param event the scene from where the function was called.
      */
     public void goToLogin(ActionEvent event) {
@@ -102,6 +102,28 @@ public class MainSceneController {
 
             primaryStage.hide();
             primaryStage.setScene(loginScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in MainSceneController");
+        }
+    }
+
+    /**
+     * Handles going to the homepage.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToHome(ActionEvent event) {
+        try {
+            Parent homeParent = FXMLLoader.load(getClass().getResource("/homepage.fxml"));
+            Scene homeScene = new Scene(homeParent);
+
+            Stage primaryStage =
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(homeScene);
             primaryStage.show();
 
         } catch (IOException e) {
