@@ -36,7 +36,7 @@ public class HomepageController implements Initializable {
     }
 
     /**
-     * Handles loading the reserved rooms to the ListView item in Homepage.fxml
+     * Handles loading the reserved rooms to the ListView item in homepage.fxml
      */
     private void loadData() {
 

@@ -18,5 +18,5 @@ public class FoodReservation {
      */
     @OneToOne
     @JoinColumn(name = "reservation_id", referencedColumnName = "reservation_id")
-    public Long linkedWith;
+    public Reservation linkedWith;
 }
