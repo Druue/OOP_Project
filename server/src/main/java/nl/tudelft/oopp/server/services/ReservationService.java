@@ -25,7 +25,7 @@ public class ReservationService {
     }
 
 
-    /** This service method uses the reservation repository to get
+    /** This service method uses the reservation repository to get.
      *  all the reservations in the database, associated with a given user
      *
      * @param userID The id of the user whose reservations should be fetched from the database
