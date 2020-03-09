@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.client.controllers;
 
-import com.google.gson.JsonObject;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.RegistrationRequest;
 import nl.tudelft.oopp.api.models.RegistrationResponse;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.User;
 
 public class RegistrationSceneController {

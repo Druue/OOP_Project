@@ -1,9 +1,7 @@
 package nl.tudelft.oopp.server.services;
 
 import javax.management.InstanceAlreadyExistsException;
-import nl.tudelft.oopp.api.models.RegistrationRequest;
 import nl.tudelft.oopp.server.models.User;
-import nl.tudelft.oopp.server.repositories.MenuItemRepository;
 import nl.tudelft.oopp.server.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
