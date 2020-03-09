@@ -40,10 +40,10 @@ public class LoginController {
         Gson gson = new Gson();
         LoginRequest loginRequest = gson.fromJson(request, LoginRequest.class);
         try {
-            String role = service.userValidate(loginRequest);
+            String type = service.userValidate(loginRequest);
             LoggerService.info(LoginController.class, "User successfully authenticated.");
 
-            // Send a response containing a success message, and the user's role.
+            // Send a response containing a success message, and the user's type.
             ServerResponseAlert a = new ServerResponseAlert("Successful login!", "CONFIRMATION");
             return ResponseEntity.ok().body(a);
         } catch (AuthenticationException e) {
