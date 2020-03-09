@@ -1,17 +1,63 @@
 package nl.tudelft.oopp.client.controllers;
 
-
-import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 
-public class HomepageController {
+import javafx.scene.control.ListView;
+import javafx.stage.Stage;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.Reservation;
+import nl.tudelft.oopp.api.models.ReservationResponse;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class HomepageController implements Initializable {
+
+    ObservableList list = FXCollections.observableArrayList();
+
+    @FXML
+    private ListView<String> todayRes;
+
+    @FXML
+    private ListView<String> allRes;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        loadData();
+    }
 
     /**
-     * Handles going to the mainScene.
+     * Handles loading the reserved rooms to the ListView item in Homepage.fxml
+     */
+    private void loadData() {
+        list.removeAll(list);
+
+
+        HttpRequestHandler.get("reservations/all", ReservationResponse.class);
+
+        //HttpRequestHandler
+
+        //Add rooms here
+        //list.add();
+
+
+
+
+        //todayRes.getItems().addAll(list);
+        //allRes.getItems().addAll(list);
+    }
+
+    /**
+     * Handles going to the mainScene.a
      *
      * @param event the scene from where the function was called.
      */
