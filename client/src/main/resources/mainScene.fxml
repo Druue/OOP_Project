@@ -14,7 +14,7 @@
     <Button onAction="#goToReservations" text="Go to reservations" />
 
     <Button onAction="#goToLogin" text="Go to the login page" />
-
+    <Button onAction="#goToAddRooms" text="Go to add rooms page"/>
     <Button onAction="#goToHome" text="Go to the homepage" />
 
     <Button text="Get some buildings" onAction="#getBuildings"/>

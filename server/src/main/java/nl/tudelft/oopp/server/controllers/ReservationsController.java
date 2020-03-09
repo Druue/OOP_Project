@@ -6,11 +6,15 @@ import java.util.List;
 import com.google.gson.Gson;
 import javassist.NotFoundException;
 import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.ReservableResponse;
 import nl.tudelft.oopp.api.models.ReservationResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.Reservation;
+import nl.tudelft.oopp.server.models.Room;
 import nl.tudelft.oopp.server.models.User;
 import nl.tudelft.oopp.server.services.LoggerService;
+import nl.tudelft.oopp.server.services.ReservableService;
 import nl.tudelft.oopp.server.services.ReservationService;
 import nl.tudelft.oopp.server.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -27,6 +31,7 @@ public class ReservationsController {
     // Connection with the methods for querying the database for the reservations
     private ReservationService reservationService;
     private UserService userService;
+    private Gson gson = new Gson();
 
     public ReservationsController(ReservationService reservationService, UserService userService) {
         this.reservationService = reservationService;
@@ -47,14 +52,14 @@ public class ReservationsController {
     public ResponseEntity<ReservationResponse> getAllReservations(ClientRequest<String> request) {
         LoggerService.info(ReservationsController.class,
             "Received request for all reservations");
-
-        Gson gson = new Gson();
         List<nl.tudelft.oopp.api.models.Reservation> responseList = new ArrayList<>();
         for (Reservation responseReservation: reservationService.getAllReservations()) {
             responseList.add(gson.fromJson(gson.toJson(responseReservation), nl.tudelft.oopp.api.models.Reservation.class));
         }
         return ResponseEntity.ok(new ReservationResponse(responseList));
     }
+
+
 
     /**
      * Endpoint for the procedure of getting user reservations.

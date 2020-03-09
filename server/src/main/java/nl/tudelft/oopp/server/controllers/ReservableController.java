@@ -1,79 +1,58 @@
 package nl.tudelft.oopp.server.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.ReservableResponse;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.Reservable;
+import nl.tudelft.oopp.server.models.Room;
+import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.ReservableService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequestMapping("/reservables")
 public class ReservableController {
 
     /**
      * Importing the methods from the service class.
      */
     @Autowired
-    ReservableService service;
+    ReservableService reservableService;
+
+    private Gson gson = new GsonBuilder().serializeNulls().create();
+
+    @GetMapping("/all")
+    public ResponseEntity<ReservableResponse> getAllReservables() {
+        LoggerService.info(ReservationsController.class,
+                "Received request for all reservables");
 
 
-    /**
-     * Gets a list of all reservables stored in the database.
-     *
-     * @return all of the reservables.
-     */
-    @RequestMapping("/models/Reservable")
-    public List<Reservable> getAllReservables() {
-        return service.getAllReservables();
+        List<nl.tudelft.oopp.api.models.Reservable> responseList = new ArrayList<>();
+        for (Reservable responseReservable: reservableService.getAllReservables()) {
+            if (responseReservable instanceof Room) {
+                responseList.add(gson.fromJson(gson.toJson(responseReservable), nl.tudelft.oopp.api.models.Room.class));
+            }
+
+        }
+        return ResponseEntity.ok(new ReservableResponse(responseList));
     }
 
-    /**
-     * Gets a specific reservable from the database.
-     *
-     * @param id the id to look for.
-     * @return the corresponding reservable.
-     */
-    @RequestMapping("models/Reservable/{id}")
-    public Reservable getReservable(@PathVariable Long id) {
-        return service.getReservable(id).get();
-    }
+    @PutMapping("/insert/new_room")
+    public ServerResponseAlert addNewRoom(@RequestBody String request) {
+        Room requestRoom = gson.fromJson(request, Room.class);
 
-
-    /**
-     * Add a new Reservable to the database.
-     *
-     * @param newReservable the reservable to add.
-     */
-    @PostMapping("models/Reservable")
-    public void create(@RequestBody Reservable newReservable) {
-        service.addReservable(newReservable);
-    }
-
-    /**
-     * Updates an existing reservable inside of the database.
-     *
-     * @param id The ID of the reservable to update.
-     */
-    @PutMapping("models/Reservable/{id}")
-    public void update(@RequestBody Reservable newReservable, @PathVariable Long id) {
-        service.updateReservable(id, newReservable);
-    }
-
-    /**
-     * Deletes a specific reservable from the database.
-     *
-     * @param id the ID of the reservable to delete.
-     */
-    @DeleteMapping("/Reservable/{id}")
-    public void delete(@PathVariable Long id) {
-
-        service.deleteReservable(id);
+        System.out.println(request);
+        Room room = new Room(request, true, false);
+        reservableService.addRoom(room);
+        return new ServerResponseAlert("Room added", "CONFIRMATION");
     }
 
 

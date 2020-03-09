@@ -12,14 +12,16 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
+import nl.tudelft.oopp.api.models.Room;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
 
-public class MainSceneController {
+public class AddRoomsController {
 
 
     // the TextField object from mainScene.fxml
     @FXML
-    public TextField userInput;
+    public TextField RoomNameInput;
 
     /**
      * Handles going to the reservation page.
@@ -74,28 +76,11 @@ public class MainSceneController {
      */
     public void goToHome(ActionEvent event) {
         try {
-            Parent homeParent = FXMLLoader.load(getClass().getResource("/Homepage.fxml"));
+            Parent homeParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
             Scene homeScene = new Scene(homeParent);
 
             Stage primaryStage =
-                    (Stage) userInput.getScene().getWindow();
-            primaryStage.hide();
-            primaryStage.setScene(homeScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("IOException in MainSceneController");
-        }
-    }
-
-    public void goToAddRooms(ActionEvent event) {
-        try {
-            Parent homeParent = FXMLLoader.load(getClass().getResource("/addRooms.fxml"));
-            Scene homeScene = new Scene(homeParent);
-
-            Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                    (Stage) (RoomNameInput.getScene().getWindow());
 
             primaryStage.hide();
             primaryStage.setScene(homeScene);
@@ -130,5 +115,14 @@ public class MainSceneController {
         // Show the alert with all the building names
         alert.setContentText(s.toString());
         alert.showAndWait();
+    }
+
+    public void addRoom(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("yeet");
+        alert.setHeaderText(null);
+        Room room = new Room(RoomNameInput.getText(), true, false);
+        HttpRequestHandler.put("reservables/insert/new_room", room, ServerResponseAlert.class);
+
     }
 }

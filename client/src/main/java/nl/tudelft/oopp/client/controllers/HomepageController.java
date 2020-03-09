@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.Reservable;
+import nl.tudelft.oopp.api.models.ReservableResponse;
 import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.ReservationResponse;
 
@@ -40,10 +42,10 @@ public class HomepageController implements Initializable {
      */
     private void loadData() {
 
-        List<Reservation> reservationList = HttpRequestHandler.get("reservations/all", ReservationResponse.class).getReservationList();
+        List<Reservable> reservationList = HttpRequestHandler.get("reservables/all", ReservableResponse.class).getReservableList();
 
-        for (Reservation s : reservationList) {
-            todayRes.getItems().add(s.getReservationID().toString());
+        for (Reservable s : reservationList) {
+            todayRes.getItems().add(s.getName());
         }
 
     }

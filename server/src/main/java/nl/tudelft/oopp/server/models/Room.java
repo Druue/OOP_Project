@@ -11,6 +11,10 @@ import javax.persistence.Table;
 @Table(name = "room")
 public class Room extends Reservable {
 
+    public Room() {
+        super();
+    }
+
     /**
      * Whether the room is only reservable by staff or not.
      */
@@ -22,4 +26,8 @@ public class Room extends Reservable {
         this.employeeOnly = employeeOnly;
     }
 
+    public Room(String name, boolean isAvailable, boolean employeeOnly) {
+        super(name, isAvailable);
+        this.employeeOnly = employeeOnly;
+    }
 }

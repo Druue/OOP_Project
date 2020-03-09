@@ -1,11 +1,6 @@
 package nl.tudelft.oopp.server.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Initialises a new {@link Reservable}.
@@ -26,6 +21,7 @@ public abstract class Reservable {
      */
     @Id
     @Column(name = "reservable_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
     /**
@@ -45,6 +41,11 @@ public abstract class Reservable {
      */
     public Reservable(Long id, String name, boolean isAvailable) {
         this.id = id;
+        this.name = name;
+        this.isAvailable = isAvailable;
+    }
+
+    public Reservable(String name, boolean isAvailable) {
         this.name = name;
         this.isAvailable = isAvailable;
     }
