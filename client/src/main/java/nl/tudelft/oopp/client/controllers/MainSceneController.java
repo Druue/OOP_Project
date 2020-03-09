@@ -22,17 +22,6 @@ public class MainSceneController {
     public TextField userInput;
 
     /**
-     * Handles clicking the 'Send a ping' button.
-     */
-    public void buttonPing() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("A response");
-        alert.setHeaderText(null);
-        alert.setContentText(HttpRequestHandler.get("ping", String.class));
-        alert.showAndWait();
-    }
-
-    /**
      * Handles going to the reservation page.
      *
      * @param event the scene from where the function was called.
