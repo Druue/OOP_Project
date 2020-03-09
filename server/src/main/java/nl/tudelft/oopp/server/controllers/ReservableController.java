@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import nl.tudelft.oopp.api.models.ClientRequest;
-import nl.tudelft.oopp.api.models.ReservableResponse;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.RoomResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.Room;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/reservables")
+@RequestMapping("reservables")
 public class ReservableController {
 
     /**
@@ -29,29 +29,31 @@ public class ReservableController {
 
     private Gson gson = new GsonBuilder().serializeNulls().create();
 
-    @GetMapping("/all")
-    public ResponseEntity<ReservableResponse> getAllReservables() {
+    @GetMapping("/all/rooms")
+    public ResponseEntity<RoomResponse> getAllReservables() {
         LoggerService.info(ReservationsController.class,
                 "Received request for all reservables");
 
 
-        List<nl.tudelft.oopp.api.models.Reservable> responseList = new ArrayList<>();
+        List<nl.tudelft.oopp.api.models.Room> responseList = new ArrayList<>();
         for (Reservable responseReservable: reservableService.getAllReservables()) {
             if (responseReservable instanceof Room) {
-                responseList.add(gson.fromJson(gson.toJson(responseReservable), nl.tudelft.oopp.api.models.Room.class));
+                LoggerService.info(ReservableController.class, (HttpRequestHandler.convert(
+                        responseReservable, nl.tudelft.oopp.api.models.Room.class
+                ).getName()));
+                responseList.add(HttpRequestHandler.convert(
+                        responseReservable, nl.tudelft.oopp.api.models.Room.class
+                ));
             }
 
         }
-        return ResponseEntity.ok(new ReservableResponse(responseList));
+        return ResponseEntity.ok(new RoomResponse(responseList));
     }
 
     @PutMapping("/insert/new_room")
     public ServerResponseAlert addNewRoom(@RequestBody String request) {
         Room requestRoom = gson.fromJson(request, Room.class);
-
-        System.out.println(request);
-        Room room = new Room(request, true, false);
-        reservableService.addRoom(room);
+        reservableService.addRoom(requestRoom);
         return new ServerResponseAlert("Room added", "CONFIRMATION");
     }
 

@@ -84,8 +84,8 @@ public class HttpRequestHandler {
         return null;
     }
 
-    public static <T, E> E convertToApiModel(T input, Class<E> outputType) {
+    public static <T, E> E convert(T from, Class<E> to) {
         Gson gson = new GsonBuilder().serializeNulls().create();
-        return gson.fromJson(gson.toJson(input), outputType);
+        return gson.fromJson(gson.toJson(from), to);
     }
 }

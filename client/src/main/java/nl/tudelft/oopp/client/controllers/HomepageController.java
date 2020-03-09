@@ -12,13 +12,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.Reservable;
-import nl.tudelft.oopp.api.models.ReservableResponse;
-import nl.tudelft.oopp.api.models.Reservation;
-import nl.tudelft.oopp.api.models.ReservationResponse;
+import nl.tudelft.oopp.api.models.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -42,11 +40,48 @@ public class HomepageController implements Initializable {
      */
     private void loadData() {
 
-        List<Reservable> reservationList = HttpRequestHandler.get("reservables/all", ReservableResponse.class).getReservableList();
+        /**
+         * This block makes three rooms and tree reservations.
+         */
+        User exampleUser = new User("first last", "flast", "password", "example@mail.com", "student");
 
-        for (Reservable s : reservationList) {
-            todayRes.getItems().add(s.getName());
+        Room a = new Room("Example room a", false, false);
+        Room b = new Room("Example room b", true, true);
+        Room c = new Room("Example room c", true, false);
+
+        Reservation reservationA = new Reservation((long) 0, exampleUser, a);
+        Reservation reservationB = new Reservation((long) 1, exampleUser, b);
+        Reservation reservationC = new Reservation((long) 2, exampleUser, c);
+        List<Reservation> exampleReservationList = new ArrayList<>();
+        exampleReservationList.add(reservationA);
+        exampleReservationList.add(reservationB);
+        exampleReservationList.add(reservationC);
+
+        for (Reservation s : exampleReservationList) {
+            todayRes.getItems().add(s.getReservableId().getName());
         }
+
+        // Set to true / remove the condition once the actual reservations controller is ready.
+        boolean doRest = false;
+
+        if (doRest) {
+
+            List<Reservation> reservationList = new ArrayList<>();
+            try {
+                ReservationResponse response = HttpRequestHandler.get("reservations/all", ReservationResponse.class);
+                reservationList = response.getReservationList();
+                for (Reservation s : reservationList) {
+                    todayRes.getItems().add(s.getReservableId().getName());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+
+
 
     }
 

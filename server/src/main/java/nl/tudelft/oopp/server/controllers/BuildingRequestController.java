@@ -44,7 +44,7 @@ public class BuildingRequestController {
         Gson gson = new GsonBuilder().serializeNulls().create();
         List<Building> buildings = new ArrayList<>();
         for (nl.tudelft.oopp.server.models.Building queryBuilding: service.getAllBuildings()) {
-            buildings.add(HttpRequestHandler.convertToApiModel(queryBuilding, Building.class));
+            buildings.add(HttpRequestHandler.convert(queryBuilding, Building.class));
         }
 
         BuildingResponse response = new BuildingResponse(buildings);
