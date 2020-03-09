@@ -1,9 +1,7 @@
 package nl.tudelft.oopp.server.controllers;
 
 import com.google.gson.Gson;
-import nl.tudelft.oopp.api.models.RegistrationRequest;
-import nl.tudelft.oopp.api.models.RegistrationResponse;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.server.models.User;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.RegistrationService;
@@ -31,7 +29,7 @@ public class RegistrationController {
      * successfully registered.
      */
     @PostMapping("/register")
-    public ResponseEntity<RegistrationResponse> registerUser(@RequestBody String jsonRequest) {
+    public ResponseEntity<UserAuthResponse> registerUser(@RequestBody String jsonRequest) {
         LoggerService.info(RegistrationController.class, "Received registration details");
 
         User registrationRequest = gson.fromJson(jsonRequest, User.class);
@@ -39,8 +37,8 @@ public class RegistrationController {
         try {
             //TODO: Validate that the user doesn't already exist.
             registrationService.addUser(registrationRequest);
-            Long userId = registrationService.getUserId(registrationRequest.email);
-            RegistrationResponse r = new RegistrationResponse("You've registered successfully!", "CONFIRMATION", userId);
+            nl.tudelft.oopp.api.models.User user = gson.fromJson(gson.toJson(registrationService.getUserByID(registrationService.getUserId(registrationRequest.email))), nl.tudelft.oopp.api.models.User.class);
+            UserAuthResponse r = new UserAuthResponse("You've registered successfully!", "CONFIRMATION", user);
             LoggerService.info(RegistrationController.class, "New user successfully registered.");
             return ResponseEntity.ok().body(r);
         } catch (Exception /* InstanceAlreadyExistsException */ e) {
@@ -49,7 +47,7 @@ public class RegistrationController {
                     "Invalid details provided. User with that "
                             + "NetID already exists in the database.");
 
-            RegistrationResponse r = new RegistrationResponse("Invalid details provided!", "ERROR", null);
+            UserAuthResponse r = new UserAuthResponse("Invalid details provided!", "ERROR", null);
             return ResponseEntity.badRequest().body(r);
         }
 

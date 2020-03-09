@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.client.controllers;
 
-import com.google.gson.JsonObject;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.RegistrationRequest;
-import nl.tudelft.oopp.api.models.RegistrationResponse;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.api.models.User;
 
 public class RegistrationSceneController {
@@ -72,8 +69,8 @@ public class RegistrationSceneController {
             User registrationRequest = new User(name, username, email, password, type);
 
             // Send a register request to the server.
-            RegistrationResponse response =
-                    HttpRequestHandler.post("register", registrationRequest, RegistrationResponse.class);
+            UserAuthResponse response =
+                    HttpRequestHandler.post("register", registrationRequest, UserAuthResponse.class);
 
             // Create an alert, and show it to the user.
             Alert alert = new Alert(Alert.AlertType.NONE);
@@ -81,8 +78,8 @@ public class RegistrationSceneController {
             alert.setHeaderText(null);
             if (response != null) {
                 if (response.getAlertType().equals("CONFIRMATION")) {
-                    HttpRequestHandler.saveUser(registrationRequest);
-                    HttpRequestHandler.user.setUserId(response.getUserId());
+                    HttpRequestHandler.saveUser(response.getUser());
+                    //HttpRequestHandler.user.setUserId(response.getUser().getUserId());
                     System.out.println(HttpRequestHandler.user.getUserId());
                     alert.setAlertType(Alert.AlertType.CONFIRMATION);
                     alert.setContentText(response.getMessage());

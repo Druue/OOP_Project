@@ -10,6 +10,8 @@ public class User {
     public String username;
     public String email;
     public String password;
+
+    public Collection<Reservation> reservations;
     public String type;
 
     public User(String name, String username, String email, String password, String type) {
@@ -20,13 +22,22 @@ public class User {
         this.type = type;
     }
 
-    public User(Long userId, String name, String username, String email, String password, String type) {
+    public User(Long userId, String name, String username, String email, String password, Collection<Reservation> reservations, String type) {
         this.userId = userId;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.reservations = reservations;
         this.type = type;
+    }
+
+    public Collection<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Collection<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public Long getUserId() {
