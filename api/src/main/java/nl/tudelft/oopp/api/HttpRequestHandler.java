@@ -2,12 +2,11 @@ package nl.tudelft.oopp.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import nl.tudelft.oopp.api.models.User;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import nl.tudelft.oopp.api.models.User;
 
 public class HttpRequestHandler {
     private static final String host = "http://localhost:8080";

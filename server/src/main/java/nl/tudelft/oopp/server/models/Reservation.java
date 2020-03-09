@@ -1,6 +1,14 @@
 package nl.tudelft.oopp.server.models;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * Initialises a new isntance of {@link Reservation}.
@@ -26,10 +34,9 @@ public class Reservation {
     @OneToOne
     @JoinColumn(name = "reservable_id", referencedColumnName = "reservable_id")
     public Reservable reservableId;
+
     /**
      * Initialises a new isntance of {@link Reservation}.
      */
-    public Reservation() {
-
-    }
+    public Reservation() {}
 }
