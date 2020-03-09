@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.RegistrationRequest;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
 public class RegistrationSceneController {
@@ -65,16 +66,11 @@ public class RegistrationSceneController {
             alert.showAndWait();
         } else {
 
-            // Create a JSON Object containing the user's registration details.
-            JsonObject parameters = new JsonObject();
-            parameters.addProperty("NetID", netID);
-            parameters.addProperty("Password", password);
-            parameters.addProperty("name", name);
-            parameters.addProperty("email", email);
+            RegistrationRequest registrationRequest = new RegistrationRequest(name, netID, email, password, "student");
 
             // Send a register request to the server.
             ServerResponseAlert response =
-                    HttpRequestHandler.post("register", parameters, ServerResponseAlert.class);
+                    HttpRequestHandler.post("register", registrationRequest, ServerResponseAlert.class);
 
             // Create an alert, and show it to the user.
             Alert alert = new Alert(Alert.AlertType.NONE);
