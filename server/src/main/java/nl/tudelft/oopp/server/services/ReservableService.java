@@ -3,7 +3,9 @@ package nl.tudelft.oopp.server.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import nl.tudelft.oopp.server.models.Bike;
 import nl.tudelft.oopp.server.models.Reservable;
+import nl.tudelft.oopp.server.models.Room;
 import nl.tudelft.oopp.server.repositories.ReservableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,36 @@ public class ReservableService {
         List<Reservable> reservables = new ArrayList<Reservable>();
         reservableRepository.findAll().forEach(reservables::add);
         return reservables;
+    }
+
+    /**method that returns all possible rooms from.
+     *
+     * @return a list of rooms
+     */
+    public List<Reservable> getAllRooms() {
+        List<Reservable> reservables = getAllReservables();
+        List<Reservable> rooms = new ArrayList<>();
+        for (int i = 0; i < reservables.size(); i++) {
+            if (reservables.get(i) instanceof Room) {
+                rooms.add(reservables.get(i));
+            }
+        }
+        return rooms;
+    }
+
+    /**method that returns a list of all possible bikes.
+     *
+     * @return a list of bikes
+     */
+    public List<Reservable> getAllBikes() {
+        List<Reservable> reservables = getAllReservables();
+        List<Reservable> bikes = new ArrayList<>();
+        for (int i = 0; i < reservables.size(); i++) {
+            if (reservables.get(i) instanceof Bike) {
+                bikes.add(reservables.get(i));
+            }
+        }
+        return bikes;
     }
 
     /**

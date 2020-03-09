@@ -6,7 +6,7 @@ public class RegistrationRequest {
     private String netID;
     private String email;
     private String password;
-    private String role;
+    private String type;
 
     /**
      * An Object used during the registration process, containing all of the user's details.
@@ -15,14 +15,14 @@ public class RegistrationRequest {
      * @param netID    The user's netID.
      * @param email    the user's email.
      * @param password the user's password.
-     * @param role     the user's role: Either employee or student.
+     * @param type     the user's type: Either employee or student.
      */
-    public RegistrationRequest(String name, String netID, String email, String password, String role) {
+    public RegistrationRequest(String name, String netID, String email, String password, String type) {
         this.name = name;
         this.netID = netID;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.type = type;
     }
 
     public String getName() {
@@ -58,10 +58,10 @@ public class RegistrationRequest {
     }
 
     public String getRole() {
-        return role;
+        return type;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(String type) {
+        this.type = type;
     }
 }

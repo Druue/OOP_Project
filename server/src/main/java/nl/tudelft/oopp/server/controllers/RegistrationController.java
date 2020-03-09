@@ -1,8 +1,8 @@
 package nl.tudelft.oopp.server.controllers;
 
 import com.google.gson.Gson;
-import nl.tudelft.oopp.api.models.RegistrationRequest;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.api.models.RegistrationResponse;
+import nl.tudelft.oopp.server.models.User;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.RegistrationService;
 import org.springframework.http.ResponseEntity;
@@ -29,24 +29,29 @@ public class RegistrationController {
      * successfully registered.
      */
     @PostMapping("/register")
-    public ResponseEntity<ServerResponseAlert> registerUser(@RequestBody String jsonRequest) {
+    public ResponseEntity<RegistrationResponse> registerUser(@RequestBody String jsonRequest) {
         LoggerService.info(RegistrationController.class, "Received registration details");
 
-        RegistrationRequest registrationRequest = gson.fromJson(jsonRequest, RegistrationRequest.class);
+        User registrationRequest = gson.fromJson(jsonRequest, User.class);
+
         try {
-            registrationService.registerUser(registrationRequest);
+            //TODO: Validate that the user doesn't already exist.
+            registrationService.addUser(registrationRequest);
+            Long userId = registrationService.getUserId(registrationRequest.email);
+            RegistrationResponse r = new RegistrationResponse("You've registered successfully!", "CONFIRMATION", userId);
+            LoggerService.info(RegistrationController.class, "New user successfully registered.");
+            return ResponseEntity.ok().body(r);
         } catch (Exception /* InstanceAlreadyExistsException */ e) {
+            e.printStackTrace();
             LoggerService.error(RegistrationController.class,
                     "Invalid details provided. User with that "
                             + "NetID already exists in the database.");
 
-            ServerResponseAlert r = new ServerResponseAlert("Invalid details provided!", "ERROR");
+            RegistrationResponse r = new RegistrationResponse("Invalid details provided!", "ERROR", null);
             return ResponseEntity.badRequest().body(r);
         }
 
-        LoggerService.info(RegistrationController.class, "New user successfully registered.");
-        ServerResponseAlert r = new ServerResponseAlert("You've registered successfully!", "CONFIRMATION");
-        return ResponseEntity.ok().body(r);
+
     }
 
 }

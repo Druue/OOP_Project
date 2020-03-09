@@ -6,11 +6,18 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import nl.tudelft.oopp.api.models.User;
 
 public class HttpRequestHandler {
     private static final String host = "http://localhost:8080";
     private static final HttpClient client = HttpClient.newHttpClient();
     private static final Gson gson = new Gson();
+
+    public static User user;
+
+    public static void saveUser(User input) {
+        user = input;
+    }
 
     /**
      * Sends a POST request with some given parameters.

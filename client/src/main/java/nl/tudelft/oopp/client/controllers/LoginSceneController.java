@@ -29,16 +29,16 @@ public class LoginSceneController {
      */
     public void tryLogin() {
 
-        String netID = inputNetID.getText();
+        String username = inputNetID.getText();
         String password = inputPassword.getText();
-        if (netID.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText(null);
             alert.setContentText("Please provide a NetID and password.");
             alert.showAndWait();
         } else {
-            LoginRequest loginRequest = new LoginRequest(netID, password);
+            LoginRequest loginRequest = new LoginRequest(username, password);
             ServerResponseAlert response =
                     HttpRequestHandler.post("login", loginRequest, ServerResponseAlert.class);
 

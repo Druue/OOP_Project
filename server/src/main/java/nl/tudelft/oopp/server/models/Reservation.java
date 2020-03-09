@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -30,6 +31,9 @@ public class Reservation {
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     public User userID;
 
+    @OneToOne
+    @JoinColumn(name = "reservable_id", referencedColumnName = "reservable_id")
+    public Reservable reservableId;
     /**
      * Initialises a new isntance of {@link Reservation}.
      */

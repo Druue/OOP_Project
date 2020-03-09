@@ -28,7 +28,7 @@ public class BuildingService {
      * @param id we search for
      * @return the building with that exact id if it exists or null if not
      */
-    public Optional<Building> getBuilding(Long id) {
+    public Optional<Building> getBuilding(Integer id) {
         return buildingRepository.findById(id);
     }
 
@@ -56,7 +56,7 @@ public class BuildingService {
      *
      * @param id to be deleted from the list of buildings
      */
-    public void delete(Long id) {
+    public void delete(Integer id) {
         buildingRepository.deleteById(id);
     }
 }
