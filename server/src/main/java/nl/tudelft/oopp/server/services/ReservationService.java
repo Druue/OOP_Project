@@ -2,7 +2,6 @@ package nl.tudelft.oopp.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import nl.tudelft.oopp.server.models.Reservation;
 import nl.tudelft.oopp.server.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,8 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    /**returns a list with all reservations in the table.
+    /**
+     * returns a list with all reservations in the table.
      *
      * @return a list with reservations
      */
@@ -24,33 +24,39 @@ public class ReservationService {
         return reservations;
     }
 
-    /**method that returns a reservation if exists with this ID or null otherwise.
+
+    /** This service method uses the reservation repository to get
+     *  all the reservations in the database, associated with a given user
      *
-     * @param id linked to a reservation.
-     * @return a reservation.
+     * @param userID The id of the user whose reservations should be fetched from the database
+     * @return A List of all the reservations of user with id = userID
      */
-    public Optional<Reservation> getReservations(Long id) {
-        return reservationRepository.findById(id);
+    public List<Reservation> getReservations(Long userID) {
+        return reservationRepository.findByUserID(userID);
     }
 
-    /**method adds this reservation to the tabel reservations.
+    /**
+     * method adds this reservation to the tabel reservations.
      *
      * @param reservation to be added
      */
     public void addReservation(Reservation reservation) {
+
         reservationRepository.save(reservation);
     }
 
-    /**methods that updates this reservation id to the one in the parameter.
+    /**
+     * methods that updates this reservation id to the one in the parameter.
      *
-     * @param id linked to a reservation
+     * @param id          linked to a reservation
      * @param reservation to be updated
      */
     public void updateReservation(Long id, Reservation reservation) {
         reservationRepository.save(reservation);
     }
 
-    /**method to delete a reservation with this ID.
+    /**
+     * method to delete a reservation with this ID.
      *
      * @param id linked to a reservation
      */
