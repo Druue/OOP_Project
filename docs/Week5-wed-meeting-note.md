@@ -8,7 +8,6 @@ Note taker: Justin Jo
     - name
     - description
     - image
-    
 - User
     - _email_
     - _**NetID**_
