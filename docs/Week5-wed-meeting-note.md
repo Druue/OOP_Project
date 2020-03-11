@@ -5,9 +5,9 @@ Note taker: Justin Jo
 ## Schema
 - Details
     - _**ID**_
-    - name
-    - description
-    - image
+    - name *
+    - description *
+    - image *
 - User
     - _email_
     - _**NetID**_
@@ -18,15 +18,14 @@ Note taker: Justin Jo
 - Building
     - _**ID**_
     - @Details
-    - @FoodCourt (nullable)
-    - @Reservables
-    - @Timeslot
+    - @FoodCourt *
+    - @Reservables +
     - @OpeningTime
-    - @ElementCollection
+    - @Map<Reservable, Timeslots> +
 - FoodCourt
     - _**ID**_
     - @Details
-    - @MenuItems
+    - @FoodList
 - FoodCourt - Food
     - @Details
 - Reservable
@@ -62,4 +61,10 @@ Note taker: Justin Jo
     - _**ID**_
     - @User
     - name
-    
+
+## Labels
+- @: foreign key
+- *: nullable
+- bold: primary
+- italics: unique
+- +: for code implementation only
