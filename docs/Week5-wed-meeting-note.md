@@ -1,0 +1,66 @@
+# Week 5 Wednesday meeting notes
+Date: 11/03/2020\
+Note taker: Justin Jo
+
+## Schema
+- Details
+    - _**ID**_
+    - name
+    - description
+    - image
+    
+- User
+    - _email_
+    - _**NetID**_
+    - Password
+    - @Details
+    - ~~firstname~~
+    - ~~lastname~~
+- Building
+    - _**ID**_
+    - @Details
+    - @FoodCourt (nullable)
+    - @Reservables
+    - @Timeslot
+    - @OpeningTime
+    - @ElementCollection
+- FoodCourt
+    - _**ID**_
+    - @Details
+    - @MenuItems
+- FoodCourt - Food
+    - @Details
+- Reservable
+    - _**ID**_
+    - @Details
+- Reservable - Room
+    - Capacity
+    - hasProjector
+    - forEmployee
+- Reservable - Bike
+- Reservation
+    - @User
+    - @Reservable
+    - @Timeslot
+    - _**ID**_
+- Timeslot
+    - _**ID**_
+    - index
+    - isAvailable
+- OpeningTimes
+    - _**ID**_
+    - openingHour
+    - closingHour
+    - @Date
+- Date
+    - Year
+    - Month
+    - Day
+    - Week
+    - isHoliday
+- FoodOrder
+    - FoodItems
+    - _**ID**_
+    - @User
+    - name
+    
