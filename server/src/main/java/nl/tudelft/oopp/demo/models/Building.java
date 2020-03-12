@@ -57,10 +57,8 @@ public class Building {
      */
     @OneToMany
     @ElementCollection
-    @CollectionTable(name = "available_reserverations")
-    Map<Reservable, TimeSlots> availableReservations;
+    @CollectionTable(name = "available_TimeSlots")
+    Map<Reservable, TimeSlots> availableTimeslots;
 
-    @ElementCollection
-    @Column(name = "available_reservables")
-    Collection<Reservable> reservables;
+
 }

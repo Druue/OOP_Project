@@ -18,3 +18,4 @@ public class MenuItem { // Do we want to store this as an entity?
     @Column(name = "name")
     public String name;
 }
+
