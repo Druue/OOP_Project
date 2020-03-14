@@ -64,7 +64,7 @@ public class ReservableController {
     public void update(@RequestBody Reservable newReservable, @PathVariable Long id) {
         service.updateReservable(id, newReservable);
     }
-
+    
     /**
      * Deletes a specific reservable from the database.
      *
@@ -72,7 +72,6 @@ public class ReservableController {
      */
     @DeleteMapping("/Reservable/{id}")
     public void delete(@PathVariable Long id) {
-
         service.deleteReservable(id);
     }
 
