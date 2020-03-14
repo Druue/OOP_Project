@@ -23,6 +23,15 @@
     -fx-padding: 15;
 }
 
+#buildingsList .viewport {
+    -fx-background-color: transparent;
+}
+
+
+#buildingsList {
+    -fx-background-color: transparent;
+}
+
 #buildingsList:nth-child(2n+0) {
     -fx-background-color: #161925;
 }

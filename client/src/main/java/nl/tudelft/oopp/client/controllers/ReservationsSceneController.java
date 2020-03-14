@@ -1,11 +1,16 @@
 package nl.tudelft.oopp.client.controllers;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,10 +19,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
@@ -31,13 +34,15 @@ import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
+import javax.swing.text.html.ImageView;
+
 public class ReservationsSceneController implements Initializable {
 
     public static final int MAX_DAYS_IN_ADVANCE = 14;
     public static final int RESPONSE_TIMEOUT = 5;
 
     @FXML
-    VBox buildingsList;
+    ListView<Node> buildingsList;
 
     @FXML
     ChoiceBox<String> datesList;
@@ -97,11 +102,11 @@ public class ReservationsSceneController implements Initializable {
 
         DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0,0,0,0.1), 2,4,2, 2);
         buildingSearchField.setEffect(dropShadow);
-        buildingsList.setStyle("-fx-background-color: white;");
 
         List<Building> buildingList;
         if (waitForResponse(buildingResponse)) {
-            buildingList = buildingResponse.getBuildingList();
+            buildingList = buildingResponse.getBuildingList(); //NullPointer handled in waitForResponse()
+            List<Node> listOfEntries = new ArrayList<Node>();
             for (Building building : buildingList) {
                 VBox buildingEntry = new VBox();
                 buildingEntry.getStyleClass().add("buildingEntry");
@@ -112,12 +117,13 @@ public class ReservationsSceneController implements Initializable {
 
                 buildingEntry.getChildren().add(buildingName);
                 buildingEntry.getChildren().add(buildingOpeningTime);
-                buildingEntry.setPrefSize(300, 60);
+                buildingEntry.setPrefHeight(60);
+                buildingEntry.prefWidthProperty().bind(buildingsList.widthProperty().subtract(50));
+//                buildingEntry.setMaxWidth(Control.USE_PREF_SIZE);
 
                 buildingEntry.setEffect(dropShadow);
 
-                buildingsList.getChildren().add(buildingEntry);
-
+                listOfEntries.add(buildingEntry);
 
                 EventHandler<MouseEvent> mouseEventEventHandler = new EventHandler<MouseEvent>() {
                     @Override
@@ -133,6 +139,10 @@ public class ReservationsSceneController implements Initializable {
                     }
                 };
                 buildingEntry.setOnMouseClicked(mouseEventEventHandler);
+            }
+            if(listOfEntries.size() != 0) {
+                ObservableList<Node> observableListOfEntries = FXCollections.observableArrayList(listOfEntries);
+                buildingsList.setItems(observableListOfEntries);
             }
         }
     }
