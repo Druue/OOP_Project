@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * Initialises a new {@link Reservable}.
  */
 @Entity
-@Table(name = "reservable")
+@Table(name = "Reservable")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Reservable {
 
@@ -21,31 +21,29 @@ public abstract class Reservable {
     public Reservable() {
     }
 
+    public Reservable(Details details, Long id) {
+        this.details=details;
+        this.id = id;
+    }
+
+    /**
+     * This is a details entity that tells you information about a reservable
+     */
+    @OneToMany
+    @Column(name = "details")
+    private Details details;
+
+
     /**
      * The reservable's unique Id.
      */
     @Id
-    @Column(name = "reservable_id")
+    @Column(name = "id")
     public Long id;
 
-    /**
-     * The name of the building. EXAMPLE: "Ewi"
-     */
-    @Column(name = "name")
-    public String name;
+    // Add a map that has a onetomany relationship to a list of timeslots List<Timeslot>.
+    //Put the timemslots table back and have the one to many relationship to it.
 
-    /**
-     * Whether the current reservable object is available to be reserved.
-     */
-    @Column(name = "isavailable")
-    public boolean isAvailable;
 
-    /**
-     * Initialises a new {@link Reservable}.
-     */
-    public Reservable(Long id, String name, boolean isAvailable) {
-        this.id = id;
-        this.name = name;
-        this.isAvailable = isAvailable;
-    }
+
 }

@@ -1,11 +1,11 @@
 package nl.tudelft.oopp.demo.repositories;
 
-import nl.tudelft.oopp.demo.models.User;
+import nl.tudelft.oopp.demo.models.Users;
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<User, String> {
+public interface UserRepository extends CrudRepository<Users, String> {
 
-    User findByNetIdAndPassword(String userID, String password);
+    Users findByNetIdAndPassword(String userID, String password);
 
     boolean existsByEmail(String email);
 

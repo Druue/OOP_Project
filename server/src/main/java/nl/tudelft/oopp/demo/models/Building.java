@@ -1,6 +1,8 @@
 package nl.tudelft.oopp.demo.models;
 
-import java.util.Collection;
+import nl.tudelft.oopp.demo.models.FoodCourt;
+import nl.tudelft.oopp.demo.models.TimeSlots;
+
 import java.util.Map;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -16,7 +18,7 @@ import javax.persistence.Table;
  * Building.
  */
 @Entity
-@Table(name = "building")
+@Table(name = "Building")
 public class Building {
 
     /**
@@ -26,34 +28,44 @@ public class Building {
     }
 
     /**
-     * The building's campus number.
+     * The building's campus number works as a building id in the database.
      */
     @Id
-    @Column(name = "number")
-    public Integer number;
+    @Column(name = "id")
+    public Long number;
 
     /**
-     * The name of the building.
+     * The details of the building.
      */
-    @Column(name = "name")
-    public String name;
+    @Column(name = "details")
+    public Details details;
+
+    /**
+     * OPTIONAL: The foodcourt within the building.
+     */
+    @OneToOne
+    @Column(name = "foodcourt", referencedColumnName = "building_number", nullable="true")
+    public FoodCourt foodCourt;
+
+    /**
+     * Should this be a column?
+     */
+    @Column(name="reservables")
+    @OneToMany
+    public Reservable reservable;
 
     /**
      * The hours during which the building is open during the week.
      */
     @OneToOne
     @JoinColumn(name = "opening_hours", referencedColumnName = "id")
-    public TimeSlot openingHours;
+    public OpeningTimes openingHours;
+
+
 
     /**
-     * OPTIONAL: The foodcourt within the building.
-     */
-    @OneToOne
-    @JoinColumn(name = "foodcourt", referencedColumnName = "building_number")
-    public Foodcourt foodCourt;
-
-    /**
-     * A map of available reservation slots for each reservable entity at/in the building.
+     * Move this to the reservable table model.
+     *
      */
     @OneToMany
     @ElementCollection

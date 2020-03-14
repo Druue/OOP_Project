@@ -12,14 +12,22 @@ import javax.persistence.Table;
 public class Room extends Reservable {
 
     /**
+     * This denotes how many people can be in a room.
+     */
+    @Column(name = "capacity")
+    public int capacity;
+    /**
+     * This lets the user know which room has a projector.
+     */
+    @Column(name = "hasProjector")
+    public boolean hasProjector;
+
+    /**
      * Whether the room is only reservable by staff or not.
      */
-    @Column(name = "employeeonly")
-    public boolean employeeOnly;
+    @Column(name = "forEmployee")
+    public boolean forEmployee;
 
-    public Room(Long id, String name, boolean isAvailable, boolean employeeOnly) {
-        super(id, name, isAvailable);
-        this.employeeOnly = employeeOnly;
-    }
+
 
 }

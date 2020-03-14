@@ -1,4 +1,4 @@
-package nl.tudelft.oopp.demo.models;
+package nl.tudelft.oopp.server.models;
 
 import java.util.Collection;
 import javax.persistence.Column;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * TimeSlots.
  */
 @Entity
-@Table(name = "timeslots")
+@Table(name = "Timeslots")
 public class TimeSlots {
 
     /**

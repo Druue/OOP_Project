@@ -12,24 +12,22 @@ import javax.persistence.Table;
  * Initialises a new {@link User}.
  */
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "Users")
+public class Users {
+
+    /**
+     * The user's email.
+     */
+    @Column(name = "email")
+    public String email;
+
     /**
      * The user's netID...?
      */
     @Id
     @Column(name = "netid")
     public String netId;
-    /**
-     * The user's username...?
-     */
-    @Column(name = "username")
-    public String username;
-    /**
-     * The user's email.
-     */
-    @Column(name = "email")
-    public String email;
+
     /**
      * The user's password.
      */
@@ -39,13 +37,13 @@ public class User {
      * A collection of the user's current reservations.
      */
 
-    @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL)
-    public List<Reservation> reservations;
+    @OneToMany
+    public Details details;
 
     /**
      * Initialises a new {@link User}.
      */
-    public User() {
+    public Users() {
 
     }
 
@@ -54,8 +52,8 @@ public class User {
      *
      * @param registrationDetails The registration details from which to create a new user
      */
-    public User(RegistrationDetails registrationDetails) {
-        this.username = registrationDetails.getName();
+    public Users(RegistrationDetails registrationDetails) {
+        this.details = registrationDetails.getDetails();
         this.email = registrationDetails.getEmail();
         this.netId = registrationDetails.getNetID();
         this.password = registrationDetails.getPassword();
