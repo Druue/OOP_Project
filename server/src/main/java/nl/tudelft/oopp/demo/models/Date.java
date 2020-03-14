@@ -19,7 +19,7 @@ public class Date {
      * This represents a year in java date object.
      */
     @Column(name="year")
-    public Date Year;
+    public Date year;
 
     /**
      * This is a month of a year.
@@ -54,7 +54,7 @@ public class Date {
      * @param isHoliday
      */
     public Date(Date year, Integer month, Integer week, Integer day, boolean isHoliday) {
-        this.year=year;
+        this.year= new Date();
         this.month=month;
         this.week=week;
         this.day=day;

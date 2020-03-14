@@ -2,6 +2,9 @@ package nl.tudelft.oopp.demo.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.*;
+import javax.persistence.GenerationType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
@@ -14,7 +17,7 @@ public class Details {
      * This is the id of the detail that is a randomly generated value.
      */
     @Id
-    @GeneratedValue(strategy = generationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public Long id;
 

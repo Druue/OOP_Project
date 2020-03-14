@@ -2,7 +2,7 @@ package nl.tudelft.oopp.demo.services;
 
 import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.demo.models.LoginDetails;
-import nl.tudelft.oopp.demo.models.User;
+import nl.tudelft.oopp.demo.models.Users;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class LoginService {
         String netID = providedDetails.getNetID();
         String password = providedDetails.getPassword();
 
-        User userToBeValidated = repository.findByNetIdAndPassword(netID, password);
+        Users userToBeValidated = repository.findByNetIdAndPassword(netID, password);
 
         if (userToBeValidated == null) {
             throw new AuthenticationException();

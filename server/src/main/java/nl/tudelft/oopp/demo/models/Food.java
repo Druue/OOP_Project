@@ -4,6 +4,7 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,7 +17,7 @@ public class Food {
      * This hold the details about a food item
      */
     @OneToMany
-    @CollectionColumn(name="details")
-    public Details details;
+    @ElementCollection
+    public Collection<Details> details;
 
 }

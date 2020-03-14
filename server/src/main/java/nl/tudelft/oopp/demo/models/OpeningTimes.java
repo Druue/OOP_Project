@@ -4,6 +4,7 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +44,7 @@ public class OpeningTimes {
      * This tells you the dates that the building is open.
      */
     @OneToOne
-    @ElementCollection(name="date")
+    @ElementCollection
     public Collection<Date> date;
 
 

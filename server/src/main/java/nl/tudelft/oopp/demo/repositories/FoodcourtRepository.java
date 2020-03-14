@@ -1,6 +1,6 @@
 package nl.tudelft.oopp.demo.repositories;
 
-import nl.tudelft.oopp.demo.entities.FoodCourt;
+import nl.tudelft.oopp.demo.models.FoodCourt;
 import org.springframework.data.repository.CrudRepository;
 
 /**

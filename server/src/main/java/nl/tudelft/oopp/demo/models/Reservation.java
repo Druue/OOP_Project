@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.*;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -28,7 +29,7 @@ public class Reservation {
      */
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "netId")
-    public User userID;
+    public Users userID;
 
     /**
      * This is a reservation of a specific reservable.
@@ -41,7 +42,7 @@ public class Reservation {
      * This shows the timeslot of a reservation.
      */
     @OneToOne
-    @CollectionColumn(name="timeslot")
+    @Column(name="timeslot")
     public TimeSlot timeslot;
 
 
@@ -54,7 +55,7 @@ public class Reservation {
     public Long reservationID;
 
 
-    public Reservation(User userID, Reservable reservable, Timeslot timeslot, Long reservationID) {
+    public Reservation(Users userID, Reservable reservable, TimeSlot timeslot, Long reservationID) {
         this.userID=userID;
         this.reservable=reservable;
         this.timeslot=timeslot;

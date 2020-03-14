@@ -3,7 +3,7 @@ package nl.tudelft.oopp.demo.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import nl.tudelft.oopp.demo.entities.FoodCourt;
+import nl.tudelft.oopp.demo.models.FoodCourt;
 import nl.tudelft.oopp.demo.repositories.FoodcourtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

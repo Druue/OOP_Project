@@ -1,7 +1,7 @@
 package nl.tudelft.oopp.demo.models;
 
-import nl.tudelft.oopp.demo.models.FoodCourt;
-import nl.tudelft.oopp.demo.models.TimeSlots;
+import nl.tudelft.oopp.demo.models.*;
+
 
 import java.util.Map;
 import javax.persistence.CollectionTable;
@@ -41,10 +41,10 @@ public class Building {
     public Details details;
 
     /**
-     * OPTIONAL: The foodcourt within the building.
+     * The foodcourt within the building.
      */
     @OneToOne
-    @Column(name = "foodcourt", referencedColumnName = "building_number", nullable="true")
+    @JoinColumn(name="foodCourt", referencedColumnName="id")
     public FoodCourt foodCourt;
 
     /**
@@ -70,7 +70,7 @@ public class Building {
     @OneToMany
     @ElementCollection
     @CollectionTable(name = "available_TimeSlots")
-    Map<Reservable, TimeSlots> availableTimeslots;
+    Map<Reservable, TimeSlot> availableTimeslots;
 
 
 }

@@ -2,7 +2,7 @@ package nl.tudelft.oopp.demo.services;
 
 import javax.management.InstanceAlreadyExistsException;
 import nl.tudelft.oopp.demo.models.RegistrationDetails;
-import nl.tudelft.oopp.demo.models.User;
+import nl.tudelft.oopp.demo.models.Users;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class RegistrationService {
     public void registerUser(RegistrationDetails registrationDetails)
         throws InstanceAlreadyExistsException {
 
-        User user = new User(registrationDetails);
+        Users user = new Users(registrationDetails);
         if (userRepository.existsByNetId(user.netId)) {
             throw new InstanceAlreadyExistsException();
         } else if (userRepository.existsByEmail(user.email)) {

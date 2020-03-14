@@ -1,6 +1,9 @@
 package nl.tudelft.oopp.demo.models;
 
+import nl.tudelft.oopp.demo.models.Users;
+import java.util.Collection;
 import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -33,7 +36,7 @@ public class FoodOrder {
      */
     @OneToMany
     @Column(name="user")
-    public User user;
+    public Users user;
 
 
     /**
@@ -42,7 +45,7 @@ public class FoodOrder {
     @Column(name = "name")
     public String name;
 
-    public FoodOrder(Long id, Collection<Food> food, User user, String name) {
+    public FoodOrder(Long id, Collection<Food> food, Users user, String name) {
         this.id=id;
         this.food=food;
         this.user=user;

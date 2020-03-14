@@ -1,9 +1,11 @@
 package nl.tudelft.oopp.demo.models;
 
 import java.util.Collection;
+import java.util.*;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -50,9 +52,9 @@ public class FoodCourt {
      * @param details
      * @param foodlist
      */
-    public FoodCourt(Integer id, Details details, Collection<String> foodlist) {
-        this.id = id;
+    public FoodCourt(Integer buildingNumber, Details details, Collection<String> foodlist) {
+        this.buildingNumber = buildingNumber;
         this.details = details;
-        this.foodlist = foodlist;
+        this.foodlist = new ArrayList<>();
     }
 }

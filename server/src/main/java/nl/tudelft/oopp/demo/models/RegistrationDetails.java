@@ -4,7 +4,7 @@ package nl.tudelft.oopp.demo.models;
 // This class represents the user information provided at registration time
 public class RegistrationDetails {
 
-    private String username;
+    private Details details;
     private String netID;
     private String email;
     private String password;
@@ -18,18 +18,18 @@ public class RegistrationDetails {
      * @param password the user's password.
      */
     public RegistrationDetails(String name, String netID, String email, String password) {
-        this.username = name;
+        this.details = details;
         this.netID = netID;
         this.email = email;
         this.password = password;
     }
 
-    public String getName() {
-        return username;
+    public Details getDetails() {
+        return details;
     }
 
-    public void setName(String name) {
-        this.username = name;
+    public void setDetails(Details details) {
+        this.details = details;
     }
 
     public String getNetID() {
