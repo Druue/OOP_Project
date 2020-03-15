@@ -1,13 +1,12 @@
-package nl.tudelft.oopp.server.services;
+package nl.tudelft.oopp.demo.services;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import nl.tudelft.oopp.server.models.MenuItem;
-import nl.tudelft.oopp.server.repositories.MenuItemRepository;
+import nl.tudelft.oopp.demo.models.FoodOrder;
+import nl.tudelft.oopp.demo.repositories.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class MenuItemService {
@@ -18,8 +17,8 @@ public class MenuItemService {
     /**
      * Gets a list of all menu items.
      */
-    public List<MenuItem> getAllMenuItems() {
-        List<MenuItem> menuItems = new ArrayList<MenuItem>();
+    public List<FoodOrder> getAllMenuItems() {
+        List<FoodOrder> menuItems = new ArrayList<FoodOrder>();
         menuItemRepository.findAll().forEach(menuItems::add);
         return menuItems;
     }
@@ -30,7 +29,7 @@ public class MenuItemService {
      * @param id linked to a menu item
      * @return the menu item with that id or null if it does not exist
      */
-    public Optional<MenuItem> getMenuItem(Long id) {
+    public Optional<FoodOrder> getMenuItem(Long id) {
         return menuItemRepository.findById(id);
     }
 
@@ -39,7 +38,7 @@ public class MenuItemService {
      * 
      * @param menuItem to be added to the menu items list
      */
-    public void addMenuItem(MenuItem menuItem) {
+    public void addMenuItem(FoodOrder menuItem) {
         menuItemRepository.save(menuItem);
     }
 
@@ -49,7 +48,7 @@ public class MenuItemService {
      * @param id       to be linked to a menuItem
      * @param menuItem to be updated
      */
-    public void updateMenuItem(Long id, MenuItem menuItem) {
+    public void updateMenuItem(Long id, FoodOrder menuItem) {
         menuItemRepository.save(menuItem);
     }
 

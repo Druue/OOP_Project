@@ -1,21 +1,51 @@
-package nl.tudelft.oopp.server.models;
+package nl.tudelft.oopp.demo.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.util.Collection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.*;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  * Initialises a new isntance of {@link Reservation}.
  */
 @Entity
-@Table(name = "reservation")
+@Table(name = "Reservation")
 public class Reservation {
+
+    /**
+     * Initialises a new isntance of {@link Reservation}.
+     */
+    public Reservation() {
+
+    }
+
+    /**
+     * The ID of the user who made the reservation.
+     */
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "netId")
+    public Users userID;
+
+    /**
+     * This is a reservation of a specific reservable.
+     */
+    @OneToMany
+    @JoinColumn(name="reservable")
+    public Collection<Reservable> reservable;
+
+    /**
+     * This shows the timeslot of a reservation.
+     */
+    @OneToOne
+    @JoinColumn(name="timeslot")
+    public Collection<TimeSlot> timeslot;
+
 
     /**
      * The reservation's unique ID.
@@ -24,19 +54,12 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "reservation_id")
     public Long reservationID;
-    /**
-     * The ID of the user who made the reservation.
-     */
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId")
-    public User userID;
 
-    @OneToOne
-    @JoinColumn(name = "reservable_id", referencedColumnName = "reservable_id")
-    public Reservable reservableId;
 
-    /**
-     * Initialises a new isntance of {@link Reservation}.
-     */
-    public Reservation() {}
+    public Reservation(Users userID, Collection<Reservable> reservable, Collection<TimeSlot> timeslot, Long reservationID) {
+        this.userID=userID;
+        this.reservable=reservable;
+        this.timeslot=timeslot;
+        this.reservationID=reservationID;
+    }
 }

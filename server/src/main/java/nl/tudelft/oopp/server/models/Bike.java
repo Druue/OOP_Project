@@ -2,22 +2,20 @@ package nl.tudelft.oopp.server.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Collection;
 
 /**
  * Initialises a new {@link Bike}.
  */
 @Entity
-@Table(name = "bike")
+@Table(name = "Bike")
 public class Bike extends Reservable {
 
     /**
-     * Initialises a new {@link Bike}.
-     * 
-     * @param id          The bike's ID.
-     * @param name        The bike's name.
-     * @param isAvailable The bike's availability.
+     * @param details
+     * @param id
      */
-    public Bike(Long id, String name, boolean isAvailable) {
-        super(id, name, isAvailable);
+    public Bike(Collection<Details> details, Long id) {
+        super(details, id);
     }
 }

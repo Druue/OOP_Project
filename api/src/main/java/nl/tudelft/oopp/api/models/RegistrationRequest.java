@@ -1,36 +1,35 @@
-package nl.tudelft.oopp.api.models;
+package nl.tudelft.oopp.demo.models;
 
-public class RegistrationRequest {
 
-    private String name;
+// This class represents the user information provided at registration time
+public class RegistrationDetails {
+
+    private Details details;
     private String netID;
     private String email;
     private String password;
-    private String type;
 
     /**
      * An Object used during the registration process, containing all of the user's details.
-     * 
+     *
      * @param name     The user's name.
      * @param netID    The user's netID.
      * @param email    the user's email.
      * @param password the user's password.
-     * @param type     the user's type: Either employee or student.
      */
-    public RegistrationRequest(String name, String netID, String email, String password, String type) {
-        this.name = name;
+    public RegistrationDetails(String name, String netID, String email, String password) {
+        this.details = details;
         this.netID = netID;
         this.email = email;
         this.password = password;
-        this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public Details getDetails() {
+        return details;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDetails(Details details) {
+        this.details = details;
     }
 
     public String getNetID() {
@@ -57,11 +56,4 @@ public class RegistrationRequest {
         this.password = password;
     }
 
-    public String getRole() {
-        return type;
-    }
-
-    public void setRole(String type) {
-        this.type = type;
-    }
 }

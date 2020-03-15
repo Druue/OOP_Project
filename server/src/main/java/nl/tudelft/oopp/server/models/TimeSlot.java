@@ -1,4 +1,4 @@
-package nl.tudelft.oopp.server.models;
+package nl.tudelft.oopp.demo.models;
 
 import java.sql.Timestamp;
 import javax.persistence.Column;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * TimeSlot.
  */
 @Entity
-@Table(name = "timeslot")
+@Table(name = "Timeslot")
 public class TimeSlot {
 
     /**
@@ -21,17 +21,34 @@ public class TimeSlot {
     public TimeSlot() {
     }
 
+    /**
+     * This is the timeslot id.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    Long id;
+    public Long id;
 
-    @Column(name = "start")
-    Timestamp startTime;
+    /**
+     * This is the index? What did you guys mean buy this?
+     */
+    @Column(name = "index")
+    public String index;
 
-    @Column(name = "end")
-    Timestamp endTime;
+    /**
+     * This tells us whether or not the timeslot is available.
+     */
+    @Column(name = "isAvailable")
+    public boolean isAvailable;
 
-    @Column(name = "availability")
-    Boolean isAvailable;
+    /**
+     * @param id
+     * @param index
+     * @param isAvailable
+     */
+    public TimeSlot(Long id, String index, boolean isAvailable) {
+        this.id=id;
+        this.index=index;
+        this.isAvailable=isAvailable;
+    }
 }

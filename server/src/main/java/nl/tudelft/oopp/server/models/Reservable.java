@@ -1,8 +1,10 @@
 package nl.tudelft.oopp.server.models;
 
+import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.*;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
@@ -11,7 +13,7 @@ import javax.persistence.Table;
  * Initialises a new {@link Reservable}.
  */
 @Entity
-@Table(name = "reservable")
+@Table(name = "Reservable")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Reservable {
 
@@ -21,31 +23,31 @@ public abstract class Reservable {
     public Reservable() {
     }
 
+
+    /**
+     * This is a details entity that tells you information about a reservable
+     */
+    @OneToOne
+    @ElementCollection
+    @JoinColumn(name = "details")
+    public Collection<Details> details;
+
+
     /**
      * The reservable's unique Id.
      */
     @Id
-    @Column(name = "reservable_id")
+    @Column(name = "id")
     public Long id;
 
-    /**
-     * The name of the building. EXAMPLE: "Ewi"
-     */
-    @Column(name = "name")
-    public String name;
-
-    /**
-     * Whether the current reservable object is available to be reserved.
-     */
-    @Column(name = "isavailable")
-    public boolean isAvailable;
-
-    /**
-     * Initialises a new {@link Reservable}.
-     */
-    public Reservable(Long id, String name, boolean isAvailable) {
+    public Reservable(Collection<Details> details, Long id) {
+        this.details=details;
         this.id = id;
-        this.name = name;
-        this.isAvailable = isAvailable;
     }
+
+    // Add a map that has a onetomany relationship to a list of timeslots List<Timeslot>.
+    //Put the timemslots table back and have the one to many relationship to it.
+
+
+
 }

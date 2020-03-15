@@ -3,8 +3,13 @@ package nl.tudelft.oopp.server.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+<<<<<<< HEAD:server/src/main/java/nl/tudelft/oopp/server/services/FoodcourtService.java
 import nl.tudelft.oopp.server.models.FoodCourt;
 import nl.tudelft.oopp.server.repositories.FoodCourtRepository;
+=======
+import nl.tudelft.oopp.demo.models.FoodCourt;
+import nl.tudelft.oopp.demo.repositories.FoodcourtRepository;
+>>>>>>> 59e9244a0240f4f41315ec1e50940aada02337a3:server/src/main/java/nl/tudelft/oopp/demo/services/FoodcourtService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
