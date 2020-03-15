@@ -21,7 +21,16 @@
                   <Image url="@images/Rooms-background8x6.png" />
                </image>
             </ImageView>
-
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+               <children>
+                  <Box depth="0.0" height="420.0" width="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Label text="*Room name*" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="20.0">
+                     <font>
+                        <Font name="Helvetica" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
 
           <MenuBar id="menuBar" style="-fx-background-color: #00A6D6;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
