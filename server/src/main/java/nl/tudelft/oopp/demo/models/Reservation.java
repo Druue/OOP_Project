@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.util.Collection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,15 +36,15 @@ public class Reservation {
      * This is a reservation of a specific reservable.
      */
     @OneToMany
-    @Column(name="reservable")
-    public Reservable reservable;
+    @JoinColumn(name="reservable")
+    public Collection<Reservable> reservable;
 
     /**
      * This shows the timeslot of a reservation.
      */
     @OneToOne
-    @Column(name="timeslot")
-    public TimeSlot timeslot;
+    @JoinColumn(name="timeslot")
+    public Collection<TimeSlot> timeslot;
 
 
     /**
@@ -55,7 +56,7 @@ public class Reservation {
     public Long reservationID;
 
 
-    public Reservation(Users userID, Reservable reservable, TimeSlot timeslot, Long reservationID) {
+    public Reservation(Users userID, Collection<Reservable> reservable, Collection<TimeSlot> timeslot, Long reservationID) {
         this.userID=userID;
         this.reservable=reservable;
         this.timeslot=timeslot;

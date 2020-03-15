@@ -34,7 +34,6 @@ public class FoodOrder {
     /**
      * This has the information about the user that ordered the food.
      */
-    @OneToMany
     @Column(name="user")
     public Users user;
 

@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.models;
 
 import java.util.Collection;
+import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ public class Date {
     /**
      * This represents a year in java date object.
      */
+    @Id
     @Column(name="year")
     public Date year;
 
@@ -54,7 +56,7 @@ public class Date {
      * @param isHoliday
      */
     public Date(Date year, Integer month, Integer week, Integer day, boolean isHoliday) {
-        this.year= new Date();
+        this.year= year;
         this.month=month;
         this.week=week;
         this.day=day;

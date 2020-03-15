@@ -34,9 +34,9 @@ public class FoodCourt {
     /**
      * This holds the details about each foodcourt in a building.
      */
-    @Column(name = "Details")
+    @JoinColumn(name = "Details")
     @OneToMany
-    public Details details;
+    public Collection<Details> details;
 
 
     /**
@@ -52,7 +52,7 @@ public class FoodCourt {
      * @param details
      * @param foodlist
      */
-    public FoodCourt(Integer buildingNumber, Details details, Collection<String> foodlist) {
+    public FoodCourt(Integer buildingNumber, Collection<Details> details, Collection<String> foodlist) {
         this.buildingNumber = buildingNumber;
         this.details = details;
         this.foodlist = new ArrayList<>();

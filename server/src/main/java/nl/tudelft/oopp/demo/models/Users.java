@@ -1,9 +1,11 @@
 package nl.tudelft.oopp.demo.models;
 
 import java.util.List;
+import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ElementCollection;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -38,7 +40,7 @@ public class Users {
      */
 
     @OneToMany
-    public Details details;
+    public Collection<Details> details;
 
     /**
      * Initialises a new {@link User}.
@@ -53,7 +55,7 @@ public class Users {
      * @param registrationDetails The registration details from which to create a new user
      */
     public Users(RegistrationDetails registrationDetails) {
-        this.details = registrationDetails.getDetails();
+        this.details = details;
         this.email = registrationDetails.getEmail();
         this.netId = registrationDetails.getNetID();
         this.password = registrationDetails.getPassword();

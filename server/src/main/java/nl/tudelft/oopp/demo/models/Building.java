@@ -50,8 +50,8 @@ public class Building {
     /**
      * Should this be a column?
      */
-    @Column(name="reservables")
-    @OneToMany
+    @JoinColumn(name="reservables")
+    @OneToOne
     public Reservable reservable;
 
     /**
