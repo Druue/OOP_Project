@@ -74,7 +74,7 @@ public class ReservationsSceneController implements Initializable {
 
         populateBuildingsScrollBox();
 
-        roomsListWrapper.setVisible(false);
+//        roomsListWrapper.setVisible(false);
     }
 
     /**
@@ -129,10 +129,15 @@ public class ReservationsSceneController implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-                            FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
+//                            FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomsList.fxml"));
+                            RoomsListController controller = new RoomsListController();
+                            loader.setController(controller);
+                            VBox tabContent = loader.load();
                             roomsListWrapper.setVisible(true);
-                            roomsListTab.setContent(flowPane);
-                            RoomsListController.generateInitialRooms(event);
+                            roomsListTab.setContent(tabContent);
+
+                            controller.generateInitialRooms(event);
                         } catch (IOException e) {
                             System.out.println("File Not Found");
                         }
