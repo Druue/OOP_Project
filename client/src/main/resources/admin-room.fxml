@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Box?>
 <?import javafx.scene.text.Font?>
@@ -26,9 +29,56 @@
                   <Box depth="0.0" height="420.0" width="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Label text="*Room name*" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="20.0">
                      <font>
-                        <Font name="Helvetica" size="24.0" />
+                        <Font name="Helvetica" size="31.0" />
                      </font>
                   </Label>
+                  <Button mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: #287E40;" text="Reserve" textFill="WHITE" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="200.0">
+                     <font>
+                        <Font name="Helvetica" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: #0080D6;" text="Edit" textFill="WHITE" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="250.0">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: #E80100;" text="Manage reservation" textFill="WHITE" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="300.0">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <ListView prefHeight="250.0" prefWidth="450.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
+                  <VBox prefHeight="100.0" prefWidth="180.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="80.0">
+                     <children>
+                        <Label text="hasMultimedia">
+                           <font>
+                              <Font name="Helvetica" size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="25.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Capacity: ">
+                                 <font>
+                                    <Font name="Helvetica" size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="40.0" top="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label text="x">
+                                 <font>
+                                    <Font name="Helvetica" size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets top="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children></VBox>
                </children>
             </AnchorPane>
 
