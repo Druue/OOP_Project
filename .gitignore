@@ -160,3 +160,6 @@ build
 # Ignore all local history of files
 .history
 .vscode/settings.json
+
+### MYSQL DOCKER ###
+/data
