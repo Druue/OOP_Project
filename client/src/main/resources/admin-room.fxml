@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Box?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.HomepageController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.AdminRoomController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -47,7 +47,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-                  <ListView prefHeight="250.0" prefWidth="450.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
+                  <ListView fx:id="todayRes" prefHeight="250.0" prefWidth="450.0" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0" />
                   <VBox prefHeight="100.0" prefWidth="180.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="80.0">
                      <children>
                         <Label text="hasMultimedia">
