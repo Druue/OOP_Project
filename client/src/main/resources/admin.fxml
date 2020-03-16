@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.HomepageController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.AdminController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -55,6 +55,7 @@
                               <ListView fx:id="allRes1" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #00a6d6;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <Button mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: #287e40;" text="Add a building" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="130.0" />
                               <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: #EA2E00;" text="Delete a building" textFill="WHITE" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="130.0" />
+                              <Button onAction="#goToAdminRoom" text="room" />
                            </children>
                         </AnchorPane>
                      </content>

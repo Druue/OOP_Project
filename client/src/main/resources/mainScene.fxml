@@ -17,5 +17,7 @@
 
     <Button onAction="#goToHome" text="Go to the homepage" />
 
+    <Button onAction="#goToAdmin" text="Go to the admin page" />
+
     <Button text="Get some buildings" onAction="#getBuildings"/>
 </VBox>
