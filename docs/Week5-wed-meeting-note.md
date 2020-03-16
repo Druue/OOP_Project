@@ -60,7 +60,7 @@ Note taker: Justin Jo
     - FoodItems
     - _**ID**_
     - @User
-    - name
+
 
 ## Labels
 - @: foreign key
