@@ -29,6 +29,7 @@ public class Building {
      * The details of the building.
      */
     @Column(name = "details")
+    @JoinColumn(name = "details", referencedColumnName = "id")
     public Details details;
 
     /**

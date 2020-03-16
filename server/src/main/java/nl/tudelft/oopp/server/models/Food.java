@@ -1,14 +1,16 @@
 package nl.tudelft.oopp.server.models;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * A piece of {@link Food}.
  */
+@Entity
+@Table(name = "food_item")
 public class Food {
 
     @Id
@@ -19,8 +21,7 @@ public class Food {
     /**
      * This hold the details about the food item.
      */
-    @OneToMany
-    @ElementCollection
+    @Column(name = "details")
     public Details details;
 
 }
