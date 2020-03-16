@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.server.models;
 
-import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -14,10 +13,10 @@ public class Bike extends Reservable {
     /**
      * Initialises a new instance of {@link Bike}.
      * 
-     * @param details Details about the bike.
      * @param id      The bike's ID.
+     * @param details Details about the bike.
      */
-    public Bike(Collection<Details> details, Long id) {
-        super(details, id);
+    public Bike(Long id, Details details) {
+        super(id, details);
     }
 }

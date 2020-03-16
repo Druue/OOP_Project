@@ -23,6 +23,9 @@ public class Details {
      */
     private String image;
 
+    /**
+     * Initialises a new instance of a {@link Details}.
+     */
     public Details() {
 
     }

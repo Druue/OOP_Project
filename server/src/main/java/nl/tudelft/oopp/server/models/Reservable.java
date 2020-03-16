@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.server.models;
 
-import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -20,11 +19,11 @@ import javax.persistence.Table;
 public abstract class Reservable {
 
     /**
-     * Initialises a new instance of {@link Reservable}.
+     * The reservable's unique Id.
      */
-    public Reservable() {
-    }
-
+    @Id
+    @Column(name = "id")
+    public Long id;
 
     /**
      * This is a details entity that tells you information about a reservable.
@@ -32,24 +31,17 @@ public abstract class Reservable {
     @OneToOne
     @ElementCollection
     @JoinColumn(name = "details")
-    public Collection<Details> details;
-
+    public Details details;
 
     /**
-     * The reservable's unique Id.
+     * Initialises a new instance of {@link Reservable}.
      */
-    @Id
-    @Column(name = "id")
-    public Long id;
+    public Reservable() {
 
-    public Reservable(Collection<Details> details, Long id) {
-        this.details = details;
-        this.id = id;
     }
 
-    // Add a map that has a onetomany relationship to a list of timeslots List<Timeslot>.
-    // Put the timemslots table back and have the one to many relationship to it.
-
-
-
+    public Reservable(Long id, Details details) {
+        this.id = id;
+        this.details = details;
+    }
 }
