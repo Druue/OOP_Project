@@ -8,7 +8,6 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -45,7 +44,6 @@ public class Foodcourt {
      * The foodcourt's menu.
      */
     @ElementCollection
-    @ManyToMany
     @CollectionTable(name = "foodlist")
     public Collection<Food> menu;
 
