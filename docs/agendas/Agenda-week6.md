@@ -5,10 +5,10 @@ In the 'Points of action' part you will also find some topics to cover in/after 
 
 ---
 
-Date:          	
-Main focus:     
-Chair:          
-Note taker:     
+Date:          	16/03/2020
+Main focus:     Communication
+Chair:          Nikko
+Note taker:     Justin
 
 In italics you will find some additional explanations of the agenda points. You will find mostly the same points in the next agendas.
 
@@ -27,7 +27,6 @@ Frontend:
 - Room entry implementation and reservation screen improvement - Nikko
 
 Database:
-
  
 
 # Action points for next week (Scrum board)
