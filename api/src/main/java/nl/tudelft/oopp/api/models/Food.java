@@ -1,25 +1,20 @@
 package nl.tudelft.oopp.api.models;
 
-/**
- * Initialises a new {@link Reservable}.
- */
-public abstract class Reservable {
 
-    /**
-     * The reservable's unique Id.
-     */
+/**
+ * A piece of {@link Food}.
+ */
+
+public class Food {
 
     public Long id;
 
     /**
-     * This is a details entity that tells you information about a reservable.
+     * This hold the details about the food item.
      */
     public Details details;
 
-
-    public Reservable() { }
-
-    public Reservable(Long id, Details details) {
+    public Food(Long id, Details details) {
         this.id = id;
         this.details = details;
     }
