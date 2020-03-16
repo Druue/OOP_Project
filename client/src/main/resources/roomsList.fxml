@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<FlowPane id="mainPane" xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
+<FlowPane xmlns:fx="http://javafx.com/fxml" id="mainPane"
+          xmlns="http://javafx.com/javafx"
           fx:controller="nl.tudelft.oopp.client.controllers.RoomsListController"
           prefHeight="400.0" prefWidth="600.0">
     <HBox>
