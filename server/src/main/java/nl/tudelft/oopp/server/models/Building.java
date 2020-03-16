@@ -28,7 +28,7 @@ public class Building {
     /**
      * The details of the building.
      */
-    @Column(name = "details")
+    @OneToOne
     @JoinColumn(name = "details", referencedColumnName = "id")
     public Details details;
 
@@ -68,7 +68,7 @@ public class Building {
      * @param number       The building's number.
      * @param details      {@link Details} about the building.
      * @param foodcourt    The building's {@link Foodcourt}.
-     * @param openingHours The building's {@link OpeningTimes}.
+     * @param openingHours The building's {@link TimeSlot}.
      */
     public Building(Long number, Details details, Foodcourt foodcourt, TimeSlot openingHours) {
         this.number = number;

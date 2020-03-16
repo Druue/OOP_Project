@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -21,7 +23,8 @@ public class Food {
     /**
      * This hold the details about the food item.
      */
-    @Column(name = "details")
+    @OneToOne
+    @JoinColumn(name = "details", referencedColumnName = "id")
     public Details details;
 
 }

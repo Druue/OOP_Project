@@ -2,6 +2,8 @@ package nl.tudelft.oopp.server.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -11,11 +13,18 @@ import javax.persistence.Id;
 public class Date {
 
     /**
-     * The year.
+     * The id.
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    public Long id;
+
+    /**
+     * The year.
+     */
     @Column(name = "year")
-    public Date year;
+    public Integer year;
 
     /**
      * The month of the year. EXAMPLE: 4 (April in that case).
@@ -57,7 +66,7 @@ public class Date {
      * @param day       The day.
      * @param isHoliday Whether it's a holiday or not.
      */
-    public Date(Date year, Integer month, Integer week, Integer day, boolean isHoliday) {
+    public Date(Integer year, Integer month, Integer week, Integer day, boolean isHoliday) {
         this.year = year;
         this.month = month;
         this.week = week;

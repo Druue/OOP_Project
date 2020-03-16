@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -29,14 +29,15 @@ public class Reservation {
     /**
      * The ID of the user who made the reservation.
      */
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "username")
+    @OneToOne
+    @JoinColumn(name = "user", referencedColumnName = "user_id")
     public User user;
 
     /**
      * This is a reservation of a specific reservable.
      */
-    @JoinColumn(name = "reservable")
+    @OneToOne
+    @JoinColumn(name = "reservable", referencedColumnName = "id")
     public Reservable reservable;
 
     /**
