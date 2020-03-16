@@ -76,19 +76,20 @@ public class AdminController implements Initializable {
      */
     public void goToAdminRoom(ActionEvent event) {
         try {
-            Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-room.fxml"));
-            Scene roomScene = new Scene(roomParent);
+            Parent aRoomParent = FXMLLoader.load(getClass().getResource("/admin-room.fxml"));
+            Scene aRoomScene = new Scene(aRoomParent);
 
             Stage primaryStage =
                     (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
-            primaryStage.setScene(roomScene);
+            primaryStage.setScene(aRoomScene);
             primaryStage.show();
 
         } catch (IOException e) {
             System.out.println("IOException in AdminController");
         }
     }
+
 
 }
