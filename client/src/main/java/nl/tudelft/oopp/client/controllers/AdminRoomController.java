@@ -56,4 +56,26 @@ public class AdminRoomController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadData();
     }
+
+    /**
+     * Handles going to the mainScene.a
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToMain(ActionEvent event) {
+        try {
+            Parent mainParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
+            Scene mainScene = new Scene(mainParent);
+
+            Stage primaryStage =
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(mainScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AdminController");
+        }
+    }
 }
