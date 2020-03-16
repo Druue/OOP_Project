@@ -32,7 +32,7 @@ public class User {
     public String email;
 
     /**
-     * The user's netID.
+     * The user's username.
      */
     @Column(name = "username")
     public String username;
@@ -65,7 +65,7 @@ public class User {
         this.details =
                 HttpRequestHandler.convertModel(registrationDetails.getDetails(), Details.class);
         this.email = registrationDetails.getEmail();
-        this.username = registrationDetails.getNetID();
+        this.username = registrationDetails.getusername();
         this.password = registrationDetails.getPassword();
     }
 }

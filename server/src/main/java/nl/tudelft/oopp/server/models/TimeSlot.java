@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.server.models;
 
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
  * TimeSlot.
  */
 @Entity
-@Table(name = "Timeslot")
+@Table(name = "timeslot")
 public class TimeSlot {
 
     /**
@@ -25,14 +26,14 @@ public class TimeSlot {
     /**
      * This is the index? What did you guys mean buy this?.
      */
-    @Column(name = "index")
-    public String index;
+    @Column(name = "start")
+    public Timestamp startTime;
 
     /**
      * This tells us whether or not the timeslot is available.
      */
-    @Column(name = "isAvailable")
-    public boolean isAvailable;
+    @Column(name = "end")
+    public Timestamp endTime;
 
     /**
      * Initialises a new instance of {@link TimeSlot}.
@@ -44,13 +45,11 @@ public class TimeSlot {
     /**
      * Initialises a new instance of {@link TimeSlot}.
      * 
-     * @param id          The timeslot's id.
-     * @param index       The timeslot's index.
-     * @param isAvailable The availability of the timeslot.
+     * @param startTime When the timeslot starts.
+     * @param endTime   When the timeslot ends.
      */
-    public TimeSlot(Long id, String index, boolean isAvailable) {
-        this.id = id;
-        this.index = index;
-        this.isAvailable = isAvailable;
+    public TimeSlot(Timestamp startTime, Timestamp endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 }

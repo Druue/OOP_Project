@@ -19,7 +19,7 @@ public class LoginSceneController {
 
     // the TextField object from mainScene.fxml
     @FXML
-    public TextField inputNetID;
+    public TextField inputusername;
     @FXML
     public TextField inputPassword;
 
@@ -29,7 +29,7 @@ public class LoginSceneController {
      */
     public void tryLogin() {
 
-        String username = inputNetID.getText();
+        String username = inputusername.getText();
         String password = inputPassword.getText();
         if (username.isEmpty() || password.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -92,7 +92,7 @@ public class LoginSceneController {
         try {
             Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
             Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) (inputNetID.getScene().getWindow());
+            Stage primaryStage = (Stage) (inputusername.getScene().getWindow());
             primaryStage.hide();
             primaryStage.setScene(homepageScene);
             primaryStage.show();

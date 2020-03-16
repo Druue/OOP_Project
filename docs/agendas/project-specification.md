@@ -114,7 +114,7 @@ A person is able to create an account. This can only be done using a TU Delft ma
 
 - First and Last name
 - Their TU Delft email address
-- Their NetID
+- Their username
 - A password   
 
 ## Roles

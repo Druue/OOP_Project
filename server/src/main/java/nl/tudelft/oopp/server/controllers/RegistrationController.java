@@ -23,10 +23,10 @@ public class RegistrationController {
      * This method is the entry point for the registration procedure. It accepts as input the
      * provided by the user registration details encapsulated in a RegistrationDetails object, with
      * the password hashed in advance by the client. Check: The method tries to establish whether a
-     * client with such a NetID already exists in the database and if so, sends a response informing
-     * the user to provide another NetID If no user with the provided NetID exists, the method adds
-     * the new user to the database and sends a response that informs the user he has been
-     * successfully registered.
+     * client with such a username already exists in the database and if so, sends a response
+     * informing the user to provide another username If no user with the provided username exists,
+     * the method adds the new user to the database and sends a response that informs the user he
+     * has been successfully registered.
      */
     @PostMapping("/register")
     public ResponseEntity<UserAuthResponse> registerUser(@RequestBody String jsonRequest) {
@@ -49,7 +49,7 @@ public class RegistrationController {
             e.printStackTrace();
             LoggerService.error(RegistrationController.class,
                     "Invalid details provided. User with that "
-                            + "NetID already exists in the database.");
+                            + "username already exists in the database.");
 
             UserAuthResponse r = new UserAuthResponse("Invalid details provided!", "ERROR", null);
             return ResponseEntity.badRequest().body(r);

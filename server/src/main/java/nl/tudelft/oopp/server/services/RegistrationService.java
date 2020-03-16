@@ -19,8 +19,8 @@ public class RegistrationService {
      * exists, throws exception.
      * 
      * @param registrationRequest The user provided registration details
-     * @throws InstanceAlreadyExistsException - throws it if a user with the provided NetID already
-     *                                        exists
+     * @throws InstanceAlreadyExistsException - throws it if a user with the provided username
+     *                                        already exists
      */
     public void registerUser(User registrationRequest) throws InstanceAlreadyExistsException {
     }

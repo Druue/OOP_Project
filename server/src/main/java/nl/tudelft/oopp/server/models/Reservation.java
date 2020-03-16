@@ -2,14 +2,13 @@ package nl.tudelft.oopp.server.models;
 
 import java.util.Collection;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -31,21 +30,20 @@ public class Reservation {
      * The ID of the user who made the reservation.
      */
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "netId")
+    @JoinColumn(name = "user_id", referencedColumnName = "username")
     public User user;
 
     /**
      * This is a reservation of a specific reservable.
      */
-    @OneToMany
     @JoinColumn(name = "reservable")
     public Reservable reservable;
 
     /**
      * This shows the timeslot of a reservation.
      */
-    @OneToOne
     @JoinColumn(name = "timeslot")
+    @ElementCollection
     public Collection<TimeSlot> timeslot;
 
     /**

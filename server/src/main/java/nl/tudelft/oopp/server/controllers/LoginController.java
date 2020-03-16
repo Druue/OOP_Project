@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 // This class contains the method to answer to a login request from the client
-// It receives as input the provided by the user NetID and a hashed password.
+// It receives as input the provided by the user username and a hashed password.
 @RestController
 public class LoginController {
 
@@ -25,8 +25,8 @@ public class LoginController {
     }
 
     /**
-     * This method logs in a user to the application with provided NetID and password. It calls the
-     * method userValidate() of the LoginService class to query the database for the user.
+     * This method logs in a user to the application with provided username and password. It calls
+     * the method userValidate() of the LoginService class to query the database for the user.
      *
      * @param request - The request provided by the user details mapped to a LoginDetails object
      *                through the @RequestBody annotation.
@@ -49,7 +49,7 @@ public class LoginController {
             return ResponseEntity.ok().body(a);
         } catch (Exception /* AuthenticationException */ e) {
             LoggerService.info(LoginController.class,
-                    "Authentication failed for user with NetID: " + loginRequest.getUsername()
+                    "Authentication failed for user with username: " + loginRequest.getUsername()
                             + " and password " + loginRequest.getPassword()
                             + " : No such user registered.");
 

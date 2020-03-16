@@ -16,7 +16,7 @@ public class User {
     public String email;
 
     /**
-     * The user's netID.
+     * The user's username.
      */
     public String username;
 
@@ -60,7 +60,7 @@ public class User {
     public User(RegistrationDetails registrationDetails) {
         this.details = registrationDetails.getDetails();
         this.email = registrationDetails.getEmail();
-        this.username = registrationDetails.getNetID();
+        this.username = registrationDetails.getusername();
         this.password = registrationDetails.getPassword();
     }
 

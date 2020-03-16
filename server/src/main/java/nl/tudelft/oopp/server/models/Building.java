@@ -39,18 +39,11 @@ public class Building {
     public Foodcourt foodcourt;
 
     /**
-     * Should this be a column?.
-     */
-    @JoinColumn(name = "reservables")
-    @OneToOne
-    public Reservable reservable;
-
-    /**
      * The hours during which the building is open during the week.
      */
     @OneToOne
     @JoinColumn(name = "opening_hours", referencedColumnName = "id")
-    public OpeningTimes openingHours;
+    public TimeSlot openingHours;
 
     /**
      * Move this to the reservable table model.
@@ -76,7 +69,7 @@ public class Building {
      * @param foodcourt    The building's {@link Foodcourt}.
      * @param openingHours The building's {@link OpeningTimes}.
      */
-    public Building(Long number, Details details, Foodcourt foodcourt, OpeningTimes openingHours) {
+    public Building(Long number, Details details, Foodcourt foodcourt, TimeSlot openingHours) {
         this.number = number;
         this.details = details;
         this.foodcourt = foodcourt;

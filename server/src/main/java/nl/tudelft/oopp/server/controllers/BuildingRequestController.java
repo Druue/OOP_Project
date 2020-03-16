@@ -31,7 +31,7 @@ public class BuildingRequestController {
         // "Request for all available buildings received. Processing ...");
         // System.out.println(session);
         // try {
-        // if (session.getAttribute("NetID") == null) {
+        // if (session.getAttribute("username") == null) {
         // throw new IllegalAccessException();
         // }
         // } catch (IllegalAccessException exception) {

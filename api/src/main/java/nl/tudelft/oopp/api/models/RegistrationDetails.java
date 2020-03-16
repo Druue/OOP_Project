@@ -5,7 +5,7 @@ package nl.tudelft.oopp.api.models;
 public class RegistrationDetails {
 
     private Details details;
-    private String netID;
+    private String username;
     private String email;
     private String password;
 
@@ -13,13 +13,13 @@ public class RegistrationDetails {
      * An Object used during the registration process, containing all of the user's details.
      *
      * @param details  The user's details.
-     * @param netID    The user's netID.
+     * @param username The user's username.
      * @param email    the user's email.
      * @param password the user's password.
      */
-    public RegistrationDetails(Details details, String netID, String email, String password) {
+    public RegistrationDetails(Details details, String username, String email, String password) {
         this.details = details;
-        this.netID = netID;
+        this.username = username;
         this.email = email;
         this.password = password;
     }
@@ -32,12 +32,12 @@ public class RegistrationDetails {
         this.details = details;
     }
 
-    public String getNetID() {
-        return netID;
+    public String getusername() {
+        return username;
     }
 
-    public void setNetID(String netID) {
-        this.netID = netID;
+    public void setusername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
