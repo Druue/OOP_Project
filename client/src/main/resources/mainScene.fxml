@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafreservationsx.com/fxml"
+<VBox xmlns:fx="http://javafreservationsx.com/fxml"
+      xmlns="http://javafx.com/javafx"
       fx:controller="nl.tudelft.oopp.client.controllers.MainSceneController">
 
     <!-- Text field called 'userInput' -->
-    <TextField fx:id="userInput" />
+    <TextField fx:id="userInput"/>
     <!-- Button that sends the text within 'userInput'-->
-    <Button onAction="#goToReservations" text="Go to reservations" />
+    <Button onAction="#goToReservations" text="Go to reservations"/>
 
-    <Button onAction="#goToLogin" text="Go to the login page" />
+    <Button onAction="#goToLogin" text="Go to the login page"/>
 
-    <Button onAction="#goToHome" text="Go to the homepage" />
+    <Button onAction="#goToHome" text="Go to the homepage"/>
 
-    <Button onAction="#goToAdmin" text="Go to the admin page" />
+    <Button onAction="#goToAdmin" text="Go to the admin page"/>
 
     <Button text="Get some buildings" onAction="#getBuildings"/>
 </VBox>
