@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Food {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "food_id")
     public Long id;
 
