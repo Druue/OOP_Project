@@ -1,27 +1,21 @@
-package nl.tudelft.oopp.demo.models;
+package nl.tudelft.oopp.server.models;
 
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * OpeningTimes
+ * The {@link OpeningTimes}.
  */
 @Entity
 @Table(name = "OpeningTimes")
 public class OpeningTimes {
-
-    /**
-     * Initialises a new {@link OpeningTimes}.
-     */
-    public OpeningTimes() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,13 +25,13 @@ public class OpeningTimes {
     /**
      * This tells you when the building opens.
      */
-    @Column(name="opening_hour")
+    @Column(name = "opening_hour")
     public TimeSlot openingHour;
 
     /**
      * This tells you when the building closes.
      */
-    @Column(name="closing_hour")
+    @Column(name = "closing_hour")
     public TimeSlot closingHour;
 
     /**
@@ -45,7 +39,25 @@ public class OpeningTimes {
      */
     @OneToOne
     @ElementCollection
-    public Collection<Date> date;
+    public Collection<Date> dates;
 
+    /**
+     * Initialises a new {@link OpeningTimes}.
+     */
+    public OpeningTimes() {
 
+    }
+
+    /**
+     * Initialises a new {@link OpeningTimes}.
+     * 
+     * @param openingHour When the building opens.
+     * @param closingHour When the building closes.
+     * @param dates       The dates on which the building is open.
+     */
+    public OpeningTimes(TimeSlot openingHour, TimeSlot closingHour, Collection<Date> dates) {
+        this.openingHour = openingHour;
+        this.closingHour = closingHour;
+        this.dates = dates;
+    }
 }

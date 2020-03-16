@@ -35,10 +35,14 @@ public class RegistrationController {
         User registrationRequest = gson.fromJson(jsonRequest, User.class);
 
         try {
-            //TODO: Validate that the user doesn't already exist.
+            // TODO: Validate that the user doesn't already exist.
             registrationService.addUser(registrationRequest);
-            nl.tudelft.oopp.api.models.User user = gson.fromJson(gson.toJson(registrationService.getUserByID(registrationService.getUserId(registrationRequest.email))), nl.tudelft.oopp.api.models.User.class);
-            UserAuthResponse r = new UserAuthResponse("You've registered successfully!", "CONFIRMATION", user);
+            nl.tudelft.oopp.api.models.User user = gson.fromJson(
+                    gson.toJson(registrationService
+                            .getUserByID(registrationService.getUserId(registrationRequest.email))),
+                    nl.tudelft.oopp.api.models.User.class);
+            UserAuthResponse r =
+                    new UserAuthResponse("You've registered successfully!", "CONFIRMATION", user);
             LoggerService.info(RegistrationController.class, "New user successfully registered.");
             return ResponseEntity.ok().body(r);
         } catch (Exception /* InstanceAlreadyExistsException */ e) {

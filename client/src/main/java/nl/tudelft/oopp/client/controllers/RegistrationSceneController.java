@@ -12,8 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.api.models.User;
+import nl.tudelft.oopp.api.models.UserAuthResponse;
 
 public class RegistrationSceneController {
     @FXML
@@ -53,8 +53,9 @@ public class RegistrationSceneController {
         // Get all text from text fields
         String username = registrationUsernameInput.getText();
         String password = registrationPasswordInput.getText();
-        String name = registrationNameInput.getText();
         String email = registrationEmailInput.getText();
+        // TODO: USE DETAILS OBJECT.
+        String name = registrationNameInput.getText();
 
         // If any of these fields are empty: Send an alert.
         if (username.isEmpty() || password.isEmpty() || name.isEmpty() || email.isEmpty()) {
@@ -64,13 +65,12 @@ public class RegistrationSceneController {
             alert.setContentText("Please fill in all required fields.");
             alert.showAndWait();
         } else {
-            //TODO: Checking the type of user via the email address.
-            String type = "student";
-            User registrationRequest = new User(name, username, email, password, type);
+            // TODO: Checking the type of user via the email address.
+            User registrationRequest = new User(email, username, password, null);
 
             // Send a register request to the server.
-            UserAuthResponse response =
-                    HttpRequestHandler.post("register", registrationRequest, UserAuthResponse.class);
+            UserAuthResponse response = HttpRequestHandler.post("register", registrationRequest,
+                    UserAuthResponse.class);
 
             // Create an alert, and show it to the user.
             Alert alert = new Alert(Alert.AlertType.NONE);
@@ -79,8 +79,8 @@ public class RegistrationSceneController {
             if (response != null) {
                 if (response.getAlertType().equals("CONFIRMATION")) {
                     HttpRequestHandler.saveUser(response.getUser());
-                    //HttpRequestHandler.user.setUserId(response.getUser().getUserId());
-                    System.out.println(HttpRequestHandler.user.getUserId());
+                    // HttpRequestHandler.user.setUserId(response.getUser().getUserId());
+                    System.out.println(HttpRequestHandler.user.getId());
                     alert.setAlertType(Alert.AlertType.CONFIRMATION);
                     alert.setContentText(response.getMessage());
                     alert.showAndWait();

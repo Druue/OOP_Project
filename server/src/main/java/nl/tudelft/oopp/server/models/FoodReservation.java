@@ -1,11 +1,20 @@
 package nl.tudelft.oopp.server.models;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 @Entity
 @Table(name = "food_reservation")
 public class FoodReservation {
 
-    /**food_reservation_id to be unique for each one
+    /**
+     * food_reservation_id to be unique for each one.
      *
      */
     @Id
@@ -13,7 +22,8 @@ public class FoodReservation {
     @Column(name = "food_reservation_id")
     public Long foodReservationId;
 
-    /**attribute linked with a reservat
+    /**
+     * attribute linked with a reservat.
      *
      */
     @OneToOne

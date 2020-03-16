@@ -1,10 +1,10 @@
-package nl.tudelft.oopp.demo.services;
+package nl.tudelft.oopp.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import nl.tudelft.oopp.demo.models.OpeningTimes;
-import nl.tudelft.oopp.demo.repositories.TimeSlotsRepository;
+import nl.tudelft.oopp.server.models.TimeSlots;
+import nl.tudelft.oopp.server.repositories.TimeSlotsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +19,8 @@ public class TimeSlotsService {
      * 
      * @return a list with all timeslots
      */
-    public List<OpeningTimes> getAllTimeSlots() {
-        List<OpeningTimes> timeSlots = new ArrayList<OpeningTimes>();
+    public List<TimeSlots> getAllTimeSlots() {
+        List<TimeSlots> timeSlots = new ArrayList<>();
         timeSlotsRepository.findAll().forEach(timeSlots::add);
         return timeSlots;
     }
@@ -31,7 +31,7 @@ public class TimeSlotsService {
      * @param id linked to a list of timeSlots
      * @return a list of timeSlots or null if it does not exist
      */
-    public Optional<OpeningTimes> getTimeSlots(Long id) {
+    public Optional<TimeSlots> getTimeSlots(Long id) {
         return timeSlotsRepository.findById(id);
     }
 
@@ -40,17 +40,17 @@ public class TimeSlotsService {
      * 
      * @param openingTimes to be added to the list of timeSlots lists
      */
-    public void addTimeSlots(OpeningTimes openingTimes) {
+    public void addTimeSlots(TimeSlots openingTimes) {
         timeSlotsRepository.save(openingTimes);
     }
 
     /**
      * Updates Timeslots.
      *
-     * @param id        linked to a list of timeSlots
+     * @param id           linked to a list of timeSlots
      * @param openingTimes to be updated
      */
-    public void updateTimeSlots(Long id, OpeningTimes openingTimes) {
+    public void updateTimeSlots(Long id, TimeSlots openingTimes) {
         timeSlotsRepository.save(openingTimes);
     }
 

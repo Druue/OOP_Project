@@ -1,54 +1,55 @@
-package nl.tudelft.oopp.demo.models;
+package nl.tudelft.oopp.server.models;
 
-import nl.tudelft.oopp.demo.models.Users;
 import java.util.Collection;
 import javax.persistence.Column;
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * FoodItem.
+ * A {@link FoodOrder}.
  */
 @Entity
 @Table(name = "Foodorder")
 public class FoodOrder {
 
-    public FoodOrder() {
-    }
-
     /**
-     * This is the id of the food order of a customer
+     * This is the id of the food order.
      */
     @Id
     @Column(name = "id")
     public Long id;
 
     /**
-     * This stores the actual information about the food they ordered
+     * The ordered food.
      */
     @ElementCollection
     public Collection<Food> food;
 
     /**
-     * This has the information about the user that ordered the food.
+     * The user who made the order.
      */
-    @Column(name="user")
-    public Users user;
-
+    @Column(name = "user")
+    public User user;
 
     /**
-     * This stores the name of the food orered.
+     * Initialises a new instance of {@link FoodOrder}.
      */
-    @Column(name = "name")
-    public String name;
+    public FoodOrder() {
 
-    public FoodOrder(Long id, Collection<Food> food, Users user, String name) {
-        this.id=id;
-        this.food=food;
-        this.user=user;
-        this.name=name;
+    }
+
+    /**
+     * Initialises a new instance of {@link FoodOrder}.
+     * 
+     * @param id   The foodorder's id.
+     * @param food The collection of food being ordered.
+     * @param user The user who made the order.
+     */
+    public FoodOrder(Long id, Collection<Food> food, User user) {
+        this.id = id;
+        this.food = food;
+        this.user = user;
     }
 }
-

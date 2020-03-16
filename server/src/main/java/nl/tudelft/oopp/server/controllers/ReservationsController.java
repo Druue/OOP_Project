@@ -1,9 +1,8 @@
 package nl.tudelft.oopp.server.controllers;
 
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.Gson;
 import javassist.NotFoundException;
 import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.ReservationResponse;
@@ -34,32 +33,34 @@ public class ReservationsController {
     }
 
     public static void logUserError(String username) {
-        LoggerService.error(ReservationsController.class, "No user with username: "
-            + username + " found");
+        LoggerService.error(ReservationsController.class,
+                "No user with username: " + username + " found");
     }
 
-    /** Sends all reservations in the database to the requesting administrator.
+    /**
+     * Sends all reservations in the database to the requesting administrator.
+     * 
      * @param request The request containing the admin's info.
-     * @return A {@link ResponseEntity} object containing all the current
-     *      reservations in the database.
+     * @return A {@link ResponseEntity} object containing all the current reservations in the
+     *         database.
      */
     @GetMapping("/all")
     public ResponseEntity<ReservationResponse> getAllReservations(ClientRequest<String> request) {
-        LoggerService.info(ReservationsController.class,
-            "Received request for all reservations");
+        LoggerService.info(ReservationsController.class, "Received request for all reservations");
 
         Gson gson = new Gson();
         List<nl.tudelft.oopp.api.models.Reservation> responseList = new ArrayList<>();
-        for (Reservation responseReservation: reservationService.getAllReservations()) {
-            responseList.add(gson.fromJson(gson.toJson(responseReservation), nl.tudelft.oopp.api.models.Reservation.class));
+        for (Reservation responseReservation : reservationService.getAllReservations()) {
+            responseList.add(gson.fromJson(gson.toJson(responseReservation),
+                    nl.tudelft.oopp.api.models.Reservation.class));
         }
         return ResponseEntity.ok(new ReservationResponse(responseList));
     }
 
     /**
-     * Endpoint for the procedure of getting user reservations.
-     * Receives the username in the {@link ClientRequest} object and uses
-     * to find the user in the database and then use his userID to find his reservations.
+     * Endpoint for the procedure of getting user reservations. Receives the username in the
+     * {@link ClientRequest} object and uses to find the user in the database and then use his
+     * userID to find his reservations.
      *
      * @param request The request object containing the username to be used.
      * @return A List of Reservations object representing all the current reservations of the user.
@@ -67,7 +68,7 @@ public class ReservationsController {
     @GetMapping("/findForUser")
     public ResponseEntity<List<Reservation>> getUserReservations(ClientRequest<String> request) {
         LoggerService.info(ReservationsController.class,
-            "Received request for user reservations. Processing ...");
+                "Received request for user reservations. Processing ...");
 
         String username = request.getUsername();
         User foundUser = null;
@@ -79,9 +80,9 @@ public class ReservationsController {
             return ResponseEntity.badRequest().build();
         }
 
-        LoggerService.info(ReservationsController.class, "User with username: "
-            + username + " successfully found.");
-        Long userID = foundUser.userId;
+        LoggerService.info(ReservationsController.class,
+                "User with username: " + username + " successfully found.");
+        Long userID = foundUser.id;
 
         List<Reservation> foundReservations = reservationService.getReservationsByUserID(userID);
         return new ResponseEntity<List<Reservation>>(foundReservations, HttpStatus.ACCEPTED);
@@ -90,23 +91,22 @@ public class ReservationsController {
     /**
      * Adds a reservation to the database.
      *
-     * @param request The {@link ClientRequest} object containing the {@link Reservation} info.
-     *                that is used to save the new reservation.
+     * @param request The {@link ClientRequest} object containing the {@link Reservation} info. that
+     *                is used to save the new reservation.
      * @return ResponseEntity object indicating that
      */
     @PostMapping("/addNewOne")
     public ResponseEntity<ServerResponseAlert> addReservation(ClientRequest<Reservation> request) {
         LoggerService.info(ReservationsController.class,
-            "Received POST request for a new reservation from user: "
-                + request.getUsername() + ". Processing ...");
-        String username = request.getUsername();
+                "Received POST request for a new reservation from user: " + request.getUsername()
+                        + ". Processing ...");
+        request.getUsername();
 
         reservationService.addReservation(request.getBody());
 
-        LoggerService.info(ReservationsController.class,
-            "New reservation added successfully");
-        return ResponseEntity.ok(new ServerResponseAlert(
-            "New reservation added successfully", "SUCCESS"));
+        LoggerService.info(ReservationsController.class, "New reservation added successfully");
+        return ResponseEntity
+                .ok(new ServerResponseAlert("New reservation added successfully", "SUCCESS"));
     }
 
 }

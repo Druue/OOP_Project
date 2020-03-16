@@ -1,40 +1,26 @@
-package nl.tudelft.oopp.server.models;
+package nl.tudelft.oopp.api.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "Details")
 public class Details {
 
     /**
      * This is the id of the detail that is a randomly generated value.
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     public Long id;
 
     /**
      * This is the name of the detail.
      */
-    @Column(name = "name")
     public String name;
 
     /**
      * This is the description of the detail.
      */
-    @Column(name = "description")
     private String description;
 
     /**
      * This is the image of the detail.
      */
-    @Column(name = "image")
     private String image;
 
     public Details() {

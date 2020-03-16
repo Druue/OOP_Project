@@ -6,9 +6,9 @@ import javafx.fxml.FXMLLoader;
 
 public class RoomEntryComponent {
 
-    //TODO: Add a better javadoc comment.
+    // TODO: Add a better javadoc comment.
     /**
-     * Instantiates a new RoomEntryComponent.
+     * Initialises a new instance of {@link RoomEntryComponent}.
      */
     public RoomEntryComponent() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/roomEntry.fxml"));

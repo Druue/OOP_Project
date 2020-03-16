@@ -1,69 +1,67 @@
-package nl.tudelft.oopp.demo.models;
+package nl.tudelft.oopp.server.models;
 
-import java.util.Collection;
-import javax.persistence.*;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
+/**
+ * A {@link Date}.
+ */
 @Entity
 public class Date {
 
-    public Date() {
-    }
-
     /**
-     * This represents a year in java date object.
+     * The year.
      */
     @Id
-    @Column(name="year")
+    @Column(name = "year")
     public Date year;
 
     /**
-     * This is a month of a year.
+     * The month of the year. EXAMPLE: 4 (April in that case).
      */
-    @Column(name="month")
+    @Column(name = "month")
     public Integer month;
 
     /**
-     * This is the day of the month.
+     * The week of the year. EXAMPLE: 48.
      */
-    @Column(name="day")
-    public Integer day;
-
-    /**
-     * This is the week of the year according to the Dutch calendar.
-     */
-    @Column(name="week")
+    @Column(name = "week")
     public Integer week;
 
     /**
-     * This tells us if it is a holiday according to the Dutch calendar.
+     * The day of the month. EXAMPLE: 28.
      */
-    @Column(name="isHoliday")
-    public boolean isHoliday;
-
+    @Column(name = "day")
+    public Integer day;
 
     /**
-     * @param year
-     * @param month
-     * @param week
-     * @param day
-     * @param isHoliday
+     * Whether the date is a holiday or not.
      */
-    public Date(Date year, Integer month, Integer week, Integer day, boolean isHoliday) {
-        this.year= year;
-        this.month=month;
-        this.week=week;
-        this.day=day;
-        this.isHoliday=isHoliday;
+    @Column(name = "isHoliday")
+    public boolean isHoliday;
 
+    /**
+     * Initialises a new instance of {@link Date}.
+     */
+    public Date() {
 
     }
 
-
+    /**
+     * Initialises a new instance of a {@link Date}.
+     * 
+     * @param year      The year.
+     * @param month     The month.
+     * @param week      The week.
+     * @param day       The day.
+     * @param isHoliday Whether it's a holiday or not.
+     */
+    public Date(Date year, Integer month, Integer week, Integer day, boolean isHoliday) {
+        this.year = year;
+        this.month = month;
+        this.week = week;
+        this.day = day;
+        this.isHoliday = isHoliday;
+    }
 }

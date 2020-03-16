@@ -1,9 +1,7 @@
 package nl.tudelft.oopp.server.controllers;
 
 import com.google.gson.Gson;
-import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.api.models.LoginRequest;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.server.services.LoggerService;
@@ -27,14 +25,13 @@ public class LoginController {
     }
 
     /**
-     * This method logs in a user to the application with provided
-     * NetID and password. It calls the method userValidate() of the LoginService class to
-     * query the database for the user.
+     * This method logs in a user to the application with provided NetID and password. It calls the
+     * method userValidate() of the LoginService class to query the database for the user.
      *
      * @param request - The request provided by the user details mapped to a LoginDetails object
      *                through the @RequestBody annotation.
-     * @return An instance of ResponseEntity with status code 200 if the user is successfully authenticated.
-     *              Otherwise returns Bad Request response.
+     * @return An instance of ResponseEntity with status code 200 if the user is successfully
+     *         authenticated. Otherwise returns Bad Request response.
      */
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<UserAuthResponse> validateAuthentication(@RequestBody String request) {
@@ -42,7 +39,8 @@ public class LoginController {
         Gson gson = new Gson();
         LoginRequest loginRequest = gson.fromJson(request, LoginRequest.class);
         try {
-            User user = gson.fromJson(gson.toJson(service.getUserInformation(loginRequest)), User.class);
+            User user = gson.fromJson(gson.toJson(service.getUserInformation(loginRequest)),
+                    User.class);
             LoggerService.info(LoginController.class, "User successfully authenticated.");
             LoggerService.info(LoginController.class, user.username + user.email);
 
@@ -50,13 +48,14 @@ public class LoginController {
             UserAuthResponse a = new UserAuthResponse("Successful login!", "CONFIRMATION", user);
             return ResponseEntity.ok().body(a);
         } catch (Exception /* AuthenticationException */ e) {
-            LoggerService.info(LoginController.class, "Authentication failed for user with NetID: "
-                                                      + loginRequest.getUsername() + " and password "
-                                                      + loginRequest.getPassword()
-                                                      + " : No such user registered.");
+            LoggerService.info(LoginController.class,
+                    "Authentication failed for user with NetID: " + loginRequest.getUsername()
+                            + " and password " + loginRequest.getPassword()
+                            + " : No such user registered.");
 
             // Send a response containing an error message.
-            UserAuthResponse a = new UserAuthResponse("Invalid user/password combination.", "ERROR", null);
+            UserAuthResponse a =
+                    new UserAuthResponse("Invalid user/password combination.", "ERROR", null);
             return ResponseEntity.badRequest().body(a);
         }
     }

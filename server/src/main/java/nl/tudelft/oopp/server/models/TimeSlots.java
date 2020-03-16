@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.server.models;
 
 import java.util.Collection;
-import nl.tudelft.oopp.demo.models.*;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;

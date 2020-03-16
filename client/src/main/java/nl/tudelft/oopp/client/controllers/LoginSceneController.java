@@ -13,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.LoginRequest;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 
 public class LoginSceneController {
@@ -85,7 +84,8 @@ public class LoginSceneController {
     }
 
     /**
-     * >>>>>>> master:client/src/main/java/nl/tudelft/oopp/demo/controllers/LoginSceneController.java
+     * >>>>>>>
+     * master:client/src/main/java/nl/tudelft/oopp/demo/controllers/LoginSceneController.java
      * Handles going the the homepage, without any event occurring.
      */
     public void goToHomepage() {

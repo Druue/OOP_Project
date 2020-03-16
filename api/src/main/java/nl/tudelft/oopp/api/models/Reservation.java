@@ -6,14 +6,21 @@ package nl.tudelft.oopp.api.models;
 public class Reservation {
 
     public Long reservationID;
-    public User userID;
-    public Reservable reservableId;
+    public User user;
+    public Reservable reservable;
 
 
-    public Reservation(Long reservationID, User userID, Reservable reservableId) {
+    /**
+     * Initialises a new {@link Reservation}.
+     * 
+     * @param reservationID The reservation's ID.
+     * @param user          The user who made the reservation.
+     * @param reservable    The entity being reserved.
+     */
+    public Reservation(Long reservationID, User user, Reservable reservable) {
         this.reservationID = reservationID;
-        this.userID = userID;
-        this.reservableId = reservableId;
+        this.user = user;
+        this.reservable = reservable;
     }
 
     public Long getReservationID() {
@@ -24,19 +31,19 @@ public class Reservation {
         this.reservationID = reservationID;
     }
 
-    public User getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(User userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Reservable getReservableId() {
-        return reservableId;
+    public Reservable getReservable() {
+        return reservable;
     }
 
-    public void setReservableId(Reservable reservableId) {
-        this.reservableId = reservableId;
+    public void setReservable(Reservable reservable) {
+        this.reservable = reservable;
     }
 }

@@ -3,50 +3,45 @@ package nl.tudelft.oopp.server.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-<<<<<<< HEAD:server/src/main/java/nl/tudelft/oopp/server/services/FoodcourtService.java
-import nl.tudelft.oopp.server.models.FoodCourt;
-import nl.tudelft.oopp.server.repositories.FoodCourtRepository;
-=======
-import nl.tudelft.oopp.demo.models.FoodCourt;
-import nl.tudelft.oopp.demo.repositories.FoodcourtRepository;
->>>>>>> 59e9244a0240f4f41315ec1e50940aada02337a3:server/src/main/java/nl/tudelft/oopp/demo/services/FoodcourtService.java
+import nl.tudelft.oopp.server.models.Foodcourt;
+import nl.tudelft.oopp.server.repositories.FoodcourtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FoodCourtService {
+public class FoodcourtService {
 
     @Autowired
-    private FoodCourtRepository foodCourtRepository;
+    private FoodcourtRepository foodcourtRepository;
 
     /**
      * Gets all foodcourts.
      *
      * @return a new list of all foodcourts
      */
-    public List<FoodCourt> getAllFoodcourts() {
-        List<FoodCourt> foodCourts = new ArrayList<FoodCourt>();
-        foodCourtRepository.findAll().forEach(foodCourts::add);
-        return foodCourts;
+    public List<Foodcourt> getAllFoodcourts() {
+        List<Foodcourt> foodcourts = new ArrayList<>();
+        foodcourtRepository.findAll().forEach(foodcourts::add);
+        return foodcourts;
     }
 
     /**
-     * Gets a foodcourt.
+     * Gets a Foodcourt.
      *
      * @param id linked to a sertain foocourt
-     * @return the foodcourt with that id
+     * @return the Foodcourt with that id
      */
-    public Optional<FoodCourt> getFoodcourt(Integer id) {
-        return foodCourtRepository.findById(id);
+    public Optional<Foodcourt> getFoodcourt(Integer id) {
+        return foodcourtRepository.findById(id);
     }
 
     /**
-     * Adds a foodcourt.
+     * Adds a Foodcourt.
      *
-     * @param foodcourt to be added to the list of foodcourts
+     * @param foodcourt to be added to the list of Foodcourts.
      */
-    public void addFoodcourt(FoodCourt foodcourt) {
-        foodCourtRepository.save(foodcourt);
+    public void addFoodcourt(Foodcourt foodcourt) {
+        foodcourtRepository.save(foodcourt);
     }
 
     /**
@@ -55,8 +50,8 @@ public class FoodCourtService {
      * @param id        new to be assigned to a foodcourt
      * @param foodcourt to be updated
      */
-    public void updateFoodcourt(Integer id, FoodCourt foodcourt) {
-        foodCourtRepository.save(foodcourt);
+    public void updateFoodcourt(Integer id, Foodcourt foodcourt) {
+        foodcourtRepository.save(foodcourt);
     }
 
     /**
@@ -65,8 +60,6 @@ public class FoodCourtService {
      * @param id linked to a foodcourt to be deleted from the list
      */
     public void deleteFoodcourt(Integer id) {
-        foodCourtRepository.deleteById(id);
+        foodcourtRepository.deleteById(id);
     }
-
-
 }
