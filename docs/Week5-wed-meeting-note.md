@@ -10,7 +10,7 @@ Note taker: Justin Jo
     - image *
 - User
     - _email_
-    - username
+    - _**username**_
     - Password
     - @Details
     - ~~firstname~~

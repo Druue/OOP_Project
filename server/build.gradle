@@ -6,7 +6,7 @@ plugins {
 }
 
 application {
-	mainClassName = 'nl.tudelft.oopp.demo.DemoApplication'
+	mainClassName = 'nl.tudelft.oopp.server.DemoApplication'
 }
 
 configurations {
@@ -17,8 +17,7 @@ configurations {
 }
 
 dependencies {
-	compile 'org.json:json:20171018'
-
+	compile project(":api")
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile group: 'mysql', name: 'mysql-connector-java'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
