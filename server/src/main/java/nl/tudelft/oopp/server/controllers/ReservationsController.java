@@ -5,11 +5,14 @@ import javassist.NotFoundException;
 import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.server.models.ReservableTimeslotException;
 import nl.tudelft.oopp.server.models.Reservation;
+import nl.tudelft.oopp.server.models.TimeSlot;
 import nl.tudelft.oopp.server.models.User;
 import nl.tudelft.oopp.server.models.UserReservationsIntersectionException;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.ReservationService;
 import nl.tudelft.oopp.server.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,16 +28,13 @@ public class ReservationsController {
     // Connection with the methods for querying the database for the reservations
     private ReservationService reservationService;
     private UserService userService;
+    private Logger logger = LoggerFactory.getLogger(ReservationsController.class);
 
     public ReservationsController(ReservationService reservationService, UserService userService) {
         this.reservationService = reservationService;
         this.userService = userService;
     }
 
-    public static void logUserError(String username) {
-        LoggerService.error(ReservationsController.class, "No user with username: "
-            + username + " found");
-    }
 
     /**
      * Sends all reservations in the database to the requesting administrator.
@@ -43,8 +43,7 @@ public class ReservationsController {
      */
     @GetMapping("/admin/all")
     public ResponseEntity<List<Reservation>> getAllReservations() {
-        LoggerService.info(ReservationsController.class,
-            "Received request for all reservations");
+        logger.info("Received GET request for all reservations");
 
         List<Reservation> responseList = reservationService.getAllReservations();
         return ResponseEntity.ok(responseList);
@@ -55,8 +54,7 @@ public class ReservationsController {
      */
     @GetMapping("/admin/current")
     public ResponseEntity<List<Reservation>> getCurrentReservations() {
-        LoggerService.info(ReservationsController.class, "Received GET request for all "
-            + "current reservations. Processing ...");
+        logger.info("Received GET request for all current reservations. Processing ...");
         List<Reservation> responseList =  reservationService.getAllCurrentReservations();
         return ResponseEntity.ok(responseList);
     }
@@ -71,8 +69,7 @@ public class ReservationsController {
      */
     @GetMapping("/user/all")
     public ResponseEntity<List<Reservation>> getUserReservations(ClientRequest<String> request) {
-        LoggerService.info(ReservationsController.class,
-            "Received request for user reservations. Processing ...");
+        logger.info("Received GET request for user reservations. Processing ...");
 
         String username = request.getUsername();
         User foundUser = null;
@@ -80,12 +77,11 @@ public class ReservationsController {
         try {
             foundUser = userService.getUserByUsername(username);
         } catch (NotFoundException e) {
-            logUserError(username);
+            logger.error("User with username: " + username + " not found.");
             return ResponseEntity.badRequest().build();
         }
 
-        LoggerService.info(ReservationsController.class, "User with username: "
-            + username + " successfully found.");
+        logger.info("User with username: " + username + " successfully found.");
 
         Long userId = foundUser.id;
         List<Reservation> foundReservations = reservationService.getReservationsByUserID(userId);
@@ -102,8 +98,7 @@ public class ReservationsController {
     @GetMapping("/user/current")
     public ResponseEntity<List<Reservation>> getCurrentUserReservations(
         ClientRequest<String> request) {
-        LoggerService.info(ReservationsController.class,
-            "Received request for current user reservations. Processing ...");
+        logger.info("Received GET request for current user reservations. Processing ...");
 
         String username = request.getUsername();
         User foundUser = null;
@@ -111,16 +106,16 @@ public class ReservationsController {
         try {
             foundUser = userService.getUserByUsername(username);
         } catch (NotFoundException e) {
-            logUserError(username);
+            logger.error("User with username: " + username + " not found.");
             return ResponseEntity.badRequest().build();
         }
 
-        LoggerService.info(ReservationsController.class, "User with username: "
-            + username + " successfully found.");
+        logger.info("User with username: " + username + " successfully found.");
 
         Long userId = foundUser.id;
         List<Reservation> foundReservations =
             reservationService.getCurrentUserReservations(userId);
+
         return ResponseEntity.ok(foundReservations);
     }
 
@@ -133,13 +128,14 @@ public class ReservationsController {
      */
     @PostMapping("/{role:(?:user|admin)}/add")
     public ResponseEntity<String> addReservation(ClientRequest<Reservation> request) {
-        LoggerService.info(ReservationsController.class,
-            "Received POST request for a new reservation from user: "
+        logger.info("Received POST request for a new reservation from user: "
                 + request.getUsername() + ". Processing ...");
 
+        Reservation newReservation = request.getBody();
+        newReservation.timeslot = new TimeSlot(newReservation.timeslot.startTime,
+                                                newReservation.timeslot.endTime);
         try {
-
-            reservationService.addReservation(request.getBody());
+            reservationService.addReservation(newReservation);
 
         } catch (UserReservationsIntersectionException e) {
             return ResponseEntity.badRequest().body("Failure to create reservations. "
@@ -149,8 +145,8 @@ public class ReservationsController {
                 + "Intersection found current reservations of the reservable.");
         }
 
-        LoggerService.info(ReservationsController.class,
-            "New reservation added successfully");
+        logger.info("New reservation added successfully");
+
         return ResponseEntity.ok().build();
     }
 
@@ -168,8 +164,7 @@ public class ReservationsController {
     @DeleteMapping("/{role:(?:user|admin)}/delete")
     public ResponseEntity<String> deleteReservation(@RequestParam Long id) {
 
-        LoggerService.info(ReservationsController.class, "Received DELETE request "
-            + "for reservation. Processing ...");
+        logger.info("Received DELETE request for reservation. Processing ...");
 
         try {
             reservationService.deleteReservation(id);
@@ -179,8 +174,7 @@ public class ReservationsController {
             return ResponseEntity.badRequest().build();
         }
 
-        LoggerService.info(ReservationsController.class,
-            "Reservation successfully deleted");
+        logger.info("Reservation successfully deleted");
 
         return ResponseEntity.ok().build();
     }
