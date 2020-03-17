@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.server.controllers;
 
-import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import nl.tudelft.oopp.api.HttpRequestHandler;
@@ -40,7 +39,7 @@ public class BuildingRequestController {
         // return ResponseEntity.badRequest().build();
         // }
 
-        new GsonBuilder().serializeNulls().create();
+
         List<Building> buildings = new ArrayList<>();
         for (nl.tudelft.oopp.server.models.Building queryBuilding : service.getAllBuildings()) {
             buildings.add(HttpRequestHandler.convertModel(queryBuilding, Building.class));

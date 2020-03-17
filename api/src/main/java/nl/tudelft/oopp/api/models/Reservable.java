@@ -1,69 +1,48 @@
 package nl.tudelft.oopp.api.models;
 
 /**
- * Initialises a new instance of a {@link Reservable}.
+ * Initialises a new {@link Reservable}.
  */
 public abstract class Reservable {
-    private Long id;
-    private String name;
-    private boolean isAvailable;
-
-    public Reservable() {
-    }
 
     /**
-     * Initializes a new reservable.
-     * 
-     * @param id          Unique id of the reservable.
-     * @param name        Name of the connected building.
-     * @param isAvailable a boolean stating the availability of the reservable.
+     * The reservable's unique Id.
      */
-    public Reservable(Long id, String name, boolean isAvailable) {
+
+    public Long id;
+
+    /**
+     * This is a details entity that tells you information about a reservable.
+     */
+    public Details details;
+
+
+    public Reservable(Long id, Details details) {
         this.id = id;
-        this.name = name;
-        this.isAvailable = isAvailable;
+        this.details = details;
+    }
+
+    public Details getDetails() {
+        return details;
+    }
+
+    public void setDetails(Details details) {
+        this.details = details;
+    }
+
+
+
+    public Reservable() {
+        super();
     }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isIsAvailable() {
-        return this.isAvailable;
-    }
-
-    public boolean getIsAvailable() {
-        return this.isAvailable;
-    }
-
-    public void setIsAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
-    }
-
-    public Reservable id(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public Reservable name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public Reservable isAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
-        return this;
-    }
 }

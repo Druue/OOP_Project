@@ -1,47 +1,30 @@
-package nl.tudelft.oopp.server.models;
-
+package nl.tudelft.oopp.api.models;
 
 import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
  * A {@link FoodOrder}.
  */
-@Entity
-@Table(name = "Foodorder")
 public class FoodOrder {
 
     /**
      * This is the id of the food order.
      */
-    @Id
-    @Column(name = "id")
     public Long id;
 
     /**
      * The ordered food.
      */
-    @ElementCollection
     public Collection<Food> food;
 
     /**
      * The user who made the order.
      */
-    @OneToOne
-    @JoinColumn(name = "user", referencedColumnName = "user_id")
     public User user;
 
     /**
      * The optional reservation that is tied to the food order.
      */
-    @OneToOne
-    @JoinColumn(name = "reservation", referencedColumnName = "reservation_id")
     public Reservation reservation;
 
     /**
@@ -64,5 +47,32 @@ public class FoodOrder {
         this.food = food;
         this.user = user;
         this.reservation = reservation;
+    }
+
+
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Collection<Food> getFood() {
+        return food;
+    }
+
+    public void setFood(Collection<Food> food) {
+        this.food = food;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

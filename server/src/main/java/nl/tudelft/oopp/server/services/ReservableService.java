@@ -23,21 +23,20 @@ public class ReservableService {
      * @return a list of all reservables
      */
     public List<Reservable> getAllReservables() {
-        List<Reservable> reservables = new ArrayList<Reservable>();
-        reservableRepository.findAll().forEach(reservables::add);
-        return reservables;
+        return reservableRepository.findAll();
     }
 
     /**method that returns all possible rooms from.
      *
      * @return a list of rooms
      */
-    public List<Reservable> getAllRooms() {
+    public List<Room> getAllRooms() {
         List<Reservable> reservables = getAllReservables();
-        List<Reservable> rooms = new ArrayList<>();
+
+        List<Room> rooms = new ArrayList<>();
         for (int i = 0; i < reservables.size(); i++) {
             if (reservables.get(i) instanceof Room) {
-                rooms.add(reservables.get(i));
+                rooms.add((Room) reservables.get(i));
             }
         }
         return rooms;
@@ -75,6 +74,10 @@ public class ReservableService {
      */
     public void addReservable(Reservable reservable) {
         reservableRepository.save(reservable);
+    }
+
+    public void addRoom(Room room) {
+        reservableRepository.save(room);
     }
 
     /**

@@ -66,7 +66,7 @@ public class RegistrationSceneController {
             alert.showAndWait();
         } else {
             // TODO: Checking the type of user via the email address.
-            User registrationRequest = new User(email, username, password, null);
+            User registrationRequest = new User(email, username, password);
 
             // Send a register request to the server.
             UserAuthResponse response = HttpRequestHandler.post("register", registrationRequest,

@@ -11,6 +11,10 @@ import javax.persistence.Table;
 @Table(name = "room")
 public class Room extends Reservable {
 
+    public Room() {
+        super();
+    }
+
     /**
      * This denotes how many people can be in a room.
      */
@@ -27,7 +31,5 @@ public class Room extends Reservable {
      */
     @Column(name = "forEmployee")
     public boolean forEmployee;
-
-
 
 }

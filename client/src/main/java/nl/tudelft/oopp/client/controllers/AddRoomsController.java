@@ -14,12 +14,12 @@ import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 
 
-public class MainSceneController {
+public class AddRoomsController {
 
 
     // the TextField object from mainScene.fxml
     @FXML
-    public TextField userInput;
+    public TextField roomNameInput;
 
     /**
      * Handles going to the reservation page.
@@ -74,57 +74,14 @@ public class MainSceneController {
      */
     public void goToHome(ActionEvent event) {
         try {
-            Parent homeParent = FXMLLoader.load(getClass().getResource("/Homepage.fxml"));
+            Parent homeParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
             Scene homeScene = new Scene(homeParent);
 
             Stage primaryStage =
-                    (Stage) userInput.getScene().getWindow();
-            primaryStage.hide();
-            primaryStage.setScene(homeScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("IOException in MainSceneController");
-        }
-    }
-
-    /**
-     * Handles going to the "Add rooms" page.
-     * @param event the scene from where the function was called.
-     */
-    public void goToAddRooms(ActionEvent event) {
-        try {
-            Parent homeParent = FXMLLoader.load(getClass().getResource("/addRooms.fxml"));
-            Scene homeScene = new Scene(homeParent);
-
-            Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                    (Stage) (roomNameInput.getScene().getWindow());
 
             primaryStage.hide();
             primaryStage.setScene(homeScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            System.out.println("IOException in MainSceneController");
-        }
-    }
-
-    /**
-     * Handles going to the admin page.
-     *
-     * @param event the scene from where the function was called.
-     */
-    public void goToAdmin(ActionEvent event) {
-        try {
-            Parent adminParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
-            Scene adminScene = new Scene(adminParent);
-
-            Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(adminScene);
             primaryStage.show();
 
         } catch (IOException e) {
@@ -142,6 +99,8 @@ public class MainSceneController {
         alert.setTitle("A response");
         alert.setHeaderText(null);
 
+        //TODO: Add a proper connection to the backend.
+
         // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
         BuildingResponse buildingResponse = HttpRequestHandler.get("getbuildings", BuildingResponse.class);
 
@@ -156,5 +115,20 @@ public class MainSceneController {
         // Show the alert with all the building names
         alert.setContentText(s.toString());
         alert.showAndWait();
+    }
+
+    /** Sends a request to the backend to add a Room to the database.
+     *
+     * @param event The event that called the function.
+     */
+    public void addRoom(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Room added.");
+        alert.setHeaderText(null);
+        //TODO: Add proper connection to the backend.
+
+        //Room room = new Room(roomNameInput.getText(), true, false);
+        //HttpRequestHandler.put("reservables/insert/new_room", null /* room */, ServerResponseAlert.class);
+
     }
 }

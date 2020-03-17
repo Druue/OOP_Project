@@ -1,65 +1,105 @@
 package nl.tudelft.oopp.api.models;
 
-import java.util.Collection;
 import java.util.Map;
 
+/**
+ * A {@link Building}.
+ */
 public class Building {
 
-    String name;
-    Integer number;
-    int capacity;
-    TimeSlot openingHours;
-    Collection<Reservable> reservables;
-    Map<Reservable, TimeSlot> availableReservations;
+    /**
+     * The building's campus number works as a building id in the database.
+     */
+    public Long number;
 
     /**
-     * An example model, to showcase the usage of the API. This will be deleted in the final product.
-     *
-     * @param name     The building name.
-     * @param capacity The building capacity.
+     * The details of the building.
      */
-    public Building(String name, int capacity, TimeSlot openingHours,
-                    Collection<Reservable> reservables, Map<Reservable, TimeSlot> availableReservations) {
-        this.name = name;
-        this.capacity = capacity;
+    public Details details;
+
+    /**
+     * The foodcourt within the building.
+     */
+    public Foodcourt foodcourt;
+
+    /**
+     * The hours during which the building is open during the week.
+     */
+    public TimeSlot openingHours;
+
+    /**
+     * Move this to the reservable table model.
+     *
+     */
+    Map<Reservable, TimeSlot> availableTimeslots;
+
+    /**
+     * Initialises a new instance of {@link Building}.
+     */
+    public Building() {
+
+    }
+
+    /**
+     * Initialises a new instance of {@link Building}.
+     *
+     * @param number       The building's number.
+     * @param details      {@link Details} about the building.
+     * @param foodcourt    The building's {@link Foodcourt}.
+     * @param openingHours The building's {@link TimeSlot}.
+     */
+    public Building(Long number, Details details, Foodcourt foodcourt, TimeSlot openingHours) {
+        this.number = number;
+        this.details = details;
+        this.foodcourt = foodcourt;
         this.openingHours = openingHours;
-        this.reservables = reservables;
-        this.availableReservations = availableReservations;
     }
 
     public String getName() {
-        return name;
+        return details.getName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        details.setName(name);
     }
 
-    public int getNumber() {
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public Details getDetails() {
+        return details;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setDetails(Details details) {
+        this.details = details;
+    }
+
+    public Foodcourt getFoodcourt() {
+        return foodcourt;
+    }
+
+    public void setFoodcourt(Foodcourt foodcourt) {
+        this.foodcourt = foodcourt;
     }
 
     public TimeSlot getOpeningHours() {
         return openingHours;
     }
 
-    public Collection<Reservable> getReservables() {
-        return reservables;
+    public void setOpeningHours(TimeSlot openingHours) {
+        this.openingHours = openingHours;
     }
 
-    public Map<Reservable, TimeSlot> getAvailableReservations() {
-        return availableReservations;
+    public Map<Reservable, TimeSlot> getAvailableTimeslots() {
+        return availableTimeslots;
+    }
+
+    public void setAvailableTimeslots(Map<Reservable, TimeSlot> availableTimeslots) {
+        this.availableTimeslots = availableTimeslots;
     }
 }

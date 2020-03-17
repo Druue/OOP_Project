@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.api.models;
 
+import nl.tudelft.oopp.api.HttpRequestHandler;
+
 /**
  * Initialises a new {@link User}.
  */
@@ -27,8 +29,12 @@ public class User {
     /**
      * A collection of the user's current reservations.
      */
-
     public Details details;
+
+    /**
+     * The {@link UserKind} of user.
+     */
+    public UserKind userKind;
 
     /**
      * Initialises a new {@link User}.
@@ -39,33 +45,56 @@ public class User {
 
     /**
      * Initialises a new {@link User}.
-     * 
-     * @param email    The user's email.
-     * @param username The user's username.
-     * @param password The user's password.
-     * @param details  Details about the user.
+     * @param details       The user's details. (Includes the user's first and last name.)
+     * @param email         The user's email.
+     * @param username      The user's username.
+     * @param password      The user's password.
+     * @param userKind      The kind of user.
      */
-    public User(String email, String username, String password, Details details) {
+    public User(Details details, String email, String username, String password, UserKind userKind) {
+        this.details = details;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.details = details;
+        this.userKind = userKind;
     }
 
     /**
      * Initialises a new {@link User}.
      *
+     * @param email         The user's email.
+     * @param username      The user's username.
+     * @param password      The user's password.
+     */
+    public User(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getName() {
+        return details.getName();
+    }
+
+    public void setName(String name) {
+        details.setName(name);
+    }
+
+    /**
+     * Creates a user from a provided registration details object.
+     *
      * @param registrationDetails The registration details from which to create a new user
      */
     public User(RegistrationDetails registrationDetails) {
-        this.details = registrationDetails.getDetails();
+        this.details =
+                HttpRequestHandler.convertModel(registrationDetails.getDetails(), Details.class);
         this.email = registrationDetails.getEmail();
         this.username = registrationDetails.getusername();
         this.password = registrationDetails.getPassword();
     }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -73,7 +102,7 @@ public class User {
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {
@@ -81,7 +110,7 @@ public class User {
     }
 
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
     public void setUsername(String username) {
@@ -89,7 +118,7 @@ public class User {
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     public void setPassword(String password) {
@@ -97,35 +126,18 @@ public class User {
     }
 
     public Details getDetails() {
-        return this.details;
+        return details;
     }
 
     public void setDetails(Details details) {
         this.details = details;
     }
 
-    public User id(Long id) {
-        this.id = id;
-        return this;
+    public UserKind getUserKind() {
+        return userKind;
     }
 
-    public User email(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public User username(String username) {
-        this.username = username;
-        return this;
-    }
-
-    public User password(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public User details(Details details) {
-        this.details = details;
-        return this;
+    public void setUserKind(UserKind userKind) {
+        this.userKind = userKind;
     }
 }
