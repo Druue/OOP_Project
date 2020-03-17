@@ -31,5 +31,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select res "
         + " from Reservation res "
         + " where res.reservable = ?1 and res.timeslot.startTime > ?2")
-    List<Reservation> findAllCurrentReservable(Reservable reservable, Timestamp timestamp);
+    List<Reservation> findAllCurrentByReservable(Reservable reservable, Timestamp timestamp);
 }
