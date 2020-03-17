@@ -16,6 +16,7 @@ import java.util.List;
 public class RoomEntryComponent extends Pane {
 
     RoomEntryController controller;
+
     public RoomEntryComponent() {
         super();
         try {

@@ -1,51 +1,47 @@
 package nl.tudelft.oopp.server.models;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  * Initialises a new {@link Reservable}.
  */
 @Entity
-@Table(name = "reservable")
+@Table(name = "Reservable")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Reservable {
-
-    /**
-     * Initialises a new instance of {@link Reservable}.
-     */
-    public Reservable() {
-    }
 
     /**
      * The reservable's unique Id.
      */
     @Id
-    @Column(name = "reservable_id")
+    @Column(name = "id")
     public Long id;
 
     /**
-     * The name of the building. EXAMPLE: "Ewi"
+     * This is a details entity that tells you information about a reservable.
      */
-    @Column(name = "name")
-    public String name;
+    @OneToOne
+    @ElementCollection
+    @JoinColumn(name = "details")
+    public Details details;
 
     /**
-     * Whether the current reservable object is available to be reserved.
+     * Initialises a new instance of {@link Reservable}.
      */
-    @Column(name = "isavailable")
-    public boolean isAvailable;
+    public Reservable() {
 
-    /**
-     * Initialises a new {@link Reservable}.
-     */
-    public Reservable(Long id, String name, boolean isAvailable) {
+    }
+
+    public Reservable(Long id, Details details) {
         this.id = id;
-        this.name = name;
-        this.isAvailable = isAvailable;
+        this.details = details;
     }
 }

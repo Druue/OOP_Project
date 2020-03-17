@@ -1,39 +1,30 @@
 package nl.tudelft.oopp.server.models;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.RegistrationDetails;
 
 /**
  * Initialises a new {@link User}.
  */
 @Entity
-@Table(name = "user")
+@Table(name = "User")
 public class User {
-    /**
-     * Initialises a new {@link User}.
-     */
-    public User() {
-
-    }
 
     /**
-     * The user's netID...?
+     * The user's ID.
      */
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     @Id
-    @Column(name = "userId")
-    public Long userId;
-
-    /**
-     * The user's name...?
-     */
-    @Column(name = "name")
-    public String name;
-
-    /**
-     * The user's username...?
-     */
-    @Column(name = "username")
-    public String username;
+    public Long id;
 
     /**
      * The user's email.
@@ -42,15 +33,41 @@ public class User {
     public String email;
 
     /**
+     * The user's username.
+     */
+    @Column(name = "username")
+    public String username;
+
+    /**
      * The user's password.
      */
     @Column(name = "password")
     public String password;
-
     /**
      * A collection of the user's current reservations.
      */
-    @ElementCollection
-    @Column(name = "reservations")
-    public Collection<Reservation> reservations;
+
+    @OneToOne
+    @JoinColumn(name = "details", referencedColumnName = "id")
+    public Details details;
+
+    /**
+     * Initialises a new {@link User}.
+     */
+    public User() {
+
+    }
+
+    /**
+     * Creates a user from a provided registration details object.
+     *
+     * @param registrationDetails The registration details from which to create a new user
+     */
+    public User(RegistrationDetails registrationDetails) {
+        this.details =
+                HttpRequestHandler.convertModel(registrationDetails.getDetails(), Details.class);
+        this.email = registrationDetails.getEmail();
+        this.username = registrationDetails.getusername();
+        this.password = registrationDetails.getPassword();
+    }
 }

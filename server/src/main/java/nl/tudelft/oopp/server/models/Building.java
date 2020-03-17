@@ -1,13 +1,10 @@
 package nl.tudelft.oopp.server.models;
 
-import java.util.Collection;
 import java.util.Map;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -15,47 +12,32 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * The Building Table.
+ * A {@link Building}.
  */
 @Entity
-@Table(name = "building")
+@Table(name = "Building")
 public class Building {
-    /**
-     * Creates a new Building.
-     * @param name The building name.
-     * @param openingHours A {@link TimeSlot} that includes the opening hours of the building.
-     * @param foodCourt The building's foodcourt.
-     * @param availableReservations A Map containing all {@link TimeSlots} that are available for reservation.
-     * @param reservables The Collection containing all the reservables that a Building has.
-     */
-    public Building(String name, TimeSlot openingHours, FoodCourt foodCourt, Map<Reservable,
-            TimeSlots> availableReservations, Collection<Reservable> reservables) {
-        this.name = name;
-        this.openingHours = openingHours;
-        this.foodCourt = foodCourt;
-        this.availableReservations = availableReservations;
-        this.reservables = reservables;
-    }
 
     /**
-     * Initialises a new instance of {@link Building}.
-     */
-    public Building() {
-    }
-
-    /**
-     * The building's campus number.
+     * The building's campus number works as a building id in the database.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "number")
-    public Integer number;
+    @Column(name = "id")
+    public Long number;
 
     /**
-     * The name of the building.
+     * The details of the building.
      */
-    @Column(name = "name")
-    public String name;
+    @OneToOne
+    @JoinColumn(name = "details", referencedColumnName = "id")
+    public Details details;
+
+    /**
+     * The foodcourt within the building.
+     */
+    @OneToOne
+    @JoinColumn(name = "foodCourt", referencedColumnName = "id")
+    public Foodcourt foodcourt;
 
     /**
      * The hours during which the building is open during the week.
@@ -65,21 +47,33 @@ public class Building {
     public TimeSlot openingHours;
 
     /**
-     * OPTIONAL: The foodcourt within the building.
-     */
-    @OneToOne
-    @JoinColumn(name = "foodcourt", referencedColumnName = "building_number")
-    public FoodCourt foodCourt;
-
-    /**
-     * A map of available reservation slots for each reservable entity at/in the building.
+     * Move this to the reservable table model.
+     *
      */
     @OneToMany
     @ElementCollection
-    @CollectionTable(name = "available_reserverations")
-    Map<Reservable, TimeSlots> availableReservations;
+    @CollectionTable(name = "available_TimeSlots")
+    Map<Reservable, TimeSlot> availableTimeslots;
 
-    @ElementCollection
-    @Column(name = "available_reservables")
-    Collection<Reservable> reservables;
+    /**
+     * Initialises a new instance of {@link Building}.
+     */
+    public Building() {
+
+    }
+
+    /**
+     * Initialises a new instance of {@link Building}.
+     * 
+     * @param number       The building's number.
+     * @param details      {@link Details} about the building.
+     * @param foodcourt    The building's {@link Foodcourt}.
+     * @param openingHours The building's {@link TimeSlot}.
+     */
+    public Building(Long number, Details details, Foodcourt foodcourt, TimeSlot openingHours) {
+        this.number = number;
+        this.details = details;
+        this.foodcourt = foodcourt;
+        this.openingHours = openingHours;
+    }
 }

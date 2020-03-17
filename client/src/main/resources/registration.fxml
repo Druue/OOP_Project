@@ -1,52 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<FlowPane xmlns:fx="http://javafx.com/fxml/1" id="registrationBackground" prefHeight="720.0" prefWidth="1280.0"
+          xmlns="http://javafx.com/javafx/8"
+          fx:controller="nl.tudelft.oopp.client.controllers.RegistrationSceneController">
+    <children>
+        <FlowPane id="registrationWrapper" prefHeight="550.0" prefWidth="550.0">
+            <children>
+                <FlowPane id="registrationContainer" vgap="10.0">
+                    <children>
+                        <FlowPane id="registrationLogoWrapper">
+                            <ImageView id="logo" fitWidth="300.0" preserveRatio="true">
+                                <image>
+                                    <Image url="images/Logo.png"/>
+                                </image>
+                            </ImageView>
+                        </FlowPane>
 
-<FlowPane id="registrationBackground" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.RegistrationSceneController">
-   <children>
-      <FlowPane id="registrationWrapper" prefHeight="550.0" prefWidth="550.0">
-         <children>
-             <FlowPane id="registrationContainer" vgap="10.0">
-                 <children>
-                     <FlowPane id="registrationLogoWrapper">
-                         <ImageView id="logo" fitWidth="300.0" preserveRatio="true">
-                             <image>
-                                <Image url="images/Logo.png" />
-                             </image>
-                         </ImageView>
-                     </FlowPane>
+                        <Label text="Name">
+                            <FlowPane.margin>
+                                <Insets top="10.0"/>
+                            </FlowPane.margin>
+                        </Label>
+                        <TextField fx:id="registrationNameInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0"
+                                   prefWidth="400.0" promptText="Full name" styleClass="registrationInputField"/>
 
-                     <Label text="Name"><FlowPane.margin>
-                         <Insets top="10.0" />
-                     </FlowPane.margin></Label>
-                     <TextField fx:id="registrationNameInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="First Name" styleClass="registrationInputField"/>
+                        <Label text="Username">
+                            <FlowPane.margin>
+                                <Insets top="10.0"/>
+                            </FlowPane.margin>
+                        </Label>
+                        <TextField fx:id="registrationUsernameInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0"
+                                   prefWidth="400.0" promptText="Username" styleClass="registrationInputField"/>
 
-                     <Label text="NetID"><FlowPane.margin>
-                         <Insets top="10.0" />
-                     </FlowPane.margin></Label>
-                     <TextField fx:id="registrationNetIdInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="Last Name" styleClass="registrationInputField"/>
+                        <Label text="Email">
+                            <FlowPane.margin>
+                                <Insets top="10.0"/>
+                            </FlowPane.margin>
+                        </Label>
+                        <TextField fx:id="registrationEmailInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0"
+                                   prefWidth="400.0" promptText="Email" styleClass="registrationInputField"/>
 
-                     <Label text="Email"><FlowPane.margin>
-                         <Insets top="10.0" />
-                     </FlowPane.margin></Label>
-                     <TextField fx:id="registrationEmailInput" layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="400.0" promptText="Email" styleClass="registrationInputField"/>
+                        <Label text="Password">
+                            <FlowPane.margin>
+                                <Insets top="10.0"/>
+                            </FlowPane.margin>
+                        </Label>
+                        <PasswordField fx:id="registrationPasswordInput" layoutX="50.0" layoutY="169.0"
+                                       prefHeight="40.0" prefWidth="400.0" promptText="Password"
+                                       styleClass="registrationInputField"/>
 
-                     <Label text="Password"><FlowPane.margin>
-                         <Insets top="10.0" />
-                     </FlowPane.margin></Label>
-                     <PasswordField fx:id="registrationPasswordInput" layoutX="50.0" layoutY="169.0" prefHeight="40.0" prefWidth="400.0" promptText="Password" styleClass="registrationInputField"/>
-
-                     <Button layoutX="50.0" layoutY="244.0" mnemonicParsing="false" onAction="#attemptRegistration" prefHeight="45.0" prefWidth="300.0" styleClass="registrationButton" text="Create account">
-                          <FlowPane.margin>
-                             <Insets top="15.0" />
-                         </FlowPane.margin></Button>
-                   <Label id="registrationLoginButton" onMouseClicked="#goToLogin" text="---------- Already have an account? Login ----------" />
-               </children>
-            </FlowPane>
-         </children>
-      </FlowPane>
-   </children>
+                        <Button layoutX="50.0" layoutY="244.0" mnemonicParsing="false" onAction="#attemptRegistration"
+                                prefHeight="45.0" prefWidth="300.0" styleClass="registrationButton"
+                                text="Create account">
+                            <FlowPane.margin>
+                                <Insets top="15.0"/>
+                            </FlowPane.margin>
+                        </Button>
+                        <Label id="registrationLoginButton" onMouseClicked="#goToLogin"
+                               text="---------- Already have an account? Login ----------"/>
+                    </children>
+                </FlowPane>
+            </children>
+        </FlowPane>
+    </children>
 </FlowPane>

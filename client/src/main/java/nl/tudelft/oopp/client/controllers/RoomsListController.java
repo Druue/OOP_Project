@@ -13,7 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import nl.tudelft.oopp.api.models.*;
 
-
 public class RoomsListController implements Initializable {
 
     @FXML
@@ -25,33 +24,35 @@ public class RoomsListController implements Initializable {
     }
 
     /**
-     * This will get all the rooms of the selected building and create GUI for them,
-     * as well as the initial tab layout.
-     * @param event The event that called the function.
-     *              Used to find out what Building the request was generated from.
+     * This will get all the rooms of the selected building and create GUI for them, as well as the
+     * initial tab layout.
+     * 
+     * @param event The event that called the function. Used to find out what Building the request
+     *              was generated from.
      */
     public void generateInitialRooms(MouseEvent event) {
-        List<Room> roomsList = generateTestRooms();
+//        List<Room> roomsList = generateTestRooms();
         TestOpeningTimes myOpeningTimes = generateTestOpeningTimes();
         ObservableList<RoomEntryComponent> roomEntries = FXCollections.observableArrayList();
 
-        for(Room myRoom:roomsList) {
+//        for(Room myRoom:roomsList) {
             List<TestTimeSlot> timeSlots = generateTestTimeSlots();
             RoomEntryComponent roomEntry = new RoomEntryComponent();
             roomEntries.add(roomEntry);
-        }
+//        }
 
         roomEntriesContainer.setItems(roomEntries);
 
 
     }
 
-    private static List<Room> generateTestRooms() {
-        List<Room> result = new ArrayList<Room>();
-        Room room1 = new Room(Long.parseLong("1"),"Room1",true,false);
-        result.add(room1);
-        return result;
-    }
+//    private static List<Room> generateTestRooms() {
+//        List<Room> result = new ArrayList<Room>();
+//        Details details = new Details(1, "test", "test", "test");
+//        Room room1 = new Room(Long.parseLong("1"),"Room1",details);
+//        result.add(room1);
+//        return result;
+//    }
 
     private static List<TestTimeSlot> generateTestTimeSlots() {
         List<TestTimeSlot> result = new ArrayList<TestTimeSlot>();
@@ -68,5 +69,4 @@ public class RoomsListController implements Initializable {
 
         return new TestOpeningTimes(openingTime, closingTime);
     }
-
 }

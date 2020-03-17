@@ -16,22 +16,40 @@ import javax.persistence.Table;
 public class TimeSlot {
 
     /**
-     * Initialises a new instance of {@link TimeSlot}.
+     * This is the timeslot id.
      */
-    public TimeSlot() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    Long id;
+    public Long id;
 
+    /**
+     * This is the index? What did you guys mean buy this?.
+     */
     @Column(name = "start")
-    Timestamp startTime;
+    public Timestamp startTime;
 
+    /**
+     * This tells us whether or not the timeslot is available.
+     */
     @Column(name = "end")
-    Timestamp endTime;
+    public Timestamp endTime;
 
-    @Column(name = "availability")
-    Boolean isAvailable;
+    /**
+     * Initialises a new instance of {@link TimeSlot}.
+     */
+    public TimeSlot() {
+
+    }
+
+    /**
+     * Initialises a new instance of {@link TimeSlot}.
+     * 
+     * @param startTime When the timeslot starts.
+     * @param endTime   When the timeslot ends.
+     */
+    public TimeSlot(Timestamp startTime, Timestamp endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }

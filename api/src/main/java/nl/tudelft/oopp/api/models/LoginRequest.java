@@ -2,25 +2,25 @@ package nl.tudelft.oopp.api.models;
 
 public class LoginRequest {
 
-    private String netID;
+    private String username;
     private String password;
 
     /**
      * An object containing a user's login information. Only used during the login process.
-     * @param netID    the user's NetID.
+     * @param username    the user's Username.
      * @param password the user's password.
      */
-    public LoginRequest(String netID, String password) {
-        this.netID = netID;
+    public LoginRequest(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public String getNetID() {
-        return this.netID;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setNetID(String netID) {
-        this.netID = netID;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
