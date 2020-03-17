@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafreservationsx.com/fxml"
+      fx:controller="nl.tudelft.oopp.client.controllers.AddRoomsController">
+
+    <TextField fx:id="roomNameInput" />
+
+
+    <Button onAction="#goToHome" text="Go to the homepage" />
+
+    <Button text="Add room to the Database" onAction="#addRoom"/>
+</VBox>

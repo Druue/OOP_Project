@@ -51,6 +51,9 @@ public class User {
     @JoinColumn(name = "details", referencedColumnName = "id")
     public Details details;
 
+    @Column(name = "userkind")
+    public UserKind userKind;
+
     /**
      * Initialises a new {@link User}.
      */

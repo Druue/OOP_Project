@@ -39,7 +39,7 @@ public class ReservationsController {
 
     /**
      * Sends all reservations in the database to the requesting administrator.
-     * 
+     *
      * @param request The request containing the admin's info.
      * @return A {@link ResponseEntity} object containing all the current reservations in the
      *         database.

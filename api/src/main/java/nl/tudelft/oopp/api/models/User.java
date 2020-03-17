@@ -33,6 +33,11 @@ public class User {
     public Details details;
 
     /**
+     * The {@link UserKind} of user.
+     */
+    public UserKind userKind;
+
+    /**
      * Initialises a new {@link User}.
      */
     public User() {
@@ -41,6 +46,23 @@ public class User {
 
     /**
      * Initialises a new {@link User}.
+     * @param details       The user's details. (Includes the user's first and last name.)
+     * @param email         The user's email.
+     * @param username      The user's username.
+     * @param password      The user's password.
+     * @param userKind      The kind of user.
+     */
+    public User(Details details, String email, String username, String password, UserKind userKind) {
+        this.details = details;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.userKind = userKind;
+    }
+
+    /**
+     * Initialises a new {@link User}.
+     *
      * @param email         The user's email.
      * @param username      The user's username.
      * @param password      The user's password.
@@ -49,6 +71,14 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
+    }
+
+    public String getName() {
+        return details.getName();
+    }
+
+    public void setName(String name) {
+        details.setName(name);
     }
 
     /**
@@ -102,5 +132,13 @@ public class User {
 
     public void setDetails(Details details) {
         this.details = details;
+    }
+
+    public UserKind getUserKind() {
+        return userKind;
+    }
+
+    public void setUserKind(UserKind userKind) {
+        this.userKind = userKind;
     }
 }

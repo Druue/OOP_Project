@@ -17,11 +17,23 @@ public abstract class Reservable {
     public Details details;
 
 
-    public Reservable() { }
-
     public Reservable(Long id, Details details) {
         this.id = id;
         this.details = details;
+    }
+
+    public Details getDetails() {
+        return details;
+    }
+
+    public void setDetails(Details details) {
+        this.details = details;
+    }
+
+
+
+    public Reservable() {
+        super();
     }
 
     public Long getId() {
@@ -32,11 +44,5 @@ public abstract class Reservable {
         this.id = id;
     }
 
-    public Details getDetails() {
-        return details;
-    }
 
-    public void setDetails(Details details) {
-        this.details = details;
-    }
 }
