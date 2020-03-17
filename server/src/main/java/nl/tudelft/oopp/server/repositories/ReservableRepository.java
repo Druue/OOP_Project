@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ReservableRepository extends JpaRepository<Reservable, Long> {
-    List<Reservable> findByName(String name);
+    List<Reservable> findByDetails_Name(String name);
 
     List<Reservable> findAll();
 }

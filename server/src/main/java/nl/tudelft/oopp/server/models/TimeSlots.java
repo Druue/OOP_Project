@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * TimeSlots.
  */
 @Entity
-@Table(name = "timeslots")
+@Table(name = "Timeslots")
 public class TimeSlots {
 
     /**

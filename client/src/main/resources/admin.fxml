@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1"
+      fx:controller="nl.tudelft.oopp.client.controllers.AdminController">
+    <children>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <ImageView fitWidth="800" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0"
+                           AnchorPane.rightAnchor="0.0">
+                    <image>
+                        <Image url="@images/Rooms-background8x6.png"/>
+                    </image>
+                </ImageView>
+                <Label prefHeight="50.0" text="Welcome to admin page" textAlignment="CENTER"
+                       AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="60.0">
+                    <font>
+                        <Font name="Helvetica" size="29.0"/>
+                    </font>
+                </Label>
+                <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00a6d6;"
+                         tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="75.0"
+                         AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="130.0">
+                    <tabs>
+                        <Tab text="Today's reservation">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <ListView fx:id="todayRes" prefHeight="200.0" prefWidth="300.0"
+                                                  style="-fx-background-color: #00a6d6;" AnchorPane.bottomAnchor="0.0"
+                                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                  AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="All reservations">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <ListView fx:id="allRes" prefHeight="200.0" prefWidth="300.0"
+                                                  style="-fx-background-color: #00a6d6;" AnchorPane.bottomAnchor="0.0"
+                                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                  AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="All buildings">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <ListView fx:id="allRes1" prefHeight="200.0" prefWidth="300.0"
+                                                  style="-fx-background-color: #00a6d6;" AnchorPane.bottomAnchor="40.0"
+                                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                  AnchorPane.topAnchor="0.0"/>
+                                        <Button mnemonicParsing="false" prefWidth="140.0"
+                                                style="-fx-background-color: #287e40;" text="Add a building"
+                                                textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="7.0"
+                                                AnchorPane.leftAnchor="130.0"/>
+                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="140.0"
+                                                style="-fx-background-color: #EA2E00;" text="Delete a building"
+                                                textFill="WHITE" AnchorPane.bottomAnchor="7.0"
+                                                AnchorPane.rightAnchor="130.0"/>
+                                        <Button onAction="#goToAdminRoom" text="room"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+
+                <MenuBar id="menuBar" style="-fx-background-color: #00A6D6;" AnchorPane.leftAnchor="0.0"
+                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Reserve">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Room"/>
+                                <MenuItem mnemonicParsing="false" text="Bike"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Order food"/>
+                        <Menu mnemonicParsing="false" text="Add reservable">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Building"/>
+                                <MenuItem mnemonicParsing="false" text="Room"/>
+                                <MenuItem mnemonicParsing="false" text="Bike"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Manage reservable"/>
+                    </menus>
+                </MenuBar>
+                <ImageView fitHeight="100.0" fitWidth="100.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true"
+                           AnchorPane.rightAnchor="1.5" AnchorPane.topAnchor="1.5">
+                    <image>
+                        <Image url="@images/Logo.png"/>
+                    </image>
+                </ImageView>
+                <Button onAction="#goToMain" prefWidth="100.0" text="Logo" AnchorPane.rightAnchor="1.5"
+                        AnchorPane.topAnchor="1.5"/>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

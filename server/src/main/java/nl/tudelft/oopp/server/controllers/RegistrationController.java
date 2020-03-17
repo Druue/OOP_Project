@@ -23,10 +23,10 @@ public class RegistrationController {
      * This method is the entry point for the registration procedure. It accepts as input the
      * provided by the user registration details encapsulated in a RegistrationDetails object, with
      * the password hashed in advance by the client. Check: The method tries to establish whether a
-     * client with such a NetID already exists in the database and if so, sends a response informing
-     * the user to provide another NetID If no user with the provided NetID exists, the method adds
-     * the new user to the database and sends a response that informs the user he has been
-     * successfully registered.
+     * client with such a username already exists in the database and if so, sends a response
+     * informing the user to provide another username If no user with the provided username exists,
+     * the method adds the new user to the database and sends a response that informs the user he
+     * has been successfully registered.
      */
     @PostMapping("/register")
     public ResponseEntity<UserAuthResponse> registerUser(@RequestBody String jsonRequest) {
@@ -36,17 +36,21 @@ public class RegistrationController {
         LoggerService.info(RegistrationController.class, registrationRequest.email);
 
         try {
-            //TODO: Validate that the user doesn't already exist.
+            // TODO: Validate that the user doesn't already exist.
             registrationService.addUser(registrationRequest);
-            nl.tudelft.oopp.api.models.User user = gson.fromJson(gson.toJson(registrationService.getUserByID(registrationService.getUserId(registrationRequest.email))), nl.tudelft.oopp.api.models.User.class);
-            UserAuthResponse r = new UserAuthResponse("You've registered successfully!", "CONFIRMATION", user);
+            nl.tudelft.oopp.api.models.User user = gson.fromJson(
+                    gson.toJson(registrationService
+                            .getUserByID(registrationService.getUserId(registrationRequest.email))),
+                    nl.tudelft.oopp.api.models.User.class);
+            UserAuthResponse r =
+                    new UserAuthResponse("You've registered successfully!", "CONFIRMATION", user);
             LoggerService.info(RegistrationController.class, "New user successfully registered.");
             return ResponseEntity.ok().body(r);
         } catch (Exception /* InstanceAlreadyExistsException */ e) {
             e.printStackTrace();
             LoggerService.error(RegistrationController.class,
                     "Invalid details provided. User with that "
-                            + "NetID already exists in the database.");
+                            + "username already exists in the database.");
 
             UserAuthResponse r = new UserAuthResponse("Invalid details provided!", "ERROR", null);
             return ResponseEntity.badRequest().body(r);

@@ -1,67 +1,75 @@
 package nl.tudelft.oopp.api.models;
 
-import java.util.Collection;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.RegistrationDetails;
 
+/**
+ * Initialises a new {@link User}.
+ */
 public class User {
 
+    /**
+     * The user's ID.
+     */
+    public Long id;
 
-    public Long userId;
-    public String name;
-    public String username;
+    /**
+     * The user's email.
+     */
     public String email;
+
+    /**
+     * The user's username.
+     */
+    public String username;
+
+    /**
+     * The user's password.
+     */
     public String password;
+    /**
+     * A collection of the user's current reservations.
+     */
+    public Details details;
 
-    public Collection<Reservation> reservations;
-    public String type;
+    /**
+     * Initialises a new {@link User}.
+     */
+    public User() {
 
-    public User(String name, String username, String email, String password, String type) {
-        this.name = name;
-        this.username = username;
+    }
+
+    /**
+     * Initialises a new {@link User}.
+     * @param email         The user's email.
+     * @param username      The user's username.
+     * @param password      The user's password.
+     */
+    public User(String email, String username, String password) {
         this.email = email;
-        this.password = password;
-        this.type = type;
-    }
-
-    public User(Long userId, String name, String username, String email, String password, Collection<Reservation> reservations, String type) {
-        this.userId = userId;
-        this.name = name;
         this.username = username;
-        this.email = email;
         this.password = password;
-        this.reservations = reservations;
-        this.type = type;
     }
 
-    public Collection<Reservation> getReservations() {
-        return reservations;
+    /**
+     * Creates a user from a provided registration details object.
+     *
+     * @param registrationDetails The registration details from which to create a new user
+     */
+    public User(RegistrationDetails registrationDetails) {
+        this.details =
+                HttpRequestHandler.convertModel(registrationDetails.getDetails(), Details.class);
+        this.email = registrationDetails.getEmail();
+        this.username = registrationDetails.getusername();
+        this.password = registrationDetails.getPassword();
     }
 
-    public void setReservations(Collection<Reservation> reservations) {
-        this.reservations = reservations;
+    public Long getId() {
+        return id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -72,6 +80,14 @@ public class User {
         this.email = email;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -80,11 +96,11 @@ public class User {
         this.password = password;
     }
 
-    public String getType() {
-        return type;
+    public Details getDetails() {
+        return details;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setDetails(Details details) {
+        this.details = details;
     }
 }

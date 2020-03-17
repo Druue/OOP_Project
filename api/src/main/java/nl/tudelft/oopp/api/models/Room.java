@@ -1,18 +1,52 @@
 package nl.tudelft.oopp.api.models;
 
+
+/**
+ * Room.
+ */
 public class Room extends Reservable {
-    private boolean employeeOnly;
 
     /**
-     * Initializes a new room.
-     * @param id          Unique id of the Room.
-     * @param name        Name of the connected building.
-     * @param isAvailable a boolean stating the availability of the room.
-     * @param employeeOnly signifies whether only employees can reserve this room.
+     * This denotes how many people can be in a room.
      */
-    public Room(Long id, String name, boolean isAvailable, boolean employeeOnly) {
-        super(id, name, isAvailable);
-        this.employeeOnly = employeeOnly;
+    public int capacity;
+    /**
+     * This lets the user know which room has a projector.
+     */
+    public boolean hasProjector;
+
+    /**
+     * Whether the room is only reservable by staff or not.
+     */
+    public boolean forEmployee;
+
+
+    public Room() {
+        super();
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public boolean isHasProjector() {
+        return hasProjector;
+    }
+
+    public void setHasProjector(boolean hasProjector) {
+        this.hasProjector = hasProjector;
+    }
+
+    public boolean isForEmployee() {
+        return forEmployee;
+    }
+
+    public void setForEmployee(boolean forEmployee) {
+        this.forEmployee = forEmployee;
     }
 
     public Room(String name, boolean isAvailable, boolean employeeOnly) {

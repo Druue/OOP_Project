@@ -107,6 +107,28 @@ public class MainSceneController {
     }
 
     /**
+     * Handles going to the admin page.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToAdmin(ActionEvent event) {
+        try {
+            Parent adminParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
+            Scene adminScene = new Scene(adminParent);
+
+            Stage primaryStage =
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(adminScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in MainSceneController");
+        }
+    }
+
+    /**
      * An example alert function, to showcase the use of the new API.
      */
     public void getBuildings() {

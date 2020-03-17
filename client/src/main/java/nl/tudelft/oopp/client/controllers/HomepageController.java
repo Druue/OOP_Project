@@ -1,5 +1,9 @@
 package nl.tudelft.oopp.client.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,21 +12,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.*;
+import nl.tudelft.oopp.api.models.Reservation;
+import nl.tudelft.oopp.api.models.ReservationResponse;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+public class HomepageController<E> implements Initializable {
 
-public class HomepageController implements Initializable {
-
-    ObservableList list = FXCollections.observableArrayList();
+    ObservableList<E> list = FXCollections.observableArrayList();
 
     @FXML
     private ListView<String> todayRes;
@@ -36,7 +39,7 @@ public class HomepageController implements Initializable {
     }
 
     /**
-     * Handles loading the reserved rooms to the ListView item in Homepage.fxml
+     * Handles loading the reserved rooms to the ListView item in homepage.fxml
      */
     private void loadData() {
 
@@ -78,10 +81,6 @@ public class HomepageController implements Initializable {
             }
 
         }
-
-
-
-
 
     }
 

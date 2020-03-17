@@ -35,7 +35,7 @@ public class ReservationService {
      * @return A List of all the reservations of user with id = userID
      */
     public List<Reservation> getReservationsByUserID(Long userID) {
-        return reservationRepository.findByUserID(userID);
+        return reservationRepository.findByUser_Id(userID);
     }
 
     /**

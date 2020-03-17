@@ -7,17 +7,16 @@ import javax.persistence.Table;
  * Initialises a new {@link Bike}.
  */
 @Entity
-@Table(name = "bike")
+@Table(name = "Bike")
 public class Bike extends Reservable {
 
     /**
-     * Initialises a new {@link Bike}.
+     * Initialises a new instance of {@link Bike}.
      * 
-     * @param id          The bike's ID.
-     * @param name        The bike's name.
-     * @param isAvailable The bike's availability.
+     * @param id      The bike's ID.
+     * @param details Details about the bike.
      */
-    public Bike(Long id, String name, boolean isAvailable) {
-        super(id, name, isAvailable);
+    public Bike(Long id, Details details) {
+        super(id, details);
     }
 }
