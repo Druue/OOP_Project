@@ -59,6 +59,15 @@ public class Date {
         this.isHoliday = isHoliday;
     }
 
+    /**
+     * Initialises a new instance of a {@link Date}.
+     * @param id        The id.
+     * @param year      The year.
+     * @param month     The month.
+     * @param week      The week.
+     * @param day       The day.
+     * @param isHoliday Whether it's a holiday or not.
+     */
     public Date(Long id, Integer year, Integer month, Integer week, Integer day, boolean isHoliday) {
         this.id = id;
         this.year = year;

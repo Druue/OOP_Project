@@ -64,6 +64,12 @@ public class TimeSlot {
         this.endTime = endTime;
     }
 
+    /**
+     * Initialises a new instance of {@link TimeSlot}.
+     * @param id The id of the TimeSlot.
+     * @param startTime The starting time.
+     * @param endTime The end time.
+     */
     public TimeSlot(Long id, Timestamp startTime, Timestamp endTime) {
         this.id = id;
         this.startTime = startTime;
