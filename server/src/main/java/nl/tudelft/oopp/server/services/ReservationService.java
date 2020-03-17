@@ -66,6 +66,12 @@ public class ReservationService {
         return reservationRepository.findAllCurrentByUser(userID, getCurrentTimestamp());
     }
 
+    /** Checks whether there exist a reservation of the provided user in the given period.
+     * @param userID The id of the user to check the reservations of.
+     * @param startTime The start time of the period to search for reservations in.
+     * @param endTime The end time of the period to search for reservations in.
+     * @return True if such a reservation in the given period is found. False otherwise.
+     */
     public boolean checkExistUserReservationsForPeriod(Long userID, Timestamp startTime,
                                                        Timestamp endTime) {
         List<Reservation> list = reservationRepository.findAllForUserForPeriod(userID,
@@ -84,6 +90,12 @@ public class ReservationService {
         return reservationRepository.findAllCurrentForReservable(reservable, getCurrentTimestamp());
     }
 
+    /** Checks whether there exist a reservation of the provided reservable in the given period.
+     * @param reservable The reservable to check the reservations of.
+     * @param startTime The start time of the period to search for reservations in.
+     * @param endTime The end time of the period to search for reservations in.
+     * @return True if such a reservation in the given period is found. False otherwise.
+     */
     public boolean checkExistReservableReservationsForPeriod(Reservable reservable,
                                                              Timestamp startTime,
                                                              Timestamp endTime) {
