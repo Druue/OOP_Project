@@ -40,7 +40,7 @@ public class TimeSlot {
         this.endTime = endTime;
     }
     
-     /**
+    /**
      * Initialises a new instance of {@link TimeSlot}.
      * @param id The id of the TimeSlot.
      * @param startTime The starting time.

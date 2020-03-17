@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.client.controllers;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -8,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,13 +17,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -33,8 +33,6 @@ import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
-
-import javax.swing.text.html.ImageView;
 
 public class ReservationsSceneController implements Initializable {
 
@@ -74,7 +72,7 @@ public class ReservationsSceneController implements Initializable {
 
         populateBuildingsScrollBox();
 
-//        roomsListWrapper.setVisible(false);
+        //        roomsListWrapper.setVisible(false);
     }
 
     /**
@@ -119,7 +117,7 @@ public class ReservationsSceneController implements Initializable {
                 buildingEntry.getChildren().add(buildingOpeningTime);
                 buildingEntry.setPrefHeight(60);
                 buildingEntry.prefWidthProperty().bind(buildingsList.widthProperty().subtract(50));
-//                buildingEntry.setMaxWidth(Control.USE_PREF_SIZE);
+                //buildingEntry.setMaxWidth(Control.USE_PREF_SIZE);
 
                 buildingEntry.setEffect(dropShadow);
 
@@ -129,7 +127,7 @@ public class ReservationsSceneController implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-//                            FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
+                            //FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomsList.fxml"));
                             RoomsListController controller = new RoomsListController();
                             loader.setController(controller);
@@ -145,7 +143,7 @@ public class ReservationsSceneController implements Initializable {
                 };
                 buildingEntry.setOnMouseClicked(mouseEventEventHandler);
             }
-            if(listOfEntries.size() != 0) {
+            if (listOfEntries.size() != 0) {
                 ObservableList<Node> observableListOfEntries = FXCollections.observableArrayList(listOfEntries);
                 buildingsList.setItems(observableListOfEntries);
             }

@@ -4,14 +4,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import nl.tudelft.oopp.api.models.*;
+import nl.tudelft.oopp.api.models.TestHourAndMinutes;
+import nl.tudelft.oopp.api.models.TestOpeningTimes;
+import nl.tudelft.oopp.api.models.TestTimeSlot;
 
 public class RoomsListController implements Initializable {
 
@@ -31,32 +32,32 @@ public class RoomsListController implements Initializable {
      *              was generated from.
      */
     public void generateInitialRooms(MouseEvent event) {
-//        List<Room> roomsList = generateTestRooms();
+        //        List<Room> roomsList = generateTestRooms();
         TestOpeningTimes myOpeningTimes = generateTestOpeningTimes();
         ObservableList<RoomEntryComponent> roomEntries = FXCollections.observableArrayList();
 
-//        for(Room myRoom:roomsList) {
-            List<TestTimeSlot> timeSlots = generateTestTimeSlots();
-            RoomEntryComponent roomEntry = new RoomEntryComponent();
-            roomEntries.add(roomEntry);
-//        }
+        //        for(Room myRoom:roomsList) {
+        List<TestTimeSlot> timeSlots = generateTestTimeSlots();
+        RoomEntryComponent roomEntry = new RoomEntryComponent();
+        roomEntries.add(roomEntry);
+        //        }
 
         roomEntriesContainer.setItems(roomEntries);
 
 
     }
 
-//    private static List<Room> generateTestRooms() {
-//        List<Room> result = new ArrayList<Room>();
-//        Details details = new Details(1, "test", "test", "test");
-//        Room room1 = new Room(Long.parseLong("1"),"Room1",details);
-//        result.add(room1);
-//        return result;
-//    }
+    //    private static List<Room> generateTestRooms() {
+    //        List<Room> result = new ArrayList<Room>();
+    //        Details details = new Details(1, "test", "test", "test");
+    //        Room room1 = new Room(Long.parseLong("1"),"Room1",details);
+    //        result.add(room1);
+    //        return result;
+    //    }
 
     private static List<TestTimeSlot> generateTestTimeSlots() {
         List<TestTimeSlot> result = new ArrayList<TestTimeSlot>();
-        for(int i = 0; i != 26; i++) {
+        for (int i = 0; i != 26; i++) {
             TestTimeSlot myTimeSlot = new TestTimeSlot(i,true);
             result.add(myTimeSlot);
         }

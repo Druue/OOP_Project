@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.client.controllers;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -9,14 +12,14 @@ import nl.tudelft.oopp.api.models.TestHourAndMinutes;
 import nl.tudelft.oopp.api.models.TestOpeningTimes;
 import nl.tudelft.oopp.api.models.TestTimeSlot;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RoomEntryComponent extends Pane {
 
     RoomEntryController controller;
 
+    /**
+     * Creates a new RoomEntryComponent.
+     */
     public RoomEntryComponent() {
         super();
         try {
@@ -40,8 +43,8 @@ public class RoomEntryComponent extends Pane {
 
     private static List<TestTimeSlot> generateTestTimeSlots() {
         List<TestTimeSlot> result = new ArrayList<TestTimeSlot>();
-        for(int i = 0; i != 29; i++) {
-            TestTimeSlot myTimeSlot = new TestTimeSlot(i,true);
+        for (int i = 0; i != 29; i++) {
+            TestTimeSlot myTimeSlot = new TestTimeSlot(i, true);
             result.add(myTimeSlot);
         }
         return result;

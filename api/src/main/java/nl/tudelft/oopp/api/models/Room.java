@@ -21,19 +21,19 @@ public class Room extends Reservable {
     public boolean forEmployee;
 
     /**
-     * Empty Room constructor
+     * Empty Room constructor.
      */
     public Room() {
         super();
     }
 
     /**
-     * Constructor for Room object using all attributes
-     * @param id
-     * @param details
-     * @param capacity
-     * @param hasProjector
-     * @param forEmployee
+     * Constructor for Room object using all attributes.
+     * @param id The room id.
+     * @param details The room details.
+     * @param capacity The room capacity.
+     * @param hasProjector The boolean stating whether or not the room has a projector.
+     * @param forEmployee The boolean stating whether or not the room is for employees only.
      */
     public Room(Long id, Details details, int capacity, boolean hasProjector, boolean forEmployee) {
         super(id, details);
