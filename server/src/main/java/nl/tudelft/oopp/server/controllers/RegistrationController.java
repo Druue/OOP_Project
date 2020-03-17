@@ -33,6 +33,7 @@ public class RegistrationController {
         LoggerService.info(RegistrationController.class, "Received registration details");
 
         User registrationRequest = gson.fromJson(jsonRequest, User.class);
+        LoggerService.info(RegistrationController.class, registrationRequest.email);
 
         try {
             // TODO: Validate that the user doesn't already exist.

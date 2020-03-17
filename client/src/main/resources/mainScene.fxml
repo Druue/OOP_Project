@@ -12,9 +12,9 @@
     <!-- Button that sends the text within 'userInput'-->
     <Button onAction="#goToReservations" text="Go to reservations"/>
 
-    <Button onAction="#goToLogin" text="Go to the login page"/>
-
-    <Button onAction="#goToHome" text="Go to the homepage"/>
+    <Button onAction="#goToLogin" text="Go to the login page" />
+    <Button onAction="#goToAddRooms" text="Go to add rooms page"/>
+    <Button onAction="#goToHome" text="Go to the homepage" />
 
     <Button onAction="#goToAdmin" text="Go to the admin page"/>
 

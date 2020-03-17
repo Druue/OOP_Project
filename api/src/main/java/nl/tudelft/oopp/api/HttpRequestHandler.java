@@ -21,7 +21,7 @@ public class HttpRequestHandler {
 
     /**
      * Sends a POST request with some given parameters.
-     * 
+     *
      * @param path       the path on the server where the request should be sent.
      * @param parameters a map containing all parameters in the request, mapped as 'name,value'.
      * @return An HttpResponse object.
@@ -43,7 +43,7 @@ public class HttpRequestHandler {
 
     /**
      * Sends a PUT request with some given parameters.
-     * 
+     *
      * @param path       the path on the server where the request should be sent.
      * @param parameters a map containing all parameters in the request, mapped as 'name,value'.
      * @return An HttpResponse object.
@@ -65,7 +65,7 @@ public class HttpRequestHandler {
 
     /**
      * Sends a GET request.
-     * 
+     *
      * @param path the path on the server where the request should be sent.
      * @return An HttpResponse object.
      */
@@ -83,8 +83,8 @@ public class HttpRequestHandler {
         return null;
     }
 
-    public static <T, E> E convertModel(T input, Class<E> outputType) {
+    public static <T, E> E convertModel(T from, Class<E> to) {
         Gson gson = new GsonBuilder().serializeNulls().create();
-        return gson.fromJson(gson.toJson(input), outputType);
+        return gson.fromJson(gson.toJson(from), to);
     }
 }

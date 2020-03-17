@@ -65,4 +65,5 @@ public class Room extends Reservable {
     public void setForEmployee(boolean forEmployee) {
         this.forEmployee = forEmployee;
     }
+
 }
