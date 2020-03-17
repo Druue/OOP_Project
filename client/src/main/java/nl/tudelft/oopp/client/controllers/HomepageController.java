@@ -2,6 +2,7 @@ package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -15,14 +16,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.ReservationResponse;
+import nl.tudelft.oopp.api.models.User;
+import nl.tudelft.oopp.api.models.UserKind;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+
 public class HomepageController<E> implements Initializable {
 
     ObservableList<E> list = FXCollections.observableArrayList();
@@ -43,26 +43,31 @@ public class HomepageController<E> implements Initializable {
      */
     private void loadData() {
 
-        /**
+        /*
          * This block makes three rooms and tree reservations.
          */
-        User exampleUser = new User("first last", "flast", "password", "example@mail.com", "student");
+        User exampleUser = new User(
+                new Details(null, "first last", null, null),
+                "example@mail.com",
+                "flast",
+                "badpass", UserKind.Student);
+        //TODO: Add proper connection to backend.
 
-        Room a = new Room("Example room a", false, false);
-        Room b = new Room("Example room b", true, true);
-        Room c = new Room("Example room c", true, false);
+        //        Room a = new Room("Example room a", false, false);
+        //        Room b = new Room("Example room b", true, true);
+        //        Room c = new Room("Example room c", true, false);
 
-        Reservation reservationA = new Reservation((long) 0, exampleUser, a);
-        Reservation reservationB = new Reservation((long) 1, exampleUser, b);
-        Reservation reservationC = new Reservation((long) 2, exampleUser, c);
-        List<Reservation> exampleReservationList = new ArrayList<>();
-        exampleReservationList.add(reservationA);
-        exampleReservationList.add(reservationB);
-        exampleReservationList.add(reservationC);
-
-        for (Reservation s : exampleReservationList) {
-            todayRes.getItems().add(s.getReservableId().getName());
-        }
+        //        Reservation reservationA = new Reservation((long) 0, exampleUser, a);
+        //        Reservation reservationB = new Reservation((long) 1, exampleUser, b);
+        //        Reservation reservationC = new Reservation((long) 2, exampleUser, c);
+        //        List<Reservation> exampleReservationList = new ArrayList<>();
+        //        exampleReservationList.add(reservationA);
+        //        exampleReservationList.add(reservationB);
+        //        exampleReservationList.add(reservationC);
+        //
+        //        for (Reservation s : exampleReservationList) {
+        //            todayRes.getItems().add(s.getReservableId().getName());
+        //        }
 
         // Set to true / remove the condition once the actual reservations controller is ready.
         boolean doRest = false;
@@ -74,7 +79,7 @@ public class HomepageController<E> implements Initializable {
                 ReservationResponse response = HttpRequestHandler.get("reservations/all", ReservationResponse.class);
                 reservationList = response.getReservationList();
                 for (Reservation s : reservationList) {
-                    todayRes.getItems().add(s.getReservableId().getName());
+                    todayRes.getItems().add(s.reservable.details.name);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

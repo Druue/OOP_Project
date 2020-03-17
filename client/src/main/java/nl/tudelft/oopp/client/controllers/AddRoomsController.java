@@ -21,7 +21,7 @@ public class AddRoomsController {
 
     // the TextField object from mainScene.fxml
     @FXML
-    public TextField RoomNameInput;
+    public TextField roomNameInput;
 
     /**
      * Handles going to the reservation page.
@@ -80,7 +80,7 @@ public class AddRoomsController {
             Scene homeScene = new Scene(homeParent);
 
             Stage primaryStage =
-                    (Stage) (RoomNameInput.getScene().getWindow());
+                    (Stage) (roomNameInput.getScene().getWindow());
 
             primaryStage.hide();
             primaryStage.setScene(homeScene);
@@ -101,6 +101,8 @@ public class AddRoomsController {
         alert.setTitle("A response");
         alert.setHeaderText(null);
 
+        //TODO: Add a proper connection to the backend.
+
         // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
         BuildingResponse buildingResponse = HttpRequestHandler.get("getbuildings", BuildingResponse.class);
 
@@ -117,12 +119,18 @@ public class AddRoomsController {
         alert.showAndWait();
     }
 
+    /** Sends a request to the backend to add a Room to the database.
+     *
+     * @param event The event that called the function.
+     */
     public void addRoom(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("yeet");
+        alert.setTitle("Room added.");
         alert.setHeaderText(null);
-        Room room = new Room(RoomNameInput.getText(), true, false);
-        HttpRequestHandler.put("reservables/insert/new_room", room, ServerResponseAlert.class);
+        //TODO: Add proper connection to the backend.
+
+        //Room room = new Room(roomNameInput.getText(), true, false);
+        //HttpRequestHandler.put("reservables/insert/new_room", null /* room */, ServerResponseAlert.class);
 
     }
 }

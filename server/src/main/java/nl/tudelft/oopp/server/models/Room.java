@@ -32,10 +32,4 @@ public class Room extends Reservable {
     @Column(name = "forEmployee")
     public boolean forEmployee;
 
-
-
-    public Room(String name, boolean isAvailable, boolean employeeOnly) {
-        super(name, isAvailable);
-        this.employeeOnly = employeeOnly;
-    }
 }

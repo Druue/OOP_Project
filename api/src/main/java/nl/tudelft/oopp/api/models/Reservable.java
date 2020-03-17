@@ -17,19 +17,9 @@ public abstract class Reservable {
     public Details details;
 
 
-    public Reservable() { }
-
     public Reservable(Long id, Details details) {
         this.id = id;
         this.details = details;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Details getDetails() {
@@ -40,11 +30,7 @@ public abstract class Reservable {
         this.details = details;
     }
 
-    public Reservable(String name, boolean isAvailable) {
-        this.name = name;
-        this.isAvailable = isAvailable;
 
-    }
 
     public Reservable() {
         super();
@@ -58,19 +44,5 @@ public abstract class Reservable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
 }

@@ -25,7 +25,7 @@ public class Reservation {
     /**
      * This shows the timeslot of a reservation.
      */
-    public Collection<TimeSlot> timeslot;
+    public TimeSlot timeslot;
 
     /**
      * Initialises a new instance of {@link Reservation}.
@@ -43,7 +43,7 @@ public class Reservation {
      * @param timeslot      The time during which the entity will be reserved.
      */
     public Reservation(Long reservationID, User user, Reservable reservable,
-                       Collection<TimeSlot> timeslot) {
+                       TimeSlot timeslot) {
         this.user = user;
         this.reservable = reservable;
         this.timeslot = timeslot;
@@ -74,11 +74,11 @@ public class Reservation {
         this.reservable = reservable;
     }
 
-    public Collection<TimeSlot> getTimeslot() {
+    public TimeSlot getTimeslot() {
         return timeslot;
     }
 
-    public void setTimeslot(Collection<TimeSlot> timeslot) {
+    public void setTimeslot(TimeSlot timeslot) {
         this.timeslot = timeslot;
     }
 }

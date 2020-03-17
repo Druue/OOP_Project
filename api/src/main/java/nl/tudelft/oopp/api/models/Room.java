@@ -49,23 +49,4 @@ public class Room extends Reservable {
         this.forEmployee = forEmployee;
     }
 
-    public Room(String name, boolean isAvailable, boolean employeeOnly) {
-        super(name, isAvailable);
-        this.employeeOnly = employeeOnly;
-    }
-
-    public Room() {
-        super();
-    }
-
-
-    public boolean isEmployeeOnly() {
-        return employeeOnly;
-    }
-
-    public void setEmployeeOnly(boolean employeeOnly) {
-        this.employeeOnly = employeeOnly;
-    }
-
-
 }

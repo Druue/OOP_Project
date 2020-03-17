@@ -8,7 +8,7 @@
       xmlns:fx="http://javafreservationsx.com/fxml"
       fx:controller="nl.tudelft.oopp.client.controllers.AddRoomsController">
 
-    <TextField fx:id="RoomNameInput" />
+    <TextField fx:id="roomNameInput" />
 
 
     <Button onAction="#goToHome" text="Go to the homepage" />

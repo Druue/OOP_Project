@@ -89,6 +89,10 @@ public class MainSceneController {
         }
     }
 
+    /**
+     * Handles going to the "Add rooms" page.
+     * @param event the scene from where the function was called.
+     */
     public void goToAddRooms(ActionEvent event) {
         try {
             Parent homeParent = FXMLLoader.load(getClass().getResource("/addRooms.fxml"));

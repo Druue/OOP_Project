@@ -82,7 +82,7 @@ public class ReservationsController {
 
         LoggerService.info(ReservationsController.class,
                 "User with username: " + username + " successfully found.");
-        Long userID = foundUser.userId;
+        Long userID = foundUser.id;
 
         List<Reservation> foundReservations = reservationService.getReservationsByUserID(userID);
         return new ResponseEntity<List<Reservation>>(foundReservations, HttpStatus.ACCEPTED);
