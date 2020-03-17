@@ -38,17 +38,26 @@ public class ReservationsController {
 
     /**
      * Sends all reservations in the database to the requesting administrator.
-     *
-     * @param request The request containing the admin's info.
      * @return A {@link ResponseEntity} object containing all the current
      *      reservations in the database.
      */
     @GetMapping("/admin/all")
-    public ResponseEntity<List<Reservation>> getAllReservations(ClientRequest<String> request) {
+    public ResponseEntity<List<Reservation>> getAllReservations() {
         LoggerService.info(ReservationsController.class,
             "Received request for all reservations");
 
         List<Reservation> responseList = reservationService.getAllReservations();
+        return ResponseEntity.ok(responseList);
+    }
+
+    /** Receives a GET request for all current reservations and sends them in the response.
+     * @return A {@link ResponseEntity} object containing the list of current reservations.
+     */
+    @GetMapping("/admin/current")
+    public ResponseEntity<List<Reservation>> getCurrentReservations() {
+        LoggerService.info(ReservationsController.class, "Received GET request for all "
+            + "current reservations. Processing ...");
+        List<Reservation> responseList =  reservationService.getAllCurrentReservations();
         return ResponseEntity.ok(responseList);
     }
 
