@@ -15,6 +15,7 @@ Note taker: Justin Jo
     - @Details
     - ~~firstname~~
     - ~~lastname~~
+    - UserKind
 - Building
     - _**ID**_
     - @Details
