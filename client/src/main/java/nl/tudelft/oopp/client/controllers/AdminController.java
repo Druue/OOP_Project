@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.client.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,14 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.Reservation;
-import nl.tudelft.oopp.api.models.ReservationResponse;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
 
@@ -39,11 +35,12 @@ public class AdminController implements Initializable {
      */
     private void loadData() {
 
-//        List<Reservation> reservationList = HttpRequestHandler.get("reservations/all", ReservationResponse.class).getReservationList();
-//
-//        for (Reservation s : reservationList) {
-//            todayRes.getItems().add(s.getReservationID().toString());
-//        }
+        //        List<Reservation> reservationList = HttpRequestHandler.get("reservations/all",
+        //        ReservationResponse.class).getReservationList();
+        //
+        //        for (Reservation s : reservationList) {
+        //            todayRes.getItems().add(s.getReservationID().toString());
+        //        }
 
     }
 
@@ -70,20 +67,20 @@ public class AdminController implements Initializable {
     }
 
     /**
-     * Handles going to the room page for the admin
+     * Handles going to the room page for the admin.
      *
      * @param event the scene from where the function was called.
      */
     public void goToAdminRoom(ActionEvent event) {
         try {
-            Parent aRoomParent = FXMLLoader.load(getClass().getResource("/admin-room.fxml"));
-            Scene aRoomScene = new Scene(aRoomParent);
+            Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-room.fxml"));
+            Scene roomScene = new Scene(roomParent);
 
             Stage primaryStage =
                     (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
-            primaryStage.setScene(aRoomScene);
+            primaryStage.setScene(roomScene);
             primaryStage.show();
 
         } catch (IOException e) {

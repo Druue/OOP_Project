@@ -15,6 +15,7 @@ Note taker: Justin Jo
     - @Details
     - ~~firstname~~
     - ~~lastname~~
+    - UserKind
 - Building
     - _**ID**_
     - @Details
@@ -60,7 +61,7 @@ Note taker: Justin Jo
     - FoodItems
     - _**ID**_
     - @User
-    - name
+
 
 ## Labels
 - @: foreign key
