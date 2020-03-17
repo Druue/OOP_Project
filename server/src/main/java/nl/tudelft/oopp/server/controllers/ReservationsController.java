@@ -1,22 +1,21 @@
 package nl.tudelft.oopp.server.controllers;
 
-import com.google.gson.Gson;
-import java.util.ArrayList;
 import java.util.List;
 import javassist.NotFoundException;
 import nl.tudelft.oopp.api.models.ClientRequest;
-import nl.tudelft.oopp.api.models.ReservationResponse;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.server.models.ReservableTimeslotException;
 import nl.tudelft.oopp.server.models.Reservation;
 import nl.tudelft.oopp.server.models.User;
+import nl.tudelft.oopp.server.models.UserReservationsIntersectionException;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.ReservationService;
 import nl.tudelft.oopp.server.services.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,42 +32,38 @@ public class ReservationsController {
     }
 
     public static void logUserError(String username) {
-        LoggerService.error(ReservationsController.class,
-                "No user with username: " + username + " found");
+        LoggerService.error(ReservationsController.class, "No user with username: "
+            + username + " found");
     }
 
     /**
      * Sends all reservations in the database to the requesting administrator.
      *
      * @param request The request containing the admin's info.
-     * @return A {@link ResponseEntity} object containing all the current reservations in the
-     *         database.
+     * @return A {@link ResponseEntity} object containing all the current
+     *      reservations in the database.
      */
-    @GetMapping("/all")
-    public ResponseEntity<ReservationResponse> getAllReservations(ClientRequest<String> request) {
-        LoggerService.info(ReservationsController.class, "Received request for all reservations");
+    @GetMapping("/admin/all")
+    public ResponseEntity<List<Reservation>> getAllReservations(ClientRequest<String> request) {
+        LoggerService.info(ReservationsController.class,
+            "Received request for all reservations");
 
-        Gson gson = new Gson();
-        List<nl.tudelft.oopp.api.models.Reservation> responseList = new ArrayList<>();
-        for (Reservation responseReservation : reservationService.getAllReservations()) {
-            responseList.add(gson.fromJson(gson.toJson(responseReservation),
-                    nl.tudelft.oopp.api.models.Reservation.class));
-        }
-        return ResponseEntity.ok(new ReservationResponse(responseList));
+        List<Reservation> responseList = reservationService.getAllReservations();
+        return ResponseEntity.ok(responseList);
     }
 
     /**
-     * Endpoint for the procedure of getting user reservations. Receives the username in the
-     * {@link ClientRequest} object and uses to find the user in the database and then use his
-     * userID to find his reservations.
+     * Endpoint for the procedure of getting user reservations.
+     * Receives the username in the {@link ClientRequest} object and uses
+     * to find the user in the database and then use his userID to find his reservations.
      *
      * @param request The request object containing the username to be used.
      * @return A List of Reservations object representing all the current reservations of the user.
      */
-    @GetMapping("/findForUser")
+    @GetMapping("/user/all")
     public ResponseEntity<List<Reservation>> getUserReservations(ClientRequest<String> request) {
         LoggerService.info(ReservationsController.class,
-                "Received request for user reservations. Processing ...");
+            "Received request for user reservations. Processing ...");
 
         String username = request.getUsername();
         User foundUser = null;
@@ -80,33 +75,104 @@ public class ReservationsController {
             return ResponseEntity.badRequest().build();
         }
 
-        LoggerService.info(ReservationsController.class,
-                "User with username: " + username + " successfully found.");
-        Long userID = foundUser.id;
+        LoggerService.info(ReservationsController.class, "User with username: "
+            + username + " successfully found.");
 
-        List<Reservation> foundReservations = reservationService.getReservationsByUserID(userID);
-        return new ResponseEntity<List<Reservation>>(foundReservations, HttpStatus.ACCEPTED);
+        Long userId = foundUser.id;
+        List<Reservation> foundReservations = reservationService.getReservationsByUserID(userId);
+        return ResponseEntity.ok(foundReservations);
+    }
+
+    /**
+     * Receive a GET request for the current reservations of a user.
+     *
+     * @param request The request containing the username of the user to get the reservations of.
+     * @return A {@link ResponseEntity} object containing a list of {@link Reservation} objects
+     *      that represent the current reservations of the user.
+     */
+    @GetMapping("/user/current")
+    public ResponseEntity<List<Reservation>> getCurrentUserReservations(
+        ClientRequest<String> request) {
+        LoggerService.info(ReservationsController.class,
+            "Received request for current user reservations. Processing ...");
+
+        String username = request.getUsername();
+        User foundUser = null;
+
+        try {
+            foundUser = userService.getUserByUsername(username);
+        } catch (NotFoundException e) {
+            logUserError(username);
+            return ResponseEntity.badRequest().build();
+        }
+
+        LoggerService.info(ReservationsController.class, "User with username: "
+            + username + " successfully found.");
+
+        Long userId = foundUser.id;
+        List<Reservation> foundReservations =
+            reservationService.getCurrentUserReservations(userId);
+        return ResponseEntity.ok(foundReservations);
     }
 
     /**
      * Adds a reservation to the database.
      *
-     * @param request The {@link ClientRequest} object containing the {@link Reservation} info. that
-     *                is used to save the new reservation.
-     * @return ResponseEntity object indicating that
+     * @param request The {@link ClientRequest} object containing the {@link Reservation} info.
+     *                that is used to save the new reservation.
+     * @return ResponseEntity object indicating whether the reservation was added successfully.
      */
-    @PostMapping("/addNewOne")
-    public ResponseEntity<ServerResponseAlert> addReservation(ClientRequest<Reservation> request) {
+    @PostMapping("/{role:(?:user|admin)}/add")
+    public ResponseEntity<String> addReservation(ClientRequest<Reservation> request) {
         LoggerService.info(ReservationsController.class,
-                "Received POST request for a new reservation from user: " + request.getUsername()
-                        + ". Processing ...");
-        request.getUsername();
+            "Received POST request for a new reservation from user: "
+                + request.getUsername() + ". Processing ...");
 
-        reservationService.addReservation(request.getBody());
+        try {
 
-        LoggerService.info(ReservationsController.class, "New reservation added successfully");
-        return ResponseEntity
-                .ok(new ServerResponseAlert("New reservation added successfully", "SUCCESS"));
+            reservationService.addReservation(request.getBody());
+
+        } catch (UserReservationsIntersectionException e) {
+            return ResponseEntity.badRequest().body("Failure to create reservations. "
+                + "Intersection found with other current user reservations.");
+        } catch (ReservableTimeslotException e) {
+            return ResponseEntity.badRequest().body("Failure to create reservations. "
+                + "Intersection found current reservations of the reservable.");
+        }
+
+        LoggerService.info(ReservationsController.class,
+            "New reservation added successfully");
+        return ResponseEntity.ok().build();
     }
 
+    /**
+     * Receives a DELETE request for a reservation with a provided id and removes it from
+     * the database using the {@link ReservationService} deleteReservation method.
+     * If the reservation is not found in the database, the method concludes it has
+     * already been deleted and sends a bad request status as a response.
+     *
+     * @param id The request parameter containing the id of the reservation to be removed.
+     * @return A {@link ResponseEntity} object indicating the success or failure of the delete
+     *      operation depending on whether the reservation to be deleted was actually found
+     *      in the database.
+     */
+    @DeleteMapping("/{role:(?:user|admin)}/delete")
+    public ResponseEntity<String> deleteReservation(@RequestParam Long id) {
+
+        LoggerService.info(ReservationsController.class, "Received DELETE request "
+            + "for reservation. Processing ...");
+
+        try {
+            reservationService.deleteReservation(id);
+        } catch (Exception e) {
+            LoggerService.error(ReservationsController.class, "Failure"
+                + " to delete the reservation. It has already been deleted");
+            return ResponseEntity.badRequest().build();
+        }
+
+        LoggerService.info(ReservationsController.class,
+            "Reservation successfully deleted");
+
+        return ResponseEntity.ok().build();
+    }
 }
