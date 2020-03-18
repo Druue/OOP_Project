@@ -62,7 +62,7 @@ public class ReservationsController {
         logger.info("Received GET request for all reservations");
 
         try {
-            authorizationService.checkAuthorization(request.getUsername(), request.getRole());
+            authorizationService.checkAuthorization(request.getUsername());
         } catch (AuthorizationException e) {
             logger.error(NOT_ADMIN);
             return ResponseEntity.badRequest().build();
@@ -86,7 +86,7 @@ public class ReservationsController {
         logger.info("Received GET request for all current reservations. Processing ...");
 
         try {
-            authorizationService.checkAuthorization(request.getUsername(), request.getRole());
+            authorizationService.checkAuthorization(request.getUsername());
         } catch (AuthorizationException e) {
             logger.error(NOT_ADMIN);
             return ResponseEntity.badRequest().build();
@@ -172,7 +172,7 @@ public class ReservationsController {
             + request.getUsername() + ". Processing ...");
 
         try {
-            authorizationService.checkAuthorization(request.getUsername(), request.getRole());
+            authorizationService.checkAuthorization(request.getUsername());
         } catch (AuthorizationException e) {
             logger.error(NOT_ADMIN);
             return ResponseEntity.badRequest().build();
@@ -218,7 +218,7 @@ public class ReservationsController {
         logger.info("Received DELETE request for reservation. Processing ...");
 
         try {
-            authorizationService.checkAuthorization(request.getUsername(), request.getRole());
+            authorizationService.checkAuthorization(request.getUsername());
         } catch (AuthorizationException e) {
             logger.error(NOT_ADMIN);
             return ResponseEntity.badRequest().build();
