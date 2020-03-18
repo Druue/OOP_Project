@@ -1,9 +1,6 @@
 package nl.tudelft.oopp.api.models;
 
 import java.sql.Timestamp;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 
 public class TestOpeningTimes {
     private TestHourAndMinutes openingHour;

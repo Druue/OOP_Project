@@ -12,8 +12,6 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
-import nl.tudelft.oopp.api.models.Room;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
 
 public class AddRoomsController {

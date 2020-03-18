@@ -1,7 +1,5 @@
 package nl.tudelft.oopp.api.models;
 
-import java.util.Collection;
-
 /**
  * Initialises a new isntance of {@link Reservation}.
  */

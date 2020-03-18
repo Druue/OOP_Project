@@ -20,7 +20,8 @@ public class UserService {
      * @throws NotFoundException Throws it if no user with the given username exists.
      */
     public User getUserByUsername(String username) throws NotFoundException {
-        LoggerService.info(UserService.class, "Checking database for user with the provided username");
+        LoggerService.info(UserService.class,
+            "Checking database for user with the provided username");
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new NotFoundException("No such user exists");

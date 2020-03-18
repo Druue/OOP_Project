@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.api.models;
 
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.RegistrationDetails;
 
 /**
  * Initialises a new {@link User}.
