@@ -22,7 +22,7 @@ public class ReservationService {
     }
 
     public static Timestamp getCurrentTimestamp() {
-        return new Timestamp(new Date(System.currentTimeMillis() - 3600 * 4000).getTime());
+        return new Timestamp(new Date(System.currentTimeMillis()).getTime());
     }
 
     /**
