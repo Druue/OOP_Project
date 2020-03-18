@@ -114,11 +114,11 @@ A person is able to create an account. This can only be done using a TU Delft ma
 
 - First and Last name
 - Their TU Delft email address
-- Their username
+- Their NetID
 - A password   
 
 ## Roles
-There are three types a user can have, each with its own level of permissions.
+There are three roles a user can have, each with its own level of permissions.
 Users that are either Students or Employees have no interaction with each other, as only an administrator can see who has reserved what.
 
 ### Student
