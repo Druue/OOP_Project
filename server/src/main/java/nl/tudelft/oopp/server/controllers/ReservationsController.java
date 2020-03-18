@@ -2,12 +2,15 @@ package nl.tudelft.oopp.server.controllers;
 
 import java.util.List;
 import javassist.NotFoundException;
+import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.api.models.ClientRequest;
-import nl.tudelft.oopp.server.models.ReservableTimeslotException;
+import nl.tudelft.oopp.server.models.AuthorizationException;
 import nl.tudelft.oopp.server.models.Reservation;
 import nl.tudelft.oopp.server.models.TimeSlot;
+import nl.tudelft.oopp.server.models.TimeslotAlreadyReservedException;
 import nl.tudelft.oopp.server.models.User;
 import nl.tudelft.oopp.server.models.UserReservationsIntersectionException;
+import nl.tudelft.oopp.server.services.AuthorizationService;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.ReservationService;
 import nl.tudelft.oopp.server.services.UserService;
@@ -25,37 +28,74 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/reservations")
 public class ReservationsController {
 
-    // Connection with the methods for querying the database for the reservations
+    private static final String NOT_ADMIN =
+        "Unauthorized request. The requesting user is not an administrator.";
+
+    private static final String NO_USER_FOUND =
+        "Authentication for user failed. No administrator with that name found.";
+
     private ReservationService reservationService;
     private UserService userService;
+    private AuthorizationService authorizationService;
     private Logger logger = LoggerFactory.getLogger(ReservationsController.class);
 
-    public ReservationsController(ReservationService reservationService, UserService userService) {
+    /** Used to create the {@link ReservationsController} bean with the provided information.
+     * @param reservationService The ReservationService bean to use.
+     * @param userService   The {@link UserService } bean to use.
+     * @param authorizationService The {@link AuthorizationService} bean to use
+     */
+    public ReservationsController(ReservationService reservationService, UserService userService,
+                                  AuthorizationService authorizationService) {
         this.reservationService = reservationService;
         this.userService = userService;
+        this.authorizationService = authorizationService;
     }
-
 
     /**
      * Sends all reservations in the database to the requesting administrator.
+     *
      * @return A {@link ResponseEntity} object containing all the current
      *      reservations in the database.
      */
     @GetMapping("/admin/all")
-    public ResponseEntity<List<Reservation>> getAllReservations() {
+    public ResponseEntity<List<Reservation>> getAllReservations(ClientRequest<String> request) {
         logger.info("Received GET request for all reservations");
+
+        try {
+            authorizationService.checkAuthorization(request.getUsername(), request.getRole());
+        } catch (AuthorizationException e) {
+            logger.error(NOT_ADMIN);
+            return ResponseEntity.badRequest().build();
+        } catch (AuthenticationException e) {
+            logger.error(NO_USER_FOUND);
+            return ResponseEntity.badRequest().build();
+        }
 
         List<Reservation> responseList = reservationService.getAllReservations();
         return ResponseEntity.ok(responseList);
     }
 
-    /** Receives a GET request for all current reservations and sends them in the response.
+
+    /**
+     * Receives a GET request for all current reservations and sends them in the response.
+     *
      * @return A {@link ResponseEntity} object containing the list of current reservations.
      */
     @GetMapping("/admin/current")
-    public ResponseEntity<List<Reservation>> getCurrentReservations() {
+    public ResponseEntity<List<Reservation>> getCurrentReservations(ClientRequest<String> request) {
         logger.info("Received GET request for all current reservations. Processing ...");
-        List<Reservation> responseList =  reservationService.getAllCurrentReservations();
+
+        try {
+            authorizationService.checkAuthorization(request.getUsername(), request.getRole());
+        } catch (AuthorizationException e) {
+            logger.error(NOT_ADMIN);
+            return ResponseEntity.badRequest().build();
+        } catch (AuthenticationException e) {
+            logger.error(NO_USER_FOUND);
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<Reservation> responseList = reservationService.getAllCurrentReservations();
         return ResponseEntity.ok(responseList);
     }
 
@@ -129,18 +169,28 @@ public class ReservationsController {
     @PostMapping("/{role:(?:user|admin)}/add")
     public ResponseEntity<String> addReservation(ClientRequest<Reservation> request) {
         logger.info("Received POST request for a new reservation from user: "
-                + request.getUsername() + ". Processing ...");
+            + request.getUsername() + ". Processing ...");
+
+        try {
+            authorizationService.checkAuthorization(request.getUsername(), request.getRole());
+        } catch (AuthorizationException e) {
+            logger.error(NOT_ADMIN);
+            return ResponseEntity.badRequest().build();
+        } catch (AuthenticationException e) {
+            logger.error(NO_USER_FOUND);
+            return ResponseEntity.badRequest().build();
+        }
 
         Reservation newReservation = request.getBody();
+
         newReservation.timeslot = new TimeSlot(newReservation.timeslot.startTime,
-                                                newReservation.timeslot.endTime);
+            newReservation.timeslot.endTime);
         try {
             reservationService.addReservation(newReservation);
-
         } catch (UserReservationsIntersectionException e) {
             return ResponseEntity.badRequest().body("Failure to create reservations. "
                 + "Intersection found with other current user reservations.");
-        } catch (ReservableTimeslotException e) {
+        } catch (TimeslotAlreadyReservedException e) {
             return ResponseEntity.badRequest().body("Failure to create reservations. "
                 + "Intersection found current reservations of the reservable.");
         }
@@ -162,9 +212,20 @@ public class ReservationsController {
      *      in the database.
      */
     @DeleteMapping("/{role:(?:user|admin)}/delete")
-    public ResponseEntity<String> deleteReservation(@RequestParam Long id) {
+    public ResponseEntity<String> deleteReservation(@RequestParam Long id,
+                                                    ClientRequest<String> request) {
 
         logger.info("Received DELETE request for reservation. Processing ...");
+
+        try {
+            authorizationService.checkAuthorization(request.getUsername(), request.getRole());
+        } catch (AuthorizationException e) {
+            logger.error(NOT_ADMIN);
+            return ResponseEntity.badRequest().build();
+        } catch (AuthenticationException e) {
+            logger.error(NO_USER_FOUND);
+            return ResponseEntity.badRequest().build();
+        }
 
         try {
             reservationService.deleteReservation(id);
