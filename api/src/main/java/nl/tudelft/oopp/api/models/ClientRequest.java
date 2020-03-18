@@ -3,7 +3,7 @@ package nl.tudelft.oopp.api.models;
 public class ClientRequest<T> {
 
     private String username;
-    private String role;
+    private UserKind role;
     private T body;
 
     /** Create a new client request object to be sent to the server.
@@ -12,7 +12,7 @@ public class ClientRequest<T> {
      * @param body The generic body containing different information
      *             for different types of requests.
      */
-    public ClientRequest(String username, String role, T body) {
+    public ClientRequest(String username, UserKind role, T body) {
         this.username = username;
         this.role = role;
         this.body = body;
@@ -26,11 +26,11 @@ public class ClientRequest<T> {
         this.username = username;
     }
 
-    public String getRole() {
+    public UserKind getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserKind role) {
         this.role = role;
     }
 
