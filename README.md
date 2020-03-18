@@ -25,29 +25,6 @@ Add your own name (do not add the names for others!) to the section below.
 
 ## How to run it
 
-1) Have MySQL Workbench installed on your computer 
-
-2) Open up intellij CE and go to the plugins section
-
-3) Search for the Database Navigator and instal this 
-
-4) Go to the database_resources folder and look for the database.sql file
-
-5) Open up MySQL Workbench and go to the server menu
-
-6) Select the data import option and select the database.sql file from the
-database_resources folder directory
-
-7) Once the database has been imported close MySQL Workbench and re-open intellij
-
-8) Run the application with the green play button so that Spring Data generates the tables
-
-9) Go to view > Tool Windows > DB Browser and click on the green plus
-
-10) Select MySQL and fill in the database details that are inside the UserDatabaseConfig file
-
-
-
 ## How to contribute to it
 
 ## Copyright / License (opt.)

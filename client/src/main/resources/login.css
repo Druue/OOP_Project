@@ -1,4 +1,4 @@
-.root {
+.root{
     tuDelftBlue: #00A6D6
 }
 
@@ -6,7 +6,7 @@
     -fx-background-color: white;
 }
 
-#loginContainer, #loginWrapper, #loginBackground, #loginLogoWrapper {
+#loginContainer, #loginWrapper, #loginBackground, #loginLogoWrapper{
     -fx-alignment: center;
 }
 

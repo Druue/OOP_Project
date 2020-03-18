@@ -1,3 +1,2 @@
 rootProject.name = 'client'
-include ':api'
-project(':api').projectDir = file("../api")
+
