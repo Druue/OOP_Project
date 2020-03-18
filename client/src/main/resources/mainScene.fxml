@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<VBox xmlns:fx="http://javafreservationsx.com/fxml"
+      xmlns="http://javafx.com/javafx"
+      fx:controller="nl.tudelft.oopp.client.controllers.MainSceneController">
 
-<?import javafx.scene.text.Text?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafreservationsx.com/fxml"
-      fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
-
-    <!-- Button that calls the buttonPing() function in MainSceneController.java -->
-    <Button text="Send a ping" onAction="#buttonPing"/>
-
-
-    <Text text="Send some info, and get it relayed back"/>
     <!-- Text field called 'userInput' -->
     <TextField fx:id="userInput"/>
     <!-- Button that sends the text within 'userInput'-->
-    <Button text="Send information" onAction="#testPostRequest"/>
-    <Button text="Go to reservations" onAction="#goToReservations"/>
+    <Button onAction="#goToReservations" text="Go to reservations"/>
 
-    <Button text="Go to the login page" onAction="#goToLogin"/>
+    <Button onAction="#goToLogin" text="Go to the login page" />
+    <Button onAction="#goToAddRooms" text="Go to add rooms page"/>
+    <Button onAction="#goToHome" text="Go to the homepage" />
+
+    <Button onAction="#goToAdmin" text="Go to the admin page"/>
+
+    <Button text="Get some buildings" onAction="#getBuildings"/>
 </VBox>
-
-
