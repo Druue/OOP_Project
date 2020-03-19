@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.server.models.Building;
 import nl.tudelft.oopp.server.repositories.BuildingRepository;
+import nl.tudelft.oopp.server.repositories.BuildingsDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,15 @@ public class BuildingService {
      */
     public List<Building> getAllBuildings() {
         return buildingRepository.findAll();
+    }
+
+    /** Use {@link BuildingRepository} bean to get the details of all
+     *      buildings.
+     * @return A list of {@link BuildingsDetails} objects that contain the
+     *      number, name, description, image, and opening hours.
+     */
+    public List<BuildingsDetails> getBuildingsDetails() {
+        return buildingRepository.findAllBy();
     }
 
     /**
