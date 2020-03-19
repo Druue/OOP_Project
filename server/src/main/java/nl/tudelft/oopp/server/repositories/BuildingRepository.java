@@ -14,4 +14,7 @@ public interface BuildingRepository extends JpaRepository<Building, Long> {
     List<Building> findAll();
 
     List<BuildingsDetails> findAllBy();
+
+    boolean existsByNumber(Long number);
+
 }
