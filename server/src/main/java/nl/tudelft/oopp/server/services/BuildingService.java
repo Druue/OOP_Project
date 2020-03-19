@@ -2,17 +2,27 @@ package nl.tudelft.oopp.server.services;
 
 import java.util.List;
 import java.util.Optional;
+import javax.management.InstanceAlreadyExistsException;
+import javax.persistence.EntityNotFoundException;
 import nl.tudelft.oopp.server.models.Building;
+import nl.tudelft.oopp.server.models.Details;
+import nl.tudelft.oopp.server.models.TimeSlot;
 import nl.tudelft.oopp.server.repositories.BuildingRepository;
 import nl.tudelft.oopp.server.repositories.BuildingsDetails;
-import org.springframework.beans.factory.annotation.Autowired;
+import nl.tudelft.oopp.server.repositories.DetailsRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BuildingService {
 
-    @Autowired
-    private BuildingRepository buildingRepository;
+    private final BuildingRepository buildingRepository;
+    private final DetailsRepository detailsRepository;
+
+    public BuildingService(BuildingRepository buildingRepository,
+                           DetailsRepository detailsRepository) {
+        this.buildingRepository = buildingRepository;
+        this.detailsRepository = detailsRepository;
+    }
 
     /**
      * Gets all buildings.
@@ -38,35 +48,79 @@ public class BuildingService {
      * @param id we search for
      * @return the building with that exact id if it exists or null if not
      */
-    public Optional<Building> getBuilding(Integer id) {
+    public Optional<Building> getBuilding(Long id) {
         return buildingRepository.findById(id);
     }
 
-    /**
-     * Adds a building.
-     *
-     * @param building to be added to the list of buildings
+
+    /** Adds a new building to the database.
+     * @param building The building to add to the database.
+     * @throws InstanceAlreadyExistsException Throws it if a building already exists
+     *      with the given number or if the details name already exists as all names should be
+     *      different.
      */
-    public void addBuilding(Building building) {
+    public void addBuilding(Building building) throws InstanceAlreadyExistsException {
+        if (buildingRepository.existsByNumber(building.number)
+            || detailsRepository.existsByName(building.details.name)) {
+            throw new InstanceAlreadyExistsException();
+        }
         buildingRepository.save(building);
+
     }
 
-    /**
-     * Updates a building.
-     *
-     * @param id       new one to be updated to
-     * @param building to be updated
+    /** Updates a building by using the generic method updateBuilding() to set new details for it.
+     * @param number The number/id of the building to update.
+     * @param newDetails The new details to set on the building.
      */
-    public void updateBuilding(Integer id, Building building) {
-        buildingRepository.save(building);
+    public void updateBuildingDetails(Long number, Details newDetails) {
+        updateBuilding(number, newDetails);
     }
+
+    /** Updates a building by using the generic method updateBuilding() to set new opening hours
+     *      for it.
+     * @param number The number/id of the building to change.
+     * @param newOpeningHours The new opening hours to set on the building.
+     */
+    public void updateBuildingOpeningHours(Long number, TimeSlot newOpeningHours) {
+        updateBuilding(number, newOpeningHours);
+    }
+
 
     /**
      * Deletes a building.
      *
      * @param id to be deleted from the list of buildings
      */
-    public void delete(Integer id) {
+    public void delete(Long id) {
         buildingRepository.deleteById(id);
     }
+
+
+    /** Generic method to update a building in the database with the given number to
+     *      have the given field value.
+     * @param number The number of the building to update.
+     * @param fieldToBeChanged The new details to be set on te building.
+     * @throws EntityNotFoundException Throws it if the searched building does not exist.
+     *
+     */
+    public <T> void updateBuilding(Long number, T fieldToBeChanged)
+        throws EntityNotFoundException {
+
+        Optional<Building> optional = getBuilding(number);
+        if (optional.isEmpty()) {
+            throw new EntityNotFoundException();
+        } else {
+            Building building = optional.get();
+            if (fieldToBeChanged instanceof TimeSlot) {
+                building.openingHours = (TimeSlot)fieldToBeChanged;
+            } else {
+                building.details = (Details) fieldToBeChanged;
+            }
+            buildingRepository.save(building);
+        }
+
+    }
+
+
+
 }
