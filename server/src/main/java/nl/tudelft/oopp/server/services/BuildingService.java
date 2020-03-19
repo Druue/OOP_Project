@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.server.models.Building;
 import nl.tudelft.oopp.server.repositories.BuildingRepository;
+import nl.tudelft.oopp.server.repositories.BuildingsDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,22 @@ public class BuildingService {
         return buildingRepository.findAll();
     }
 
+    /** Use {@link BuildingRepository} bean to get the details of all
+     *      buildings.
+     * @return A list of {@link BuildingsDetails} objects that contain the
+     *      number, name, description, image, and opening hours.
+     */
+    public List<BuildingsDetails> getBuildingsDetails() {
+        return buildingRepository.findAllBy();
+    }
+
     /**
      * Gets a building.
      *
      * @param id we search for
      * @return the building with that exact id if it exists or null if not
      */
-    public Optional<Building> getBuilding(Integer id) {
+    public Optional<Building> getBuilding(Long id) {
         return buildingRepository.findById(id);
     }
 
@@ -47,7 +57,7 @@ public class BuildingService {
      * @param id       new one to be updated to
      * @param building to be updated
      */
-    public void updateBuilding(Integer id, Building building) {
+    public void updateBuilding(Long id, Building building) {
         buildingRepository.save(building);
     }
 
@@ -56,7 +66,7 @@ public class BuildingService {
      *
      * @param id to be deleted from the list of buildings
      */
-    public void delete(Integer id) {
+    public void delete(Long id) {
         buildingRepository.deleteById(id);
     }
 }
