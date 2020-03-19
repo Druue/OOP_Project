@@ -17,8 +17,6 @@ import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.api.models.UserKind;
 
-import javax.naming.AuthenticationException;
-
 public class RegistrationSceneController {
     @FXML
     public TextField registrationNameInput;
