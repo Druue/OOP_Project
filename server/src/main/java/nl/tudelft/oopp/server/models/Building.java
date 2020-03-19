@@ -69,11 +69,22 @@ public class Building {
      * @param details      {@link Details} about the building.
      * @param foodcourt    The building's {@link Foodcourt}.
      * @param openingHours The building's {@link TimeSlot}.
+     * @param availableTimeslots the buidling's map.
      */
-    public Building(Long number, Details details, Foodcourt foodcourt, TimeSlot openingHours) {
+    public Building(Long number, Details details, Foodcourt foodcourt, TimeSlot openingHours,
+                    Map<Reservable, TimeSlot> availableTimeslots) {
         this.number = number;
         this.details = details;
         this.foodcourt = foodcourt;
         this.openingHours = openingHours;
+        this.availableTimeslots = availableTimeslots;
+    }
+
+    /**returns the map of the building.
+     *
+     * @return the map
+     */
+    public Map<Reservable, TimeSlot> getMap() {
+        return this.availableTimeslots;
     }
 }

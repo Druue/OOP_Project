@@ -3,6 +3,7 @@ package nl.tudelft.oopp.server.services;
 import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.server.models.Building;
+import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.repositories.BuildingRepository;
 import nl.tudelft.oopp.server.repositories.BuildingsDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +69,9 @@ public class BuildingService {
      */
     public void delete(Long id) {
         buildingRepository.deleteById(id);
+    }
+
+    public void addReservable(Reservable reservable, Building building) {
+        building.getMap().put(reservable, building.openingHours);
     }
 }
