@@ -11,7 +11,7 @@ import nl.tudelft.oopp.api.models.User;
 public class HttpRequestHandler {
     private static final String host = "http://localhost:8080";
     private static final HttpClient client = HttpClient.newHttpClient();
-    private static final Gson gson = new Gson();
+    private static final Gson gson = new GsonBuilder().serializeNulls().create();
 
     public static User user;
 
@@ -84,7 +84,7 @@ public class HttpRequestHandler {
     }
 
     public static <T, E> E convertModel(T from, Class<E> to) {
-        Gson gson = new GsonBuilder().serializeNulls().create();
+        gson.toJson(from);
         return gson.fromJson(gson.toJson(from), to);
     }
 }

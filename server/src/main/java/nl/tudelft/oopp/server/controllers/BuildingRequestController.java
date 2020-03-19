@@ -9,12 +9,7 @@ import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.services.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/buildings")
@@ -57,8 +52,8 @@ public class BuildingRequestController {
     }
 
     @PutMapping("/insert/new_building")
-    ResponseEntity<ServerResponseAlert> addBuilding(/* TODO */) {
-        service.addBuilding(new nl.tudelft.oopp.server.models.Building(0L, null, null, null));
+    ResponseEntity<ServerResponseAlert> addBuilding(@RequestBody nl.tudelft.oopp.server.models.Building requestBuilding) {
+        service.addBuilding(requestBuilding);
         return ResponseEntity.ok(new ServerResponseAlert("Building added!", "CONFIRMATION"));
     }
 

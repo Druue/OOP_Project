@@ -55,6 +55,11 @@ public class Building {
         this.openingHours = openingHours;
     }
 
+    public Building(Long number, Details details) {
+        this.number = number;
+        this.details = details;
+    }
+
     public String getName() {
         return details.getName();
     }

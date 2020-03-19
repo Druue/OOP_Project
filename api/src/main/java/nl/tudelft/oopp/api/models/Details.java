@@ -45,6 +45,12 @@ public class Details {
         this.image = image;
     }
 
+    public Details(String name, String description, String image) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+    }
+
     public Long getId() {
         return id;
     }

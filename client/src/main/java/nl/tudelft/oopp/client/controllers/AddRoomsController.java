@@ -108,7 +108,7 @@ public class AddRoomsController {
         StringBuilder s = new StringBuilder("Building names: ");
         if (buildingResponse != null) {
             for (Building b : buildingResponse.getBuildingList()) {
-                s.append(b.getName()).append(", ");
+                s.append(b.getDetails().getName()).append(", ");
             }
         }
 

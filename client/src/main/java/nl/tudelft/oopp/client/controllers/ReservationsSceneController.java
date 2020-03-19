@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
+import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
 public class ReservationsSceneController implements Initializable {
@@ -108,7 +109,7 @@ public class ReservationsSceneController implements Initializable {
             for (Building building : buildingList) {
                 VBox buildingEntry = new VBox();
                 buildingEntry.getStyleClass().add("buildingEntry");
-                Label buildingName = new Label(building.getNumber() + "," + building.getName());
+                Label buildingName = new Label(building.getNumber() + "," + building.getDetails().getName());
                 buildingName.getStyleClass().add("buildingName");
                 Label buildingOpeningTime = new Label("09:00 - 22:00 //hardcoded");
                 buildingOpeningTime.getStyleClass().add("buildingOpeningTime");
@@ -207,6 +208,10 @@ public class ReservationsSceneController implements Initializable {
     }
 
     public void addTestBuilding() {
-        HttpRequestHandler.put("buildings/insert/new_building", null, ServerResponseAlert.class);
+        Building testBuilding = new Building(
+                1L,
+                new Details("Test name", null, null)
+        );
+        HttpRequestHandler.put("buildings/insert/new_building", testBuilding, ServerResponseAlert.class);
     }
 }
