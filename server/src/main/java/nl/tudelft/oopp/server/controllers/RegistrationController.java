@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.server.controllers;
 
 import com.google.gson.Gson;
+import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.server.models.User;
 import nl.tudelft.oopp.server.services.LoggerService;
@@ -29,24 +30,33 @@ public class RegistrationController {
      * has been successfully registered.
      */
     @PostMapping("/register")
-    public ResponseEntity<UserAuthResponse> registerUser(@RequestBody String jsonRequest) {
+    public ResponseEntity<UserAuthResponse> registerUser(@RequestBody User userRequest) {
+
+        // Log the registration attempt
         LoggerService.info(RegistrationController.class, "Received registration details");
+        LoggerService.info(RegistrationController.class, userRequest.email);
 
-        User registrationRequest = gson.fromJson(jsonRequest, User.class);
-        LoggerService.info(RegistrationController.class, registrationRequest.email);
-
+        // TODO: Validate that the user doesn't already exist.
         try {
-            // TODO: Validate that the user doesn't already exist.
-            registrationService.addUser(registrationRequest);
-            nl.tudelft.oopp.api.models.User user = gson.fromJson(
-                    gson.toJson(registrationService
-                            .getUserByID(registrationService.getUserId(registrationRequest.email))),
-                    nl.tudelft.oopp.api.models.User.class);
+            // Attempts to add the user to the database.
+            registrationService.addUser(userRequest);
+
+            // Converts the user into an API model User.
+            // This has to be done via their email, as they don't know their ID during registration.
+            nl.tudelft.oopp.api.models.User user = HttpRequestHandler.convertModel(
+                    registrationService.getUserByEmail(userRequest.email),   //from
+                    nl.tudelft.oopp.api.models.User.class);             //to
+
+            // Return a UserAuthResponse, and log the registration.
             UserAuthResponse r =
                     new UserAuthResponse("You've registered successfully!", "CONFIRMATION", user);
             LoggerService.info(RegistrationController.class, "New user successfully registered.");
             return ResponseEntity.ok().body(r);
+
         } catch (Exception /* InstanceAlreadyExistsException */ e) {
+
+            // Print the debugging info, and send a request back to the client
+            // Stating that the user has made an invalid registration attempt.
             e.printStackTrace();
             LoggerService.error(RegistrationController.class,
                     "Invalid details provided. User with that "
