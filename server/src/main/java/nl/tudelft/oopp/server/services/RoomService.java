@@ -40,7 +40,7 @@ public class RoomService {
         List<Room> result = new ArrayList<>();
         List<Room> rooms = roomRepository.findAll();
         for (int i = 0; i < rooms.size(); i++) {
-            if (rooms.get(i).capacity <= userInput) {
+            if (rooms.get(i).capacity >= userInput) {
                 result.add(rooms.get(i));
             }
         }
