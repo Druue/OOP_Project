@@ -29,8 +29,8 @@ public class RegistrationService {
         userRepository.save(user);
     }
 
-    public Long getUserId(String email) {
-        return userRepository.findByEmail(email).id;
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public Optional<User> getUserByID(Long userId) {

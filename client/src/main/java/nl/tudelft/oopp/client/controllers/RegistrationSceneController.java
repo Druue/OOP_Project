@@ -12,8 +12,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
+import nl.tudelft.oopp.api.models.UserKind;
+
+import javax.naming.AuthenticationException;
 
 public class RegistrationSceneController {
     @FXML
@@ -65,8 +69,36 @@ public class RegistrationSceneController {
             alert.setContentText("Please fill in all required fields.");
             alert.showAndWait();
         } else {
-            // TODO: Checking the type of user via the email address.
-            User registrationRequest = new User(email, username, password);
+
+            // Checks for the kind of user that is registrating
+            UserKind userKind = null;
+            try {
+                String domainEmailPart = email.split("@")[1];
+                String userRole = domainEmailPart.split("\\.")[0];
+                if (userRole.equals("student")) {
+
+                    userKind = UserKind.Student;
+
+                } else if (userRole.equals("tudelft")) {
+
+                    userKind =  UserKind.Employee;
+
+                } else {
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                // Create an alert, and show it to the user.
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("Invalid email address given.");
+                alert.showAndWait();
+                return;
+            }
+
+            User registrationRequest = new User(
+                    new Details(name, null, null),
+                    email, username, password, userKind);
 
             // Send a register request to the server.
             UserAuthResponse response = HttpRequestHandler.post("register", registrationRequest,
