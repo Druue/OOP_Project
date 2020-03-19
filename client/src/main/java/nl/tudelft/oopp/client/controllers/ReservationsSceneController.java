@@ -207,6 +207,11 @@ public class ReservationsSceneController implements Initializable {
         }
     }
 
+    /**
+     * Adds a test building to the database.
+     * Very barebones right now: It will cause an error if called more than once
+     * due to the hardcoded ID.
+     */
     public void addTestBuilding() {
         Building testBuilding = new Building(
                 1L,
