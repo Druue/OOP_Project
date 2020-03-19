@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import nl.tudelft.oopp.server.models.Reservable;
-import nl.tudelft.oopp.server.models.ReservableTimeslotException;
 import nl.tudelft.oopp.server.models.Reservation;
+import nl.tudelft.oopp.server.models.TimeslotAlreadyReservedException;
 import nl.tudelft.oopp.server.models.UserReservationsIntersectionException;
 import nl.tudelft.oopp.server.repositories.ReservationRepository;
 import nl.tudelft.oopp.server.repositories.UserRepository;
@@ -22,7 +22,7 @@ public class ReservationService {
     }
 
     public static Timestamp getCurrentTimestamp() {
-        return new Timestamp(new Date(System.currentTimeMillis() - 3600 * 500).getTime());
+        return new Timestamp(new Date(System.currentTimeMillis()).getTime());
     }
 
     /**
@@ -172,7 +172,7 @@ public class ReservationService {
      */
     private void checkReservableAlreadyReserved(Reservation reservation,
                                                 Reservable reservable)
-        throws ReservableTimeslotException {
+        throws TimeslotAlreadyReservedException {
 
         // Take the start time of the first and the end time of the last
         Timestamp startTime = reservation.timeslot.startTime;
@@ -181,7 +181,7 @@ public class ReservationService {
         if (checkExistReservableReservationsForPeriod(reservable, startTime, endTime)) {
             LoggerService.error(ReservationService.class,
                 "Intersection found. Cannot add new reservation for this reservable.");
-            throw new ReservableTimeslotException();
+            throw new TimeslotAlreadyReservedException();
         }
     }
 

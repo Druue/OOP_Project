@@ -20,12 +20,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("select res "
         + " from Reservation res"
-        + " where res.timeslot.startTime > ?1")
+        + " where res.timeslot.endTime > ?1")
     List<Reservation> findAllCurrent(Timestamp startSearchTime);
 
     @Query("select res "
         + " from Reservation res "
-        + " where res.user.id=?1 and res.timeslot.startTime > ?2")
+        + " where res.user.id=?1 and res.timeslot.endTime > ?2")
     List<Reservation> findAllCurrentByUser(Long userID, Timestamp startSearchTime);
 
     @Query("select res "
@@ -37,7 +37,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("select res "
         + " from Reservation res "
-        + " where res.reservable = ?1 and res.timeslot.startTime > ?2")
+        + " where res.reservable = ?1 and res.timeslot.endTime > ?2")
     List<Reservation> findAllCurrentForReservable(Reservable reservable, Timestamp timestamp);
 
     @Query("select res "
