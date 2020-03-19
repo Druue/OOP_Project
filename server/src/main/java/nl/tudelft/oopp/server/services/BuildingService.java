@@ -33,8 +33,10 @@ public class BuildingService {
         return buildingRepository.findAll();
     }
 
-    /** Use {@link BuildingRepository} bean to get the details of all
-     *      buildings.
+    /**
+     * Use {@link BuildingRepository} bean to get the details of all
+     * buildings.
+     *
      * @return A list of {@link BuildingsDetails} objects that contain the
      *      number, name, description, image, and opening hours.
      */
@@ -53,11 +55,12 @@ public class BuildingService {
     }
 
 
-    /** Adds a new building to the database.
+    /**
+     * Adds a new building to the database.
+     *
      * @param building The building to add to the database.
-     * @throws InstanceAlreadyExistsException Throws it if a building already exists
-     *      with the given number or if the details name already exists as all names should be
-     *      different.
+     * @throws InstanceAlreadyExistsException Throws it if a building already exists with the
+     *                                          given number or if the details name already exists.
      */
     public void addBuilding(Building building) throws InstanceAlreadyExistsException {
         if (buildingRepository.existsByNumber(building.number)
@@ -68,17 +71,21 @@ public class BuildingService {
 
     }
 
-    /** Updates a building by using the generic method updateBuilding() to set new details for it.
-     * @param number The number/id of the building to update.
+    /**
+     * Updates a building by using the generic method updateBuilding() to set new details for it.
+     *
+     * @param number     The number/id of the building to update.
      * @param newDetails The new details to set on the building.
      */
     public void updateBuildingDetails(Long number, Details newDetails) {
         updateBuilding(number, newDetails);
     }
 
-    /** Updates a building by using the generic method updateBuilding() to set new opening hours
-     *      for it.
-     * @param number The number/id of the building to change.
+    /**
+     * Updates a building by using the generic method updateBuilding() to set new opening hours
+     * for it.
+     *
+     * @param number          The number/id of the building to change.
      * @param newOpeningHours The new opening hours to set on the building.
      */
     public void updateBuildingOpeningHours(Long number, TimeSlot newOpeningHours) {
@@ -87,21 +94,26 @@ public class BuildingService {
 
 
     /**
-     * Deletes a building.
+     * Deletes the building with the specified number from the database.
      *
-     * @param id to be deleted from the list of buildings
+     * @param number Number of the building to be deleted from the database.
      */
-    public void delete(Long id) {
-        buildingRepository.deleteById(id);
+    public void delete(Long number) throws EntityNotFoundException {
+        if (!buildingRepository.existsByNumber(number)) {
+            throw new EntityNotFoundException();
+        } else {
+            buildingRepository.deleteById(number);
+        }
     }
 
 
-    /** Generic method to update a building in the database with the given number to
-     *      have the given field value.
-     * @param number The number of the building to update.
+    /**
+     * Generic method to update a building in the database with the given number to
+     * have the given field value.
+     *
+     * @param number           The number of the building to update.
      * @param fieldToBeChanged The new details to be set on te building.
      * @throws EntityNotFoundException Throws it if the searched building does not exist.
-     *
      */
     public <T> void updateBuilding(Long number, T fieldToBeChanged)
         throws EntityNotFoundException {
@@ -112,7 +124,7 @@ public class BuildingService {
         } else {
             Building building = optional.get();
             if (fieldToBeChanged instanceof TimeSlot) {
-                building.openingHours = (TimeSlot)fieldToBeChanged;
+                building.openingHours = (TimeSlot) fieldToBeChanged;
             } else {
                 building.details = (Details) fieldToBeChanged;
             }
@@ -120,7 +132,6 @@ public class BuildingService {
         }
 
     }
-
 
 
 }
