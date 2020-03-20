@@ -8,6 +8,7 @@ import javax.persistence.EntityNotFoundException;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.ListPair;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.AuthorizationException;
 import nl.tudelft.oopp.server.models.Building;
@@ -94,6 +95,28 @@ public class BuildingRequestController {
         List<BuildingsDetails> buildings = buildingService.getBuildingsDetails();
         return ResponseEntity.ok(buildings);
 
+    }
+
+    @GetMapping("/admin/all/uniquevalues")
+    ResponseEntity<ListPair<Long, String>> sendAllBuildingsNumbersAndNames(
+        @RequestBody ClientRequest<String> request) {
+
+        logger.info("Received a GET request for all buildings numbers and database names.");
+
+        try {
+            authorizationService.checkAuthorization(request.getUsername());
+        } catch (AuthenticationException e) {
+            logger.error(NO_USER_FOUND);
+            return ResponseEntity.badRequest().build();
+        } catch (AuthorizationException e) {
+            logger.error(NOT_ADMIN);
+            return ResponseEntity.badRequest().build();
+        }
+
+        ListPair<Long, String> responseListPair = buildingService.getBuildingNumbersAndNames();
+        logger.info("Numbers and names successfully retrieved from the database. Sending ...");
+
+        return ResponseEntity.ok(responseListPair);
     }
 
     /**
