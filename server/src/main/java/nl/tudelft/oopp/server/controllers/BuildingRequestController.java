@@ -1,9 +1,12 @@
 package nl.tudelft.oopp.server.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.management.InstanceAlreadyExistsException;
 import javax.naming.AuthenticationException;
 import javax.persistence.EntityNotFoundException;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.AuthorizationException;
@@ -60,7 +63,32 @@ public class BuildingRequestController {
      * @return A {@link ResponseEntity} containing he aforementioned list of objects.
      */
     @GetMapping("/{name:(?:admin|user)}/all")
-    ResponseEntity<List<BuildingsDetails>> sendAllBuildings() {
+    ResponseEntity<BuildingResponse> sendAllBuildings() {
+
+        logger.info("Received GET request for all buildings. Processing...");
+        List<Building> buildings = buildingService.getAllBuildings();
+
+        List<nl.tudelft.oopp.api.models.Building> buildingsResponse = new ArrayList<>();
+        for (Building queryBuilding : buildings) {
+            buildingsResponse.add(HttpRequestHandler.convertModel(queryBuilding,
+                nl.tudelft.oopp.api.models.Building.class));
+        }
+
+        BuildingResponse response = new BuildingResponse(buildingsResponse);
+        logger.info("Sending the list of all buildings...");
+        return ResponseEntity.ok(response);
+
+    }
+
+    /**
+     * Receives a GET request for information about all buildings in the database.
+     * Sends back a list of objects, each containing:
+     * - number, name, description, image, opening hours
+     *
+     * @return A {@link ResponseEntity} containing he aforementioned list of objects.
+     */
+    @GetMapping("/{name:(?:admin|user)}/all/information")
+    ResponseEntity<List<BuildingsDetails>> sendAllBuildingsInformation() {
 
         logger.info("Received GET request for all buildings' details. Processing...");
         List<BuildingsDetails> buildings = buildingService.getBuildingsDetails();
