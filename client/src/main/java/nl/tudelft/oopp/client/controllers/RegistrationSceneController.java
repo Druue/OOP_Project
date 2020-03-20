@@ -73,16 +73,19 @@ public class RegistrationSceneController {
             try {
                 String domainEmailPart = email.split("@")[1];
                 String userRole = domainEmailPart.split("\\.")[0];
-                if (userRole.equals("student")) {
+                switch (userRole) {
+                    case "student":
 
-                    userKind = UserKind.Student;
+                        userKind = UserKind.Student;
 
-                } else if (userRole.equals("tudelft")) {
+                        break;
+                    case "tudelft":
 
-                    userKind =  UserKind.Employee;
+                        userKind = UserKind.Employee;
 
-                } else {
-                    throw new Exception();
+                        break;
+                    default:
+                        throw new Exception();
                 }
             } catch (Exception e) {
                 // Create an alert, and show it to the user.
