@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * interface for building to implement crud operations.
  */
 @Repository
-public interface BuildingRepository extends JpaRepository<Building, Integer> {
+public interface BuildingRepository extends JpaRepository<Building, Long> {
 
     List<Building> findAll();
 
