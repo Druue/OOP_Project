@@ -1,14 +1,18 @@
 package nl.tudelft.oopp.server.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.management.InstanceAlreadyExistsException;
 import javax.persistence.EntityNotFoundException;
+import nl.tudelft.oopp.api.models.ListPair;
 import nl.tudelft.oopp.server.models.Building;
 import nl.tudelft.oopp.server.models.Details;
 import nl.tudelft.oopp.server.models.TimeSlot;
+import nl.tudelft.oopp.server.repositories.BuildingNumber;
 import nl.tudelft.oopp.server.repositories.BuildingRepository;
 import nl.tudelft.oopp.server.repositories.BuildingsDetails;
+import nl.tudelft.oopp.server.repositories.DetailsName;
 import nl.tudelft.oopp.server.repositories.DetailsRepository;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +46,26 @@ public class BuildingService {
      */
     public List<BuildingsDetails> getBuildingsDetails() {
         return buildingRepository.findAllBy();
+    }
+
+    /** Gets all the buildings numbers and existing names in the database.
+     * @return A {@link ListPair} object containing two lists - the numbers and the names.
+     */
+    public ListPair<Long, String> getBuildingNumbersAndNames() {
+        List<BuildingNumber> queriedNumbers = buildingRepository.getAllBy();
+        List<DetailsName> queriedNames = detailsRepository.findAllBy();
+
+        List<Long> sentNumbers = new ArrayList<>();
+        List<String> sentNames = new ArrayList<>();
+
+        for (BuildingNumber number: queriedNumbers) {
+            sentNumbers.add(number.getNumber());
+        }
+        for (DetailsName name: queriedNames) {
+            sentNames.add(name.getName());
+        }
+
+        return new ListPair<>(sentNumbers, sentNames);
     }
 
     /**
