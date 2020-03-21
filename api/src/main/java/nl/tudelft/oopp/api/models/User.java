@@ -59,19 +59,6 @@ public class User {
         this.userKind = userKind;
     }
 
-    /**
-     * Initialises a new {@link User}.
-     *
-     * @param email         The user's email.
-     * @param username      The user's username.
-     * @param password      The user's password.
-     */
-    public User(String email, String username, String password) {
-        this.email = email;
-        this.username = username;
-        this.password = password;
-    }
-
     public String getName() {
         return details.getName();
     }

@@ -3,6 +3,7 @@ package nl.tudelft.oopp.server.services;
 import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.server.models.User;
+import nl.tudelft.oopp.server.models.UserKind;
 import nl.tudelft.oopp.server.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class LoginService {
      * @return the role of the authenticated user.
      * @throws AuthenticationException thrown if the login credentials are invalid.
      */
-    public String userValidate(LoginRequest providedDetails) throws AuthenticationException {
+    public UserKind userValidate(LoginRequest providedDetails) throws AuthenticationException {
         String username = providedDetails.getUsername();
         String password = providedDetails.getPassword();
 
@@ -34,7 +35,14 @@ public class LoginService {
         String domainEmailPart = userEmail.split("@")[1];
         String userRole = domainEmailPart.split(".")[0];
 
-        return userRole;
+        if (userRole.equals("student")) {
+            return UserKind.Student;
+        } else if (userRole.equals("tudelft")) {
+            return UserKind.Employee;
+        } else {
+            throw new AuthenticationException();
+        }
+
     }
 
     public User getUserInformation(LoginRequest providedDetails) {

@@ -39,10 +39,10 @@ public class Foodcourt {
      * @param details        Details about the foodcourt.
      * @param menu           The foodcourt's menu.
      */
-    public Foodcourt(Integer buildingNumber, Collection<Details> details, Collection<String> menu) {
+    public Foodcourt(Integer buildingNumber, Collection<Details> details, Collection<Food> menu) {
         this.buildingNumber = buildingNumber;
         this.details = details;
-        this.menu = new ArrayList<>();
+        this.menu = menu;
     }
 
     public Integer getBuildingNumber() {

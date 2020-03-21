@@ -5,6 +5,9 @@ public class LoginRequest {
     private String username;
     private String password;
 
+    public LoginRequest() {
+    }
+
     /**
      * An object containing a user's login information. Only used during the login process.
      * @param username    the user's Username.

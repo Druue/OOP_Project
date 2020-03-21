@@ -122,17 +122,17 @@ public class BuildingRequestController {
     /**
      * Receives e PUT request for adding a new building to the database.
      *
-     * @param request A {@link ClientRequest} object containing the new Building to insert.
+     * @param requestBuilding A {@link ClientRequest} object containing the new Building to insert.
      * @return A {@link ResponseEntity} object indicating the success of the operation.
      */
-    @PutMapping("/admin/add")
+    @PutMapping(value = "/admin/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<ServerResponseAlert> addBuilding(
-        @RequestBody ClientRequest<Building> request) {
+        @RequestBody ClientRequest<Building> requestBuilding) {
 
-        logger.info("Received PUT request for adding a building. Processing...");
+        logger.info("Received PUT request for adding a new building. Processing ...");
 
         try {
-            authorizationService.checkAuthorization(request.getUsername());
+            authorizationService.checkAuthorization(requestBuilding.getUsername());
         } catch (AuthenticationException e) {
             logger.error(NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
@@ -142,7 +142,7 @@ public class BuildingRequestController {
         }
 
         try {
-            buildingService.addBuilding(request.getBody());
+            buildingService.addBuilding(requestBuilding.getBody());
         } catch (InstanceAlreadyExistsException e) {
             logger.error("Failure to add the new building. Building number or details "
                 + "name already exists!");
@@ -194,14 +194,15 @@ public class BuildingRequestController {
             "SUCCESS"));
     }
 
-    /** Receives a POST request for updating the opening hours of a building to the provided
-     *      ones in a {@link ClientRequest} input parameter.
-     *      Uses the {@link AuthorizationService} bean to validate the administrator who sent the
-     *      request. Then uses the {@link BuildingService} bean to update the building with the
-     *      provided in the request parameter number.
+    /**
+     * Receives a POST request for updating the opening hours of a building to the provided
+     * ones in a {@link ClientRequest} field of type {@link TimeSlot}.
+     * Uses the {@link AuthorizationService} bean to validate the administrator who sent the
+     * request. Then uses the {@link BuildingService} bean to update the building with the
+     * provided in the request parameter number.
      *
      * @param request The {@link ClientRequest} object containing the new opening hours to be set.
-     * @param number The id of the building to update.
+     * @param number  The id of the building to update.
      * @return A {@link ResponseEntity} object indicating the success or failure of the operation.
      */
     @PostMapping("/admin/change/hours")
