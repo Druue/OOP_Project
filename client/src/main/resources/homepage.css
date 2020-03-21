@@ -6,40 +6,43 @@
 }
 
 .menu-bar {
-    -fx-background-color: #00a6d6 ;
+    -fx-background-color: #00a6d6;
     -fx-opacity: 0.5;
     -fx-border-width: 2.0;
 
 }
 
 .menu-bar .label {
-    -fx-font-size: 14.0 pt;
+    -fx-font-size: 14.0pt;
     -fx-font-family: "Helvetica";
     -fx-text-fill: white;
     -fx-font-weight: bold;
 
 }
+
 .menu-bar, .menu-bar {
-    -fx-background: black ;
+    -fx-background: black;
     -fx-opacity: 0.5;
     -fx-text-fill: white;
 }
 
 .menu-item {
     -fx-text-fill: black;
-    -fx-background: gray ;
+    -fx-background: gray;
     -fx-padding: 10.0px;
 }
-.menu-item .label{
-    -fx-font-size: 14.0 pt;
+
+.menu-item .label {
+    -fx-font-size: 14.0pt;
     -fx-text-fill: white;
 }
-.menu-item:hover, .menu-button:hover, .menu-button:focused, .menu-button:showing, .menu-item:focused{
+
+.menu-item:hover, .menu-button:hover, .menu-button:focused, .menu-button:showing, .menu-item:focused {
     -fx-background-color: #94b3ff;
 }
 
 .context-menu {
-    -fx-background-color:#00a6d6 ;
+    -fx-background-color: #00a6d6;
     -fx-border-width: 0px;
 }
 
@@ -47,17 +50,16 @@
     -fx-opacity: 0;
 }
 
-.tab{
-    -fx-background-insets: 0,1,1,1,1,1;
+.tab {
+    -fx-background-insets: 0, 1, 1, 1, 1, 1;
 }
-.tab-pane .tab
-{
+
+.tab-pane .tab {
     -fx-background-color: #e6e6e6;
 
 }
 
-.tab-pane .tab:selected
-{
+.tab-pane .tab:selected {
     -fx-background-color: #00a6d6;
 }
 
