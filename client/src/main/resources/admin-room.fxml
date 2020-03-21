@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Box?>
 <?import javafx.scene.text.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" stylesheets="@homepage.css"
       fx:controller="nl.tudelft.oopp.client.controllers.AdminRoomController">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
@@ -113,7 +113,7 @@
                         <Image url="@images/Logo.png"/>
                     </image>
                 </ImageView>
-                <Button onAction="#goToMain" prefWidth="100.0" text="Logo" AnchorPane.rightAnchor="1.5"
+                <Button id="logo" onAction="#goToMain" prefWidth="100.0" AnchorPane.rightAnchor="1.5"
                         AnchorPane.topAnchor="1.5"/>
             </children>
         </AnchorPane>
