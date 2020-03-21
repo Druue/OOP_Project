@@ -86,6 +86,7 @@ public class Building {
      *
      * @return the map
      */
+    @JsonIgnore
     public Map<Reservable, TimeSlot> getMap() {
         return this.availableTimeslots;
     }
