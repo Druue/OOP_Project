@@ -22,6 +22,10 @@ public abstract class Reservable {
         this.details = details;
     }
 
+    public Reservable() {
+
+    }
+
     public Details getDetails() {
         return details;
     }
@@ -32,8 +36,8 @@ public abstract class Reservable {
 
 
 
-    public Reservable() {
-        super();
+    public Reservable(Details details) {
+        this.details = details;
     }
 
     public Long getId() {
