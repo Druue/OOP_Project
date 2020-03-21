@@ -16,16 +16,15 @@
                         <Image url="@images/Rooms-background8x6.png"/>
                     </image>
                 </ImageView>
-                <Label id="title" prefHeight="50.0" style="-fx-alignment: center;" text="Welcome to ReserveTUDelft!"
-                       textAlignment="CENTER" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0"
-                       AnchorPane.topAnchor="80.0">
+                <Label id="title" prefHeight="50.0" text="Welcome to ReserveTUDelft!" textAlignment="CENTER"
+                       AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="80.0">
                     <font>
                         <Font name="Helvetica" size="29.0"/>
                     </font>
                 </Label>
-                <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;"
-                         tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="75.0"
-                         AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="160.0">
+                <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE"
+                         AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0"
+                         AnchorPane.topAnchor="160.0">
                     <tabs>
                         <Tab text="Today's reservation">
                             <content>
