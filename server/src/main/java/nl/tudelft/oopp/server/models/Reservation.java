@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.server.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,21 +28,21 @@ public class Reservation {
     /**
      * The ID of the user who made the reservation.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user", referencedColumnName = "user_id")
     public User user;
 
     /**
      * This is a reservation of a specific reservable.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "reservable", referencedColumnName = "id")
     public Reservable reservable;
 
     /**
      * This shows the timeslot of a reservation.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "timeslot", referencedColumnName = "id")
     public TimeSlot timeslot;
 
