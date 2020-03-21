@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.server.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,12 +27,14 @@ public class TimeSlot {
     /**
      * This is the index? What did you guys mean buy this?.
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "start")
     public Timestamp startTime;
 
     /**
      * This tells us whether or not the timeslot is available.
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "end")
     public Timestamp endTime;
 
