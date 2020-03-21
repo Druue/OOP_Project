@@ -1,17 +1,32 @@
 package nl.tudelft.oopp.server.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.management.InstanceAlreadyExistsException;
+import javax.persistence.EntityNotFoundException;
+import nl.tudelft.oopp.api.models.ListPair;
 import nl.tudelft.oopp.server.models.Building;
+import nl.tudelft.oopp.server.models.Details;
+import nl.tudelft.oopp.server.models.TimeSlot;
+import nl.tudelft.oopp.server.repositories.BuildingNumber;
 import nl.tudelft.oopp.server.repositories.BuildingRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import nl.tudelft.oopp.server.repositories.BuildingsDetails;
+import nl.tudelft.oopp.server.repositories.DetailsName;
+import nl.tudelft.oopp.server.repositories.DetailsRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BuildingService {
 
-    @Autowired
-    private BuildingRepository buildingRepository;
+    private final BuildingRepository buildingRepository;
+    private final DetailsRepository detailsRepository;
+
+    public BuildingService(BuildingRepository buildingRepository,
+                           DetailsRepository detailsRepository) {
+        this.buildingRepository = buildingRepository;
+        this.detailsRepository = detailsRepository;
+    }
 
     /**
      * Gets all buildings.
@@ -20,6 +35,37 @@ public class BuildingService {
      */
     public List<Building> getAllBuildings() {
         return buildingRepository.findAll();
+    }
+
+    /**
+     * Use {@link BuildingRepository} bean to get the details of all
+     * buildings.
+     *
+     * @return A list of {@link BuildingsDetails} objects that contain the
+     *      number, name, description, image, and opening hours.
+     */
+    public List<BuildingsDetails> getBuildingsDetails() {
+        return buildingRepository.findAllBy();
+    }
+
+    /** Gets all the buildings numbers and existing names in the database.
+     * @return A {@link ListPair} object containing two lists - the numbers and the names.
+     */
+    public ListPair<Long, String> getBuildingNumbersAndNames() {
+        List<BuildingNumber> queriedNumbers = buildingRepository.getAllBy();
+        List<DetailsName> queriedNames = detailsRepository.findAllBy();
+
+        List<Long> sentNumbers = new ArrayList<>();
+        List<String> sentNames = new ArrayList<>();
+
+        for (BuildingNumber number: queriedNumbers) {
+            sentNumbers.add(number.getNumber());
+        }
+        for (DetailsName name: queriedNames) {
+            sentNames.add(name.getName());
+        }
+
+        return new ListPair<>(sentNumbers, sentNames);
     }
 
     /**
@@ -32,31 +78,84 @@ public class BuildingService {
         return buildingRepository.findById(id);
     }
 
+
     /**
-     * Adds a building.
+     * Adds a new building to the database.
      *
-     * @param building to be added to the list of buildings
+     * @param building The building to add to the database.
+     * @throws InstanceAlreadyExistsException Throws it if a building already exists with the
+     *                                          given number or if the details name already exists.
      */
-    public void addBuilding(Building building) {
+    public void addBuilding(Building building) throws InstanceAlreadyExistsException {
+        if (buildingRepository.existsByNumber(building.number)
+            || detailsRepository.existsByName(building.details.name)) {
+            throw new InstanceAlreadyExistsException();
+        }
         buildingRepository.save(building);
+
     }
 
     /**
-     * Updates a building.
+     * Updates a building by using the generic method updateBuilding() to set new details for it.
      *
-     * @param id       new one to be updated to
-     * @param building to be updated
+     * @param number     The number/id of the building to update.
+     * @param newDetails The new details to set on the building.
      */
-    public void updateBuilding(Long id, Building building) {
-        buildingRepository.save(building);
+    public void updateBuildingDetails(Long number, Details newDetails) {
+        updateBuilding(number, newDetails);
     }
 
     /**
-     * Deletes a building.
+     * Updates a building by using the generic method updateBuilding() to set new opening hours
+     * for it.
      *
-     * @param id to be deleted from the list of buildings
+     * @param number          The number/id of the building to change.
+     * @param newOpeningHours The new opening hours to set on the building.
      */
-    public void delete(Long id) {
-        buildingRepository.deleteById(id);
+    public void updateBuildingOpeningHours(Long number, TimeSlot newOpeningHours) {
+        updateBuilding(number, newOpeningHours);
     }
+
+
+    /**
+     * Deletes the building with the specified number from the database.
+     *
+     * @param number Number of the building to be deleted from the database.
+     */
+    public void delete(Long number) throws EntityNotFoundException {
+        if (!buildingRepository.existsByNumber(number)) {
+            throw new EntityNotFoundException();
+        } else {
+            buildingRepository.deleteById(number);
+        }
+    }
+
+
+    /**
+     * Generic method to update a building in the database with the given number to
+     * have the given field value.
+     *
+     * @param number           The number of the building to update.
+     * @param fieldToBeChanged The new details to be set on te building.
+     * @throws EntityNotFoundException Throws it if the searched building does not exist.
+     */
+    public <T> void updateBuilding(Long number, T fieldToBeChanged)
+        throws EntityNotFoundException {
+
+        Optional<Building> optional = getBuilding(number);
+        if (optional.isEmpty()) {
+            throw new EntityNotFoundException();
+        } else {
+            Building building = optional.get();
+            if (fieldToBeChanged instanceof TimeSlot) {
+                building.openingHours = (TimeSlot) fieldToBeChanged;
+            } else {
+                building.details = (Details) fieldToBeChanged;
+            }
+            buildingRepository.save(building);
+        }
+
+    }
+
+
 }

@@ -31,7 +31,7 @@ public class FoodcourtService {
      * @param id linked to a sertain foocourt
      * @return the Foodcourt with that id
      */
-    public Optional<Foodcourt> getFoodcourt(Integer id) {
+    public Optional<Foodcourt> getFoodcourt(Long id) {
         return foodcourtRepository.findById(id);
     }
 
@@ -50,7 +50,7 @@ public class FoodcourtService {
      * @param id        new to be assigned to a foodcourt
      * @param foodcourt to be updated
      */
-    public void updateFoodcourt(Integer id, Foodcourt foodcourt) {
+    public void updateFoodcourt(Long id, Foodcourt foodcourt) {
         foodcourtRepository.save(foodcourt);
     }
 
@@ -59,7 +59,7 @@ public class FoodcourtService {
      *
      * @param id linked to a foodcourt to be deleted from the list
      */
-    public void deleteFoodcourt(Integer id) {
+    public void deleteFoodcourt(Long id) {
         foodcourtRepository.deleteById(id);
     }
 }
