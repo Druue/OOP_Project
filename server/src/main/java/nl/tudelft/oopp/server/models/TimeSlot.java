@@ -56,6 +56,11 @@ public class TimeSlot {
         this.endTime = endTime;
     }
 
+    /** Constructs a new Timeslot with the provided id, startTime and endTime.
+     * @param id The unique number of the TimeSLot
+     * @param startTime The starting hour.
+     * @param endTime The end hour.
+     */
     public TimeSlot(Long id, Timestamp startTime, Timestamp endTime) {
         this.id = id;
         this.startTime = startTime;

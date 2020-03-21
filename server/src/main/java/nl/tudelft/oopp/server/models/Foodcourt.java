@@ -2,7 +2,15 @@ package nl.tudelft.oopp.server.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * A {@link Foodcourt}.
@@ -12,27 +20,17 @@ import javax.persistence.*;
 public class Foodcourt {
 
     /**
-     * Initialises a new instance of {@link Foodcourt}.
-     */
-    public Foodcourt() {
-    }
-
-    /**
      * The menu of items available at the foodcourt.
      */
     @Id
     @Column(name = "id")
     public Integer buildingNumber;
-
-
     /**
      * This holds the details about each foodcourt in a building.
      */
     @JoinColumn(name = "details")
     @OneToMany(cascade = CascadeType.ALL)
     public Collection<Details> details;
-
-
     /**
      * The foodcourt's menu.
      */
@@ -40,9 +38,16 @@ public class Foodcourt {
     @CollectionTable(name = "foodlist")
     public Collection<Food> menu;
 
+
+    /**
+     * Initialises a new instance of {@link Foodcourt}.
+     */
+    public Foodcourt() {
+    }
+
     /**
      * Initialises a new instance of a {@link Foodcourt}.
-     * 
+     *
      * @param buildingNumber The foodcourt's ID.
      * @param details        Details about the foodcourt.
      * @param menu           The foodcourt's menu.
