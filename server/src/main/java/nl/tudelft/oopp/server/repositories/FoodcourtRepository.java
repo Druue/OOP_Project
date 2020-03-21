@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * interface to implement crud operations for food court.
  */
 @Repository
-public interface FoodcourtRepository extends JpaRepository<Foodcourt, Integer> {
+public interface FoodcourtRepository extends JpaRepository<Foodcourt, Long> {
 }
