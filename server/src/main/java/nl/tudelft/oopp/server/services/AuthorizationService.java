@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthorizationService {
 
-    private UserService userService;
+    private final UserService userService;
 
-    public AuthorizationService() {
+    public AuthorizationService(UserService userService) {
+        this.userService = userService;
     }
 
     /** Makes an authorization check on a user requesting something.
