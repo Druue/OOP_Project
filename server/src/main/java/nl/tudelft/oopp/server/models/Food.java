@@ -1,13 +1,6 @@
 package nl.tudelft.oopp.server.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * A piece of {@link Food}.
@@ -23,7 +16,7 @@ public class Food {
     /**
      * This hold the details about the food item.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details", referencedColumnName = "id")
     public Details details;
 

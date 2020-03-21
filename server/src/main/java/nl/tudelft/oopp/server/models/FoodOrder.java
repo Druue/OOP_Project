@@ -2,13 +2,7 @@ package nl.tudelft.oopp.server.models;
 
 
 import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * A {@link FoodOrder}.
@@ -33,14 +27,14 @@ public class FoodOrder {
     /**
      * The user who made the order.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user", referencedColumnName = "user_id")
     public User user;
 
     /**
      * The optional reservation that is tied to the food order.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "reservation", referencedColumnName = "reservation_id")
     public Reservation reservation;
 

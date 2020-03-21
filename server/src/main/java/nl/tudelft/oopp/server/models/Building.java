@@ -1,15 +1,7 @@
 package nl.tudelft.oopp.server.models;
 
 import java.util.Map;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * A {@link Building}.
@@ -28,7 +20,7 @@ public class Building {
     /**
      * The details of the building.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details", referencedColumnName = "id")
     public Details details;
 
