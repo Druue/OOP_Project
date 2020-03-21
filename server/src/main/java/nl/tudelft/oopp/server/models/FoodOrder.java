@@ -2,7 +2,14 @@ package nl.tudelft.oopp.server.models;
 
 
 import java.util.Collection;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * A {@link FoodOrder}.
