@@ -1,7 +1,17 @@
 package nl.tudelft.oopp.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Map;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * A {@link Building}.
@@ -40,8 +50,8 @@ public class Building {
 
     /**
      * Move this to the reservable table model.
-     *
      */
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     @ElementCollection
     @CollectionTable(name = "available_TimeSlots")
@@ -56,11 +66,11 @@ public class Building {
 
     /**
      * Initialises a new instance of {@link Building}.
-     * 
-     * @param number       The building's number.
-     * @param details      {@link Details} about the building.
-     * @param foodcourt    The building's {@link Foodcourt}.
-     * @param openingHours The building's {@link TimeSlot}.
+     *
+     * @param number             The building's number.
+     * @param details            {@link Details} about the building.
+     * @param foodcourt          The building's {@link Foodcourt}.
+     * @param openingHours       The building's {@link TimeSlot}.
      * @param availableTimeslots the buidling's map.
      */
     public Building(Long number, Details details, Foodcourt foodcourt, TimeSlot openingHours,
@@ -71,14 +81,14 @@ public class Building {
         this.openingHours = openingHours;
         this.availableTimeslots = availableTimeslots;
     }
-//
-//    /**returns the map of the building.
-//     *
-//     * @return the map
-//     */
-//    public Map<Reservable, TimeSlot> getMap() {
-//        return this.availableTimeslots;
-//    }
+
+    /**returns the map of the building.
+     *
+     * @return the map
+     */
+    public Map<Reservable, TimeSlot> getMap() {
+        return this.availableTimeslots;
+    }
 
     public Long getNumber() {
         return number;
