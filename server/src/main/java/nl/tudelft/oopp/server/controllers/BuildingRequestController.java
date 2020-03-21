@@ -1,16 +1,10 @@
 package nl.tudelft.oopp.server.controllers;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.management.InstanceAlreadyExistsException;
 import javax.naming.AuthenticationException;
 import javax.persistence.EntityNotFoundException;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.mysql.cj.xdevapi.Client;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.ClientRequest;
@@ -128,26 +122,24 @@ public class BuildingRequestController {
     /**
      * Receives e PUT request for adding a new building to the database.
      *
-     * @param request A {@link ClientRequest} object containing the new Building to insert.
+     * @param requestBuilding A {@link ClientRequest} object containing the new Building to insert.
      * @return A {@link ResponseEntity} object indicating the success of the operation.
      */
     @PutMapping(value = "/admin/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<ServerResponseAlert> addBuilding(
-        @RequestBody String request) {
+        @RequestBody ClientRequest<Building> requestBuilding) {
 
-        Type type = new TypeToken<ClientRequest<Building>>(){}.getType();
-        logger.info("Received PUT request for adding a building. Processing...");
-        ClientRequest<Building> requestBuilding = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create().fromJson(request, type);
-        logger.info(new Gson().toJson(requestBuilding));
-//        try {
-//            authorizationService.checkAuthorization(requestBuilding.getUsername());
-//        } catch (AuthenticationException e) {
-//            logger.error(NO_USER_FOUND);
-//            return ResponseEntity.badRequest().build();
-//        } catch (AuthorizationException e) {
-//            logger.error(NOT_ADMIN);
-//            return ResponseEntity.badRequest().build();
-//        }
+        logger.info("Received PUT request for adding a new building. Processing ...");
+
+        try {
+            authorizationService.checkAuthorization(requestBuilding.getUsername());
+        } catch (AuthenticationException e) {
+            logger.error(NO_USER_FOUND);
+            return ResponseEntity.badRequest().build();
+        } catch (AuthorizationException e) {
+            logger.error(NOT_ADMIN);
+            return ResponseEntity.badRequest().build();
+        }
 
         try {
             buildingService.addBuilding(requestBuilding.getBody());
@@ -202,14 +194,15 @@ public class BuildingRequestController {
             "SUCCESS"));
     }
 
-    /** Receives a POST request for updating the opening hours of a building to the provided
-     *      ones in a {@link ClientRequest} input parameter.
-     *      Uses the {@link AuthorizationService} bean to validate the administrator who sent the
-     *      request. Then uses the {@link BuildingService} bean to update the building with the
-     *      provided in the request parameter number.
+    /**
+     * Receives a POST request for updating the opening hours of a building to the provided
+     * ones in a {@link ClientRequest} field of type {@link TimeSlot}.
+     * Uses the {@link AuthorizationService} bean to validate the administrator who sent the
+     * request. Then uses the {@link BuildingService} bean to update the building with the
+     * provided in the request parameter number.
      *
      * @param request The {@link ClientRequest} object containing the new opening hours to be set.
-     * @param number The id of the building to update.
+     * @param number  The id of the building to update.
      * @return A {@link ResponseEntity} object indicating the success or failure of the operation.
      */
     @PostMapping("/admin/change/hours")
