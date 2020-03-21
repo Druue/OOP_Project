@@ -112,8 +112,8 @@ public class AddBuildingsController {
         );
 
         ClientRequest<Building> request = new ClientRequest<>(
-                "admin",
-                UserKind.Admin,
+                HttpRequestHandler.user.username,
+                HttpRequestHandler.user.userKind,
                 requestBuilding
         );
 
