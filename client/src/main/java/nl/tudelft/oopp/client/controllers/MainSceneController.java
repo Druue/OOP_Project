@@ -143,13 +143,13 @@ public class MainSceneController {
         alert.setHeaderText(null);
 
         // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
-        BuildingResponse buildingResponse = HttpRequestHandler.get("getbuildings", BuildingResponse.class);
+        BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/all", BuildingResponse.class);
 
         // Add all of the building names into a string
         StringBuilder s = new StringBuilder("Building names: ");
         if (buildingResponse != null) {
             for (Building b : buildingResponse.getBuildingList()) {
-                s.append(b.getName()).append(", ");
+                s.append(b.getDetails().getName()).append(", ");
             }
         }
 

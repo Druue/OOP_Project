@@ -88,5 +88,25 @@ public class AdminController implements Initializable {
         }
     }
 
+    /**
+     * Handles going to the add buildings page for the admin.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToAddBuildings(ActionEvent event) {
+        try {
+            Parent roomParent = FXMLLoader.load(getClass().getResource("/addBuildings.fxml"));
+            Scene roomScene = new Scene(roomParent);
 
+            Stage primaryStage =
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(roomScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AdminController");
+        }
+    }
 }
