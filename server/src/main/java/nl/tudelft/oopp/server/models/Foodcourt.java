@@ -2,14 +2,7 @@ package nl.tudelft.oopp.server.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * A {@link Foodcourt}.
@@ -36,7 +29,7 @@ public class Foodcourt {
      * This holds the details about each foodcourt in a building.
      */
     @JoinColumn(name = "details")
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public Collection<Details> details;
 
 
@@ -58,5 +51,29 @@ public class Foodcourt {
         this.buildingNumber = buildingNumber;
         this.details = details;
         this.menu = new ArrayList<>();
+    }
+
+    public Integer getBuildingNumber() {
+        return buildingNumber;
+    }
+
+    public void setBuildingNumber(Integer buildingNumber) {
+        this.buildingNumber = buildingNumber;
+    }
+
+    public Collection<Details> getDetails() {
+        return details;
+    }
+
+    public void setDetails(Collection<Details> details) {
+        this.details = details;
+    }
+
+    public Collection<Food> getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Collection<Food> menu) {
+        this.menu = menu;
     }
 }

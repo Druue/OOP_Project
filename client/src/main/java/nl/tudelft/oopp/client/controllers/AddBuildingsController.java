@@ -13,10 +13,11 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
+import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.TimeSlot;
-
+import nl.tudelft.oopp.api.models.UserKind;
 
 public class AddBuildingsController {
 
@@ -110,9 +111,15 @@ public class AddBuildingsController {
                 new TimeSlot(openingTime, closingTime)
         );
 
+        ClientRequest<Building> request = new ClientRequest<>(
+                "admin",
+                UserKind.Admin,
+                requestBuilding
+        );
+
         ServerResponseAlert response = HttpRequestHandler.put(
-                "buildings/insert/new_building",
-                requestBuilding,
+                "buildings/admin/add",
+                request,
                 ServerResponseAlert.class
         );
 

@@ -1,15 +1,7 @@
 package nl.tudelft.oopp.server.models;
 
 import java.util.Map;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * A {@link Building}.
@@ -28,21 +20,21 @@ public class Building {
     /**
      * The details of the building.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details", referencedColumnName = "id")
     public Details details;
 
     /**
      * The foodcourt within the building.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "foodCourt", referencedColumnName = "id")
     public Foodcourt foodcourt;
 
     /**
      * The hours during which the building is open during the week.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "opening_hours", referencedColumnName = "id")
     public TimeSlot openingHours;
 
@@ -50,7 +42,7 @@ public class Building {
      * Move this to the reservable table model.
      *
      */
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @ElementCollection
     @CollectionTable(name = "available_TimeSlots")
     Map<Reservable, TimeSlot> availableTimeslots;
@@ -79,12 +71,52 @@ public class Building {
         this.openingHours = openingHours;
         this.availableTimeslots = availableTimeslots;
     }
+//
+//    /**returns the map of the building.
+//     *
+//     * @return the map
+//     */
+//    public Map<Reservable, TimeSlot> getMap() {
+//        return this.availableTimeslots;
+//    }
 
-    /**returns the map of the building.
-     *
-     * @return the map
-     */
-    public Map<Reservable, TimeSlot> getMap() {
-        return this.availableTimeslots;
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
+
+    public Details getDetails() {
+        return details;
+    }
+
+    public void setDetails(Details details) {
+        this.details = details;
+    }
+
+    public Foodcourt getFoodcourt() {
+        return foodcourt;
+    }
+
+    public void setFoodcourt(Foodcourt foodcourt) {
+        this.foodcourt = foodcourt;
+    }
+
+    public TimeSlot getOpeningHours() {
+        return openingHours;
+    }
+
+    public void setOpeningHours(TimeSlot openingHours) {
+        this.openingHours = openingHours;
+    }
+
+    public Map<Reservable, TimeSlot> getAvailableTimeslots() {
+        return availableTimeslots;
+    }
+
+    public void setAvailableTimeslots(Map<Reservable, TimeSlot> availableTimeslots) {
+        this.availableTimeslots = availableTimeslots;
     }
 }
