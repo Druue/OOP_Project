@@ -11,7 +11,10 @@ import nl.tudelft.oopp.api.models.User;
 public class HttpRequestHandler {
     private static final String host = "http://localhost:8080";
     private static final HttpClient client = HttpClient.newHttpClient();
-    private static final Gson gson = new GsonBuilder().serializeNulls().create();
+    private static final Gson gson = new GsonBuilder()
+            .serializeNulls()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            .create();
 
     public static User user;
 

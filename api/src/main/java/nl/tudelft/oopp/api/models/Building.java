@@ -45,13 +45,11 @@ public class Building {
      *
      * @param number       The building's number.
      * @param details      {@link Details} about the building.
-     * @param foodcourt    The building's {@link Foodcourt}.
      * @param openingHours The building's {@link TimeSlot}.
      */
-    public Building(Long number, Details details, Foodcourt foodcourt, TimeSlot openingHours) {
+    public Building(Long number, Details details, TimeSlot openingHours) {
         this.number = number;
         this.details = details;
-        this.foodcourt = foodcourt;
         this.openingHours = openingHours;
     }
 
