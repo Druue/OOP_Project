@@ -112,7 +112,7 @@ public class ReservationsController {
         logger.info("Received GET request for user reservations. Processing ...");
 
         String username = request.getUsername();
-        User foundUser = null;
+        User foundUser;
 
         try {
             foundUser = userService.getUserByUsername(username);
@@ -141,7 +141,7 @@ public class ReservationsController {
         logger.info("Received GET request for current user reservations. Processing ...");
 
         String username = request.getUsername();
-        User foundUser = null;
+        User foundUser;
 
         try {
             foundUser = userService.getUserByUsername(username);
@@ -172,10 +172,7 @@ public class ReservationsController {
             + request.getUsername() + ". Processing ...");
 
         try {
-            authorizationService.checkAuthorization(request.getUsername());
-        } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
-            return ResponseEntity.badRequest().build();
+            authorizationService.authenticateUser(request.getUsername());
         } catch (AuthenticationException e) {
             logger.error(NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
