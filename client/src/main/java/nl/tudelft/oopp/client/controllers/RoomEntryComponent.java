@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
@@ -48,6 +49,9 @@ public class RoomEntryComponent extends Pane {
     private void setRoomDetails(Room room) {
         getRoomName().setText(room.getName());
         getCapacity().setText(room.getCapacity()+"");
+        if(!room.isHasProjector()) {
+            getHasMultimedia().setText("No multimedia");
+        }
     }
 
     private static List<TestTimeSlot> generateTestTimeSlots() {
@@ -88,6 +92,14 @@ public class RoomEntryComponent extends Pane {
 
     public List<Rectangle> getTimeslots() {
         return controller.getTimeslots();
+    }
+
+    public TextField getStartTimeInput() {
+        return controller.getStartTimeInput();
+    }
+
+    public TextField getEndTimeInput() {
+        return controller.getEndTimeInput();
     }
 
 }
