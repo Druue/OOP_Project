@@ -86,8 +86,8 @@
                         <Menu mnemonicParsing="false" text="Order food"/>
                         <Menu mnemonicParsing="false" text="Add reservable">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Building"/>
-                                <MenuItem mnemonicParsing="false" text="Room"/>
+                                <MenuItem mnemonicParsing="false" text="Building" />
+                                <MenuItem mnemonicParsing="false" text="Room" onAction="#goToAddRooms"/>
                                 <MenuItem mnemonicParsing="false" text="Bike"/>
                             </items>
                         </Menu>
@@ -100,7 +100,7 @@
                         <Image url="@images/Logo.png"/>
                     </image>
                 </ImageView>
-                <Button onAction="#goToMain" prefWidth="100.0" text="Logo" AnchorPane.rightAnchor="1.5"
+                <Button fx:id = "btn" onAction="#goToMain" prefWidth="100.0" text="Logo" AnchorPane.rightAnchor="1.5"
                         AnchorPane.topAnchor="1.5"/>
             </children>
         </AnchorPane>
