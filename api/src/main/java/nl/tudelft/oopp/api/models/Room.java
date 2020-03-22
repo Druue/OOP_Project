@@ -66,4 +66,8 @@ public class Room extends Reservable {
         this.forEmployee = forEmployee;
     }
 
+    public String getName() {
+        return details.getName();
+    }
+
 }

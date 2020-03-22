@@ -74,6 +74,20 @@ public class ReservationsSceneController implements Initializable {
         populateBuildingsScrollBox();
 
         //        roomsListWrapper.setVisible(false);
+
+        try {
+            //FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomsList.fxml"));
+            RoomsListController controller = new RoomsListController();
+            loader.setController(controller);
+            VBox tabContent = loader.load();
+            roomsListWrapper.setVisible(true);
+            roomsListTab.setContent(tabContent);
+
+            controller.generateInitialRooms(null);
+        } catch (IOException e) {
+            System.out.println("File Not Found");
+        }
     }
 
     /**
