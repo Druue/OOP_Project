@@ -29,4 +29,13 @@ public class UserService {
             return user;
         }
     }
+
+    /**returns a user by email if exists or null otherwise.
+     *
+     * @param email linked with a user
+     * @return a user
+     */
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }
