@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.TestHourAndMinutes;
 import nl.tudelft.oopp.api.models.TestOpeningTimes;
 import nl.tudelft.oopp.api.models.TestTimeSlot;
@@ -20,7 +21,7 @@ public class RoomEntryComponent extends Pane {
     /**
      * Creates a new RoomEntryComponent.
      */
-    public RoomEntryComponent() {
+    public RoomEntryComponent(Room room) {
         super();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomEntry.fxml"));
@@ -30,6 +31,9 @@ public class RoomEntryComponent extends Pane {
             loader.setController(controller);
 
             Pane roomEntry = loader.load();
+
+            setRoomDetails(room);
+
             controller.generateTimeline(generateTestOpeningTimes(), generateTestTimeSlots());
 
             this.getChildren().add(roomEntry);
@@ -39,6 +43,11 @@ public class RoomEntryComponent extends Pane {
         }
 
 
+    }
+
+    private void setRoomDetails(Room room) {
+        getRoomName().setText(room.getName());
+        getCapacity().setText(room.getCapacity()+"");
     }
 
     private static List<TestTimeSlot> generateTestTimeSlots() {
