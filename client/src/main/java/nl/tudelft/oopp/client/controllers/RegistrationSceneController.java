@@ -83,6 +83,11 @@ public class RegistrationSceneController {
                         userKind = UserKind.Employee;
 
                         break;
+                    case "admin":
+
+                        userKind = UserKind.Admin;
+
+                        break;
                     default:
                         throw new Exception();
                 }
