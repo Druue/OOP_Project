@@ -6,6 +6,7 @@ import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.server.models.User;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.RegistrationService;
+import nl.tudelft.oopp.server.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegistrationController {
     public static final Gson gson = new Gson();
     final RegistrationService registrationService;
+    final UserService userService;
 
-    public RegistrationController(RegistrationService registrationService) {
+    public RegistrationController(RegistrationService registrationService, UserService userService) {
         this.registrationService = registrationService;
+        this.userService = userService;
     }
 
     /**
@@ -36,7 +39,13 @@ public class RegistrationController {
         LoggerService.info(RegistrationController.class, "Received registration details");
         LoggerService.info(RegistrationController.class, userRequest.email);
 
-        // TODO: Validate that the user doesn't already exist.
+        //checks if a user already exists with this email.
+        User test = userService.getUserByEmail(userRequest.email);
+        if (test != null) {
+            LoggerService.info(RegistrationController.class, "User already exists with this email");
+            return ResponseEntity.badRequest().body(
+                    new UserAuthResponse("User already exists with this email", "ERROR", null));
+        }
         try {
             // Attempts to add the user to the database.
             registrationService.addUser(userRequest);
