@@ -111,7 +111,7 @@ public class ReservationsSceneController implements Initializable {
      * Generates boxes for each building and adds them to the GUI.
      */
     private void populateBuildingsScrollBox() {
-        BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/all", BuildingResponse.class);
+        BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/user/all", BuildingResponse.class);
 
         DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0,0,0,0.1), 2,4,2, 2);
         buildingSearchField.setEffect(dropShadow);
