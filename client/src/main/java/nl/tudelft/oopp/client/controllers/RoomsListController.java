@@ -47,7 +47,7 @@ public class RoomsListController implements Initializable {
             ObservableList<RoomEntryComponent> roomEntries = FXCollections.observableArrayList();
 
             for(Room myRoom:roomsList) {
-                List<TestTimeSlot> timeSlots = generateTestTimeSlots();
+//                List<TestTimeSlot> timeSlots = generateTestTimeSlots();
                 RoomEntryComponent roomEntry = new RoomEntryComponent(myRoom);
                 roomEntries.add(roomEntry);
             }
