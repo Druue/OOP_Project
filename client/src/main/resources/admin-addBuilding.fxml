@@ -1,104 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Box?>
-<?import javafx.scene.text.Font?>
-
-<VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@homepage.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.AddBuildingsController">
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0" stylesheets="@homepage.css"
+      xmlns="http://javafx.com/javafx/11.0.1" fx:controller="nl.tudelft.oopp.client.controllers.AddBuildingsController">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
-                <ImageView fitWidth="800" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <ImageView fitWidth="800" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0"
+                           AnchorPane.rightAnchor="0.0">
                     <image>
-                        <Image url="@images/Rooms-background8x6.png" />
+                        <Image url="@images/Rooms-background8x6.png"/>
                     </image>
                 </ImageView>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0"
+                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                     <children>
-                        <Box depth="0.0" height="420.0" width="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <Label text="Add a new Building" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="20.0">
+                        <Box depth="0.0" height="420.0" width="800.0" AnchorPane.bottomAnchor="0.0"
+                             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        <Label text="Add a new Building" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="75.0"
+                               AnchorPane.topAnchor="20.0">
                             <font>
-                                <Font name="Helvetica" size="27.0" />
+                                <Font name="Helvetica" size="27.0"/>
                             </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="10.0" text="Buidling number" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="80.0">
+                        <Label layoutX="10.0" layoutY="10.0" text="Buidling number" AnchorPane.leftAnchor="30.0"
+                               AnchorPane.topAnchor="80.0">
                             <font>
-                                <Font name="Helvetica" size="14.0" />
+                                <Font name="Helvetica" size="14.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="buildingNumberInput" prefHeight="30.0" prefWidth="400.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0" />
-                        <Label layoutX="20.0" layoutY="20.0" text="Name" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="150.0">
+                        <TextField fx:id="buildingNumberInput" prefHeight="30.0" prefWidth="400.0"
+                                   AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0"/>
+                        <Label layoutX="20.0" layoutY="20.0" text="Name" AnchorPane.leftAnchor="30.0"
+                               AnchorPane.topAnchor="150.0">
                             <font>
-                                <Font name="Helvetica" size="14.0" />
+                                <Font name="Helvetica" size="14.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="buildingNameInput" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="400.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="170.0" />
-                        <Label layoutX="30.0" layoutY="30.0" text="Details" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="220.0">
+                        <TextField fx:id="buildingNameInput" layoutX="10.0" layoutY="10.0" prefHeight="30.0"
+                                   prefWidth="400.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="170.0"/>
+                        <Label layoutX="30.0" layoutY="30.0" text="Details" AnchorPane.leftAnchor="30.0"
+                               AnchorPane.topAnchor="220.0">
                             <font>
-                                <Font name="Helvetica" size="14.0" />
+                                <Font name="Helvetica" size="14.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="buildingDescriptionInput" layoutX="20.0" layoutY="20.0" prefHeight="70.0" prefWidth="400.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="240.0" />
-                        <Label layoutX="30.0" layoutY="30.0" text="Opening time" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="105.0">
+                        <TextField fx:id="buildingDescriptionInput" layoutX="20.0" layoutY="20.0" prefHeight="70.0"
+                                   prefWidth="400.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="240.0"/>
+                        <Label layoutX="30.0" layoutY="30.0" text="Opening time" AnchorPane.leftAnchor="480.0"
+                               AnchorPane.topAnchor="105.0">
                             <font>
-                                <Font name="Helvetica" size="14.0" />
+                                <Font name="Helvetica" size="14.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="buildingOpeningTimeInput" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="50.0" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="100.0" />
-                        <Label layoutX="40.0" layoutY="40.0" text="Closing time" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="175.0">
+                        <TextField fx:id="buildingOpeningTimeInput" layoutX="10.0" layoutY="10.0" prefHeight="30.0"
+                                   prefWidth="50.0" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="100.0"/>
+                        <Label layoutX="40.0" layoutY="40.0" text="Closing time" AnchorPane.leftAnchor="480.0"
+                               AnchorPane.topAnchor="175.0">
                             <font>
-                                <Font name="Helvetica" size="14.0" />
+                                <Font name="Helvetica" size="14.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="buildingClosingTimeInput" layoutX="20.0" layoutY="20.0" prefHeight="30.0" prefWidth="50.0" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="170.0" />
-                        <Label layoutX="40.0" layoutY="40.0" text="Image" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="250.0">
+                        <TextField fx:id="buildingClosingTimeInput" layoutX="20.0" layoutY="20.0" prefHeight="30.0"
+                                   prefWidth="50.0" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="170.0"/>
+                        <Label layoutX="40.0" layoutY="40.0" text="Image" AnchorPane.leftAnchor="480.0"
+                               AnchorPane.topAnchor="250.0">
                             <font>
-                                <Font name="Helvetica" size="14.0" />
+                                <Font name="Helvetica" size="14.0"/>
                             </font>
                         </Label>
-                        <TextField layoutX="20.0" layoutY="20.0" prefHeight="30.0" prefWidth="280.0" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="270.0" />
-                        <Button onAction="#addBuilding" prefHeight="30.0" style="-fx-background-color: #287e40;" text="Add" textFill="WHITE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="320.0">
+                        <TextField layoutX="20.0" layoutY="20.0" prefHeight="30.0" prefWidth="280.0"
+                                   AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="270.0"/>
+                        <Button onAction="#addBuilding" prefHeight="30.0" style="-fx-background-color: #287e40;"
+                                text="Add" textFill="WHITE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="320.0"
+                                AnchorPane.rightAnchor="320.0">
                             <font>
-                                <Font name="Helvetica" size="18.0" />
+                                <Font name="Helvetica" size="18.0"/>
                             </font>
                         </Button>
                     </children>
                 </AnchorPane>
 
-                <MenuBar id="menuBar" style="-fx-background-color: #00A6D6;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <MenuBar id="menuBar" style="-fx-background-color: #00A6D6;" AnchorPane.leftAnchor="0.0"
+                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <menus>
                         <Menu mnemonicParsing="false" text="Reserve">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Room" />
-                                <MenuItem mnemonicParsing="false" text="Bike" />
+                                <MenuItem mnemonicParsing="false" text="Room"/>
+                                <MenuItem mnemonicParsing="false" text="Bike"/>
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Order food" />
+                        <Menu mnemonicParsing="false" text="Order food"/>
                         <Menu mnemonicParsing="false" text="Add reservable">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Building" />
-                                <MenuItem mnemonicParsing="false" text="Room" />
-                                <MenuItem mnemonicParsing="false" text="Bike" />
+                                <MenuItem mnemonicParsing="false" text="Building"/>
+                                <MenuItem mnemonicParsing="false" text="Room"/>
+                                <MenuItem mnemonicParsing="false" text="Bike"/>
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Manage reservable" />
+                        <Menu mnemonicParsing="false" text="Manage reservable"/>
                     </menus>
                 </MenuBar>
-                <ImageView fitHeight="100.0" fitWidth="100.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="1.5" AnchorPane.topAnchor="1.5">
+                <ImageView fitHeight="100.0" fitWidth="100.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true"
+                           AnchorPane.rightAnchor="1.5" AnchorPane.topAnchor="1.5">
                     <image>
-                        <Image url="@images/Logo.png" />
+                        <Image url="@images/Logo.png"/>
                     </image>
                 </ImageView>
-                <Button id="logo" onAction="#goToAdmin" prefWidth="100.0" AnchorPane.rightAnchor="1.5" AnchorPane.topAnchor="1.5" />
+                <Button id="logo" onAction="#goToAdmin" prefWidth="100.0" AnchorPane.rightAnchor="1.5"
+                        AnchorPane.topAnchor="1.5"/>
             </children>
         </AnchorPane>
     </children>
