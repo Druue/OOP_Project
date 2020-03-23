@@ -206,7 +206,7 @@ public class ReservationService {
      * @param apiReservation The api module Reservation object.
      * @return The produced server module Reservation object.
      */
-    private Reservation convertApiReservationToServerReservation(
+    public Reservation convertApiReservationToServerReservation(
         nl.tudelft.oopp.api.models.Reservation apiReservation) {
 
         logger.info("Beginning convertion from api reservation to a server reservation ...");
