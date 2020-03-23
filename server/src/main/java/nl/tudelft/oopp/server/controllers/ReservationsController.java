@@ -166,7 +166,7 @@ public class ReservationsController {
      *                that is used to save the new reservation.
      * @return ResponseEntity object indicating whether the reservation was added successfully.
      */
-    @PostMapping("/{role:(?:user|admin)}/add")
+    @PostMapping("/user/add")
     public ResponseEntity<String> addReservation(ClientRequest<Reservation> request) {
         logger.info("Received POST request for a new reservation from user: "
             + request.getUsername() + ". Processing ...");
