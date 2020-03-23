@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.client.controllers;
 
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +11,8 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
+
+import java.io.IOException;
 
 
 public class MainSceneController {
@@ -91,11 +92,34 @@ public class MainSceneController {
 
     /**
      * Handles going to the "Add rooms" page.
+     *
      * @param event the scene from where the function was called.
      */
     public void goToAddRooms(ActionEvent event) {
         try {
-            Parent homeParent = FXMLLoader.load(getClass().getResource("/addRooms.fxml"));
+            Parent homeParent = FXMLLoader.load(getClass().getResource("/admin-addRoom.fxml"));
+            Scene homeScene = new Scene(homeParent);
+
+            Stage primaryStage =
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(homeScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in MainSceneController");
+        }
+    }
+
+    /**
+     * Handles going to the "Add buildings" page.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToAddBuildings(ActionEvent event) {
+        try {
+            Parent homeParent = FXMLLoader.load(getClass().getResource("/admin-addBuilding.fxml"));
             Scene homeScene = new Scene(homeParent);
 
             Stage primaryStage =
