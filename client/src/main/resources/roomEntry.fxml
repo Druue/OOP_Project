@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="roomEntryBackground" prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: #C0C0C0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="roomEntryBackground" prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <HBox>
       <Label fx:id="roomName" text="Room 1">
          <Font size="50.0" />

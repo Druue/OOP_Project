@@ -125,7 +125,7 @@ public class ReservationsSceneController implements Initializable {
                 buildingEntry.getStyleClass().add("buildingEntry");
                 Label buildingName = new Label(building.getNumber() + "," + building.getDetails().getName());
                 buildingName.getStyleClass().add("buildingName");
-                Label buildingOpeningTime = new Label("09:00 - 22:00 //hardcoded");
+                Label buildingOpeningTime = new Label("08:30 - 23:00 //hardcoded");
                 buildingOpeningTime.getStyleClass().add("buildingOpeningTime");
 
                 buildingEntry.getChildren().add(buildingName);

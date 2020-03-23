@@ -46,11 +46,11 @@ public class HomepageController<E> implements Initializable {
         /*
          * This block makes three rooms and tree reservations.
          */
-        User exampleUser = new User(
-                new Details(null, "first last", null, null),
-                "example@mail.com",
-                "flast",
-                "badpass", UserKind.Student);
+//        User exampleUser = new User(
+//                new Details(null, "first last", null, null),
+//                "example@mail.com",
+//                "flast",
+//                "badpass", UserKind.Student);
         //TODO: Add proper connection to backend.
 
         //        Room a = new Room("Example room a", false, false);
@@ -70,13 +70,13 @@ public class HomepageController<E> implements Initializable {
         //        }
 
         // Set to true / remove the condition once the actual reservations controller is ready.
-        boolean doRest = false;
+        boolean doRest = true;
 
         if (doRest) {
 
             List<Reservation> reservationList = new ArrayList<>();
             try {
-                ReservationResponse response = HttpRequestHandler.get("reservations/all", ReservationResponse.class);
+                ReservationResponse response = HttpRequestHandler.get("reservations/admin/all", ReservationResponse.class);
                 reservationList = response.getReservationList();
                 for (Reservation s : reservationList) {
                     todayRes.getItems().add(s.reservable.details.name);
