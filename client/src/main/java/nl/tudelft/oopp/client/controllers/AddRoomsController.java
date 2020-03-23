@@ -7,11 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.Building;
-import nl.tudelft.oopp.api.models.BuildingResponse;
+import nl.tudelft.oopp.api.models.*;
 
 
 public class AddRoomsController {
@@ -20,74 +20,12 @@ public class AddRoomsController {
     // the TextField object from mainScene.fxml
     @FXML
     public TextField roomNameInput;
+    public TextField roomCapacityInput;
+    public CheckBox roomHasProjectorInput;
+    public CheckBox roomForEmployee;
+    public TextField roomDescriptionInput;
+    public TextField roomIdInput;
 
-    /**
-     * Handles going to the reservation page.
-     *
-     * @param event the scene from where the function was called.
-     */
-    public void goToReservations(ActionEvent event) {
-        try {
-            Parent reservationsParent =
-                    FXMLLoader.load(getClass().getResource("/reservations.fxml"));
-            Scene reservationsScene = new Scene(reservationsParent);
-            reservationsScene.getStylesheets().addAll(this.getClass().getResource("/reservations.css").toExternalForm());
-            Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(reservationsScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            System.out.println("IOException in MainSceneController");
-        }
-    }
-
-    /**
-     * Handles going to the login page.
-     *
-     * @param event the scene from where the function was called.
-     */
-    public void goToLogin(ActionEvent event) {
-        try {
-            Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
-            Scene loginScene = new Scene(loginParent);
-
-            loginScene.getStylesheets()
-                    .addAll(this.getClass().getResource("/login.css").toExternalForm());
-            Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(loginScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            System.out.println("IOException in MainSceneController");
-        }
-    }
-
-    /**
-     * Handles going to the homepage.
-     *
-     * @param event the scene from where the function was called.
-     */
-    public void goToHome(ActionEvent event) {
-        try {
-            Parent homeParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene homeScene = new Scene(homeParent);
-
-            Stage primaryStage =
-                    (Stage) (roomNameInput.getScene().getWindow());
-
-            primaryStage.hide();
-            primaryStage.setScene(homeScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            System.out.println("IOException in MainSceneController");
-        }
-    }
 
     /**
      * An example alert function, to showcase the use of the new API.
@@ -108,7 +46,7 @@ public class AddRoomsController {
         StringBuilder s = new StringBuilder("Building names: ");
         if (buildingResponse != null) {
             for (Building b : buildingResponse.getBuildingList()) {
-                s.append(b.getName()).append(", ");
+                s.append(b.getDetails().getName()).append(", ");
             }
         }
 
@@ -122,13 +60,61 @@ public class AddRoomsController {
      * @param event The event that called the function.
      */
     public void addRoom(ActionEvent event) {
+
+
+        //TODO: Proper input validation.
+
+        String name = roomNameInput.getText();
+        Long id = Long.parseLong(roomIdInput.getText());
+        int capacity = Integer.parseInt(roomCapacityInput.getText());
+        boolean hasProjector = roomHasProjectorInput.isSelected();
+        boolean forEmployee = roomForEmployee.isSelected();
+        String description = roomDescriptionInput.getText();
+
+        Room requestRoom = new Room(
+                id,
+                new Details(name, description, null),
+                capacity,
+                hasProjector,
+                forEmployee
+        );
+
+        ClientRequest<Room> request = new ClientRequest<>(
+                HttpRequestHandler.user.username,
+                HttpRequestHandler.user.userKind,
+                requestRoom
+        );
+        ServerResponseAlert response = HttpRequestHandler.put(
+                "reservables/insert/new_room",
+                request,
+                ServerResponseAlert.class
+        );
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Room added.");
         alert.setHeaderText(null);
-        //TODO: Add proper connection to the backend.
+        alert.setContentText(response.getMessage());
+        alert.showAndWait();
+    }
 
-        //Room room = new Room(roomNameInput.getText(), true, false);
-        //HttpRequestHandler.put("reservables/insert/new_room", null /* room */, ServerResponseAlert.class);
+    /**
+     * Handles going to the homepage.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToAdmin(ActionEvent event) {
+        try {
+            Parent homeParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
+            Scene homeScene = new Scene(homeParent);
 
+            Stage primaryStage =
+                    (Stage) (roomNameInput.getScene().getWindow());
+
+            primaryStage.hide();
+            primaryStage.setScene(homeScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in MainSceneController");
+        }
     }
 }
