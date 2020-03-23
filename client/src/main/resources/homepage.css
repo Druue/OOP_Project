@@ -1,3 +1,82 @@
-#resBox {
-    -fx-background-color: #00A6D6;
+#title {
+    -fx-alignment: center;
+    -fx-text-alignment: cm;
+    -fx-font-family: Impact;
+    -fx-text-fill: #00A6D6;
+    -fx-background-color: white;
+}
+
+.menu-bar {
+    -fx-background-color: #00a6d6;
+    -fx-opacity: 0.5;
+    -fx-border-width: 2.0;
+
+}
+
+.menu-bar .label {
+    -fx-font-size: 12.0pt;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+}
+
+.menu-bar, .menu-bar {
+    -fx-background: black;
+    -fx-opacity: 0.5;
+    -fx-text-fill: white;
+}
+
+.menu-item {
+    -fx-text-fill: black;
+    -fx-background: gray;
+    -fx-padding: 10.0px;
+}
+
+.menu-item .label {
+    -fx-font-size: 12.0pt;
+    -fx-text-fill: white;
+}
+
+.menu-item:hover, .menu-button:hover, .menu-button:focused, .menu-button:showing, .menu-item:focused {
+    -fx-background-color: #94b3ff;
+}
+
+.context-menu {
+    -fx-background-color: #00a6d6;
+    -fx-border-width: 0px;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab {
+    -fx-background-insets: 0, 1, 0, 1, 1, 1;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #e6e6e6;
+
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #00a6d6;
+}
+
+.tab .tab-label {
+    -fx-font-family: Helvetica;
+    -fx-alignment: CENTER;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+}
+
+#logo {
+    -fx-background-color: transparent;
 }

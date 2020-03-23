@@ -16,15 +16,15 @@
                         <Image url="@images/Rooms-background8x6.png"/>
                     </image>
                 </ImageView>
-                <Label prefHeight="50.0" text="Welcome, •name•!" textAlignment="CENTER" AnchorPane.leftAnchor="75.0"
-                       AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="80.0">
+                <Label id="title" prefHeight="50.0" text="Welcome to ReserveTUDelft!" textAlignment="CENTER"
+                       AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="80.0">
                     <font>
                         <Font name="Helvetica" size="29.0"/>
                     </font>
                 </Label>
-                <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00a6d6;"
-                         tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="75.0"
-                         AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="160.0">
+                <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE"
+                         AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0"
+                         AnchorPane.topAnchor="160.0">
                     <tabs>
                         <Tab text="Today's reservation">
                             <content>
@@ -53,14 +53,14 @@
                     </tabs>
                 </TabPane>
                 <Button id="resButton" onAction="#goToRes" prefWidth="200.0" style="-fx-background-color: #287E40;"
-                        text="Reserve a room" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="95.0"
+                        text="Reserve" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="95.0"
                         AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0">
                     <font>
                         <Font name="System Bold" size="16.0"/>
                     </font>
                 </Button>
-                <MenuBar id="menuBar" style="-fx-background-color: #00A6D6;" AnchorPane.leftAnchor="0.0"
-                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <MenuBar id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                         AnchorPane.topAnchor="0.0">
                     <menus>
                         <Menu mnemonicParsing="false" text="Reserve">
                             <items>
@@ -77,7 +77,7 @@
                         <Image url="@images/Logo.png"/>
                     </image>
                 </ImageView>
-                <Button onAction="#goToMain" prefWidth="100.0" text="Logo" AnchorPane.rightAnchor="1.5"
+                <Button id="logo" onAction="#goToMain" prefWidth="100.0" AnchorPane.rightAnchor="1.5"
                         AnchorPane.topAnchor="1.5"/>
             </children>
         </AnchorPane>
