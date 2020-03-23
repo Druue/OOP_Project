@@ -12,8 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
+import nl.tudelft.oopp.api.models.UserKind;
 
 public class RegistrationSceneController {
     @FXML
@@ -54,7 +56,6 @@ public class RegistrationSceneController {
         String username = registrationUsernameInput.getText();
         String password = registrationPasswordInput.getText();
         String email = registrationEmailInput.getText();
-        // TODO: USE DETAILS OBJECT.
         String name = registrationNameInput.getText();
 
         // If any of these fields are empty: Send an alert.
@@ -65,8 +66,39 @@ public class RegistrationSceneController {
             alert.setContentText("Please fill in all required fields.");
             alert.showAndWait();
         } else {
-            // TODO: Checking the type of user via the email address.
-            User registrationRequest = new User(email, username, password);
+
+            // Checks for the kind of user that is registrating
+            UserKind userKind;
+            try {
+                String domainEmailPart = email.split("@")[1];
+                String userRole = domainEmailPart.split("\\.")[0];
+                switch (userRole) {
+                    case "student":
+
+                        userKind = UserKind.Student;
+
+                        break;
+                    case "tudelft":
+
+                        userKind = UserKind.Employee;
+
+                        break;
+                    default:
+                        throw new Exception();
+                }
+            } catch (Exception e) {
+                // Create an alert, and show it to the user.
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("Invalid email address given.");
+                alert.showAndWait();
+                return;
+            }
+
+            User registrationRequest = new User(
+                    new Details(name, null, null),
+                    email, username, password, userKind);
 
             // Send a register request to the server.
             UserAuthResponse response = HttpRequestHandler.post("register", registrationRequest,
@@ -88,6 +120,7 @@ public class RegistrationSceneController {
                     goToHomepage();
                 } else {
                     alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setContentText(response.getMessage());
                     alert.showAndWait();
                 }
             } else {

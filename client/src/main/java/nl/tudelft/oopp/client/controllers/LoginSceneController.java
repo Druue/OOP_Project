@@ -17,7 +17,7 @@ import nl.tudelft.oopp.api.models.UserAuthResponse;
 
 public class LoginSceneController {
 
-    // the TextField object from mainScene.fxml
+    // the TextField object(s) from mainScene.fxml
     @FXML
     public TextField inputusername;
     @FXML
@@ -47,9 +47,17 @@ public class LoginSceneController {
             alert.setHeaderText(null);
             if (response != null) {
                 if (response.getAlertType().equals("CONFIRMATION")) {
+
+                    // Saves the user gotten from the UserAuthResponse.
+                    // This includes the user's id and details for a more personalized experience,
+                    // and to make queries easier later on.
+                    HttpRequestHandler.saveUser(response.getUser());
+
+                    // Show an alert with the server response message.
                     alert.setAlertType(Alert.AlertType.CONFIRMATION);
                     alert.setContentText(response.getMessage());
                     alert.showAndWait();
+
                     // For now, goes back to the homepage.
                     goToHomepage();
                 } else {

@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.RoomResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.Reservable;
@@ -84,9 +85,11 @@ public class ReservableController {
      * @return A {@link ServerResponseAlert}.
      */    
     @PutMapping("/insert/new_room")
-    public ServerResponseAlert addNewRoom(@RequestBody String request) {
-        Room requestRoom = gson.fromJson(request, Room.class);
-        reservableService.addRoom(requestRoom);
+    public ServerResponseAlert addNewRoom(@RequestBody ClientRequest<Room> request) {
+        //TODO: Add authorization process
+
+
+        reservableService.addRoom(request.getBody());
         return new ServerResponseAlert("Room added", "CONFIRMATION");
     }
 

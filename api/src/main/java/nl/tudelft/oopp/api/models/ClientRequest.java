@@ -6,6 +6,9 @@ public class ClientRequest<T> {
     private UserKind role;
     private T body;
 
+    public ClientRequest() {
+    }
+
     /** Create a new client request object to be sent to the server.
      * @param username The username of the user.
      * @param role The role of the user.

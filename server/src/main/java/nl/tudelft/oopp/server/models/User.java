@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.server.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,7 +48,7 @@ public class User {
      * A collection of the user's current reservations.
      */
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details", referencedColumnName = "id")
     public Details details;
 

@@ -11,12 +11,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
 
 public class AdminController implements Initializable {
 
+    public Button btn;
     ObservableList list = FXCollections.observableArrayList();
 
     @FXML
@@ -88,5 +91,47 @@ public class AdminController implements Initializable {
         }
     }
 
+    /**
+     * Handles going to the add buildings page for the admin.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToAddBuildings(ActionEvent event) {
+        try {
+            Parent roomParent = FXMLLoader.load(getClass().getResource("/addBuildings.fxml"));
+            Scene roomScene = new Scene(roomParent);
 
+            Stage primaryStage =
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(roomScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AdminController");
+        }
+    }
+
+    /**
+     * Handles going to the add rooms page for the admin.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToAddRooms(ActionEvent event) {
+        try {
+            Parent roomParent = FXMLLoader.load(getClass().getResource("/addRooms.fxml"));
+            Scene roomScene = new Scene(roomParent);
+
+            Stage primaryStage =
+                    (Stage) btn.getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(roomScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AdminController");
+        }
+    }
 }

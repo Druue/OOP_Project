@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.server.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
+
 /**
  * A piece of {@link Food}.
  */
@@ -16,14 +19,15 @@ import javax.persistence.Table;
 @Table(name = "food_item")
 public class Food {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "food_id")
     public Long id;
 
     /**
      * This hold the details about the food item.
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details", referencedColumnName = "id")
     public Details details;
 
