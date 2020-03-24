@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.api.models;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
@@ -20,7 +21,12 @@ public class Reservation {
     /**
      * This is a reservation of a specific reservable.
      */
-    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY, property = "type")
+    @JsonSubTypes({
+        @JsonSubTypes.Type(value = Room.class, name = "room"),
+        @JsonSubTypes.Type(value = Bike.class, name = "bike")
+    })
     public Reservable reservable;
 
     /**
