@@ -43,7 +43,7 @@ public class Reservation {
         @JsonSubTypes.Type(value = Room.class, name = "room"),
         @JsonSubTypes.Type(value = Bike.class, name = "bike")
     })
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "reservable", referencedColumnName = "id")
     public Reservable reservable;
 
