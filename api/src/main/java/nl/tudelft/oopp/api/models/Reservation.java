@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.api.models;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 /**
  * Initialises a new isntance of {@link Reservation}.
  */
@@ -18,6 +20,7 @@ public class Reservation {
     /**
      * This is a reservation of a specific reservable.
      */
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
     public Reservable reservable;
 
     /**

@@ -36,7 +36,7 @@ public class Reservation {
     /**
      * This is a reservation of a specific reservable.
      */
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
     @OneToOne
     @JoinColumn(name = "reservable", referencedColumnName = "id")
     public Reservable reservable;
