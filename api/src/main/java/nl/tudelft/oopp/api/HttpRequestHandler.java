@@ -35,18 +35,16 @@ public class HttpRequestHandler {
     public static <T, E> E post(String path, T parameters, Class<E> responseType) {
         // Build HTTP request
         HttpRequest request = null;
+
         try {
+            String s = objectMapper.writeValueAsString(parameters);
             request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
                     .setHeader("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(parameters))).build();
-        } catch (IOException e) {
+            String r = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            return objectMapper.readValue(r, responseType);
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        try {
-            return objectMapper.readValue(client.send(request, HttpResponse.BodyHandlers.ofString()).body(),
-                    responseType);
-        } catch (Exception ignored) {
-            // Do nothing.
         }
 
         return null;
