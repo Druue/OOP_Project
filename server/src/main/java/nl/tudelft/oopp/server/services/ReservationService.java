@@ -3,12 +3,9 @@ package nl.tudelft.oopp.server.services;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.Reservation;
-import nl.tudelft.oopp.server.models.TimeSlot;
 import nl.tudelft.oopp.server.models.TimeslotAlreadyReservedException;
-import nl.tudelft.oopp.server.models.User;
 import nl.tudelft.oopp.server.models.UserReservationsIntersectionException;
 import nl.tudelft.oopp.server.repositories.ReservationRepository;
 import nl.tudelft.oopp.server.repositories.UserRepository;
@@ -200,28 +197,5 @@ public class ReservationService {
         logger.info("No other reservations for this reservable " + reservable.id + " found");
     }
 
-
-    /** This method takes an api module {@link nl.tudelft.oopp.api.models.Reservation} object
-     *      and produces a corresponding server {@link Reservation} object.
-     * @param apiReservation The api module Reservation object.
-     * @return The produced server module Reservation object.
-     */
-    public Reservation convertApiReservationToServerReservation(
-        nl.tudelft.oopp.api.models.Reservation apiReservation) {
-
-        logger.info("Beginning convertion from api reservation to a server reservation ...");
-        TimeSlot timeSlot = HttpRequestHandler.convertModel(
-            apiReservation.timeslot, TimeSlot.class);
-
-        User user = HttpRequestHandler.convertModel(apiReservation.user, User.class);
-
-        Reservable reservable = HttpRequestHandler.convertModel(
-            apiReservation.reservable,
-            Reservable.class);
-
-        logger.info("Convertion to server reservation completed successfully.");
-
-        return new Reservation(null, user, reservable, timeSlot);
-    }
 
 }

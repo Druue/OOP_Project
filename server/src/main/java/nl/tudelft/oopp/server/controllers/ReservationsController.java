@@ -73,7 +73,6 @@ public class ReservationsController {
             return ResponseEntity.badRequest().build();
         }
 
-        // TODO
         List<Reservation> responseList = reservationService.getAllReservations();
         return ResponseEntity.ok(responseList);
     }
@@ -99,7 +98,7 @@ public class ReservationsController {
             logger.error(NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
         }
-        // TODO
+
         List<Reservation> responseList = reservationService.getAllCurrentReservations();
         return ResponseEntity.ok(responseList);
     }
@@ -131,7 +130,7 @@ public class ReservationsController {
 
         Long userId = foundUser.id;
         List<Reservation> foundReservations = reservationService.getReservationsByUserID(userId);
-        //TODO
+
         return ResponseEntity.ok(foundReservations);
     }
 
@@ -163,7 +162,6 @@ public class ReservationsController {
         List<Reservation> foundReservations =
             reservationService.getCurrentUserReservations(userId);
 
-        // TODO
         return ResponseEntity.ok(foundReservations);
     }
 
@@ -190,6 +188,7 @@ public class ReservationsController {
 
         newReservation.timeslot = new TimeSlot(newReservation.timeslot.startTime,
             newReservation.timeslot.endTime);
+
         try {
             reservationService.addReservation(newReservation);
         } catch (UserReservationsIntersectionException e) {
