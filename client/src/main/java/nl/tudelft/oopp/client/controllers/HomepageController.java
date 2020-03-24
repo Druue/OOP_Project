@@ -16,11 +16,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.ReservationResponse;
-import nl.tudelft.oopp.api.models.User;
-import nl.tudelft.oopp.api.models.UserKind;
 
 
 public class HomepageController<E> implements Initializable {
@@ -100,7 +97,7 @@ public class HomepageController<E> implements Initializable {
             Scene mainScene = new Scene(mainParent);
 
             Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
             primaryStage.setScene(mainScene);
@@ -123,7 +120,7 @@ public class HomepageController<E> implements Initializable {
             Scene resScene = new Scene(resParent);
 
             Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
             primaryStage.setScene(resScene);
