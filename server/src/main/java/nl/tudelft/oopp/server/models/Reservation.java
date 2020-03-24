@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.server.models;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,14 +29,15 @@ public class Reservation {
     /**
      * The ID of the user who made the reservation.
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "user", referencedColumnName = "user_id")
     public User user;
 
     /**
      * This is a reservation of a specific reservable.
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+    @OneToOne
     @JoinColumn(name = "reservable", referencedColumnName = "id")
     public Reservable reservable;
 
