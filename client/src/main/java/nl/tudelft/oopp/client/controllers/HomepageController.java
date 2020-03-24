@@ -43,11 +43,11 @@ public class HomepageController<E> implements Initializable {
         /*
          * This block makes three rooms and tree reservations.
          */
-//        User exampleUser = new User(
-//                new Details(null, "first last", null, null),
-//                "example@mail.com",
-//                "flast",
-//                "badpass", UserKind.Student);
+        //        User exampleUser = new User(
+        //                new Details(null, "first last", null, null),
+        //                "example@mail.com",
+        //                "flast",
+        //                "badpass", UserKind.Student);
         //TODO: Add proper connection to backend.
 
         //        Room a = new Room("Example room a", false, false);
