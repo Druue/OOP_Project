@@ -1,7 +1,10 @@
 package nl.tudelft.oopp.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -15,7 +18,7 @@ public class HttpRequestHandler {
             .serializeNulls()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
-
+    private static final ObjectMapper objectMapper = new ObjectMapper();
     public static User user;
 
     public static void saveUser(User input) {
@@ -31,11 +34,16 @@ public class HttpRequestHandler {
      */
     public static <T, E> E post(String path, T parameters, Class<E> responseType) {
         // Build HTTP request
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
-                .setHeader("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(parameters))).build();
+        HttpRequest request = null;
         try {
-            return gson.fromJson(client.send(request, HttpResponse.BodyHandlers.ofString()).body(),
+            request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
+                    .setHeader("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(parameters))).build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            return objectMapper.readValue(client.send(request, HttpResponse.BodyHandlers.ofString()).body(),
                     responseType);
         } catch (Exception ignored) {
             // Do nothing.
@@ -53,11 +61,16 @@ public class HttpRequestHandler {
      */
     public static <T, E> E put(String path, T parameters, Class<E> responseType) {
         // Build HTTP request
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
-                .setHeader("Content-Type", "application/json")
-                .PUT(HttpRequest.BodyPublishers.ofString(gson.toJson(parameters))).build();
+        HttpRequest request = null;
         try {
-            return gson.fromJson(client.send(request, HttpResponse.BodyHandlers.ofString()).body(),
+            request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
+                    .setHeader("Content-Type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(parameters))).build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            return objectMapper.readValue(client.send(request, HttpResponse.BodyHandlers.ofString()).body(),
                     responseType);
         } catch (Exception ignored) {
             // Do nothing.
@@ -77,7 +90,7 @@ public class HttpRequestHandler {
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
                 .setHeader("Content-Type", "application/json").GET().build();
         try {
-            return gson.fromJson(client.send(request, HttpResponse.BodyHandlers.ofString()).body(),
+            return objectMapper.readValue(client.send(request, HttpResponse.BodyHandlers.ofString()).body(),
                     responseType);
         } catch (Exception ignored) {
             // Do nothing.
@@ -87,7 +100,12 @@ public class HttpRequestHandler {
     }
 
     public static <T, E> E convertModel(T from, Class<E> to) {
-        gson.toJson(from);
-        return gson.fromJson(gson.toJson(from), to);
+
+        try {
+            return objectMapper.readValue(objectMapper.writeValueAsString(from), to);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return  null;
+        }
     }
 }
