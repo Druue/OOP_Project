@@ -1,8 +1,9 @@
 package nl.tudelft.oopp.server.models;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -14,6 +15,12 @@ import javax.persistence.Table;
 /**
  * Initialises a new {@link Reservable}.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Room.class),
+    @JsonSubTypes.Type(value = Bike.class)
+})
 @Entity
 @Table(name = "Reservable")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -30,7 +37,6 @@ public abstract class Reservable {
      * This is a details entity that tells you information about a reservable.
      */
     @OneToOne(cascade = CascadeType.ALL)
-    @ElementCollection
     @JoinColumn(name = "details")
     public Details details;
 

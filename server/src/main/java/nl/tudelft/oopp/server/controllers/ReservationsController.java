@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,7 +59,8 @@ public class ReservationsController {
      *      reservations in the database.
      */
     @GetMapping("/admin/all")
-    public ResponseEntity<List<Reservation>> getAllReservations(ClientRequest<String> request) {
+    public ResponseEntity<List<Reservation>> getAllReservations(
+        @RequestBody ClientRequest<String> request) {
         logger.info("Received GET request for all reservations");
 
         try {
@@ -82,7 +84,9 @@ public class ReservationsController {
      * @return A {@link ResponseEntity} object containing the list of current reservations.
      */
     @GetMapping("/admin/current")
-    public ResponseEntity<List<Reservation>> getCurrentReservations(ClientRequest<String> request) {
+    public ResponseEntity<List<Reservation>> getCurrentReservations(
+        @RequestBody ClientRequest<String> request) {
+
         logger.info("Received GET request for all current reservations. Processing ...");
 
         try {
@@ -108,7 +112,8 @@ public class ReservationsController {
      * @return A List of Reservations object representing all the current reservations of the user.
      */
     @GetMapping("/user/all")
-    public ResponseEntity<List<Reservation>> getUserReservations(ClientRequest<String> request) {
+    public ResponseEntity<List<Reservation>> getUserReservations(
+        @RequestBody ClientRequest<String> request) {
         logger.info("Received GET request for user reservations. Processing ...");
 
         String username = request.getUsername();
@@ -125,6 +130,7 @@ public class ReservationsController {
 
         Long userId = foundUser.id;
         List<Reservation> foundReservations = reservationService.getReservationsByUserID(userId);
+
         return ResponseEntity.ok(foundReservations);
     }
 
@@ -137,7 +143,7 @@ public class ReservationsController {
      */
     @GetMapping("/user/current")
     public ResponseEntity<List<Reservation>> getCurrentUserReservations(
-        ClientRequest<String> request) {
+        @RequestBody ClientRequest<String> request) {
         logger.info("Received GET request for current user reservations. Processing ...");
 
         String username = request.getUsername();
@@ -167,7 +173,7 @@ public class ReservationsController {
      * @return ResponseEntity object indicating whether the reservation was added successfully.
      */
     @PostMapping("/{role:(?:user|admin)}/add")
-    public ResponseEntity<String> addReservation(ClientRequest<Reservation> request) {
+    public ResponseEntity<String> addReservation(@RequestBody ClientRequest<Reservation> request) {
         logger.info("Received POST request for a new reservation from user: "
             + request.getUsername() + ". Processing ...");
 
@@ -182,6 +188,7 @@ public class ReservationsController {
 
         newReservation.timeslot = new TimeSlot(newReservation.timeslot.startTime,
             newReservation.timeslot.endTime);
+
         try {
             reservationService.addReservation(newReservation);
         } catch (UserReservationsIntersectionException e) {
@@ -210,7 +217,7 @@ public class ReservationsController {
      */
     @DeleteMapping("/{role:(?:user|admin)}/delete")
     public ResponseEntity<String> deleteReservation(@RequestParam Long id,
-                                                    ClientRequest<String> request) {
+                                                    @RequestBody ClientRequest<String> request) {
 
         logger.info("Received DELETE request for reservation. Processing ...");
 

@@ -28,14 +28,14 @@ public class Reservation {
     /**
      * The ID of the user who made the reservation.
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "user", referencedColumnName = "user_id")
     public User user;
 
     /**
      * This is a reservation of a specific reservable.
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "reservable", referencedColumnName = "id")
     public Reservable reservable;
 
@@ -55,14 +55,14 @@ public class Reservation {
 
     /**
      * Initialises a new instance of {@link Reservation}.
-     * 
+     *
      * @param reservationID The reservation's unique ID.
      * @param user          The user holding the reservation.
      * @param reservable    The entity being reserved.
      * @param timeslot      The time during which the entity will be reserved.
      */
     public Reservation(Long reservationID, User user, Reservable reservable,
-            TimeSlot timeslot) {
+                       TimeSlot timeslot) {
         this.user = user;
         this.reservable = reservable;
         this.timeslot = timeslot;
