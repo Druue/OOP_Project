@@ -48,7 +48,7 @@ public class RoomEntryComponent extends Pane {
 
             controller.generateTimeline(generateTestOpeningTimes(), generateTestTimeSlots());
             controller.getReserveButton().setOnAction( //TODO: replace with lambda expression
-                new EventHandler<ActionEvent>() {
+                new EventHandler<>() {
                     @Override
                     public void handle(ActionEvent event) {
                         reserveRoom();
@@ -95,12 +95,12 @@ public class RoomEntryComponent extends Pane {
                         Integer.parseInt(startTimeString.split(":")[1]), 0, 0);
                 }
 
-                if (startTimeString.matches("\\d{1,2}(:00)?")) {
-                    endTime = new Timestamp(0, 0, 0, Integer.parseInt(startTimeString.split(":")[0]),
+                if (endTimeString.matches("\\d{1,2}(:00)?")) {
+                    endTime = new Timestamp(0, 0, 0, Integer.parseInt(endTimeString.split(":")[0]),
                         0, 0, 0);
                 } else {
-                    endTime = new Timestamp(0, 0, 0, Integer.parseInt(startTimeString.split(":")[0]),
-                        Integer.parseInt(startTimeString.split(":")[1]), 0, 0);
+                    endTime = new Timestamp(0, 0, 0, Integer.parseInt(endTimeString.split(":")[0]),
+                        Integer.parseInt(endTimeString.split(":")[1]), 0, 0);
                 }
 
                 ClientRequest<Reservation> reservationRequest = new ClientRequest<>(
@@ -133,7 +133,7 @@ public class RoomEntryComponent extends Pane {
     }
 
     private static List<TestTimeSlot> generateTestTimeSlots() {
-        List<TestTimeSlot> result = new ArrayList<TestTimeSlot>();
+        List<TestTimeSlot> result = new ArrayList<>();
         for (int i = 0; i != 29; i++) {
             TestTimeSlot myTimeSlot = new TestTimeSlot(i, true);
             result.add(myTimeSlot);
