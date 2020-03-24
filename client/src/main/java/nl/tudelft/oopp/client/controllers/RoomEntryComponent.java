@@ -37,17 +37,14 @@ public class RoomEntryComponent extends Pane {
         this.room = room;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomEntry.fxml"));
-
             controller = new RoomEntryController();
 
             loader.setController(controller);
 
-            Pane roomEntry = loader.load();
-
             setRoomDetails(room);
 
             controller.generateTimeline(generateTestOpeningTimes(), generateTestTimeSlots());
-            controller.getReserveButton().setOnAction( //TODO: replace with lambda expression
+            controller.getReserveButton().setOnAction(//TODO: replace with lambda expression
                 new EventHandler<>() {
                     @Override
                     public void handle(ActionEvent event) {
@@ -55,6 +52,7 @@ public class RoomEntryComponent extends Pane {
                     }
                 }
             );
+            Pane roomEntry = loader.load();
 
             this.getChildren().add(roomEntry);
 
@@ -73,9 +71,13 @@ public class RoomEntryComponent extends Pane {
         }
     }
 
+    /**
+     * Sends a post request with the {@link Room} connected to this RoomEntry and the
+     * input from startTimeInput and endTimeInput text fields.
+     */
     public void reserveRoom() {
-        if (!getStartTimeInput().getText().matches("\\d{1,2}(:00|:30)?") ||
-            !getEndTimeInput().getText().matches("\\d{1,2}(:00|:30)?")) {
+        if (!getStartTimeInput().getText().matches("\\d{1,2}(:00|:30)?")
+            || !getEndTimeInput().getText().matches("\\d{1,2}(:00|:30)?")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText(null);

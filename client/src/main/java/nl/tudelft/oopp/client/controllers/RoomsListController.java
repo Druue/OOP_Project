@@ -2,7 +2,6 @@ package nl.tudelft.oopp.client.controllers;
 
 import static nl.tudelft.oopp.client.controllers.ReservationsSceneController.RESPONSE_TIMEOUT;
 
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +40,13 @@ public class RoomsListController implements Initializable {
      */
     public void generateInitialRooms(MouseEvent event) {
         RoomResponse roomResponse = HttpRequestHandler.get("reservables/all/rooms", RoomResponse.class);
-        if(waitForResponse(roomResponse)) {
+        if (waitForResponse(roomResponse)) {
             List<Room> roomsList = roomResponse.getRoomList();
             TestOpeningTimes myOpeningTimes = generateTestOpeningTimes();
             ObservableList<RoomEntryComponent> roomEntries = FXCollections.observableArrayList();
 
-            for(Room myRoom:roomsList) {
-//                List<TestTimeSlot> timeSlots = generateTestTimeSlots();
+            for (Room myRoom:roomsList) {
+                //List<TestTimeSlot> timeSlots = generateTestTimeSlots();
                 RoomEntryComponent roomEntry = new RoomEntryComponent(myRoom);
                 roomEntries.add(roomEntry);
             }
