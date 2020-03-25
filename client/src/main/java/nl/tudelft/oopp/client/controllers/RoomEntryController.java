@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.client.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -13,8 +15,6 @@ import javafx.scene.text.Font;
 import nl.tudelft.oopp.api.models.TestOpeningTimes;
 import nl.tudelft.oopp.api.models.TestTimeSlot;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class RoomEntryController {
