@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.client.controllers;
 
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,12 +10,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.Building;
-import nl.tudelft.oopp.api.models.BuildingResponse;
-import nl.tudelft.oopp.api.models.ClientRequest;
-import nl.tudelft.oopp.api.models.Details;
-import nl.tudelft.oopp.api.models.Room;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.api.models.*;
+
+import java.io.IOException;
 
 
 public class AddRoomsController {
@@ -60,7 +56,8 @@ public class AddRoomsController {
         alert.showAndWait();
     }
 
-    /** Sends a request to the backend to add a Room to the database.
+    /**
+     * Sends a request to the backend to add a Room to the database.
      *
      * @param event The event that called the function.
      */

@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.client.controllers;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,6 +15,8 @@ import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.api.models.UserKind;
+
+import java.io.IOException;
 
 public class RegistrationSceneController {
     @FXML

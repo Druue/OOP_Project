@@ -1,8 +1,5 @@
 package nl.tudelft.oopp.client.controllers;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -11,6 +8,10 @@ import javafx.scene.shape.Rectangle;
 import nl.tudelft.oopp.api.models.TestHourAndMinutes;
 import nl.tudelft.oopp.api.models.TestOpeningTimes;
 import nl.tudelft.oopp.api.models.TestTimeSlot;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RoomEntryComponent extends Pane {
@@ -52,7 +53,7 @@ public class RoomEntryComponent extends Pane {
 
     private static TestOpeningTimes generateTestOpeningTimes() {
         TestHourAndMinutes openingTime = new TestHourAndMinutes(8, 30);
-        TestHourAndMinutes closingTime = new TestHourAndMinutes(23,0);
+        TestHourAndMinutes closingTime = new TestHourAndMinutes(23, 0);
 
         return new TestOpeningTimes(openingTime, closingTime);
     }

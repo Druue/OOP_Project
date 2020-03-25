@@ -1,12 +1,5 @@
 package nl.tudelft.oopp.client.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,12 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -34,6 +22,14 @@ import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class ReservationsSceneController implements Initializable {
 
@@ -59,13 +55,11 @@ public class ReservationsSceneController implements Initializable {
     /**
      * Adds GUI that can only be generated at the moment of loading the page.
      * The parameter descriptions are from the official fxml javadoc.
-     * @param location
-     * The location used to resolve relative paths for the root object, or
-     * {@code null} if the location is not known.
      *
-     * @param resources
-     * The resources used to localize the root object, or {@code null} if
-     *              the root object was not localized.
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -99,7 +93,7 @@ public class ReservationsSceneController implements Initializable {
     private void populateBuildingsScrollBox() {
         BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/all", BuildingResponse.class);
 
-        DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0,0,0,0.1), 2,4,2, 2);
+        DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0, 0, 0, 0.1), 2, 4, 2, 2);
         buildingSearchField.setEffect(dropShadow);
 
         List<Building> buildingList;
@@ -154,6 +148,7 @@ public class ReservationsSceneController implements Initializable {
     /**
      * Polls each second whether the buildingList was received by the BuildingResponse
      * until success or timeout.
+     *
      * @param buildingResponse The response object.
      * @return boolean whether a (non-null)response was received
      */
@@ -177,20 +172,22 @@ public class ReservationsSceneController implements Initializable {
 
     /**
      * Generates a user friendly date string from a LocalDate.
+     *
      * @param date The {@link LocalDate} that needs to be transformed.
      * @return String shows day of month, month and day of week
      */
     private String getDateString(LocalDate date) {
         return date.getDayOfMonth() + " "
-               + date.getMonth().name().substring(0,1)
-               + date.getMonth().name().substring(1,3).toLowerCase()
-               + " - "
-               + date.getDayOfWeek().name().substring(0,1)
-               + date.getDayOfWeek().name().substring(1).toLowerCase();
+                + date.getMonth().name().substring(0, 1)
+                + date.getMonth().name().substring(1, 3).toLowerCase()
+                + " - "
+                + date.getDayOfWeek().name().substring(0, 1)
+                + date.getDayOfWeek().name().substring(1).toLowerCase();
     }
 
     /**
      * Handles going back to the Homepage.
+     *
      * @param event the event from where the function was called.
      */
     public void goToHomepage(ActionEvent event) {
