@@ -87,7 +87,7 @@
                         <Menu mnemonicParsing="false" text="Order food"/>
                         <Menu mnemonicParsing="false" text="Add reservable">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Building" />
+                                <MenuItem mnemonicParsing="false" text="Building"/>
                                 <MenuItem mnemonicParsing="false" text="Room" onAction="#goToAddRooms"/>
                                 <MenuItem mnemonicParsing="false" text="Bike"/>
                             </items>
