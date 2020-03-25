@@ -10,9 +10,11 @@ import nl.tudelft.oopp.api.models.RoomResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.Room;
+import nl.tudelft.oopp.server.services.AuthorizationService;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.ReservableService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +28,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("reservables")
 public class ReservableController {
 
+    private Logger logger = LoggerFactory.getLogger(ReservableController.class);
+    private Gson gson = new GsonBuilder().serializeNulls().create();
+
     /**
      * Importing the methods from the service class.
      */
-    @Autowired
-    ReservableService reservableService;
+    final ReservableService reservableService;
+    final AuthorizationService authorizationService;
 
-    //    private Gson gson = new GsonBuilder().serializeNulls().create();
+    public ReservableController(ReservableService reservableService,
+                                AuthorizationService authorizationService) {
+        this.reservableService = reservableService;
+        this.authorizationService = authorizationService;
+    }
 
     /**
      * Gets all rooms from the database.
@@ -47,13 +56,9 @@ public class ReservableController {
         List<nl.tudelft.oopp.api.models.Room> responseList = new ArrayList<>();
         for (Reservable responseReservable: reservableService.getAllReservables()) {
             if (responseReservable instanceof Room) {
-                try {
-                    LoggerService.info(ReservableController.class, (HttpRequestHandler.convertModel(
+                LoggerService.info(ReservableController.class, (HttpRequestHandler.convertModel(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
-                    ).details.name));
-                } catch (NullPointerException npe) {
-                    LoggerService.info(ReservableController.class, "Name of room is null");
-                }
+                ).details.name));
                 responseList.add(HttpRequestHandler.convertModel(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
                 ));
