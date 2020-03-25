@@ -48,6 +48,21 @@ public class Reservation {
         this.reservationID = reservationID;
     }
 
+    /**
+     * Initialises a new instance of {@link Reservation} without ID.
+     *
+     * @param user          The user holding the reservation.
+     * @param reservable    The entity being reserved.
+     * @param timeslot      The time during which the entity will be reserved.
+     */
+    public Reservation(User user, Reservable reservable,
+                       TimeSlot timeslot) {
+        this.user = user;
+        this.reservable = reservable;
+        this.timeslot = timeslot;
+    }
+
+
     public Long getReservationID() {
         return reservationID;
     }
