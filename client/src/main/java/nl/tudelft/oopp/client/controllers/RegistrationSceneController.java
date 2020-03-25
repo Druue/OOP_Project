@@ -56,7 +56,6 @@ public class RegistrationSceneController {
         String username = registrationUsernameInput.getText();
         String password = registrationPasswordInput.getText();
         String email = registrationEmailInput.getText();
-        // TODO: USE DETAILS OBJECT.
         String name = registrationNameInput.getText();
 
         // If any of these fields are empty: Send an alert.
@@ -126,6 +125,7 @@ public class RegistrationSceneController {
                     goToHomepage();
                 } else {
                     alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setContentText(response.getMessage());
                     alert.showAndWait();
                 }
             } else {

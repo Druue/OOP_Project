@@ -1,8 +1,18 @@
 package nl.tudelft.oopp.api.models;
 
-/**
+/*
  * Initialises a new {@link Reservable}.
  */
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Room.class),
+    @JsonSubTypes.Type(value = Bike.class)
+})
 public abstract class Reservable {
 
     /**
@@ -26,17 +36,15 @@ public abstract class Reservable {
 
     }
 
+    public Reservable(Details details) {
+        this.details = details;
+    }
+
     public Details getDetails() {
         return details;
     }
 
     public void setDetails(Details details) {
-        this.details = details;
-    }
-
-
-
-    public Reservable(Details details) {
         this.details = details;
     }
 

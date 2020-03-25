@@ -5,7 +5,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0" stylesheets="@homepage.css"
+      xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="nl.tudelft.oopp.client.controllers.AdminController">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
@@ -16,13 +17,13 @@
                         <Image url="@images/Rooms-background8x6.png"/>
                     </image>
                 </ImageView>
-                <Label prefHeight="50.0" text="Welcome to admin page" textAlignment="CENTER"
+                <Label id="title" prefHeight="50.0" text="Welcome to admin page" textAlignment="CENTER"
                        AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="60.0">
                     <font>
                         <Font name="Helvetica" size="29.0"/>
                     </font>
                 </Label>
-                <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00a6d6;"
+                <TabPane prefHeight="200.0" prefWidth="200.0"
                          tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="75.0"
                          AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="130.0">
                     <tabs>
@@ -100,7 +101,7 @@
                         <Image url="@images/Logo.png"/>
                     </image>
                 </ImageView>
-                <Button fx:id = "btn" onAction="#goToMain" prefWidth="100.0" text="Logo" AnchorPane.rightAnchor="1.5"
+                <Button id="logo" onAction="#goToMain" prefWidth="100.0" AnchorPane.rightAnchor="1.5"
                         AnchorPane.topAnchor="1.5"/>
             </children>
         </AnchorPane>
