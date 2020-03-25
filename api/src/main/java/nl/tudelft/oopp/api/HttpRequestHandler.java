@@ -3,7 +3,6 @@ package nl.tudelft.oopp.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -97,6 +96,16 @@ public class HttpRequestHandler {
         return null;
     }
 
+    /** This method converts an object from one class to another by serializing into JSON
+     *      and then deserializing into the target class.
+     *
+     * @param from The object which is being converted.
+     * @param to The {@link Class} in which the object is converted.
+     * @param <T> A generic type parameter indicating the class of the inout object.
+     * @param <E> A generic type parameter indicating the target class to convert to.
+     * @return The converted object after serialization/deserialization, which is
+     *      an instance of @param E.
+     */
     public static <T, E> E convertModel(T from, Class<E> to) {
 
         try {

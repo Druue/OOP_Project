@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.api.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Timestamp;
 
 /**
@@ -15,11 +16,13 @@ public class TimeSlot {
     /**
      * This is the index? What did you guys mean buy this?.
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Timestamp startTime;
 
     /**
      * This tells us whether or not the timeslot is available.
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Timestamp endTime;
 
     /**

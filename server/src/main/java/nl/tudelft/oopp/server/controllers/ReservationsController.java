@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.server.controllers;
 
 import java.util.List;
-import javassist.NotFoundException;
 import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.server.models.AuthorizationException;
@@ -13,7 +12,6 @@ import nl.tudelft.oopp.server.models.UserReservationsIntersectionException;
 import nl.tudelft.oopp.server.services.AuthorizationService;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.ReservationService;
-import nl.tudelft.oopp.server.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -36,19 +34,16 @@ public class ReservationsController {
         "Authentication for user failed. No administrator with that name found.";
 
     private ReservationService reservationService;
-    private UserService userService;
     private AuthorizationService authorizationService;
     private Logger logger = LoggerFactory.getLogger(ReservationsController.class);
 
     /** Used to create the {@link ReservationsController} bean with the provided information.
      * @param reservationService The ReservationService bean to use.
-     * @param userService   The {@link UserService } bean to use.
      * @param authorizationService The {@link AuthorizationService} bean to use
      */
-    public ReservationsController(ReservationService reservationService, UserService userService,
+    public ReservationsController(ReservationService reservationService,
                                   AuthorizationService authorizationService) {
         this.reservationService = reservationService;
-        this.userService = userService;
         this.authorizationService = authorizationService;
     }
 
@@ -114,14 +109,15 @@ public class ReservationsController {
     @GetMapping("/user/all")
     public ResponseEntity<List<Reservation>> getUserReservations(
         @RequestBody ClientRequest<String> request) {
+
         logger.info("Received GET request for user reservations. Processing ...");
 
         String username = request.getUsername();
         User foundUser;
 
         try {
-            foundUser = userService.getUserByUsername(username);
-        } catch (NotFoundException e) {
+            foundUser = authorizationService.authenticateUser(username);
+        } catch (AuthenticationException e) {
             logger.error("User with username: " + username + " not found.");
             return ResponseEntity.badRequest().build();
         }
@@ -150,8 +146,8 @@ public class ReservationsController {
         User foundUser;
 
         try {
-            foundUser = userService.getUserByUsername(username);
-        } catch (NotFoundException e) {
+            foundUser = authorizationService.authenticateUser(username);
+        } catch (AuthenticationException e) {
             logger.error("User with username: " + username + " not found.");
             return ResponseEntity.badRequest().build();
         }
@@ -196,7 +192,7 @@ public class ReservationsController {
                 + "Intersection found with other current user reservations.");
         } catch (TimeslotAlreadyReservedException e) {
             return ResponseEntity.badRequest().body("Failure to create reservations. "
-                + "Intersection found current reservations of the reservable.");
+                + "Intersection found with other current reservations of the reservable.");
         }
 
         logger.info("New reservation added successfully");
@@ -222,10 +218,7 @@ public class ReservationsController {
         logger.info("Received DELETE request for reservation. Processing ...");
 
         try {
-            authorizationService.checkAuthorization(request.getUsername());
-        } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
-            return ResponseEntity.badRequest().build();
+            authorizationService.authenticateUser(request.getUsername());
         } catch (AuthenticationException e) {
             logger.error(NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
