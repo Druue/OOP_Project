@@ -74,6 +74,20 @@ public class ReservationsSceneController implements Initializable {
         populateBuildingsScrollBox();
 
         //        roomsListWrapper.setVisible(false);
+
+        try {
+            //FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomsList.fxml"));
+            RoomsListController controller = new RoomsListController();
+            loader.setController(controller);
+            VBox tabContent = loader.load();
+            roomsListWrapper.setVisible(true);
+            roomsListTab.setContent(tabContent);
+
+            controller.generateInitialRooms(null);
+        } catch (IOException e) {
+            System.out.println("File Not Found");
+        }
     }
 
     /**
@@ -97,7 +111,7 @@ public class ReservationsSceneController implements Initializable {
      * Generates boxes for each building and adds them to the GUI.
      */
     private void populateBuildingsScrollBox() {
-        BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/all", BuildingResponse.class);
+        BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/user/all", BuildingResponse.class);
 
         DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0,0,0,0.1), 2,4,2, 2);
         buildingSearchField.setEffect(dropShadow);
@@ -111,7 +125,7 @@ public class ReservationsSceneController implements Initializable {
                 buildingEntry.getStyleClass().add("buildingEntry");
                 Label buildingName = new Label(building.getNumber() + "," + building.getDetails().getName());
                 buildingName.getStyleClass().add("buildingName");
-                Label buildingOpeningTime = new Label("09:00 - 22:00 //hardcoded");
+                Label buildingOpeningTime = new Label("08:30 - 23:00 //hardcoded");
                 buildingOpeningTime.getStyleClass().add("buildingOpeningTime");
 
                 buildingEntry.getChildren().add(buildingName);
