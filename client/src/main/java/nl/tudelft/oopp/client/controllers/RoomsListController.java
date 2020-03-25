@@ -2,7 +2,6 @@ package nl.tudelft.oopp.client.controllers;
 
 import static nl.tudelft.oopp.client.controllers.ReservationsSceneController.RESPONSE_TIMEOUT;
 
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
