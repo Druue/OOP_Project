@@ -67,8 +67,8 @@ public class RegistrationSceneController {
             alert.showAndWait();
         } else {
 
-            // Checks for the kind of user that is registrating
-            UserKind userKind;
+            // Checks for the kind of user that is registering
+            UserKind userKind = null;
             try {
                 String domainEmailPart = email.split("@")[1];
                 String userRole = domainEmailPart.split("\\.")[0];

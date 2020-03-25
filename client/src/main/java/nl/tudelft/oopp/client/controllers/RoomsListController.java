@@ -14,7 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.RoomResponse;
 import nl.tudelft.oopp.api.models.TestHourAndMinutes;

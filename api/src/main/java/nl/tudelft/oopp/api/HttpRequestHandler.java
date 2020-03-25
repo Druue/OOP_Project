@@ -3,7 +3,6 @@ package nl.tudelft.oopp.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
