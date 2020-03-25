@@ -26,15 +26,39 @@ public class RoomsListController implements Initializable {
     @FXML
     ListView<RoomEntryComponent> roomEntriesContainer;
 
+    private static List<TestTimeSlot> generateTestTimeSlots() {
+        List<TestTimeSlot> result = new ArrayList<TestTimeSlot>();
+        for (int i = 0; i != 26; i++) {
+            TestTimeSlot myTimeSlot = new TestTimeSlot(i, true);
+            result.add(myTimeSlot);
+        }
+        return result;
+    }
+
+    private static TestOpeningTimes generateTestOpeningTimes() {
+        TestHourAndMinutes openingTime = new TestHourAndMinutes(8, 30);
+        TestHourAndMinutes closingTime = new TestHourAndMinutes(23, 0);
+
+        return new TestOpeningTimes(openingTime, closingTime);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
+    //    private static List<Room> generateTestRooms() {
+    //        List<Room> result = new ArrayList<Room>();
+    //        Details details = new Details(1, "test", "test", "test");
+    //        Room room1 = new Room(Long.parseLong("1"),"Room1",details);
+    //        result.add(room1);
+    //        return result;
+    //    }
+
     /**
      * This will get all the rooms of the selected building and create GUI for them, as well as the
      * initial tab layout.
-     * 
+     *
      * @param event The event that called the function. Used to find out what Building the request
      *              was generated from.
      */
@@ -45,7 +69,7 @@ public class RoomsListController implements Initializable {
             TestOpeningTimes myOpeningTimes = generateTestOpeningTimes();
             ObservableList<RoomEntryComponent> roomEntries = FXCollections.observableArrayList();
 
-            for (Room myRoom:roomsList) {
+            for (Room myRoom : roomsList) {
                 //List<TestTimeSlot> timeSlots = generateTestTimeSlots();
                 RoomEntryComponent roomEntry = new RoomEntryComponent(myRoom);
                 roomEntries.add(roomEntry);
@@ -58,6 +82,7 @@ public class RoomsListController implements Initializable {
     /**
      * Polls each second whether the buildingList was received by the BuildingResponse
      * until success or timeout.
+     *
      * @param roomResponse The response object.
      * @return boolean whether a (non-null)response was received
      */
@@ -77,29 +102,5 @@ public class RoomsListController implements Initializable {
         }
         System.out.println("BuildingResponse timed out in ReservationsSceneController");
         return false;
-    }
-
-    //    private static List<Room> generateTestRooms() {
-    //        List<Room> result = new ArrayList<Room>();
-    //        Details details = new Details(1, "test", "test", "test");
-    //        Room room1 = new Room(Long.parseLong("1"),"Room1",details);
-    //        result.add(room1);
-    //        return result;
-    //    }
-
-    private static List<TestTimeSlot> generateTestTimeSlots() {
-        List<TestTimeSlot> result = new ArrayList<TestTimeSlot>();
-        for (int i = 0; i != 26; i++) {
-            TestTimeSlot myTimeSlot = new TestTimeSlot(i,true);
-            result.add(myTimeSlot);
-        }
-        return result;
-    }
-
-    private static TestOpeningTimes generateTestOpeningTimes() {
-        TestHourAndMinutes openingTime = new TestHourAndMinutes(8, 30);
-        TestHourAndMinutes closingTime = new TestHourAndMinutes(23,0);
-
-        return new TestOpeningTimes(openingTime, closingTime);
     }
 }
