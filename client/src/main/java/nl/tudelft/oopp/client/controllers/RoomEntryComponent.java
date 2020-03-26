@@ -13,6 +13,7 @@ import nl.tudelft.oopp.api.models.TestOpeningTimes;
 import nl.tudelft.oopp.api.models.TestTimeSlot;
 
 
+
 public class RoomEntryComponent extends Pane {
 
     RoomEntryController controller;
@@ -52,7 +53,7 @@ public class RoomEntryComponent extends Pane {
 
     private static TestOpeningTimes generateTestOpeningTimes() {
         TestHourAndMinutes openingTime = new TestHourAndMinutes(8, 30);
-        TestHourAndMinutes closingTime = new TestHourAndMinutes(23,0);
+        TestHourAndMinutes closingTime = new TestHourAndMinutes(23, 0);
 
         return new TestOpeningTimes(openingTime, closingTime);
     }

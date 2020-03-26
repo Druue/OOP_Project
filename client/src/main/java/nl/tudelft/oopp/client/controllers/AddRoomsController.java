@@ -19,6 +19,7 @@ import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
 
+
 public class AddRoomsController {
 
 
@@ -60,7 +61,8 @@ public class AddRoomsController {
         alert.showAndWait();
     }
 
-    /** Sends a request to the backend to add a Room to the database.
+    /**
+     * Sends a request to the backend to add a Room to the database.
      *
      * @param event The event that called the function.
      */

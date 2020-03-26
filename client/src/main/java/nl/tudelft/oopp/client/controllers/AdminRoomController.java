@@ -44,7 +44,7 @@ public class AdminRoomController implements Initializable {
         String i = "12:00";
 
         list.removeAll();
-        list.addAll(a,b,c,d,e,f,g,h,i);
+        list.addAll(a, b, c, d, e, f, g, h, i);
         todayRes.getItems().addAll(list);
 
     }

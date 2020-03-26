@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafreservationsx.com/fxml"
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafreservationsx.com/fxml"
+      xmlns="http://javafx.com/javafx"
       fx:controller="nl.tudelft.oopp.client.controllers.AddBuildingsController">
 
     <Text>Enter the building name: *</Text>
-    <TextField fx:id="buildingNameInput" />
+    <TextField fx:id="buildingNameInput"/>
 
     <Text>Enter the building number: *</Text>
-    <TextField fx:id="buildingNumberInput" />
+    <TextField fx:id="buildingNumberInput"/>
 
     <Text>At what hour does the building open? (0-24) *</Text>
-    <TextField fx:id="buildingOpeningTimeInput" />
+    <TextField fx:id="buildingOpeningTimeInput"/>
 
     <Text>At what hour does the building close? (0-24) *</Text>
-    <TextField fx:id="buildingClosingTimeInput" />
+    <TextField fx:id="buildingClosingTimeInput"/>
 
     <Text>Enter the building description:</Text>
     <TextField fx:id="buildingDescriptionInput"/>
@@ -27,7 +26,7 @@
     <Text>* Is a required field.</Text>
     <Button text="Add building to the database" onAction="#addBuilding"/>
 
-    <Button onAction="#goToAdmin" text="Go back" />
+    <Button onAction="#goToAdmin" text="Go back"/>
 
 
 </VBox>

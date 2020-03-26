@@ -23,6 +23,7 @@ import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserKind;
 
 
+
 public class HomepageController<E> implements Initializable {
 
     ObservableList<E> list = FXCollections.observableArrayList();

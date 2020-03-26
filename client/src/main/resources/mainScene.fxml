@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafreservationsx.com/fxml"
       xmlns="http://javafx.com/javafx"
@@ -13,9 +12,10 @@
     <!-- Button that sends the text within 'userInput'-->
     <Button onAction="#goToReservations" text="Go to reservations"/>
 
-    <Button onAction="#goToLogin" text="Go to the login page" />
+    <Button onAction="#goToLogin" text="Go to the login page"/>
     <Button onAction="#goToAddRooms" text="Go to add rooms page"/>
-    <Button onAction="#goToHome" text="Go to the homepage" />
+    <Button onAction="#goToAddBuildings" text="Go to add buildings page"/>
+    <Button onAction="#goToHome" text="Go to the homepage"/>
 
     <Button onAction="#goToAdmin" text="Go to the admin page"/>
 
