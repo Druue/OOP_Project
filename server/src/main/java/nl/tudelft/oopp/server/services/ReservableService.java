@@ -7,26 +7,32 @@ import nl.tudelft.oopp.server.models.Bike;
 import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.Room;
 import nl.tudelft.oopp.server.repositories.ReservableRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class ReservableService {
 
-    @Autowired
-    private ReservableRepository reservableRepository;
+    private final ReservableRepository reservableRepository;
+    Logger logger = LoggerFactory.getLogger(ReservableService.class);
+
+    public ReservableService(ReservableRepository reservableRepository) {
+        this.reservableRepository = reservableRepository;
+    }
 
     /**
      * Gets a list of all reservables.
-     * 
+     *
      * @return a list of all reservables
      */
     public List<Reservable> getAllReservables() {
         return reservableRepository.findAll();
     }
 
-    /**method that returns all possible rooms from.
+    /**
+     * method that returns all possible rooms from.
      *
      * @return a list of rooms
      */
@@ -34,32 +40,34 @@ public class ReservableService {
         List<Reservable> reservables = getAllReservables();
 
         List<Room> rooms = new ArrayList<>();
-        for (int i = 0; i < reservables.size(); i++) {
-            if (reservables.get(i) instanceof Room) {
-                rooms.add((Room) reservables.get(i));
+        for (Reservable reservable : reservables) {
+            if (reservable instanceof Room) {
+                rooms.add((Room) reservable);
             }
         }
         return rooms;
     }
 
-    /**method that returns a list of all possible bikes.
+    /**
+     * method that returns a list of all possible bikes.
      *
      * @return a list of bikes
      */
     public List<Reservable> getAllBikes() {
         List<Reservable> reservables = getAllReservables();
         List<Reservable> bikes = new ArrayList<>();
-        for (int i = 0; i < reservables.size(); i++) {
-            if (reservables.get(i) instanceof Bike) {
-                bikes.add(reservables.get(i));
+        for (Reservable reservable : reservables) {
+            if (reservable instanceof Bike) {
+                bikes.add(reservable);
             }
         }
         return bikes;
     }
 
+
     /**
      * Gets an optional reservable.
-     * 
+     *
      * @param id for a reservable to search for
      * @return an optinal that can be a reservable or null if it doesn't exist
      */
@@ -69,7 +77,7 @@ public class ReservableService {
 
     /**
      * Adds a reservable.
-     * 
+     *
      * @param reservable to be added to the list of reservables
      */
     public void addReservable(Reservable reservable) {
@@ -82,7 +90,7 @@ public class ReservableService {
 
     /**
      * Updates a reservable.
-     * 
+     *
      * @param id         to be changed in a reservable
      * @param reservable to be changed
      */
@@ -92,7 +100,7 @@ public class ReservableService {
 
     /**
      * Deletes a Topic.
-     * 
+     *
      * @param id that identifies a reservable to be deleted
      */
     public void deleteReservable(Long id) {
