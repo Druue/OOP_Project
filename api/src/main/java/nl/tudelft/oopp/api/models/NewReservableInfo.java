@@ -1,20 +1,22 @@
 package nl.tudelft.oopp.api.models;
 
 /**
- * A class representing information to be sent to the server
+ * A generic class representing information to be sent to the server
  * when adding a new room or a new bike to a building. The class has:
  *      1) buildingID - representing the id of the building to add the new {@link Reservable} to.
  *      2) reservable - the new room or bike to add to the building with id = buildingID
+ * The class uses generic type parameter T to avoid conversions on the server from API class
+ *      Reservable to Server class Reservable.
  */
-public class NewReservableInfo {
+public class NewReservableInfo<T> {
 
     private Long buildingID;
 
-    private Reservable reservableToAdd;
+    private T reservableToAdd;
 
     public NewReservableInfo() {}
 
-    public NewReservableInfo(Long buildingID, Reservable reservableToAdd) {
+    public NewReservableInfo(Long buildingID, T reservableToAdd) {
         this.buildingID = buildingID;
         this.reservableToAdd = reservableToAdd;
     }
@@ -27,11 +29,11 @@ public class NewReservableInfo {
         this.buildingID = buildingID;
     }
 
-    public Reservable getReservableToAdd() {
+    public T getReservableToAdd() {
         return reservableToAdd;
     }
 
-    public void setReservableToAdd(Reservable reservableToAdd) {
+    public void setReservableToAdd(T reservableToAdd) {
         this.reservableToAdd = reservableToAdd;
     }
 }
