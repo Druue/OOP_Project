@@ -6,6 +6,8 @@ import java.util.Optional;
 import nl.tudelft.oopp.server.models.Room;
 import nl.tudelft.oopp.server.repositories.ReservableRepository;
 import nl.tudelft.oopp.server.repositories.RoomRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoomService {
 
-    @Autowired
-    private RoomRepository roomRepository;
+    Logger logger = LoggerFactory.getLogger(RoomService.class);
+    private final RoomRepository roomRepository;
+
+    public RoomService(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
 
     /**method loops through all rooms and checks which ones are for employees only and returns it.
      *
@@ -23,9 +29,9 @@ public class RoomService {
     public List<Room> filterByIsForEmployee() {
         List<Room> roomsForEmployee = new ArrayList<>();
         List<Room> rooms = roomRepository.findAll();
-        for (int i = 0; i < rooms.size(); i++) {
-            if (rooms.get(i).forEmployee) {
-                roomsForEmployee.add(rooms.get(i));
+        for (Room room : rooms) {
+            if (room.forEmployee) {
+                roomsForEmployee.add(room);
             }
         }
         return roomsForEmployee;
@@ -39,9 +45,9 @@ public class RoomService {
     public List<Room> filterByCapacity(int userInput) {
         List<Room> result = new ArrayList<>();
         List<Room> rooms = roomRepository.findAll();
-        for (int i = 0; i < rooms.size(); i++) {
-            if (rooms.get(i).capacity >= userInput) {
-                result.add(rooms.get(i));
+        for (Room room : rooms) {
+            if (room.capacity >= userInput) {
+                result.add(room);
             }
         }
         return result;
@@ -54,9 +60,9 @@ public class RoomService {
     public List<Room> filterByHasProjector() {
         List<Room> result = new ArrayList<>();
         List<Room> rooms = roomRepository.findAll();
-        for (int i = 0; i < rooms.size(); i++) {
-            if (rooms.get(i).hasProjector) {
-                result.add(rooms.get(i));
+        for (Room room : rooms) {
+            if (room.hasProjector) {
+                result.add(room);
             }
         }
         return result;
