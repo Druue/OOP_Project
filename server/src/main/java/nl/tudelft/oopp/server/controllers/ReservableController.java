@@ -93,9 +93,17 @@ public class ReservableController {
 
         logger.info("Received GET requests for all rooms of building " + id + ". Processing ...");
 
+        try {
+            authorizationService.authenticateUser(request.getUsername());
+        } catch (AuthenticationException e) {
+            logger.error(NO_USER_FOUND);
+            return ResponseEntity.badRequest().build();
+        }
+
+        logger.info("Fetching all rooms of building " + id + " ...");
         // TODO
 
-        logger.info("Sending the rooms of building " + id);
+        logger.info("Sending the rooms of building " + id +  " ...");
         return null;
     }
 
