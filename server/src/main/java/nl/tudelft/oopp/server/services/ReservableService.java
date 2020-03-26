@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import javax.management.InstanceAlreadyExistsException;
 import javax.persistence.EntityNotFoundException;
 import nl.tudelft.oopp.server.models.Bike;
 import nl.tudelft.oopp.server.models.Building;
@@ -11,6 +12,7 @@ import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.Room;
 import nl.tudelft.oopp.server.models.TimeSlot;
 import nl.tudelft.oopp.server.repositories.BuildingRepository;
+import nl.tudelft.oopp.server.repositories.DetailsRepository;
 import nl.tudelft.oopp.server.repositories.ReservableRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,14 +24,23 @@ public class ReservableService {
 
     private final ReservableRepository reservableRepository;
     private final BuildingService buildingService;
+    private final DetailsRepository detailsRepository;
 
     Logger logger = LoggerFactory.getLogger(ReservableService.class);
 
+    /** Creates a new {@link ReservableService} bean with the provided beans.
+     * @param reservableRepository  The {@link ReservableRepository} bean to use when fetching and
+     *                              adding {@link Reservable} objects.
+     * @param buildingService       The {@link BuildingService} bean to use when finding buildings.
+     * @param detailsRepository     The {@link DetailsRepository} bean to use when checking whether
+     *                              a certain name already exists in the database.
+     */
     public ReservableService(ReservableRepository reservableRepository,
-                             BuildingRepository buildingRepository,
-                             BuildingService buildingService) {
+                             BuildingService buildingService,
+                             DetailsRepository detailsRepository) {
         this.reservableRepository = reservableRepository;
         this.buildingService = buildingService;
+        this.detailsRepository = detailsRepository;
     }
 
     /**
@@ -137,7 +148,8 @@ public class ReservableService {
      * @param reservable    The {@link Reservable} object to add to the database.
      * @param number        The number of the building to add the reservable to.
      */
-    public void addReservable(Reservable reservable, Long number) {
+    public void addReservable(Reservable reservable, Long number)
+        throws InstanceAlreadyExistsException {
 
         Optional<Building> buildingContainer = buildingService.getBuilding(number);
 
@@ -148,10 +160,22 @@ public class ReservableService {
 
         logger.info("Building " + number + " successfully found. Saving new reservable ...");
 
+        if (detailsRepository.existsByName(reservable.details.name)) {
+            logger.info("Cannot add new reservable. Details with that name already exists.");
+            throw new InstanceAlreadyExistsException();
+        }
         reservableRepository.save(reservable);
 
         logger.info("Saving of new reservable successful. Adding the reservable to the map of"
             + " building " + number + " and generating timeslots for it.");
+
+        Map<Reservable, TimeSlot> map = buildingContainer.get().getAvailableTimeslots();
+
+        /* TODO
+        *   1) Create a Timeslots object containing all the timeslots that would be available
+        *       for the new reservable in the next 2 weeks.
+        *   2) Use map.put(reservable, list)*/
+
     }
 
     public void updateReservable(Long id, Reservable reservable) {
