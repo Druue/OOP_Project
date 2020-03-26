@@ -4,12 +4,15 @@ import javassist.NotFoundException;
 import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.server.models.AuthorizationException;
 import nl.tudelft.oopp.server.models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthorizationService {
 
     private final UserService userService;
+    Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
     public AuthorizationService(UserService userService) {
         this.userService = userService;
@@ -27,9 +30,13 @@ public class AuthorizationService {
         throws AuthorizationException, AuthenticationException {
 
         User userToBeAuthenticated = authenticateUser(username);
+        logger.info("Checking authorization of user with username: " + username + " ...");
         if (userToBeAuthenticated.userKind != nl.tudelft.oopp.server.models.UserKind.Admin) {
+            logger.error("Authorization failed. No Administrator with username "
+                + username + "found");
             throw new AuthorizationException();
         }
+        logger.info("Successful authorization for user with username: " + username + ".");
     }
 
 
@@ -41,8 +48,13 @@ public class AuthorizationService {
      */
     public User authenticateUser(String username) throws AuthenticationException {
         try {
-            return userService.getUserByUsername(username);
+            logger.info("Authenticating user with username: " + username + " ...");
+            User user = userService.getUserByUsername(username);
+            logger.info("Authentication successful for user with username: " + username + ".");
+            return user;
         } catch (NotFoundException e) {
+            logger.error("Authentication failed for user with username: " + username
+                    + ". No such user found.");
             throw new AuthenticationException();
         }
     }
