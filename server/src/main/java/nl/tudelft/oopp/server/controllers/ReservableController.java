@@ -7,6 +7,7 @@ import java.util.List;
 import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.ReservableResponse;
 import nl.tudelft.oopp.api.models.RoomResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.Reservable;
@@ -76,22 +77,25 @@ public class ReservableController {
         return ResponseEntity.ok(new RoomResponse(responseList));
     }
 
-    /** Receives a GET request for all rooms of a particular building. First authenticates
+    /** Receives a GET request for all rooms or bikes of a particular building. First authenticates
      *      the user by his username using the {@link AuthorizationService} bean and then uses the
-     *      {@link nl.tudelft.oopp.server.services.RoomService} to fetch all rooms of the building
-     *      with the provided id as a request parameter. Sends the list of rooms wrapped in a
-     *      {@link ResponseEntity} object.
+     *      {@link nl.tudelft.oopp.server.services.ReservableService} to fetch all rooms or bikes
+     *      of the building with the provided id as a request parameter. Sends the list wrapped in
+     *      a {@link ResponseEntity} object.
      *
-     * @param request The client request containing the username to be authenticated.
-     * @param id The id of the building to fetch the rooms of.
-     * @return A {@link ResponseEntity} object containing a list of the building's rooms.
+     * @param request   The client request containing the username to be authenticated.
+     * @param id        The id of the building to fetch the rooms of.
+     * @param type      The type of reservable to retrieve - rooms or bikes.
+     * @return          A {@link ResponseEntity} object containing a list of the building's rooms.
      */
-    @GetMapping("/user/all/rooms/building")
-    public ResponseEntity<RoomResponse> getAllRoomsOfBuilding(
+    @GetMapping("/{role:(?:user|admin)}/all/{type}/building")
+    public ResponseEntity<RoomResponse> getAllReservablesOfBuilding(
         @RequestBody ClientRequest<String> request,
-        @RequestParam Long id) {
+        @RequestParam Long id,
+        @PathVariable String type) {
 
-        logger.info("Received GET requests for all rooms of building " + id + ". Processing ...");
+        logger.info("Received GET requests for all " + type
+            + " of building " + id + ". Processing ...");
 
         try {
             authorizationService.authenticateUser(request.getUsername());
@@ -100,12 +104,13 @@ public class ReservableController {
             return ResponseEntity.badRequest().build();
         }
 
-        logger.info("Fetching all rooms of building " + id + " ...");
+        logger.info("Fetching all + " + type + " of building " + id + " ...");
         // TODO
 
-        logger.info("Sending the rooms of building " + id +  " ...");
+        logger.info("Sending the " + type + " of building " + id +  " ...");
         return null;
     }
+
 
     /**
      * Updates a room in the database.
