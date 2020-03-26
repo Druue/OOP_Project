@@ -17,7 +17,7 @@ import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.TimeSlot;
-import nl.tudelft.oopp.api.models.UserKind;
+
 
 public class AddBuildingsController {
 
@@ -81,8 +81,8 @@ public class AddBuildingsController {
         alert.showAndWait();
     }
 
-    /** Sends a request to the backend to add a Building to the database.
-     *
+    /**
+     * Sends a request to the backend to add a Building to the database.
      */
     public void addBuilding() {
 
@@ -95,12 +95,12 @@ public class AddBuildingsController {
         int closingHour = Integer.parseInt(buildingClosingTimeInput.getText());
 
         Timestamp openingTime = new Timestamp(
-                0,0,0,
-                openingHour, 0,0,0
+                0, 0, 0,
+                openingHour, 0, 0, 0
         );
         Timestamp closingTime = new Timestamp(
-                0,0,0,
-                closingHour,0,0,0
+                0, 0, 0,
+                closingHour, 0, 0, 0
         );
 
         Building requestBuilding = new Building(

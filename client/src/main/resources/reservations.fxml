@@ -1,99 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox fx:id="mainPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.ReservationsSceneController">
-   <children>
-      <ToolBar prefHeight="40.0" prefWidth="1080.0" StackPane.alignment="TOP_CENTER">
-          <items>
-              <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#addTestBuilding" text="Add Test Building" />
-       </items>
-      </ToolBar>
-      <StackPane prefHeight="740.0" prefWidth="1080.0">
-         <children>
-            <Pane>
-               <children>
-                   <ImageView fx:id="backgroundImage" preserveRatio="true">
-                       <image>
-                           <Image url="@images/Rooms-background.png" />
-                       </image>
-                   </ImageView>
-               </children>
-            </Pane>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" StackPane.alignment="CENTER">
-               <children>
-                     <VBox id="buildingNDateWrapper" alignment="CENTER">
-                         <children>
-                        <Region VBox.vgrow="ALWAYS" />
-                        <HBox>
-                           <children>
-                                    <Label alignment="CENTER" text="Date: ">
-                                 <font>
-                                    <Font name="FreeSans" size="18.0" />
-                                 </font>
-                              </Label>
-                                    <ChoiceBox fx:id="datesList" />
-                           </children>
-                           <padding>
-                              <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
-                           </padding>
-                        </HBox>
-                        <HBox>
-                           <children>
-                                    <Label alignment="BASELINE_LEFT" text="Building: ">
-                                 <font>
-                                    <Font name="FreeSans" size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <padding>
-                              <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
-                           </padding>
-                        </HBox>
-                             <TextField fx:id="buildingSearchField" alignment="CENTER" maxHeight="15.0" maxWidth="260.0" prefHeight="15" prefWidth="260">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </VBox.margin>
-                        </TextField>
-                             <ListView fx:id="buildingsList" prefHeight="200.0" prefWidth="300.0" styleClass="scroll-pane">
-                                 <placeholder>
-                                     <Label alignment="CENTER" text="No buildings fit this criteria" />
-                                 </placeholder>
-                             </ListView>
-                             <Button id="buildingsCancelButton" alignment="CENTER" onAction="#goToHomepage" prefHeight="50" prefWidth="150" text="Cancel">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Region VBox.vgrow="ALWAYS" />
-                         </children>
-                     <padding>
-                        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-                     </padding>
-                     </VBox>
-                     <TabPane fx:id="roomsListWrapper" HBox.hgrow="ALWAYS">
-                        <tabs>
-                            <Tab fx:id="roomsListTab" style="-fx-background-color: white;" />
-                        </tabs>
-                     </TabPane>
-               </children>
-            </HBox>
-         </children>
-       </StackPane>
-   </children>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPane" xmlns="http://javafx.com/javafx/8"
+      fx:controller="nl.tudelft.oopp.client.controllers.ReservationsSceneController">
+    <children>
+        <ToolBar prefHeight="40.0" prefWidth="1080.0" StackPane.alignment="TOP_CENTER">
+            <items>
+                <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#addTestBuilding"
+                        text="Add Test Building"/>
+            </items>
+        </ToolBar>
+        <StackPane prefHeight="740.0" prefWidth="1080.0">
+            <children>
+                <Pane>
+                    <children>
+                        <ImageView fx:id="backgroundImage" preserveRatio="true">
+                            <image>
+                                <Image url="@images/Rooms-background.png"/>
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" StackPane.alignment="CENTER">
+                    <children>
+                        <VBox id="buildingNDateWrapper" alignment="CENTER">
+                            <children>
+                                <Region VBox.vgrow="ALWAYS"/>
+                                <HBox>
+                                    <children>
+                                        <Label alignment="CENTER" text="Date: ">
+                                            <font>
+                                                <Font name="FreeSans" size="18.0"/>
+                                            </font>
+                                        </Label>
+                                        <ChoiceBox fx:id="datesList"/>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="5.0" left="20.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </HBox>
+                                <HBox>
+                                    <children>
+                                        <Label alignment="BASELINE_LEFT" text="Building: ">
+                                            <font>
+                                                <Font name="FreeSans" size="18.0"/>
+                                            </font>
+                                        </Label>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="5.0" left="20.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </HBox>
+                                <TextField fx:id="buildingSearchField" alignment="CENTER" maxHeight="15.0"
+                                           maxWidth="260.0" prefHeight="15" prefWidth="260">
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" top="10.0"/>
+                                    </VBox.margin>
+                                </TextField>
+                                <ListView fx:id="buildingsList" prefHeight="200.0" prefWidth="300.0"
+                                          styleClass="scroll-pane">
+                                    <placeholder>
+                                        <Label alignment="CENTER" text="No buildings fit this criteria"/>
+                                    </placeholder>
+                                </ListView>
+                                <Button id="buildingsCancelButton" alignment="CENTER" onAction="#goToHomepage"
+                                        prefHeight="50" prefWidth="150" text="Cancel">
+                                    <VBox.margin>
+                                        <Insets top="10.0"/>
+                                    </VBox.margin>
+                                </Button>
+                                <Region VBox.vgrow="ALWAYS"/>
+                            </children>
+                            <padding>
+                                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
+                            </padding>
+                        </VBox>
+                        <TabPane fx:id="roomsListWrapper" HBox.hgrow="ALWAYS">
+                            <tabs>
+                                <Tab fx:id="roomsListTab" style="-fx-background-color: white;"/>
+                            </tabs>
+                        </TabPane>
+                    </children>
+                </HBox>
+            </children>
+        </StackPane>
+    </children>
 </VBox>

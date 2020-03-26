@@ -16,6 +16,7 @@ import nl.tudelft.oopp.api.models.TestOpeningTimes;
 import nl.tudelft.oopp.api.models.TestTimeSlot;
 
 
+
 public class RoomEntryController {
     @FXML
     VBox roomEntryBackground;
@@ -40,13 +41,14 @@ public class RoomEntryController {
 
     /**
      * Generates a new timeline.
+     *
      * @param openingTimes the opening times.
-     * @param timeSlots The list of timeslots to use.
+     * @param timeSlots    The list of timeslots to use.
      */
     public void generateTimeline(TestOpeningTimes openingTimes, List<TestTimeSlot> timeSlots) {
         boolean startsWithRoundHour;
         startsWithRoundHour = openingTimes.getOpeningHour().getMinutes() > 30
-                              || openingTimes.getOpeningHour().getMinutes() == 0;
+                || openingTimes.getOpeningHour().getMinutes() == 0;
         timeline.maxWidthProperty().bind(roomEntryBackground.widthProperty().multiply(0.8));
         timeline.prefWidthProperty().bind(roomEntryBackground.widthProperty().multiply(0.8));
         timeline.minWidthProperty().bind(roomEntryBackground.widthProperty().multiply(0.8));
