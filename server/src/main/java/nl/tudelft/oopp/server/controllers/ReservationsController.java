@@ -1,15 +1,8 @@
 package nl.tudelft.oopp.server.controllers;
 
-import java.util.List;
 import javassist.NotFoundException;
-import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.api.models.ClientRequest;
-import nl.tudelft.oopp.server.models.AuthorizationException;
-import nl.tudelft.oopp.server.models.Reservation;
-import nl.tudelft.oopp.server.models.TimeSlot;
-import nl.tudelft.oopp.server.models.TimeslotAlreadyReservedException;
-import nl.tudelft.oopp.server.models.User;
-import nl.tudelft.oopp.server.models.UserReservationsIntersectionException;
+import nl.tudelft.oopp.server.models.*;
 import nl.tudelft.oopp.server.services.AuthorizationService;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.ReservationService;
@@ -17,12 +10,10 @@ import nl.tudelft.oopp.server.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.naming.AuthenticationException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/reservations")

@@ -41,10 +41,21 @@ public class RegistrationController {
 
         //checks if a user already exists with this email.
         User test = userService.getUserByEmail(userRequest.email);
-        if (test != null) {
+        User test2 = userService.getUserUserName(userRequest.username);
+        if (test != null && test2 == null) {
             LoggerService.info(RegistrationController.class, "User already exists with this email");
             return ResponseEntity.badRequest().body(
                     new UserAuthResponse("User already exists with this email", "ERROR", null));
+        }
+        if (test == null && test2 != null) {
+            LoggerService.info(RegistrationController.class, "User already exists with this username");
+            return ResponseEntity.badRequest().body(
+                    new UserAuthResponse("User already exists with this username", "ERROR", null));
+        }
+        if (test != null) {
+            LoggerService.info(RegistrationController.class, "User already exists with this email/username");
+            return ResponseEntity.badRequest().body(
+                    new UserAuthResponse("User already exists with this email/username", "ERROR", null));
         }
         try {
             // Attempts to add the user to the database.
