@@ -4,9 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import javax.management.InstanceAlreadyExistsException;
 import javax.naming.AuthenticationException;
+import javax.persistence.EntityNotFoundException;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.NewReservableInfo;
 import nl.tudelft.oopp.api.models.ReservableResponse;
 import nl.tudelft.oopp.api.models.RoomResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
@@ -32,7 +35,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservableController {
 
     private Logger logger = LoggerFactory.getLogger(ReservableController.class);
-    private Gson gson = new GsonBuilder().serializeNulls().create();
 
     private static final String NOT_ADMIN =
         "Unauthorized request. The requesting user is not an administrator.";
@@ -112,6 +114,50 @@ public class ReservableController {
     }
 
 
+    /** Endpoint that receives a PUT request for adding a new reservable to a building whose
+     *      id is provided as a request parameter and the type of reservable as a path variable.
+     *      The new reservable is encapsulated in a {@link ClientRequest} object.
+     * @param request   The {@link ClientRequest} object containing the new reservable to add.
+     * @param id        The id of the building to add the new reservable to.
+     * @param type      The type of reservable to add - room or bike.
+     * @return          A {@link ResponseEntity} object indicating whether the operation was
+     *                  successful.
+     */
+    @PutMapping("/insert/{type}")
+    public ResponseEntity<ServerResponseAlert> addNewReservable(
+        @RequestBody ClientRequest<Reservable> request,
+        @RequestParam Long id,
+        @PathVariable String type) {
+
+        logger.info("Received PUT request for adding a new " + type + " to building " + id
+            + ". Processing ...");
+
+        try {
+            authorizationService.authenticateUser(request.getUsername());
+        } catch (AuthenticationException e) {
+            logger.error(NO_USER_FOUND);
+            return ResponseEntity.badRequest().build();
+        }
+
+        logger.info("Adding new " + type + " to building " + id);
+
+        try {
+            reservableService.addReservable(request.getBody(), id);
+        } catch (EntityNotFoundException e) {
+            logger.error("Building " + id + " not found!");
+            return ResponseEntity.badRequest().build();
+        } catch (InstanceAlreadyExistsException e) {
+            return ResponseEntity.badRequest().body(new ServerResponseAlert(
+               "Reservable with that name already exists",
+                "ERROR"
+            ));
+        }
+
+        logger.info("Adding of " + type + " to building " + id + " successful. ");
+        return ResponseEntity.ok(new ServerResponseAlert("Adding of " + type
+            + "successful.", "SUCCESS"));
+    }
+
     /**
      * Updates a room in the database.
      * @param newReservable the Reservable to replace the old reservable with.
@@ -131,20 +177,5 @@ public class ReservableController {
     public void delete(@PathVariable Long id) {
         reservableService.deleteReservable(id);
     }
-
-    /**
-     * Inserts a new room into the DB.
-     * @param request The room that should be added.
-     * @return A {@link ServerResponseAlert}.
-     */    
-    @PutMapping("/insert/new_room")
-    public ServerResponseAlert addNewRoom(@RequestBody ClientRequest<Room> request) {
-        //TODO: Add authorization process
-
-
-        reservableService.addRoom(request.getBody());
-        return new ServerResponseAlert("Room added", "CONFIRMATION");
-    }
-
 
 }
