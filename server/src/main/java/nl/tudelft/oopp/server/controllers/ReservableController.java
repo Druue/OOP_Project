@@ -107,7 +107,13 @@ public class ReservableController {
         }
 
         logger.info("Fetching all + " + type + " of building " + id + " ...");
-        // TODO
+
+        try {
+            List<Reservable> reservablesToSend =
+                reservableService.getAllReservablesForBuilding(id, type);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
 
         logger.info("Sending the " + type + " of building " + id +  " ...");
         return null;
