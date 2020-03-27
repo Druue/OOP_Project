@@ -174,7 +174,7 @@ public class ReservationsSceneController implements Initializable {
     private boolean waitForResponse(BuildingResponse buildingResponse) {
         int i = 0;
         while (i != RESPONSE_TIMEOUT) {
-            if (buildingResponse.getBuildingList() != null) {
+            if (buildingResponse != null && buildingResponse.getBuildingList() != null) {
                 return true;
             }
             try {
@@ -200,7 +200,7 @@ public class ReservationsSceneController implements Initializable {
                + date.getMonth().name().substring(1,3).toLowerCase()
                + " - "
                + date.getDayOfWeek().name().substring(0,1)
-               + date.getDayOfWeek().name().substring(1).toLowerCase();
+               + date.getDayOfWeek().name().substring(1,3).toLowerCase();
     }
 
     /**
