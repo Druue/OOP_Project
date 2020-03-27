@@ -21,7 +21,7 @@ public class UserService {
      */
     public User getUserByUsername(String username) throws NotFoundException {
         LoggerService.info(UserService.class,
-            "Checking database for user with the provided username");
+                "Checking database for user with the provided username");
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new NotFoundException("No such user exists");
@@ -37,5 +37,14 @@ public class UserService {
      */
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    /**method to find a user by username.
+     **
+     * @param username linked with a user
+     * @return a user or null if it does not exist
+     */
+    public User getUserUserName(String username) {
+        return userRepository.findByUsername(username);
     }
 }
