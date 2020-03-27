@@ -88,7 +88,7 @@ public class RoomsListController implements Initializable {
     private boolean waitForResponse(RoomResponse roomResponse) {
         int i = 0;
         while (i != RESPONSE_TIMEOUT) {
-            if (roomResponse.getRoomList() != null) {
+            if (roomResponse != null && roomResponse.getRoomList() != null) {
                 return true;
             }
             try {
