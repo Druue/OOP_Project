@@ -59,16 +59,16 @@ public class ReservableService {
      *
      * @return a list of rooms
      */
-    public List<Room> getAllRooms() {
+    public List<Reservable> getAllRooms() {
         List<Reservable> reservables = getAllReservables();
 
         logger.info("Finding al rooms from the fetched reservables");
 
-        List<Room> rooms = new ArrayList<>();
+        List<Reservable> rooms = new ArrayList<>();
 
         for (Reservable reservable : reservables) {
             if (reservable instanceof Room) {
-                rooms.add((Room) reservable);
+                rooms.add(reservable);
             }
         }
 
