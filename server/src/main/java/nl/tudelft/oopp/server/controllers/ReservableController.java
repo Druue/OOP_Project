@@ -91,7 +91,7 @@ public class ReservableController {
      * @return          A {@link ResponseEntity} object containing a list of the building's rooms.
      */
     @GetMapping("/{role:(?:user|admin)}/all/{type}/building")
-    public ResponseEntity<RoomResponse> getAllReservablesOfBuilding(
+    public ResponseEntity<List<Reservable>> getAllReservablesOfBuilding(
         @RequestBody ClientRequest<String> request,
         @RequestParam Long id,
         @PathVariable String type) {
@@ -108,17 +108,17 @@ public class ReservableController {
 
         logger.info("Fetching all + " + type + " of building " + id + " ...");
 
+        List<Reservable> reservablesToSend;
+
         try {
-            List<Reservable> reservablesToSend =
-                reservableService.getAllReservablesForBuilding(id, type);
+            reservablesToSend = reservableService.getAllReservablesForBuilding(id, type);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(null);
         }
 
         logger.info("Sending the " + type + " of building " + id +  " ...");
-        return null;
+        return ResponseEntity.ok(reservablesToSend);
     }
-
 
     /** Endpoint that receives a PUT request for adding a new reservable to a building whose
      *      id is provided as a request parameter and the type of reservable as a path variable.
@@ -163,6 +163,7 @@ public class ReservableController {
         return ResponseEntity.ok(new ServerResponseAlert("Adding of " + type
             + "successful.", "SUCCESS"));
     }
+
 
     /**
      * Updates a room in the database.
