@@ -24,6 +24,7 @@ import nl.tudelft.oopp.api.models.TestTimeSlot;
 import nl.tudelft.oopp.api.models.TimeSlot;
 
 
+
 public class RoomEntryComponent extends Pane {
 
     RoomEntryController controller;

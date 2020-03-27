@@ -17,6 +17,8 @@ import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.api.models.UserKind;
 
+
+
 public class RegistrationSceneController {
     @FXML
     public TextField registrationNameInput;

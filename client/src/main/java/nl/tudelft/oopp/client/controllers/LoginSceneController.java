@@ -15,6 +15,7 @@ import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 
+
 public class LoginSceneController {
 
     // the TextField object(s) from mainScene.fxml

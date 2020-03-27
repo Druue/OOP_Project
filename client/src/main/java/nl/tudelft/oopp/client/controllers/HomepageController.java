@@ -20,6 +20,7 @@ import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.ReservationResponse;
 
 
+
 public class HomepageController<E> implements Initializable {
 
     ObservableList<E> list = FXCollections.observableArrayList();
