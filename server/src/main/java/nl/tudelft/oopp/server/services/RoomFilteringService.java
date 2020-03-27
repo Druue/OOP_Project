@@ -20,14 +20,13 @@ public class RoomFilteringService {
         this.roomRepository = roomRepository;
     }
 
-
     /**
      * This method uses the {@link RoomRepository} bean to fetch all rooms that are only for
      * employees. It uses the
      *
      * @return a list of all rooms that are only for employees
      */
-    public List<Room> findAllByIsForEmployee() {
+    public List<Room> filterByIsForEmployee() {
         logger.info("Fetching all rooms for employees only ...");
         return roomRepository.getAllByForEmployeeTrue();
     }
@@ -41,7 +40,7 @@ public class RoomFilteringService {
      * @return a list of rooms with capactiy <= user input if group is "smaller" or a list of rooms
      *      with capacity >= user input if group is "greater".
      */
-    public List<Room> findAllByCapacity(String group, int userInput) {
+    public List<Room> filterByCapacity(String group, int userInput) {
 
         logger.info("Beginning filtering by capacity ...");
         if (group.equals("greater")) {
@@ -51,9 +50,8 @@ public class RoomFilteringService {
         }
     }
 
-    public List<Room> findAllByHasProjector() {
+    public List<Room> filterByHasProjector() {
         logger.info("Fetching all rooms with a projector ...");
         return roomRepository.getAllByHasProjectorTrue();
     }
-
 }
