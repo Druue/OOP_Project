@@ -63,16 +63,11 @@ public class HttpRequestHandler {
             request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
                     .setHeader("Content-Type", "application/json")
                     .PUT(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(parameters))).build();
-        } catch (IOException e) {
+            String r = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            return objectMapper.readValue(r, responseType);
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        try {
-            return objectMapper.readValue(client.send(request, HttpResponse.BodyHandlers.ofString()).body(),
-                    responseType);
-        } catch (Exception ignored) {
-            // Do nothing.
-        }
-
         return null;
     }
 

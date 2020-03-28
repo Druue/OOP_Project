@@ -50,7 +50,8 @@
                                 <Font name="Helvetica" size="14.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="roomDescriptionnput" layoutX="20.0" layoutY="20.0" prefHeight="70.0"
+                        <TextField fx:id="roomDescriptionInput" layoutX="20.0" layoutY="20.0"
+                                   prefHeight="70.0"
                                    prefWidth="400.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="240.0"/>
                         <Label layoutX="30.0" layoutY="30.0" text="Capacity" AnchorPane.leftAnchor="480.0"
                                AnchorPane.topAnchor="105.0">
