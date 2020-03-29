@@ -62,7 +62,7 @@ public class ReservableService {
     public List<Reservable> getAllRooms() {
         List<Reservable> reservables = getAllReservables();
 
-        logger.info("Finding al rooms from the fetched reservables");
+        logger.info("Finding all rooms from the fetched reservables");
 
         List<Reservable> rooms = new ArrayList<>();
 
@@ -82,6 +82,9 @@ public class ReservableService {
      */
     public List<Reservable> getAllBikes() {
         List<Reservable> reservables = getAllReservables();
+
+        logger.info("Finding all bikes from the fetched reservables");
+
         List<Reservable> bikes = new ArrayList<>();
         for (Reservable reservable : reservables) {
             if (reservable instanceof Bike) {
