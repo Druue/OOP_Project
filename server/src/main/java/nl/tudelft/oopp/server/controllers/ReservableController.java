@@ -51,7 +51,8 @@ public class ReservableController {
      *                              and deleting reservables.
      * @param authorizationService  The {@link AuthorizationService} bean to use when authenticating
      *                              and authorizing users and administrators.
-     * @param roomService           The {@link RoomFilteringService} bean to use when filtering rooms.
+     * @param roomService           The {@link RoomFilteringService} bean to use when filtering
+     *                              rooms.
      */
     public ReservableController(ReservableService reservableService,
                                 AuthorizationService authorizationService,
