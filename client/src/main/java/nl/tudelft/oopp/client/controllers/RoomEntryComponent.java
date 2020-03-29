@@ -42,6 +42,8 @@ public class RoomEntryComponent extends Pane {
 
             loader.setController(controller);
 
+            final Pane roomEntry = loader.load();
+
             setRoomDetails(room);
 
             controller.generateTimeline(generateTestOpeningTimes(), generateTestTimeSlots());
@@ -53,7 +55,6 @@ public class RoomEntryComponent extends Pane {
                     }
                 }
             );
-            Pane roomEntry = loader.load();
 
             this.getChildren().add(roomEntry);
 
@@ -65,7 +66,9 @@ public class RoomEntryComponent extends Pane {
     }
 
     private void setRoomDetails(Room room) {
-        getRoomName().setText(room.getName());
+        if (room.getDetails() != null) {
+            getRoomName().setText(room.getDetails().getName());
+        }
         getCapacity().setText(room.getCapacity() + "");
         if (!room.isHasProjector()) {
             getHasMultimedia().setText("No multimedia");

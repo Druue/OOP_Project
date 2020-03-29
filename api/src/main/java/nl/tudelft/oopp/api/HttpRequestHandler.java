@@ -13,10 +13,10 @@ import nl.tudelft.oopp.api.models.User;
 public class HttpRequestHandler {
     private static final String host = "http://localhost:8080";
     private static final HttpClient client = HttpClient.newHttpClient();
-    private static final Gson gson = new GsonBuilder()
-            .serializeNulls()
-            .setDateFormat("yyyy-MM-dd HH:mm:ss")
-            .create();
+    //    private static final Gson gson = new GsonBuilder()
+    //            .serializeNulls()
+    //            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+    //            .create();
     private static final ObjectMapper objectMapper = new ObjectMapper();
     public static User user;
 
@@ -82,10 +82,11 @@ public class HttpRequestHandler {
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
                 .setHeader("Content-Type", "application/json").GET().build();
         try {
-            return objectMapper.readValue(client.send(request, HttpResponse.BodyHandlers.ofString()).body(),
-                    responseType);
-        } catch (Exception ignored) {
-            // Do nothing.
+            HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
+            Object result = objectMapper.readValue(httpResponse.body(), responseType);
+            return responseType.cast(result);
+        } catch (Exception e) {
+            System.out.println("ObjectMapper is a pain in the ass");
         }
 
         return null;
@@ -109,5 +110,20 @@ public class HttpRequestHandler {
             e.printStackTrace();
             return  null;
         }
+    }
+
+    /** This method converts an object from a server model to the same API model and
+     * vice-versa.
+     *
+     * @param from The object which is being converted.
+     * @param to The {@link Class} in which the object is converted.
+     * @param <T> A generic type parameter indicating the class of the inout object.
+     * @param <E> A generic type parameter indicating the target class to convert to.
+     * @return The converted object after serialization/deserialization, which is
+     *      an instance of @param E.
+     */
+    public static <T, E> E convertBetweenServerAndApi(T from, Class<E> to) {
+
+        return objectMapper.convertValue(from, to);
     }
 }

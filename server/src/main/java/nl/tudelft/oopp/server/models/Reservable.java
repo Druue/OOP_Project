@@ -15,12 +15,6 @@ import javax.persistence.Table;
 /**
  * Initialises a new {@link Reservable}.
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Room.class),
-    @JsonSubTypes.Type(value = Bike.class)
-})
 @Entity
 @Table(name = "Reservable")
 @Inheritance(strategy = InheritanceType.JOINED)
