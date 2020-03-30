@@ -7,13 +7,13 @@ Note taker:     Sophie
 
 # Opening
 Present: 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
+- Sophie
+- Dimitar
+- Thomas
+- Mylene
+- Nikko
+- Ayham
+(Justin is missing)
 
 
 
