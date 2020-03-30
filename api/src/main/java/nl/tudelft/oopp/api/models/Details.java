@@ -1,6 +1,8 @@
 package nl.tudelft.oopp.api.models;
 
 
+import java.util.Objects;
+
 public class Details {
 
     /**
@@ -90,4 +92,16 @@ public class Details {
     public void setImage(String image) {
         this.image = image;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Details details = (Details) o;
+        return Objects.equals(getId(), details.getId()) &&
+               Objects.equals(getName(), details.getName()) &&
+               Objects.equals(getDescription(), details.getDescription()) &&
+               Objects.equals(getImage(), details.getImage());
+    }
+
 }
