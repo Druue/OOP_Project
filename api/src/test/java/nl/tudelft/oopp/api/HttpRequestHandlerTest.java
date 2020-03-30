@@ -5,16 +5,27 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static nl.tudelft.oopp.api.HttpRequestHandler.put;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class HttpRequestHandlerTest {
 
     User testUser;
     User testUser_identical;
     User testAdmin;
+    HttpRequestHandler mockHandler;
+
     @BeforeEach
     void beforeEach() {
+        // Used for get, post, put request mocking
+        mockHandler = mock(HttpRequestHandler.class);
+
+//        when(mockHandler.put("ping", null, String.class)).thenReturn("pong");
+//        when(mockHandler.post("ping", null, String.class)).thenReturn("pong");
+//        when(mockHandler.get("ping",  String.class)).thenReturn("pong");
+
         testUser = new User(
                 new Details(
                         "name",
@@ -60,51 +71,111 @@ public class HttpRequestHandlerTest {
 
     //PUT REQUESTS
 
+    /**
+     * Checks if a PUT request can be sent without an error, regardless of the input.
+     */
     @Test
-    public void putTestSendSuccesful() {
+    public void putTestSendSuccessful() {
+
+        HttpRequestHandler.put("ping", null, String.class);
 
     }
 
+    /**
+     * Checks if a response is received.
+     */
     @Test
-    public void putTestGetResponse() {
+    public void putTestGetAnyResponse() {
 
+        Object response = mockHandler.put("ping", null, String.class);
+
+        assertNotNull(response);
     }
 
+    /**
+     * Checks to see if the **expected** response is received.
+     */
     @Test
-    public void putTestGetCorrectResponseType() {
+    public void putTestGetCorrectResponse() {
+
+        String response = mockHandler.put("ping", null, String.class);
+
+        assertEquals(response, "pong");
 
     }
 
 
     //POST REQUESTS
-
+    /**
+     * Checks if a POST request can be sent without an error, regardless of the input.
+     */
     @Test
-    public void postTestSendSuccesful() {
+    public void postTestSendSuccessful() {
+        HttpRequestHandler.post("ping", null, String.class);
+    }
+
+    /**
+     * Checks if a response is received.
+     */
+    @Test
+    public void postTestGetAnyResponse() {
+
+        Object response = mockHandler.post("ping", null, String.class);
+
+        assertNotNull(response);
 
     }
 
+    /**
+     * Checks to see if the **expected** response is received.
+     */
     @Test
-    public void postTestGetResponse() {
+    public void postTestGetCorrectResponse() {
 
-    }
+        String response = mockHandler.post("ping", null, String.class);
 
-    @Test
-    public void postTestGetCorrectResponseType() {
+        assertEquals(response, "pong");
 
     }
 
     //GET REQUESTS
+    /**
+     * Checks if a GET request can be sent without an error, regardless of the input.
+     */
     @Test
-    public void getTestGetResponse() {
+    public void getTestSendSuccessful() {
+        HttpRequestHandler.get("ping", String.class);
+    }
+
+
+    /**
+     * Checks if a response is received.
+     */
+    @Test
+    public void getTestGetAnyResponse() {
+
+        Object response = mockHandler.get("ping", String.class);
+
+        assertNotNull(response);
 
     }
 
+    /**
+     * Checks to see if the **expected** response is received.
+     */
     @Test
-    public void getTestGerCorrectResponseType() {
+    public void getTestGetCorrectResponse() {
+
+        Object response = mockHandler.get("ping", String.class);
+
+        assertEquals(response, "pong");
 
     }
 
-    // convertModel
+    /**
+     * Tests convertModel() by converting a room into a bike. Both share a details attribute,
+     * and this attribute should be preserved when converting.
+     */
     @Test
     public void convertModelTest() {
         Room testRoom = new Room(
@@ -122,7 +193,12 @@ public class HttpRequestHandlerTest {
         // For my next trick, I shall convert a Room into a Bike.
         Bike testBike = HttpRequestHandler.convertModel(testRoom, Bike.class);
 
-        System.out.println(testBike.details.name);
+        // To test the conversion, see if the id's are the same.
+        assertEquals(testBike.getDetails().id, testRoom.getDetails().id);
+
+        // An object converted into the same type should be equal to itself.
+        Room convertedTestRoom = HttpRequestHandler.convertModel(testRoom, Room.class);
+        assertEquals(testRoom, convertedTestRoom);
     }
 
 }
