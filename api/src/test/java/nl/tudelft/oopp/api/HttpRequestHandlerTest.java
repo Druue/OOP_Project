@@ -1,8 +1,6 @@
 package nl.tudelft.oopp.api;
 
-import nl.tudelft.oopp.api.models.Details;
-import nl.tudelft.oopp.api.models.User;
-import nl.tudelft.oopp.api.models.UserKind;
+import nl.tudelft.oopp.api.models.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,20 +8,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UserTest {
+public class HttpRequestHandlerTest {
 
     User testUser;
     User testUser_identical;
     User testAdmin;
     @BeforeEach
-    void beforeAll() {
+    void beforeEach() {
         testUser = new User(
                 new Details(
                         "name",
                         "description",
                         "profile picture"
                 ),
-                "mail@example.com",
+                "mail@student.tudelft.nl",
                 "test_user",
                 "password123",
                 UserKind.Student
@@ -46,7 +44,7 @@ public class UserTest {
                         "description",
                         "profile picture"
                 ),
-                "admin@example.com",
+                "admin@admin.tudelft.nl",
                 "test_admin",
                 "admin",
                 UserKind.Admin
@@ -56,9 +54,75 @@ public class UserTest {
 
     @Test
     public void saveUserTest() {
-        beforeAll();
         HttpRequestHandler.saveUser(testUser);
         assertEquals(testUser.getEmail(), HttpRequestHandler.user.getEmail());
+    }
+
+    //PUT REQUESTS
+
+    @Test
+    public void putTestSendSuccesful() {
+
+    }
+
+    @Test
+    public void putTestGetResponse() {
+
+    }
+
+    @Test
+    public void putTestGetCorrectResponseType() {
+
+    }
+
+
+    //POST REQUESTS
+
+    @Test
+    public void postTestSendSuccesful() {
+
+    }
+
+    @Test
+    public void postTestGetResponse() {
+
+    }
+
+    @Test
+    public void postTestGetCorrectResponseType() {
+
+    }
+
+    //GET REQUESTS
+    @Test
+    public void getTestGetResponse() {
+
+    }
+
+    @Test
+    public void getTestGerCorrectResponseType() {
+
+    }
+
+    // convertModel
+    @Test
+    public void convertModelTest() {
+        Room testRoom = new Room(
+                8L,
+                new Details(
+                        "Broom",
+                        "description",
+                        "image url"
+                ),
+                40,
+                false,
+                false
+        );
+
+        // For my next trick, I shall convert a Room into a Bike.
+        Bike testBike = HttpRequestHandler.convertModel(testRoom, Bike.class);
+
+        System.out.println(testBike.details.name);
     }
 
 }
