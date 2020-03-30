@@ -1,8 +1,8 @@
 package nl.tudelft.oopp.api.models;
 
+import java.util.Objects;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 
-import java.util.Objects;
 
 /**
  * Initialises a new {@link User}.
@@ -132,15 +132,19 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return Objects.equals(getId(), user.getId()) &&
-               Objects.equals(getEmail(), user.getEmail()) &&
-               Objects.equals(getUsername(), user.getUsername()) &&
-               Objects.equals(getPassword(), user.getPassword()) &&
-               Objects.equals(getDetails(), user.getDetails()) &&
-               getUserKind() == user.getUserKind();
+        return Objects.equals(getId(), user.getId())
+               && Objects.equals(getEmail(), user.getEmail())
+               && Objects.equals(getUsername(), user.getUsername())
+               && Objects.equals(getPassword(), user.getPassword())
+               && Objects.equals(getDetails(), user.getDetails())
+               && getUserKind() == user.getUserKind();
     }
 
     @Override
