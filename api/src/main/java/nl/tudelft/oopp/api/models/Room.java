@@ -75,4 +75,18 @@ public class Room extends Reservable {
         this.forEmployee = forEmployee;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return getCapacity() == room.getCapacity() &&
+               isHasProjector() == room.isHasProjector() &&
+               isForEmployee() == room.isForEmployee();
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }
