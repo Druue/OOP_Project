@@ -1,30 +1,23 @@
 package nl.tudelft.oopp.api;
 
-import nl.tudelft.oopp.api.models.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+
+import java.net.http.HttpClient;
+import nl.tudelft.oopp.api.models.Bike;
+import nl.tudelft.oopp.api.models.Details;
+import nl.tudelft.oopp.api.models.Room;
+import nl.tudelft.oopp.api.models.User;
+import nl.tudelft.oopp.api.models.UserKind;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-//import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import javax.net.ssl.SSLSession;
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-//@RunWith(PowerMockRunner.class)
 @PrepareForTest(HttpRequestHandler.class)
 public class HttpRequestHandlerTest {
 
     User testUser;
-    User testUser_identical;
+    User identicalUser;
     User testAdmin;
     HttpRequestHandler mockHttpRequestHandler;
     HttpClient mockHttpClient;
@@ -46,7 +39,7 @@ public class HttpRequestHandlerTest {
                 "password123",
                 UserKind.Student
         );
-        testUser_identical = new User(
+        identicalUser = new User(
                 new Details(
                         "name",
                         "description",

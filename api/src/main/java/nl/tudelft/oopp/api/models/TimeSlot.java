@@ -2,6 +2,7 @@ package nl.tudelft.oopp.api.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 /**
  * TimeSlot.
@@ -77,6 +78,21 @@ public class TimeSlot {
 
     public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TimeSlot timeSlot = (TimeSlot) o;
+        return Objects.equals(getId(), timeSlot.getId())
+               && Objects.equals(getStartTime(), timeSlot.getStartTime())
+               && Objects.equals(getEndTime(), timeSlot.getEndTime());
     }
 
 }

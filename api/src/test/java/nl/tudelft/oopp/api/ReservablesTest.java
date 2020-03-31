@@ -1,14 +1,20 @@
 package nl.tudelft.oopp.api;
 
-import nl.tudelft.oopp.api.models.*;
-import org.junit.jupiter.api.BeforeAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+import nl.tudelft.oopp.api.models.Bike;
+import nl.tudelft.oopp.api.models.Details;
+import nl.tudelft.oopp.api.models.Reservable;
+import nl.tudelft.oopp.api.models.ReservableResponse;
+import nl.tudelft.oopp.api.models.Room;
+import nl.tudelft.oopp.api.models.RoomResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static nl.tudelft.oopp.api.HttpRequestHandler.put;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ReservablesTest {
 
@@ -19,6 +25,10 @@ public class ReservablesTest {
     Room testRoom;
     Room identicalTestRoom;
     Room otherRoom;
+
+    ReservableResponse reservableResponse;
+
+    RoomResponse roomResponse;
 
     @BeforeEach
     void beforeEach() {
@@ -85,6 +95,16 @@ public class ReservablesTest {
                 true,
                 true
         );
+
+        List<Reservable> list = new ArrayList<>();
+        list.add(testBike);
+        list.add(testRoom);
+        reservableResponse = new ReservableResponse(list);
+
+        List<Room> roomList = new ArrayList<>();
+        roomList.add(testRoom);
+        roomList.add(otherRoom);
+        roomResponse = new RoomResponse(roomList);
     }
 
     @Test
@@ -96,6 +116,7 @@ public class ReservablesTest {
 
 
         assertNotEquals(testRoom, testBike);
+        assertNotEquals(testBike, null);
 
         assertEquals(testBike, testBike);
         assertEquals(testBike, identicalTestBike);
@@ -130,5 +151,26 @@ public class ReservablesTest {
         assertTrue(testRoom.isHasProjector());
     }
 
+    @Test
+    void testResponses() {
+        assertEquals(reservableResponse.getReservableList().size(), 2);
+
+        reservableResponse.setReservableList(new ArrayList<>());
+        assertTrue(reservableResponse.getReservableList().isEmpty());
+
+        assertEquals(roomResponse.getRoomList().size(), 2);
+
+        roomResponse.setRoomList(new ArrayList<>());
+        assertTrue(roomResponse.getRoomList().isEmpty());
+    }
+
+    @Test
+    void testConstructor() {
+        Room emptyRoom = new Room();
+
+        assertNull(emptyRoom.getDetails());
+        assertNull(emptyRoom.getId());
+
+    }
 
 }
