@@ -93,8 +93,4 @@ public class Room extends Reservable {
                && isForEmployee() == room.isForEmployee();
     }
 
-    @Override
-    public int hashCode() {
-        return 0;
-    }
 }

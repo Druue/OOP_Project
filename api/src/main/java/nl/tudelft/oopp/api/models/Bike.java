@@ -19,5 +19,4 @@ public class Bike extends Reservable {
         super(id, details);
     }
 
-
 }

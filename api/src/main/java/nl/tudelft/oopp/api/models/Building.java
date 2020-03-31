@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A {@link Building}.
@@ -103,4 +104,20 @@ public class Building {
     public void setReservables(List<Reservable> reservables) {
         this.reservables = reservables;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Building building = (Building) o;
+        return Objects.equals(getNumber(), building.getNumber())
+               && Objects.equals(getDetails(), building.getDetails())
+               && Objects.equals(getFoodcourt(), building.getFoodcourt())
+               && Objects.equals(getOpeningHours(), building.getOpeningHours());
+    }
+
 }
