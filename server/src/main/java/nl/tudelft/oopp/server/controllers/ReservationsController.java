@@ -1,8 +1,11 @@
 package nl.tudelft.oopp.server.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.AuthenticationException;
+import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.ReservationResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.AuthorizationException;
 import nl.tudelft.oopp.server.models.Reservation;
@@ -55,22 +58,33 @@ public class ReservationsController {
      *      reservations in the database.
      */
     @GetMapping("/admin/all")
-    public ResponseEntity<List<Reservation>> getAllReservations(
-        @RequestBody ClientRequest<String> request) {
+    public ResponseEntity<ReservationResponse> getAllReservations() {
         logger.info("Received GET request for all reservations");
 
-        try {
-            authorizationService.checkAuthorization(request.getUsername());
-        } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
-            return ResponseEntity.badRequest().build();
-        } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
-            return ResponseEntity.badRequest().build();
-        }
+        //        try {
+        //            authorizationService.checkAuthorization(HttpRequestHandler.user.getUsername());
+        //        } catch (AuthorizationException e) {
+        //            logger.error(NOT_ADMIN);
+        //            return ResponseEntity.badRequest().build();
+        //        } catch (AuthenticationException e) {
+        //            logger.error(NO_USER_FOUND);
+        //            return ResponseEntity.badRequest().build();
+        //        }
 
-        List<Reservation> responseList = reservationService.getAllReservations();
-        return ResponseEntity.ok(responseList);
+        List<nl.tudelft.oopp.api.models.Reservation> responseList = new ArrayList<>();
+        for (Reservation responseReservation : reservationService.getAllReservations()) {
+            try {
+                LoggerService.info(ReservationsController.class, (HttpRequestHandler.convertBetweenServerAndApi(
+                    responseReservation, nl.tudelft.oopp.api.models.Reservation.class
+                ).reservable.getDetails().getName() + " <- room for which a reservation is received "));
+            } catch (NullPointerException npe) {
+                LoggerService.info(ReservableController.class, "Name of room is null");
+            }
+            responseList.add(HttpRequestHandler.convertBetweenServerAndApi(
+                responseReservation, nl.tudelft.oopp.api.models.Reservation.class
+            ));
+        }
+        return ResponseEntity.ok(new ReservationResponse(responseList));
     }
 
 

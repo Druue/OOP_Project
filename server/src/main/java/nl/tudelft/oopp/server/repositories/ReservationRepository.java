@@ -16,6 +16,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findAllByUser_Id(Long userID);
 
+    @Query("select res "
+        +  "from Reservation res")
     List<Reservation> findAll();
 
     @Query("select res "
