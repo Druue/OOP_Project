@@ -67,8 +67,7 @@ public class Building {
 
     /**
      * Initialises a new instance of {@link Building}.
-     *
-     * @param number             The building's number.
+     *  @param number             The building's number.
      * @param details            {@link Details} about the building.
      * @param foodcourt          The building's {@link Foodcourt}.
      * @param openingHours       The building's {@link TimeSlot}.
@@ -82,6 +81,7 @@ public class Building {
         this.openingHours = openingHours;
         this.availableTimeslots = availableTimeslots;
     }
+
 
     /**returns the map of the building.
      *
