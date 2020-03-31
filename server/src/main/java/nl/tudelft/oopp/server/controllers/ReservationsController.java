@@ -3,6 +3,7 @@ package nl.tudelft.oopp.server.controllers;
 import java.util.List;
 import javax.naming.AuthenticationException;
 import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.AuthorizationException;
 import nl.tudelft.oopp.server.models.Reservation;
 import nl.tudelft.oopp.server.models.TimeSlot;
@@ -169,7 +170,7 @@ public class ReservationsController {
      * @return ResponseEntity object indicating whether the reservation was added successfully.
      */
     @PostMapping("/{role:(?:user|admin)}/add")
-    public ResponseEntity<String> addReservation(@RequestBody ClientRequest<Reservation> request) {
+    public ResponseEntity<ServerResponseAlert> addReservation(@RequestBody ClientRequest<Reservation> request) {
         logger.info("Received POST request for a new reservation from user: "
             + request.getUsername() + ". Processing ...");
 
@@ -188,16 +189,16 @@ public class ReservationsController {
         try {
             reservationService.addReservation(newReservation);
         } catch (UserReservationsIntersectionException e) {
-            return ResponseEntity.badRequest().body("Failure to create reservations. "
-                + "Intersection found with other current user reservations.");
+            return ResponseEntity.badRequest().body(new ServerResponseAlert("Failure to create reservations. "
+                + "Intersection found with other current user reservations.", "ERROR"));
         } catch (TimeslotAlreadyReservedException e) {
-            return ResponseEntity.badRequest().body("Failure to create reservations. "
-                + "Intersection found with other current reservations of the reservable.");
+            return ResponseEntity.badRequest().body(new ServerResponseAlert("Failure to create reservations. "
+                + "Intersection found with other current reservations of the reservable.", "ERROR"));
         }
 
         logger.info("New reservation added successfully");
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new ServerResponseAlert("New reservation added successfully", "CONFIRMATION"));
     }
 
     /**

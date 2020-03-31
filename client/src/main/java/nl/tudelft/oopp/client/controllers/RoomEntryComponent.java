@@ -118,8 +118,8 @@ public class RoomEntryComponent extends Pane {
                 ServerResponseAlert response =
                     HttpRequestHandler.post("reservations/user/add", reservationRequest, ServerResponseAlert.class);
                 try {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Reservation created.");
+                    Alert alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
+                    alert.setTitle("Response");
                     alert.setHeaderText(null);
                     alert.setContentText(response.getMessage());
                     alert.showAndWait();
