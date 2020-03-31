@@ -2,11 +2,21 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
-mainClassName = "nl.tudelft.oopp.client.MainApp"
+application {
+    mainClassName = "nl.tudelft.oopp.client.MainApp"
+}
 
 dependencies {
 
     compile project(':api')
+
+    test {
+            testLogging.showStandardStreams = true
+            // listen to events in the test execution lifecycle
+           beforeTest {
+              descriptor -> logger.lifecycle("Running test: " + descriptor)
+           }
+        }
 }
 
 javafx {

@@ -33,6 +33,17 @@ dependencies {
 	}
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	testCompile("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+
+	test {
+            testLogging.showStandardStreams = true
+            // listen to events in the test execution lifecycle
+           beforeTest {
+              descriptor -> logger.lifecycle("Running test: " + descriptor)
+           }
+       }
 }
 
 asciidoctor {
