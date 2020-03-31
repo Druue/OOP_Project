@@ -104,8 +104,31 @@ public class ReservablesTest {
     }
 
     @Test
-    void getterTest() {
+    void testGetterSetters() {
+        // Used for getting/setting
+        Details testDetails = new Details("test", "details", "object");
 
+        //Bikes
+        testBike.setDetails(testDetails);
+        assertEquals(testBike.getDetails(),testDetails);
+
+        testBike.setId(4000L);
+        assertEquals(4000L, testBike.getId());
+
+
+        //Rooms
+        testRoom.setDetails(testDetails);
+        assertEquals(testDetails, testRoom.getDetails());
+
+        testRoom.setCapacity(4000);
+        assertEquals(4000, testRoom.getCapacity());
+
+        testRoom.setForEmployee(true);
+        assertTrue(testRoom.isForEmployee());
+
+        testRoom.setHasProjector(true);
+        assertTrue(testRoom.isHasProjector());
     }
+
 
 }

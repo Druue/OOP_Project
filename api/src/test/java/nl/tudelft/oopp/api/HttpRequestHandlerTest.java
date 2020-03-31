@@ -1,30 +1,39 @@
 package nl.tudelft.oopp.api;
 
 import nl.tudelft.oopp.api.models.*;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+//import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import static nl.tudelft.oopp.api.HttpRequestHandler.put;
+import javax.net.ssl.SSLSession;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+//@RunWith(PowerMockRunner.class)
+@PrepareForTest(HttpRequestHandler.class)
 public class HttpRequestHandlerTest {
 
     User testUser;
     User testUser_identical;
     User testAdmin;
-    HttpRequestHandler mockHandler;
+    HttpRequestHandler mockHttpRequestHandler;
+    HttpClient mockHttpClient;
 
     @BeforeEach
     void beforeEach() {
-        // Used for get, post, put request mocking
-        mockHandler = mock(HttpRequestHandler.class);
 
-//        when(mockHandler.put("ping", null, String.class)).thenReturn("pong");
-//        when(mockHandler.post("ping", null, String.class)).thenReturn("pong");
-//        when(mockHandler.get("ping",  String.class)).thenReturn("pong");
+        mockHttpClient = mock(HttpClient.class);
+
 
         testUser = new User(
                 new Details(
@@ -87,7 +96,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void putTestGetAnyResponse() {
 
-        Object response = mockHandler.put("ping", null, String.class);
+        Object response = mockHttpRequestHandler.put("ping", null, String.class);
 
         assertNotNull(response);
     }
@@ -98,7 +107,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void putTestGetCorrectResponse() {
 
-        String response = mockHandler.put("ping", null, String.class);
+        String response = mockHttpRequestHandler.put("ping", null, String.class);
 
         assertEquals(response, "pong");
 
@@ -120,7 +129,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void postTestGetAnyResponse() {
 
-        Object response = mockHandler.post("ping", null, String.class);
+        Object response = mockHttpRequestHandler.post("ping", null, String.class);
 
         assertNotNull(response);
 
@@ -132,7 +141,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void postTestGetCorrectResponse() {
 
-        String response = mockHandler.post("ping", null, String.class);
+        String response = mockHttpRequestHandler.post("ping", null, String.class);
 
         assertEquals(response, "pong");
 
@@ -154,7 +163,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void getTestGetAnyResponse() {
 
-        Object response = mockHandler.get("ping", String.class);
+        Object response = mockHttpRequestHandler.get("ping", String.class);
 
         assertNotNull(response);
 
@@ -166,7 +175,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void getTestGetCorrectResponse() {
 
-        Object response = mockHandler.get("ping", String.class);
+        Object response = mockHttpRequestHandler.get("ping", String.class);
 
         assertEquals(response, "pong");
 
