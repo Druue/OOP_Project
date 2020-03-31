@@ -36,12 +36,6 @@ public abstract class Reservable {
         this.details = details;
     }
 
-
-
-    public Reservable(Details details) {
-        this.details = details;
-    }
-
     public Long getId() {
         return id;
     }

@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.api.models;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A {@link Building}.
@@ -105,4 +106,20 @@ public class Building {
     public void setAvailableTimeslots(Map<Reservable, TimeSlot> availableTimeslots) {
         this.availableTimeslots = availableTimeslots;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Building building = (Building) o;
+        return Objects.equals(getNumber(), building.getNumber())
+               && Objects.equals(getDetails(), building.getDetails())
+               && Objects.equals(getFoodcourt(), building.getFoodcourt())
+               && Objects.equals(getOpeningHours(), building.getOpeningHours());
+    }
+
 }
