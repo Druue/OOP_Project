@@ -1,6 +1,9 @@
 group 'nl.tudelft.oopp'
 version '0.1'
-mainClassName = "MainApp"
+application {
+    mainClassName = "MainApp"
+}
+
 
 dependencies {
 
