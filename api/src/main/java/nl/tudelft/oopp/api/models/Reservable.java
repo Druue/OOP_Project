@@ -1,5 +1,10 @@
 package nl.tudelft.oopp.api.models;
 
+import java.util.Objects;
+
+/**
+ * Initialises a new {@link Reservable}.
+ */
 public abstract class Reservable {
 
     /**
@@ -42,5 +47,17 @@ public abstract class Reservable {
         this.id = id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Reservable that = (Reservable) o;
+        return Objects.equals(getId(), that.getId())
+               && Objects.equals(getDetails(), that.getDetails());
+    }
 
 }
