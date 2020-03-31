@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.api.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Initialises a new isntance of {@link Reservation}.
  */
@@ -40,8 +43,12 @@ public class Reservation {
      * @param reservable    The entity being reserved.
      * @param timeslot      The time during which the entity will be reserved.
      */
-    public Reservation(Long reservationID, User user, Reservable reservable,
-                       TimeSlot timeslot) {
+    @JsonCreator
+    public Reservation(
+        @JsonProperty("reservationID") Long reservationID,
+        @JsonProperty("user") User user,
+        @JsonProperty("reservable") Room reservable,
+        @JsonProperty("timeslot") TimeSlot timeslot) {
         this.user = user;
         this.reservable = reservable;
         this.timeslot = timeslot;
