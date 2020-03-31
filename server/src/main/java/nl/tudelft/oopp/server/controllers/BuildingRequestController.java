@@ -127,8 +127,8 @@ public class BuildingRequestController {
      * @return A {@link ResponseEntity} object indicating the success of the operation.
      */
     @PutMapping(value = "/admin/add", consumes = "application/json", produces = "application/json")
-    ResponseEntity<ServerResponseAlert> addBuilding(
-        @RequestBody ClientRequest<Building> requestBuilding) {
+    public ResponseEntity<ServerResponseAlert> addBuilding(
+            @RequestBody ClientRequest<Building> requestBuilding) {
 
         logger.info("Received PUT request for adding a new building. Processing ...");
 
