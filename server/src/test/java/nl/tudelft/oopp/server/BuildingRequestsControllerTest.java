@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = BuildingRequestController.class)
-class BuildingRequestControllerTest {
+class BuildingRequestsControllerTest {
 
     @InjectMocks
     private BuildingRequestController buildingRequestController;
