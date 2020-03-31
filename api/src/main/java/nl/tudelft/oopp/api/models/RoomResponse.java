@@ -6,6 +6,9 @@ public class RoomResponse {
 
     List<Room> roomList;
 
+    public RoomResponse() {
+    }
+
     public RoomResponse(List<Room> roomList) {
         this.roomList = roomList;
     }

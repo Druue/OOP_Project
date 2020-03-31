@@ -2,7 +2,6 @@ package nl.tudelft.oopp.server.models;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -30,7 +29,6 @@ public abstract class Reservable {
      * This is a details entity that tells you information about a reservable.
      */
     @OneToOne(cascade = CascadeType.ALL)
-    @ElementCollection
     @JoinColumn(name = "details")
     public Details details;
 
