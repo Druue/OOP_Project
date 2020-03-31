@@ -34,7 +34,7 @@ public class Details {
 
     /**
      * Initialises a new instance of a {@link Details}.
-     * 
+     *
      * @param id          The id of the Details.
      * @param name        The name of the object.
      * @param description A description of the object.
@@ -95,13 +95,17 @@ public class Details {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Details details = (Details) o;
-        return Objects.equals(getId(), details.getId()) &&
-               Objects.equals(getName(), details.getName()) &&
-               Objects.equals(getDescription(), details.getDescription()) &&
-               Objects.equals(getImage(), details.getImage());
+        return Objects.equals(getId(), details.getId())
+               && Objects.equals(getName(), details.getName())
+               && Objects.equals(getDescription(), details.getDescription())
+               && Objects.equals(getImage(), details.getImage());
     }
 
 }

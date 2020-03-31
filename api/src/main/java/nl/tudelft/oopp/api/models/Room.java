@@ -29,11 +29,12 @@ public class Room extends Reservable {
 
     /**
      * Constructor for Room object using all attributes.
-     * @param id The room id.
-     * @param details The room details.
-     * @param capacity The room capacity.
+     *
+     * @param id           The room id.
+     * @param details      The room details.
+     * @param capacity     The room capacity.
      * @param hasProjector The boolean stating whether or not the room has a projector.
-     * @param forEmployee The boolean stating whether or not the room is for employees only.
+     * @param forEmployee  The boolean stating whether or not the room is for employees only.
      */
     public Room(Long id, Details details, int capacity, boolean hasProjector, boolean forEmployee) {
         super(id, details);
@@ -68,12 +69,16 @@ public class Room extends Reservable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Room room = (Room) o;
-        return getCapacity() == room.getCapacity() &&
-               isHasProjector() == room.isHasProjector() &&
-               isForEmployee() == room.isForEmployee();
+        return getCapacity() == room.getCapacity()
+               && isHasProjector() == room.isHasProjector()
+               && isForEmployee() == room.isForEmployee();
     }
 
     @Override
