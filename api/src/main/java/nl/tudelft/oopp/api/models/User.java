@@ -147,8 +147,4 @@ public class User {
                && getUserKind() == user.getUserKind();
     }
 
-    @Override
-    public int hashCode() {
-        return 0;
-    }
 }

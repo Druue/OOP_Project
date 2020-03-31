@@ -1,20 +1,22 @@
 package nl.tudelft.oopp.api;
 
-import nl.tudelft.oopp.api.models.*;
-import org.junit.jupiter.api.BeforeAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import nl.tudelft.oopp.api.models.Details;
+import nl.tudelft.oopp.api.models.RegistrationDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static nl.tudelft.oopp.api.HttpRequestHandler.put;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class DetailsTest {
 
     Details testDetails;
     Details identicalTestDetails;
     Details otherDetails;
+
+    RegistrationDetails testRegistrationDetails;
 
     @BeforeEach
     void beforeEach() {
@@ -37,6 +39,13 @@ public class DetailsTest {
                 "other",
                 "details",
                 "object"
+        );
+
+        testRegistrationDetails = new RegistrationDetails(
+                testDetails,
+                "username",
+                "email@email.com",
+                "1234"
         );
     }
 
@@ -63,6 +72,18 @@ public class DetailsTest {
         testDetails.setImage("imageURL");
         assertEquals("imageURL", testDetails.getImage());
 
+
+        testRegistrationDetails.setDetails(otherDetails);
+        assertEquals(otherDetails, testRegistrationDetails.getDetails());
+
+        testRegistrationDetails.setEmail("newmail@gmail.org");
+        assertEquals("newmail@gmail.org", testRegistrationDetails.getEmail());
+
+        testRegistrationDetails.setPassword("4321");
+        assertEquals("4321", testRegistrationDetails.getPassword());
+
+        testRegistrationDetails.setusername("usr");
+        assertEquals("usr", testRegistrationDetails.getusername());
     }
 
     @Test
