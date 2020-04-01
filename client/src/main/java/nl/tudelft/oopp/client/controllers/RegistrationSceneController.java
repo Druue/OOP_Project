@@ -20,6 +20,9 @@ import nl.tudelft.oopp.api.models.UserKind;
 
 
 public class RegistrationSceneController {
+
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     @FXML
     public TextField registrationNameInput;
     public TextField registrationUsernameInput;
@@ -108,7 +111,7 @@ public class RegistrationSceneController {
                     email, username, password, userKind);
 
             // Send a register request to the server.
-            UserAuthResponse response = HttpRequestHandler.post("register", registrationRequest,
+            UserAuthResponse response = httpRequestHandler.post("register", registrationRequest,
                     UserAuthResponse.class);
 
             // Create an alert, and show it to the user.

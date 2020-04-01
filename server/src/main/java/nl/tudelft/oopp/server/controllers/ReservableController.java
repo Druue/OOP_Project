@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("reservables")
 public class ReservableController {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     /**
      * Importing the methods from the service class.
      */
@@ -48,13 +50,14 @@ public class ReservableController {
         for (Reservable responseReservable: reservableService.getAllReservables()) {
             if (responseReservable instanceof Room) {
                 try {
-                    LoggerService.info(ReservableController.class, (HttpRequestHandler.convertBetweenServerAndApi(
+                    LoggerService.info(ReservableController.class,
+                            (httpRequestHandler.convertBetweenServerAndApi(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
                     ).details.name));
                 } catch (NullPointerException npe) {
                     LoggerService.info(ReservableController.class, "Name of room is null");
                 }
-                responseList.add(HttpRequestHandler.convertBetweenServerAndApi(
+                responseList.add(httpRequestHandler.convertBetweenServerAndApi(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
                 ));
             }

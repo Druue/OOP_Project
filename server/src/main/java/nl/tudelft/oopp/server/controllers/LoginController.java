@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     private final LoginService service;
     private final UserService userService;
 
@@ -49,7 +51,7 @@ public class LoginController {
         }
         try {
             // Gets a complete User entity from the database, to send back to the client for later use.
-            User user = HttpRequestHandler.convertModel(service.getUserInformation(loginRequest),
+            User user = httpRequestHandler.convertModel(service.getUserInformation(loginRequest),
                     User.class);
             LoggerService.info(LoginController.class, "User successfully authenticated.");
             LoggerService.info(LoginController.class, user.username + user.email);

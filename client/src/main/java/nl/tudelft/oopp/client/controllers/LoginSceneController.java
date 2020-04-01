@@ -18,6 +18,8 @@ import nl.tudelft.oopp.api.models.UserAuthResponse;
 
 public class LoginSceneController {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     // the TextField object(s) from mainScene.fxml
     @FXML
     public TextField inputusername;
@@ -28,8 +30,9 @@ public class LoginSceneController {
 
     public UserAuthResponse sendLoginRequest(String username, String password) {
         LoginRequest loginRequest = new LoginRequest(username, password);
-        return HttpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
+        return httpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
     }
+
 
     /**
      * Sends a login request to the backend, using the information stored in the text fields.

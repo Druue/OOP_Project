@@ -37,6 +37,8 @@ import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
 public class ReservationsSceneController implements Initializable {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     public static final int MAX_DAYS_IN_ADVANCE = 14;
     public static final int RESPONSE_TIMEOUT = 5;
 
@@ -111,7 +113,8 @@ public class ReservationsSceneController implements Initializable {
      * Generates boxes for each building and adds them to the GUI.
      */
     private void populateBuildingsScrollBox() {
-        BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/user/all", BuildingResponse.class);
+        BuildingResponse buildingResponse = httpRequestHandler.get("buildings/user/all",
+                BuildingResponse.class);
 
         DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0,0,0,0.1), 2,4,2, 2);
         buildingSearchField.setEffect(dropShadow);
@@ -231,6 +234,7 @@ public class ReservationsSceneController implements Initializable {
                 1L,
                 new Details("Test name", null, null)
         );
-        HttpRequestHandler.put("buildings/insert/new_building", testBuilding, ServerResponseAlert.class);
+        httpRequestHandler.put("buildings/insert/new_building", testBuilding,
+                ServerResponseAlert.class);
     }
 }

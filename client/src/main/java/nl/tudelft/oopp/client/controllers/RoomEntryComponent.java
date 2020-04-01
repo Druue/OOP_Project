@@ -27,6 +27,8 @@ import nl.tudelft.oopp.api.models.TimeSlot;
 
 public class RoomEntryComponent extends Pane {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     RoomEntryController controller;
     Room room;
 
@@ -116,7 +118,8 @@ public class RoomEntryComponent extends Pane {
                 );
 
                 ServerResponseAlert response =
-                    HttpRequestHandler.post("reservations/user/add", reservationRequest, ServerResponseAlert.class);
+                    httpRequestHandler.post("reservations/user/add", reservationRequest,
+                            ServerResponseAlert.class);
                 try {
                     Alert alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
                     alert.setTitle("Response");

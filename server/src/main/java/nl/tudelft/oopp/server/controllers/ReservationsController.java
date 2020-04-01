@@ -35,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/reservations")
 public class ReservationsController {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     private static final String NOT_ADMIN =
         "Unauthorized request. The requesting user is not an administrator.";
 
@@ -78,13 +80,14 @@ public class ReservationsController {
         List<nl.tudelft.oopp.api.models.Reservation> responseList = new ArrayList<>();
         for (Reservation responseReservation : reservationService.getAllReservations()) {
             try {
-                LoggerService.info(ReservationsController.class, (HttpRequestHandler.convertBetweenServerAndApi(
+                LoggerService.info(ReservationsController.class,
+                        (httpRequestHandler.convertBetweenServerAndApi(
                     responseReservation, nl.tudelft.oopp.api.models.Reservation.class
                 ).reservable.getDetails().getName() + " <- room for which a reservation is received "));
             } catch (NullPointerException npe) {
                 LoggerService.info(ReservableController.class, "Name of room is null");
             }
-            responseList.add(HttpRequestHandler.convertBetweenServerAndApi(
+            responseList.add(httpRequestHandler.convertBetweenServerAndApi(
                 responseReservation, nl.tudelft.oopp.api.models.Reservation.class
             ));
         }

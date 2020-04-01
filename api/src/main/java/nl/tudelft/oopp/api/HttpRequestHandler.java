@@ -11,21 +11,25 @@ import java.net.http.HttpResponse;
 import nl.tudelft.oopp.api.models.User;
 
 public class HttpRequestHandler {
-    private static final String host = "http://localhost:8080";
-    private static HttpClient client = HttpClient.newHttpClient();
-    //    private static final Gson gson = new GsonBuilder()
-    //            .serializeNulls()
-    //            .setDateFormat("yyyy-MM-dd HH:mm:ss")
-    //            .create();
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private String host;
+    private HttpClient client;
+    private ObjectMapper objectMapper;
     public static User user;
 
     public static void saveUser(User input) {
         user = input;
     }
 
-    public static void setClient(HttpClient client) {
-        HttpRequestHandler.client = client;
+    public HttpRequestHandler() {
+        this.client = HttpClient.newHttpClient();
+        this.host = "http://localhost:8080";
+        this.objectMapper = new ObjectMapper();
+    }
+
+    public HttpRequestHandler(HttpClient client) {
+        this.host = "http://localhost:8080";
+        this.objectMapper = new ObjectMapper();
+        this.client = client;
     }
 
     /**
@@ -35,7 +39,7 @@ public class HttpRequestHandler {
      * @param parameters a map containing all parameters in the request, mapped as 'name,value'.
      * @return An HttpResponse object.
      */
-    public static <T, E> E post(String path, T parameters, Class<E> responseType) {
+    public <T, E> E post(String path, T parameters, Class<E> responseType) {
         // Build HTTP request
         HttpRequest request = null;
 
@@ -61,7 +65,7 @@ public class HttpRequestHandler {
      * @param parameters a map containing all parameters in the request, mapped as 'name,value'.
      * @return An HttpResponse object.
      */
-    public static <T, E> E put(String path, T parameters, Class<E> responseType) {
+    public <T, E> E put(String path, T parameters, Class<E> responseType) {
         // Build HTTP request
         HttpRequest request = null;
         try {
@@ -82,7 +86,7 @@ public class HttpRequestHandler {
      * @param path the path on the server where the request should be sent.
      * @return An HttpResponse object.
      */
-    public static <E> E get(String path, Class<E> responseType) {
+    public <E> E get(String path, Class<E> responseType) {
         // Build HTTP request
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
                 .setHeader("Content-Type", "application/json").GET().build();
@@ -107,7 +111,7 @@ public class HttpRequestHandler {
      * @return The converted object after serialization/deserialization, which is
      *      an instance of @param E.
      */
-    public static <T, E> E convertModel(T from, Class<E> to) {
+    public <T, E> E convertModel(T from, Class<E> to) {
 
         try {
             return objectMapper.readValue(objectMapper.writeValueAsString(from), to);
@@ -127,7 +131,7 @@ public class HttpRequestHandler {
      * @return The converted object after serialization/deserialization, which is
      *      an instance of @param E.
      */
-    public static <T, E> E convertBetweenServerAndApi(T from, Class<E> to) {
+    public <T, E> E convertBetweenServerAndApi(T from, Class<E> to) {
 
         return objectMapper.convertValue(from, to);
     }
