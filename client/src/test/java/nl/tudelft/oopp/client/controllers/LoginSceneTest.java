@@ -1,18 +1,18 @@
 package nl.tudelft.oopp.client.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import javafx.scene.control.Alert;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
@@ -27,28 +27,33 @@ public class LoginSceneTest {
     @BeforeEach
     void beforeEach() throws IOException, InterruptedException {
         mockAlertController = mock(AlertsController.class);
-        Mockito.doNothing().when(mockAlertController).show(any(), any());
-        Mockito.doNothing().when(mockAlertController).show(any(), any(), any(), any());
+        Mockito.doNothing().when(mockAlertController).show(
+                ArgumentMatchers.any(Alert.AlertType.class),
+                ArgumentMatchers.anyString());
+        Mockito.doNothing().when(mockAlertController).show(
+                ArgumentMatchers.any(Alert.AlertType.class),
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.anyString());
 
-        scene = new LoginSceneController();
+
         mockHttpRequestHandler = mock(HttpRequestHandler.class);
-        scene.httpRequestHandler = mockHttpRequestHandler;
 
         testLoginRequest = new LoginRequest(
                 "username",
                 "password"
         );
-        when(mockHttpRequestHandler.post(eq("login"), any(LoginRequest.class),
-                eq(UserAuthResponse.class)))
+        when(mockHttpRequestHandler.post(ArgumentMatchers.eq("login"), ArgumentMatchers.any(LoginRequest.class),
+                ArgumentMatchers.eq(UserAuthResponse.class)))
                 .thenReturn(
-                        new UserAuthResponse(
-                                "invalid login",
-                                "ERROR",
-                                new User()
-                        ));
+                    new UserAuthResponse(
+                        "invalid login",
+                        "ERROR",
+                        new User()
+                ));
 
-        when(mockHttpRequestHandler.post(eq("login"), eq(testLoginRequest),
-                eq(UserAuthResponse.class)))
+        when(mockHttpRequestHandler.post(ArgumentMatchers.eq("login"), ArgumentMatchers.eq(testLoginRequest),
+                ArgumentMatchers.eq(UserAuthResponse.class)))
                 .thenReturn(
                         new UserAuthResponse(
                         "success!",
@@ -56,9 +61,8 @@ public class LoginSceneTest {
                         new User()
                 ));
 
-
-
-        scene.alertsController = mockAlertController;
+        scene = new LoginSceneController(mockAlertController);
+        scene.httpRequestHandler = mockHttpRequestHandler;
 
     }
 
@@ -72,12 +76,83 @@ public class LoginSceneTest {
         Mockito.verify(mockHttpRequestHandler).post("login", testLoginRequest,
                 UserAuthResponse.class);
 
-        assertEquals(response.getMessage(), "success!");
+        Assertions.assertEquals(response.getMessage(), "success!");
 
         response = scene.sendLoginRequest(
                 "doesnt", "exist"
         );
 
-        assertEquals(response.getMessage(), "invalid login");
+        Assertions.assertEquals(response.getMessage(), "invalid login");
     }
+
+    @Test
+    public void testEmptyLogin() {
+
+        scene.tryLogin("", "");
+        Mockito.verify(mockAlertController).show(
+                Alert.AlertType.WARNING,
+                "Warning",
+                null,
+                "Please provide a username and password."
+        );
+    }
+
+    @Test
+    public void testSuccessLogin() {
+        try {
+            scene.tryLogin("username", "password");
+        } catch (ExceptionInInitializerError | NoClassDefFoundError ignored) {
+            return;
+            // Error is thrown due to scene switching.
+        }
+
+        Mockito.verify(mockAlertController).show(
+                Alert.AlertType.CONFIRMATION,
+                "success!"
+        );
+
+    }
+
+    @Test
+    public void testWrongLogin() {
+
+        scene.tryLogin("username", "wrongPassword");
+        Mockito.verify(mockAlertController).show(
+                Alert.AlertType.ERROR,
+                "invalid login"
+        );
+
+    }
+
+    @Test
+    void invalidResponseLogin() {
+
+        // Setup the mock so an invalid response is sent.
+        when(mockHttpRequestHandler.post(
+                ArgumentMatchers.eq("login"),
+                ArgumentMatchers.any(LoginRequest.class),
+                ArgumentMatchers.eq(UserAuthResponse.class))
+        ).thenReturn(null);
+
+        scene.tryLogin("username", "password");
+        Mockito.verify(mockAlertController).show(
+                Alert.AlertType.ERROR,
+                "Invalid response from server."
+        );
+    }
+
+    @Test
+    void constructorTest() {
+
+        scene = new LoginSceneController(mockAlertController);
+        Assertions.assertEquals(scene.alertsController, mockAlertController);
+        try {
+            scene = new LoginSceneController();
+        } catch (ExceptionInInitializerError | NoClassDefFoundError ignored) {
+            // Error is thrown due to JavaFx trying to load components in the testing context.
+        }
+        Assertions.assertNotNull(scene.alertsController);
+
+    }
+
 }
