@@ -20,6 +20,7 @@ import nl.tudelft.oopp.server.services.BuildingService;
 import nl.tudelft.oopp.server.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +65,7 @@ public class BuildingRequestController {
      *
      * @return A {@link ResponseEntity} containing he aforementioned list of objects.
      */
-    @GetMapping("/{name:(?:admin|user)}/all")
+    @GetMapping(value = "/{name:(?:admin|user)}/all", produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<BuildingResponse> sendAllBuildings() {
 
         logger.info("Received GET request for all buildings. Processing...");
