@@ -19,7 +19,9 @@ public class HttpRequestHandler {
     }
 
     /**
-     * For testing purposes, this class isn't static, but instead has this.
+     * Creates a new HttpRequestHandler.
+     * Used by frontend controllers to send requests,
+     * and by the backend to convert models.
      */
     public HttpRequestHandler() {
         this.client = HttpClient.newHttpClient();
@@ -27,6 +29,11 @@ public class HttpRequestHandler {
         this.objectMapper = new ObjectMapper();
     }
 
+    /**
+     * Creates a new HttpRequestHandler.
+     * Used in Unit testing, for mocking the HttpClient.
+     * @param client The (mock) HttpClient.
+     */
     public HttpRequestHandler(HttpClient client) {
         this.client = client;
     }
@@ -118,7 +125,7 @@ public class HttpRequestHandler {
             return objectMapper.readValue(objectMapper.writeValueAsString(from), to);
         } catch (IOException e) {
             e.printStackTrace();
-            return  null;
+            return null;
         }
     }
 }
