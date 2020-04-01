@@ -1,7 +1,5 @@
 package nl.tudelft.oopp.client.controllers;
 
-import java.io.IOException;
-import java.sql.Timestamp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,12 +9,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.Building;
-import nl.tudelft.oopp.api.models.BuildingResponse;
-import nl.tudelft.oopp.api.models.ClientRequest;
-import nl.tudelft.oopp.api.models.Details;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
-import nl.tudelft.oopp.api.models.TimeSlot;
+import nl.tudelft.oopp.api.models.*;
+
+import java.io.IOException;
+import java.sql.Timestamp;
 
 
 public class AddBuildingsController {
