@@ -1,8 +1,6 @@
 package nl.tudelft.oopp.api;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -368,6 +366,29 @@ public class HttpRequestHandlerTest {
 
     }
 
+    @Test
+    public void attemptIncorrectRequestTest() {
+
+        // Force an error to occur within the method, which should return null.
+        Room obviouslyWrongGetRoom = httpRequestHandler.get("ping", Room.class);
+        assertNull(obviouslyWrongGetRoom);
+
+        Room obviouslyWrongPostRoom = httpRequestHandler.post(
+                "ping",
+                null,
+                Room.class
+        );
+        assertNull(obviouslyWrongPostRoom);
+
+        Room obviouslyWrongPutRoom = httpRequestHandler.put(
+                "ping",
+                null,
+                Room.class
+        );
+        assertNull(obviouslyWrongPutRoom);
+
+    }
+
     /**
      * Tests convertModel() by converting a room into a bike. Both share a details attribute,
      * and this attribute should be preserved when converting.
@@ -403,6 +424,63 @@ public class HttpRequestHandlerTest {
         Bike wonkyBike = httpRequestHandler.convertModel(testRoom, Bike.class);
         assertNull(wonkyBike);
 
+    }
+
+    @Test
+    void anotherConvertModelTest() {
+        Room testRoom = new Room(
+                8L,
+                new Details(
+                        "Broom",
+                        "description",
+                        "image url"
+                ),
+                40,
+                false,
+                false
+        );
+
+        // Unfortunately, importing server models is not possible.
+        // That's why conversion is done between two API models.
+        Room convertedTestRoom = httpRequestHandler.convertBetweenServerAndApi(testRoom, Room.class);
+        assertNotNull(convertedTestRoom);
+
+        // To test the conversion, see if the id's are the same.
+        assertEquals(convertedTestRoom.getCapacity(), 40);
+
+        // An object converted into the same type should be equal to itself.
+        convertedTestRoom = httpRequestHandler.convertBetweenServerAndApi(testRoom, Room.class);
+        assertEquals(testRoom, convertedTestRoom);
+
+
+        // Force an error to occur within the method, and see if it gets caught.
+        try {
+            Bike wonkyBike = httpRequestHandler.convertBetweenServerAndApi(testRoom, Bike.class);
+            fail("conversion should throw an error.");
+        } catch (IllegalArgumentException ignored) {
+
+        }
+
+    }
+
+    /**
+     * Checks if the default constructor works,
+     * and if the new {@link HttpRequestHandler} has a
+     */
+    @Test
+    void constructorTest() {
+        HttpRequestHandler newHandler = new HttpRequestHandler();
+        assertNotNull(newHandler);
+
+        newHandler.saveUser(new User(
+                new Details(),
+                "email",
+                "",
+                "",
+                UserKind.Admin)
+        );
+
+        assertEquals(newHandler.user, HttpRequestHandler.user);
     }
 
 }
