@@ -1,83 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="roomEntryBackground" prefHeight="200.0" prefWidth="600.0"
-      style="-fx-background-color: #C0C0C0" xmlns="http://javafx.com/javafx/8">
-    <children>
-        <HBox>
-            <children>
-                <Label fx:id="roomName" text="Room 1">
-                    <font>
-                        <Font size="50.0"/>
-                    </font>
-                    <padding>
-                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
-                    </padding>
-                </Label>
-                <Region HBox.hgrow="ALWAYS"/>
-                <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label fx:id="hasMultimedia" text="hasMultimedia">
-                            <VBox.margin>
-                                <Insets/>
-                            </VBox.margin>
-                            <graphic>
-                                <ImageView fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="2.0">
-                                    <image>
-                                        <Image url="@images/Icon-multimedia.png"/>
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Label>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                            <children>
-                                <Label alignment="CENTER_RIGHT" text="Capacity:">
-                                    <graphic>
-                                        <ImageView fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@images/Icon-people.png"/>
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Label>
-                                <Label fx:id="capacity" text="x"/>
-                            </children>
-                        </HBox>
-                    </children>
-                    <HBox.margin>
-                        <Insets right="40.0"/>
-                    </HBox.margin>
-                    <padding>
-                        <Insets bottom="20.0" top="20.0"/>
-                    </padding>
-                </VBox>
-            </children>
-        </HBox>
-        <HBox prefHeight="160.0" prefWidth="200.0">
-            <children>
-                <StackPane fx:id="timeline" alignment="TOP_LEFT" prefWidth="450.0" HBox.hgrow="NEVER">
-                    <HBox.margin>
-                        <Insets bottom="20.0" left="20.0" top="10"/>
-                    </HBox.margin>
-                </StackPane>
-                <Button fx:id="reserveButton" mnemonicParsing="false"
-                        style="-fx-background-color: red; -fx-text-fill: white;" text="Reserve">
-                    <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                    </padding>
-                    <font>
-                        <Font size="14.0"/>
-                    </font>
-                    <HBox.margin>
-                        <Insets left="10.0" right="10.0"/>
-                    </HBox.margin>
-                </Button>
-            </children>
-        </HBox>
-    </children>
+<VBox fx:id="roomEntryBackground" prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <HBox>
+      <Label fx:id="roomName" text="Room 1">
+         <Font size="50.0" />
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding></Label>
+      <Region HBox.hgrow="ALWAYS" />
+      <VBox spacing="10.0">
+            <Label fx:id="hasMultimedia" text="hasMultimedia">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="2.0">
+                     <Image url="@images/Icon-multimedia.png" />
+                  </ImageView>
+               </graphic></Label>
+            <HBox alignment="CENTER_LEFT">
+               <Label alignment="CENTER_RIGHT" text="Capacity:">
+                  <graphic>
+                     <ImageView fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@images/Icon-people.png" />
+                     </ImageView>
+                  </graphic></Label>
+               <Label fx:id="capacity" text="x" />
+            </HBox>
+         <HBox.margin>
+            <Insets right="40.0" />
+         </HBox.margin>
+         <padding>
+            <Insets bottom="20.0" top="20.0" />
+         </padding>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+            <Label text="Start time" />
+            <TextField fx:id="startTimeInput" />
+            <Label text="End time" />
+            <TextField fx:id="endTimeInput" />
+      </VBox>
+   </HBox>
+   <HBox prefHeight="160.0" prefWidth="200.0">
+         <StackPane fx:id="timeline" alignment="TOP_LEFT" prefWidth="450.0" HBox.hgrow="NEVER">
+            <HBox.margin>
+               <Insets bottom="20.0" left="20.0" top="10" />
+            </HBox.margin></StackPane>
+         <Button fx:id="reserveButton" mnemonicParsing="false" style="-fx-background-color: red; -fx-text-fill: white;" text="Reserve">
+            <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+            <Font size="14.0" />
+            <HBox.margin>
+               <Insets left="10.0" right="10.0" />
+            </HBox.margin></Button>
+   </HBox>
 </VBox>

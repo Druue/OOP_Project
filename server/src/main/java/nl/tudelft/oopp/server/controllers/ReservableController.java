@@ -32,7 +32,7 @@ public class ReservableController {
     @Autowired
     ReservableService reservableService;
 
-    private Gson gson = new GsonBuilder().serializeNulls().create();
+    //    private Gson gson = new GsonBuilder().serializeNulls().create();
 
     /**
      * Gets all rooms from the database.
@@ -47,10 +47,14 @@ public class ReservableController {
         List<nl.tudelft.oopp.api.models.Room> responseList = new ArrayList<>();
         for (Reservable responseReservable: reservableService.getAllReservables()) {
             if (responseReservable instanceof Room) {
-                LoggerService.info(ReservableController.class, (HttpRequestHandler.convertModel(
+                try {
+                    LoggerService.info(ReservableController.class, (HttpRequestHandler.convertBetweenServerAndApi(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
-                ).details.name));
-                responseList.add(HttpRequestHandler.convertModel(
+                    ).details.name));
+                } catch (NullPointerException npe) {
+                    LoggerService.info(ReservableController.class, "Name of room is null");
+                }
+                responseList.add(HttpRequestHandler.convertBetweenServerAndApi(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
                 ));
             }

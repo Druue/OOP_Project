@@ -10,6 +10,8 @@ public class BuildingResponse {
         this.buildingList = buildingList;
     }
 
+    public BuildingResponse(){}
+
     public List<Building> getBuildingList() {
         return buildingList;
     }
