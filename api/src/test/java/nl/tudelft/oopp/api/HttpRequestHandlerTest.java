@@ -24,7 +24,7 @@ public class HttpRequestHandlerTest {
     User testUser;
     User identicalUser;
     User testAdmin;
-    HttpRequestHandler mockHttpRequestHandler;
+    HttpRequestHandler httpRequestHandler;
     HttpClient mockHttpClient;
 
     @BeforeEach
@@ -32,6 +32,7 @@ public class HttpRequestHandlerTest {
 
         mockHttpClient = mock(HttpClient.class);
 
+        httpRequestHandler = new HttpRequestHandler(mockHttpClient);
 
         testUser = new User(
                 new Details(
@@ -84,7 +85,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void putTestSendSuccessful() {
 
-        HttpRequestHandler.put("ping", null, String.class);
+        httpRequestHandler.put("ping", null, String.class);
 
     }
 
@@ -94,7 +95,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void putTestGetAnyResponse() {
 
-        Object response = mockHttpRequestHandler.put("ping", null, String.class);
+        Object response = httpRequestHandler.put("ping", null, String.class);
 
         //assertNotNull(response);
     }
@@ -105,7 +106,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void putTestGetCorrectResponse() {
 
-        String response = mockHttpRequestHandler.put("ping", null, String.class);
+        String response = httpRequestHandler.put("ping", null, String.class);
 
         //assertEquals(response, "pong");
 
@@ -118,7 +119,7 @@ public class HttpRequestHandlerTest {
      */
     @Test
     public void postTestSendSuccessful() {
-        HttpRequestHandler.post("ping", null, String.class);
+        httpRequestHandler.post("ping", null, String.class);
     }
 
     /**
@@ -127,7 +128,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void postTestGetAnyResponse() {
 
-        Object response = mockHttpRequestHandler.post("ping", null, String.class);
+        Object response = httpRequestHandler.post("ping", null, String.class);
 
         //assertNotNull(response);
 
@@ -139,7 +140,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void postTestGetCorrectResponse() {
 
-        String response = mockHttpRequestHandler.post("ping", null, String.class);
+        String response = httpRequestHandler.post("ping", null, String.class);
 
         //assertEquals(response, "pong");
 
@@ -151,7 +152,7 @@ public class HttpRequestHandlerTest {
      */
     @Test
     public void getTestSendSuccessful() {
-        HttpRequestHandler.get("ping", String.class);
+        httpRequestHandler.get("ping", String.class);
     }
 
 
@@ -161,7 +162,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void getTestGetAnyResponse() {
 
-        Object response = mockHttpRequestHandler.get("ping", String.class);
+        Object response = httpRequestHandler.get("ping", String.class);
 
         //assertNotNull(response);
 
@@ -173,7 +174,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void getTestGetCorrectResponse() {
 
-        Object response = mockHttpRequestHandler.get("ping", String.class);
+        Object response = httpRequestHandler.get("ping", String.class);
 
         //assertEquals(response, "pong");
 
@@ -199,14 +200,14 @@ public class HttpRequestHandlerTest {
 
         // Unfortunately, importing server models is not possible.
         // That's why conversion is done between two API models.
-        Room convertedTestRoom = HttpRequestHandler.convertModel(testRoom, Room.class);
+        Room convertedTestRoom = httpRequestHandler.convertModel(testRoom, Room.class);
         assertNotNull(convertedTestRoom);
 
         // To test the conversion, see if the id's are the same.
         assertEquals(convertedTestRoom.getCapacity(), 40);
 
         // An object converted into the same type should be equal to itself.
-        convertedTestRoom = HttpRequestHandler.convertModel(testRoom, Room.class);
+        convertedTestRoom = httpRequestHandler.convertModel(testRoom, Room.class);
         assertEquals(testRoom, convertedTestRoom);
     }
 
