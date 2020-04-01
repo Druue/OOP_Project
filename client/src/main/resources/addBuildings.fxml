@@ -24,7 +24,7 @@
     <TextField fx:id="buildingDescriptionInput"/>
 
     <Text>* Is a required field.</Text>
-    <Button text="Add building to the database" onAction="#addBuilding"/>
+    <Button text="Add building to the database" onAction="#addBuildingEntry"/>
 
     <Button onAction="#goToAdmin" text="Go back"/>
 
