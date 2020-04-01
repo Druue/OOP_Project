@@ -1,8 +1,10 @@
 package nl.tudelft.oopp.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
+import java.io.IOException;
 import java.net.http.HttpClient;
 import nl.tudelft.oopp.api.models.Bike;
 import nl.tudelft.oopp.api.models.Details;
@@ -192,14 +194,16 @@ public class HttpRequestHandlerTest {
                 false
         );
 
-        // For my next trick, I shall convert a Room into a Bike.
-        Bike testBike = HttpRequestHandler.convertModel(testRoom, Bike.class);
+        // Unfortunately, importing server models is not possible.
+        // That's why conversion is done between two API models.
+        Room convertedTestRoom = HttpRequestHandler.convertModel(testRoom, Room.class);
+        assertNotNull(convertedTestRoom);
 
         // To test the conversion, see if the id's are the same.
-        assertEquals(testBike.getDetails().id, testRoom.getDetails().id);
+        assertEquals(convertedTestRoom.getCapacity(), 40);
 
         // An object converted into the same type should be equal to itself.
-        Room convertedTestRoom = HttpRequestHandler.convertModel(testRoom, Room.class);
+        convertedTestRoom = HttpRequestHandler.convertModel(testRoom, Room.class);
         assertEquals(testRoom, convertedTestRoom);
     }
 
