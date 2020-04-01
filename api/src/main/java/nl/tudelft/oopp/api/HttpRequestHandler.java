@@ -12,7 +12,7 @@ import nl.tudelft.oopp.api.models.User;
 
 public class HttpRequestHandler {
     private static final String host = "http://localhost:8080";
-    private static final HttpClient client = HttpClient.newHttpClient();
+    private static HttpClient client = HttpClient.newHttpClient();
     //    private static final Gson gson = new GsonBuilder()
     //            .serializeNulls()
     //            .setDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -22,6 +22,10 @@ public class HttpRequestHandler {
 
     public static void saveUser(User input) {
         user = input;
+    }
+
+    public static void setClient(HttpClient client) {
+        HttpRequestHandler.client = client;
     }
 
     /**
@@ -42,6 +46,7 @@ public class HttpRequestHandler {
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(parameters))).build();
             String r = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
             return objectMapper.readValue(r, responseType);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -2,10 +2,13 @@ package nl.tudelft.oopp.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
+import java.net.http.HttpResponse;
+
 import nl.tudelft.oopp.api.models.Bike;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.Room;
@@ -25,7 +28,7 @@ public class HttpRequestHandlerTest {
     HttpClient mockHttpClient;
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEach() throws IOException, InterruptedException {
 
         mockHttpClient = mock(HttpClient.class);
 
