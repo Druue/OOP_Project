@@ -20,12 +20,22 @@ public class HttpRequestHandler {
         user = input;
     }
 
+    /**
+     * Creates a new HttpRequestHandler.
+     * Used by frontend controllers to send requests,
+     * and by the backend to convert models.
+     */
     public HttpRequestHandler() {
         this.client = HttpClient.newHttpClient();
         this.host = "http://localhost:8080";
         this.objectMapper = new ObjectMapper();
     }
 
+    /**
+     * Creates a new HttpRequestHandler.
+     * Used in Unit testing, for mocking the HttpClient.
+     * @param client The (mock) HttpClient.
+     */
     public HttpRequestHandler(HttpClient client) {
         this.host = "http://localhost:8080";
         this.objectMapper = new ObjectMapper();
@@ -117,7 +127,7 @@ public class HttpRequestHandler {
             return objectMapper.readValue(objectMapper.writeValueAsString(from), to);
         } catch (IOException e) {
             e.printStackTrace();
-            return  null;
+            return null;
         }
     }
 

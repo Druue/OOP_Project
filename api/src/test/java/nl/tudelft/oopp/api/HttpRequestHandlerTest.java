@@ -2,21 +2,29 @@ package nl.tudelft.oopp.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.net.URI;
 import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
+import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
+import java.util.Optional;
+import javax.net.ssl.SSLSession;
 import nl.tudelft.oopp.api.models.Bike;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.Room;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserKind;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+
 
 @PrepareForTest(HttpRequestHandler.class)
 public class HttpRequestHandlerTest {
@@ -29,10 +37,190 @@ public class HttpRequestHandlerTest {
 
     @BeforeEach
     void beforeEach() throws IOException, InterruptedException {
+        ObjectMapper objectMapper = new ObjectMapper();
 
         mockHttpClient = mock(HttpClient.class);
 
         httpRequestHandler = new HttpRequestHandler(mockHttpClient);
+
+        when(mockHttpClient.send(HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/ping"))
+                .setHeader("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(
+                    objectMapper.writeValueAsString("")
+                )
+                )
+                .build(),
+                HttpResponse.BodyHandlers.ofString())).thenReturn(
+                new HttpResponse<>() {
+                    @Override
+                    public int statusCode() {
+                        return 200;
+                    }
+
+                    @Override
+                    public HttpRequest request() {
+                        return null;
+                    }
+
+                    @Override
+                    public Optional<HttpResponse<String>> previousResponse() {
+                        return Optional.empty();
+                    }
+
+                    @Override
+                    public HttpHeaders headers() {
+                        return null;
+                    }
+
+                    @Override
+                    public String body() {
+                        try {
+                            return objectMapper.writeValueAsString(new ServerResponseAlert(
+                                    "pong",
+                                    null
+                            ));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    }
+
+                    @Override
+                    public Optional<SSLSession> sslSession() {
+                        return Optional.empty();
+                    }
+
+                    @Override
+                    public URI uri() {
+                        return null;
+                    }
+
+                    @Override
+                    public HttpClient.Version version() {
+                        return null;
+                    }
+                }
+        );
+
+        when(mockHttpClient.send(HttpRequest.newBuilder()
+                        .uri(URI.create("http://localhost:8080/ping"))
+                        .setHeader("Content-Type", "application/json")
+                        .PUT(HttpRequest.BodyPublishers.ofString(
+                                objectMapper.writeValueAsString("")
+                                )
+                        )
+                        .build(),
+                HttpResponse.BodyHandlers.ofString())).thenReturn(
+                new HttpResponse<>() {
+                    @Override
+                    public int statusCode() {
+                        return 200;
+                    }
+
+                    @Override
+                    public HttpRequest request() {
+                        return null;
+                    }
+
+                    @Override
+                    public Optional<HttpResponse<String>> previousResponse() {
+                        return Optional.empty();
+                    }
+
+                    @Override
+                    public HttpHeaders headers() {
+                        return null;
+                    }
+
+                    @Override
+                    public String body() {
+                        try {
+                            return objectMapper.writeValueAsString(new ServerResponseAlert(
+                                    "pong",
+                                    null
+                            ));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    }
+
+                    @Override
+                    public Optional<SSLSession> sslSession() {
+                        return Optional.empty();
+                    }
+
+                    @Override
+                    public URI uri() {
+                        return null;
+                    }
+
+                    @Override
+                    public HttpClient.Version version() {
+                        return null;
+                    }
+                }
+        );
+
+        when(mockHttpClient.send(HttpRequest.newBuilder()
+                        .uri(URI.create("http://localhost:8080/ping"))
+                        .setHeader("Content-Type", "application/json")
+                        .GET()
+                        .build(),
+                HttpResponse.BodyHandlers.ofString())).thenReturn(
+                new HttpResponse<>() {
+                    @Override
+                    public int statusCode() {
+                        return 200;
+                    }
+
+                    @Override
+                    public HttpRequest request() {
+                        return null;
+                    }
+
+                    @Override
+                    public Optional<HttpResponse<String>> previousResponse() {
+                        return Optional.empty();
+                    }
+
+                    @Override
+                    public HttpHeaders headers() {
+                        return null;
+                    }
+
+                    @Override
+                    public String body() {
+                        try {
+                            return objectMapper.writeValueAsString(new ServerResponseAlert(
+                                    "pong",
+                                    null
+                            ));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    }
+
+                    @Override
+                    public Optional<SSLSession> sslSession() {
+                        return Optional.empty();
+                    }
+
+                    @Override
+                    public URI uri() {
+                        return null;
+                    }
+
+                    @Override
+                    public HttpClient.Version version() {
+                        return null;
+                    }
+                }
+        );
+
+
 
         testUser = new User(
                 new Details(
@@ -85,7 +273,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void putTestSendSuccessful() {
 
-        httpRequestHandler.put("ping", null, String.class);
+        httpRequestHandler.put("ping", null, ServerResponseAlert.class);
 
     }
 
@@ -95,9 +283,9 @@ public class HttpRequestHandlerTest {
     @Test
     public void putTestGetAnyResponse() {
 
-        Object response = httpRequestHandler.put("ping", null, String.class);
+        Object response = httpRequestHandler.put("ping", null, ServerResponseAlert.class);
 
-        //assertNotNull(response);
+        assertNotNull(response);
     }
 
     /**
@@ -106,9 +294,9 @@ public class HttpRequestHandlerTest {
     @Test
     public void putTestGetCorrectResponse() {
 
-        String response = httpRequestHandler.put("ping", null, String.class);
+        ServerResponseAlert response = httpRequestHandler.put("ping", null, ServerResponseAlert.class);
 
-        //assertEquals(response, "pong");
+        assertEquals(response.getMessage(), "pong");
 
     }
 
@@ -119,7 +307,7 @@ public class HttpRequestHandlerTest {
      */
     @Test
     public void postTestSendSuccessful() {
-        httpRequestHandler.post("ping", null, String.class);
+        httpRequestHandler.post("ping", null, ServerResponseAlert.class);
     }
 
     /**
@@ -128,9 +316,9 @@ public class HttpRequestHandlerTest {
     @Test
     public void postTestGetAnyResponse() {
 
-        Object response = httpRequestHandler.post("ping", null, String.class);
+        Object response = httpRequestHandler.post("ping", null, ServerResponseAlert.class);
 
-        //assertNotNull(response);
+        assertNotNull(response);
 
     }
 
@@ -140,9 +328,9 @@ public class HttpRequestHandlerTest {
     @Test
     public void postTestGetCorrectResponse() {
 
-        String response = httpRequestHandler.post("ping", null, String.class);
+        ServerResponseAlert response = httpRequestHandler.post("ping", null, ServerResponseAlert.class);
 
-        //assertEquals(response, "pong");
+        assertEquals(response.getMessage(), "pong");
 
     }
 
@@ -152,7 +340,7 @@ public class HttpRequestHandlerTest {
      */
     @Test
     public void getTestSendSuccessful() {
-        httpRequestHandler.get("ping", String.class);
+        httpRequestHandler.get("ping", ServerResponseAlert.class);
     }
 
 
@@ -162,9 +350,9 @@ public class HttpRequestHandlerTest {
     @Test
     public void getTestGetAnyResponse() {
 
-        Object response = httpRequestHandler.get("ping", String.class);
+        Object response = httpRequestHandler.get("ping", ServerResponseAlert.class);
 
-        //assertNotNull(response);
+        assertNotNull(response);
 
     }
 
@@ -174,9 +362,9 @@ public class HttpRequestHandlerTest {
     @Test
     public void getTestGetCorrectResponse() {
 
-        Object response = httpRequestHandler.get("ping", String.class);
+        ServerResponseAlert response = httpRequestHandler.get("ping", ServerResponseAlert.class);
 
-        //assertEquals(response, "pong");
+        assertEquals(response.getMessage(), "pong");
 
     }
 
@@ -209,6 +397,12 @@ public class HttpRequestHandlerTest {
         // An object converted into the same type should be equal to itself.
         convertedTestRoom = httpRequestHandler.convertModel(testRoom, Room.class);
         assertEquals(testRoom, convertedTestRoom);
+
+
+        // Force an error to occur within the method, and see if it gets caught.
+        Bike wonkyBike = httpRequestHandler.convertModel(testRoom, Bike.class);
+        assertNull(wonkyBike);
+
     }
 
 }
