@@ -106,11 +106,27 @@ public class RegistrationSceneTest {
     }
 
     @Test
+    void invalidMailDomainTest() {
+
+        scene.attemptRegistration(
+                "user", "pass",
+                "invalid@mailadress.com", "name"
+        );
+
+        Mockito.verify(mockAlertController).show(
+                Alert.AlertType.ERROR,
+                "ERROR",
+                null,
+                "Invalid email address given."
+        );
+    }
+
+    @Test
     void correctStudentTest() {
         try {
             scene.attemptRegistration(
                     "user", "pass",
-                    "employee@tudelft.nl", "name"
+                    "employee@student.tudelft.nl", "name"
             );
         } catch (ExceptionInInitializerError | NoClassDefFoundError ignored) {
             return;
