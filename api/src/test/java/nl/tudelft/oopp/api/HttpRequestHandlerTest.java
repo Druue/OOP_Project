@@ -1,6 +1,9 @@
 package nl.tudelft.oopp.api;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -458,14 +461,14 @@ public class HttpRequestHandlerTest {
             Bike wonkyBike = httpRequestHandler.convertBetweenServerAndApi(testRoom, Bike.class);
             fail("conversion should throw an error.");
         } catch (IllegalArgumentException ignored) {
-
+            // Do nothing - Test succeeded
         }
 
     }
 
     /**
      * Checks if the default constructor works,
-     * and if the new {@link HttpRequestHandler} has a
+     * and if the new {@link HttpRequestHandler} has the same user as the static one.
      */
     @Test
     void constructorTest() {

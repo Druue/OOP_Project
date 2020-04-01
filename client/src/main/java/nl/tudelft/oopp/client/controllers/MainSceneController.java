@@ -65,6 +65,7 @@ public class MainSceneController {
             primaryStage.show();
 
         } catch (IOException e) {
+            System.out.println(e);
             System.out.println("IOException in MainSceneController");
         }
     }

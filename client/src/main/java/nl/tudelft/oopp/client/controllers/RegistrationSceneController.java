@@ -21,7 +21,7 @@ import nl.tudelft.oopp.api.models.UserKind;
 
 public class RegistrationSceneController {
 
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     @FXML
     public TextField registrationNameInput;
@@ -29,18 +29,27 @@ public class RegistrationSceneController {
     public TextField registrationEmailInput;
     public PasswordField registrationPasswordInput;
 
+    public AlertsController alertsController;
+
+    public RegistrationSceneController() {
+        this.alertsController = new AlertsController();
+    }
+
+    public RegistrationSceneController(AlertsController alertsController) {
+        this.alertsController = alertsController;
+    }
+
     /**
      * Handles going to the login page.
      *
-     * @param event the event from where the function was called.
      */
-    public void goToLogin(MouseEvent event) {
+    public void goToLogin() {
         try {
             Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
             Scene loginScene = new Scene(loginParent);
             loginScene.getStylesheets()
                     .addAll(this.getClass().getResource("/login.css").toExternalForm());
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage primaryStage = (Stage) registrationPasswordInput.getScene().getWindow();
 
 
             primaryStage.hide();
@@ -52,31 +61,42 @@ public class RegistrationSceneController {
     }
 
     /**
-     * Makes a request to the backend using the information that is present in the client's text
-     * fields.
+     * Entry function that gets called through the client.
+     * Gets the input from the text fields and calls attemptRegistration().
      */
-    public void attemptRegistration() {
-
+    public void attemptRegistrationEntry() {
         // Get all text from text fields
         String username = registrationUsernameInput.getText();
         String password = registrationPasswordInput.getText();
         String email = registrationEmailInput.getText();
         String name = registrationNameInput.getText();
 
+        attemptRegistration(username, password, email, name);
+    }
+
+    /**
+     * Makes a request to the backend using the information that is present in the client's text
+     * fields.
+     */
+    public void attemptRegistration(String username, String password, String email, String name) {
+
         // If any of these fields are empty: Send an alert.
         if (username.isEmpty() || password.isEmpty() || name.isEmpty() || email.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all required fields.");
-            alert.showAndWait();
+            alertsController.show(
+                    Alert.AlertType.WARNING,
+                    "Warning",
+                    null,
+                    "Please fill in all required fields."
+            );
         } else {
 
             // Checks for the kind of user that is registering
             UserKind userKind = null;
             try {
+
                 String domainEmailPart = email.split("@")[1];
                 String userRole = domainEmailPart.split("\\.")[0];
+
                 switch (userRole) {
                     case "student":
 
@@ -97,12 +117,13 @@ public class RegistrationSceneController {
                         throw new Exception();
                 }
             } catch (Exception e) {
-                // Create an alert, and show it to the user.
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("Invalid email address given.");
-                alert.showAndWait();
+
+                alertsController.show(
+                        Alert.AlertType.ERROR,
+                        "ERROR",
+                        null,
+                        "Invalid email address given."
+                );
                 return;
             }
 
@@ -114,45 +135,36 @@ public class RegistrationSceneController {
             UserAuthResponse response = httpRequestHandler.post("register", registrationRequest,
                     UserAuthResponse.class);
 
-            // Create an alert, and show it to the user.
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setTitle("Response");
-            alert.setHeaderText(null);
+
             if (response != null) {
                 if (response.getAlertType().equals("CONFIRMATION")) {
+
+                    alertsController.show(
+                            Alert.AlertType.CONFIRMATION,
+                            response.getMessage()
+                    );
+
+                    // Save the user.
                     HttpRequestHandler.saveUser(response.getUser());
-                    // HttpRequestHandler.user.setUserId(response.getUser().getUserId());
-                    System.out.println(HttpRequestHandler.user.getId());
-                    alert.setAlertType(Alert.AlertType.CONFIRMATION);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
-                    // For now, goes back to the homepage.
-                    goToHomepage();
+
+                    // Go to the login page.
+                    goToLogin();
                 } else {
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+
+                    alertsController.show(
+                            Alert.AlertType.ERROR,
+                            response.getMessage()
+                    );
+
                 }
             } else {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid response from server.");
-            }
-        }
-    }
 
-    /**
-     * Handles going back to the Homepage.
-     */
-    public void goToHomepage() {
-        try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) (registrationPasswordInput.getScene().getWindow());
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
-        } catch (IOException e) {
-            System.out.println("IOException in RegistrationController");
+                alertsController.show(
+                        Alert.AlertType.ERROR,
+                        "Invalid response from server."
+                );
+
+            }
         }
     }
 }
