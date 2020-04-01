@@ -121,7 +121,51 @@ public class AddRoomsController {
             primaryStage.show();
 
         } catch (IOException e) {
-            System.out.println("IOException in MainSceneController");
+            System.out.println("IOException in AddRoomsController");
+        }
+    }
+
+    /**
+     * Handles going to the add rooms page.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToAddRoom(ActionEvent event) {
+        try {
+            Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-addRoom.fxml"));
+            Scene roomScene = new Scene(roomParent);
+
+            Stage primaryStage =
+                    (Stage) (roomNameInput.getScene().getWindow());
+
+            primaryStage.hide();
+            primaryStage.setScene(roomScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AddRoomsController");
+        }
+    }
+
+    /**
+     * Handles going to the add buildings page.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToAddBuilding(ActionEvent event) {
+        try {
+            Parent buildingParent = FXMLLoader.load(getClass().getResource("/admin-addBuilding.fxml"));
+            Scene buildingScene = new Scene(buildingParent);
+
+            Stage primaryStage =
+                    (Stage) (roomNameInput.getScene().getWindow());
+
+            primaryStage.hide();
+            primaryStage.setScene(buildingScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AddRoomsController");
         }
     }
 }
