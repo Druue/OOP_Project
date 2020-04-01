@@ -116,7 +116,6 @@ public class Building {
         Building building = (Building) o;
         return Objects.equals(getNumber(), building.getNumber())
                && Objects.equals(getDetails(), building.getDetails())
-               && Objects.equals(getFoodcourt(), building.getFoodcourt())
                && Objects.equals(getOpeningHours(), building.getOpeningHours());
     }
 
