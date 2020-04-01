@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.server.models;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +37,6 @@ public class Reservation {
     /**
      * This is a reservation of a specific reservable.
      */
-    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
     @OneToOne
     @JoinColumn(name = "reservable", referencedColumnName = "id")
     public Reservable reservable;
@@ -57,14 +57,18 @@ public class Reservation {
 
     /**
      * Initialises a new instance of {@link Reservation}.
-     * 
+     *
      * @param reservationID The reservation's unique ID.
      * @param user          The user holding the reservation.
      * @param reservable    The entity being reserved.
      * @param timeslot      The time during which the entity will be reserved.
      */
-    public Reservation(Long reservationID, User user, Reservable reservable,
-            TimeSlot timeslot) {
+    @JsonCreator
+    public Reservation(
+        @JsonProperty Long reservationID,
+        @JsonProperty User user,
+        @JsonProperty Room reservable,
+        @JsonProperty TimeSlot timeslot) {
         this.user = user;
         this.reservable = reservable;
         this.timeslot = timeslot;

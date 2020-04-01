@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Map;
 
 /**
@@ -31,6 +32,7 @@ public class Building {
      * Move this to the reservable table model.
      *
      */
+    @JsonIgnore
     Map<Reservable, TimeSlot> availableTimeslots;
 
     /**

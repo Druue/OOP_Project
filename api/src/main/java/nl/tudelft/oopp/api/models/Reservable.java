@@ -1,8 +1,5 @@
 package nl.tudelft.oopp.api.models;
 
-/**
- * Initialises a new {@link Reservable}.
- */
 public abstract class Reservable {
 
     /**
@@ -16,7 +13,6 @@ public abstract class Reservable {
      */
     public Details details;
 
-
     public Reservable(Long id, Details details) {
         this.id = id;
         this.details = details;
@@ -26,17 +22,15 @@ public abstract class Reservable {
 
     }
 
+    public Reservable(Details details) {
+        this.details = details;
+    }
+
     public Details getDetails() {
         return details;
     }
 
     public void setDetails(Details details) {
-        this.details = details;
-    }
-
-
-
-    public Reservable(Details details) {
         this.details = details;
     }
 

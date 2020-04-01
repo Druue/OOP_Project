@@ -1,6 +1,9 @@
 package nl.tudelft.oopp.api.models;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Details {
 
     /**
@@ -38,7 +41,12 @@ public class Details {
      * @param description A description of the object.
      * @param image       An image of the object.
      */
-    public Details(Long id, String name, String description, String image) {
+    @JsonCreator
+    public Details(
+        @JsonProperty("id") Long id,
+        @JsonProperty("name") String name,
+        @JsonProperty("description") String description,
+        @JsonProperty("image") String image) {
         this.id = id;
         this.name = name;
         this.description = description;

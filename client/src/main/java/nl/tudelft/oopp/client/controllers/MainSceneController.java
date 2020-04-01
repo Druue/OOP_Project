@@ -74,7 +74,7 @@ public class MainSceneController {
      */
     public void goToHome(ActionEvent event) {
         try {
-            Parent homeParent = FXMLLoader.load(getClass().getResource("/Homepage.fxml"));
+            Parent homeParent = FXMLLoader.load(getClass().getResource("/homepage.fxml"));
             Scene homeScene = new Scene(homeParent);
 
             Stage primaryStage =
