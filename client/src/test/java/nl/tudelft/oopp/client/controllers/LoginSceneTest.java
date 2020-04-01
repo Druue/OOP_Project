@@ -25,7 +25,7 @@ public class LoginSceneTest {
     HttpRequestHandler mockHttpRequestHandler;
 
     @BeforeEach
-    void beforeEach() throws IOException, InterruptedException {
+    void beforeEach() {
         mockAlertController = mock(AlertsController.class);
         Mockito.doNothing().when(mockAlertController).show(
                 ArgumentMatchers.any(Alert.AlertType.class),
