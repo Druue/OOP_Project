@@ -1,6 +1,8 @@
 package nl.tudelft.oopp.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,11 +31,10 @@ public class Building {
     public TimeSlot openingHours;
 
     /**
-     * Move this to the reservable table model.
-     *
+     * List with all the rooms and bikes.
      */
     @JsonIgnore
-    Map<Reservable, TimeSlot> availableTimeslots;
+    List<Reservable> reservables;
 
     /**
      * Initialises a new instance of {@link Building}.
@@ -53,11 +54,13 @@ public class Building {
         this.number = number;
         this.details = details;
         this.openingHours = openingHours;
+        reservables = new ArrayList<>();
     }
 
     public Building(Long number, Details details) {
         this.number = number;
         this.details = details;
+        reservables = new ArrayList<>();
     }
 
     public String getName() {
@@ -100,11 +103,11 @@ public class Building {
         this.openingHours = openingHours;
     }
 
-    public Map<Reservable, TimeSlot> getAvailableTimeslots() {
-        return availableTimeslots;
+    public List<Reservable> getReservables() {
+        return reservables;
     }
 
-    public void setAvailableTimeslots(Map<Reservable, TimeSlot> availableTimeslots) {
-        this.availableTimeslots = availableTimeslots;
+    public void setReservables(List<Reservable> reservables) {
+        this.reservables = reservables;
     }
 }

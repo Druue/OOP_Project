@@ -119,19 +119,4 @@ public class HttpRequestHandler {
             return  null;
         }
     }
-
-    /** This method converts an object from a server model to the same API model and
-     * vice-versa.
-     *
-     * @param from The object which is being converted.
-     * @param to The {@link Class} in which the object is converted.
-     * @param <T> A generic type parameter indicating the class of the inout object.
-     * @param <E> A generic type parameter indicating the target class to convert to.
-     * @return The converted object after serialization/deserialization, which is
-     *      an instance of @param E.
-     */
-    public <T, E> E convertBetweenServerAndApi(T from, Class<E> to) {
-
-        return objectMapper.convertValue(from, to);
-    }
 }

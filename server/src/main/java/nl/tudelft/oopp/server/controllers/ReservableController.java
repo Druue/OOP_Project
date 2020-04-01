@@ -50,14 +50,13 @@ public class ReservableController {
         for (Reservable responseReservable: reservableService.getAllReservables()) {
             if (responseReservable instanceof Room) {
                 try {
-                    LoggerService.info(ReservableController.class,
-                            (httpRequestHandler.convertBetweenServerAndApi(
+                    LoggerService.info(ReservableController.class, (httpRequestHandler.convertModel(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
                     ).details.name));
                 } catch (NullPointerException npe) {
                     LoggerService.info(ReservableController.class, "Name of room is null");
                 }
-                responseList.add(httpRequestHandler.convertBetweenServerAndApi(
+                responseList.add(httpRequestHandler.convertModel(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
                 ));
             }
