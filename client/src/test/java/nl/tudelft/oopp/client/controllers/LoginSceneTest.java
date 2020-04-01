@@ -2,12 +2,14 @@ package nl.tudelft.oopp.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +25,9 @@ import java.net.http.HttpResponse;
 public class LoginSceneTest {
 
     AlertsController mockAlertController;
-    HttpClient mockClient;
     LoginSceneController scene;
+    LoginRequest testLoginRequest;
+    HttpRequestHandler mockHttpRequestHandler;
 
     @BeforeEach
     void beforeEach() throws IOException, InterruptedException {
@@ -33,11 +36,30 @@ public class LoginSceneTest {
         Mockito.doNothing().when(mockAlertController).show(any(), any(), any(), any());
 
         scene = new LoginSceneController();
-        mockClient = mock(HttpClient.class);
+        mockHttpRequestHandler = mock(HttpRequestHandler.class);
+        scene.httpRequestHandler = mockHttpRequestHandler;
 
+        testLoginRequest = new LoginRequest(
+                "username",
+                "password"
+        );
+        when(mockHttpRequestHandler.post(eq("login"), any(LoginRequest.class),
+                eq(UserAuthResponse.class)))
+                .thenReturn(
+                        new UserAuthResponse(
+                                "invalid login",
+                                "ERROR",
+                                new User()
+                        ));
 
-
-        HttpRequestHandler.setClient(mockClient);
+        when(mockHttpRequestHandler.post(eq("login"), eq(testLoginRequest),
+                eq(UserAuthResponse.class)))
+                .thenReturn(
+                        new UserAuthResponse(
+                        "success!",
+                        "CONFIRMATION",
+                        new User()
+                ));
 
 
 
@@ -46,14 +68,21 @@ public class LoginSceneTest {
     }
 
     @Test
-    public void testLoginRequest() throws IOException, InterruptedException {
+    public void testLoginRequest()  {
+
         UserAuthResponse response = scene.sendLoginRequest(
                 "username", "password"
         );
 
-        Mockito.verify(mockClient).send(any(), any());
+        Mockito.verify(mockHttpRequestHandler).post("login", testLoginRequest,
+                UserAuthResponse.class);
 
-        //assertEquals(response.getMessage(), "login sucessfull");
+        assertEquals(response.getMessage(), "success!");
 
+        response = scene.sendLoginRequest(
+                "doesnt", "exist"
+        );
+        
+        assertEquals(response.getMessage(), "invalid login");
     }
 }

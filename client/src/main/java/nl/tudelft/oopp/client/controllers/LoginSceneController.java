@@ -18,7 +18,7 @@ import nl.tudelft.oopp.api.models.UserAuthResponse;
 
 public class LoginSceneController {
 
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     // the TextField object(s) from mainScene.fxml
     @FXML
