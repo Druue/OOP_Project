@@ -10,6 +10,8 @@ public class ReservationResponse {
         this.reservationList = reservationList;
     }
 
+    public ReservationResponse(){}
+
     public List<Reservation> getReservationList() {
         return reservationList;
     }

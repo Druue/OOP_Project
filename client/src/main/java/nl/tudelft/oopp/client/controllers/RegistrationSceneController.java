@@ -20,6 +20,9 @@ import nl.tudelft.oopp.api.models.UserKind;
 
 
 public class RegistrationSceneController {
+
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     @FXML
     public TextField registrationNameInput;
     public TextField registrationUsernameInput;
@@ -69,8 +72,8 @@ public class RegistrationSceneController {
             alert.showAndWait();
         } else {
 
-            // Checks for the kind of user that is registrating
-            UserKind userKind;
+            // Checks for the kind of user that is registering
+            UserKind userKind = null;
             try {
                 String domainEmailPart = email.split("@")[1];
                 String userRole = domainEmailPart.split("\\.")[0];
@@ -83,6 +86,11 @@ public class RegistrationSceneController {
                     case "tudelft":
 
                         userKind = UserKind.Employee;
+
+                        break;
+                    case "admin":
+
+                        userKind = UserKind.Admin;
 
                         break;
                     default:
@@ -103,7 +111,7 @@ public class RegistrationSceneController {
                     email, username, password, userKind);
 
             // Send a register request to the server.
-            UserAuthResponse response = HttpRequestHandler.post("register", registrationRequest,
+            UserAuthResponse response = httpRequestHandler.post("register", registrationRequest,
                     UserAuthResponse.class);
 
             // Create an alert, and show it to the user.

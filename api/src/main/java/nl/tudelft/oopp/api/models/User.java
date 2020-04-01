@@ -75,8 +75,7 @@ public class User {
      * @param registrationDetails The registration details from which to create a new user
      */
     public User(RegistrationDetails registrationDetails) {
-        this.details =
-                HttpRequestHandler.convertModel(registrationDetails.getDetails(), Details.class);
+        this.details = registrationDetails.getDetails();
         this.email = registrationDetails.getEmail();
         this.username = registrationDetails.getusername();
         this.password = registrationDetails.getPassword();

@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RegistrationController {
-    public static final Gson gson = new Gson();
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     final RegistrationService registrationService;
     final UserService userService;
 
@@ -63,7 +64,7 @@ public class RegistrationController {
 
             // Converts the user into an API model User.
             // This has to be done via their email, as they don't know their ID during registration.
-            nl.tudelft.oopp.api.models.User user = HttpRequestHandler.convertModel(
+            nl.tudelft.oopp.api.models.User user = httpRequestHandler.convertModel(
                     registrationService.getUserByEmail(userRequest.email),   //from
                     nl.tudelft.oopp.api.models.User.class);             //to
 

@@ -18,7 +18,6 @@ public abstract class Reservable {
      */
     public Details details;
 
-
     public Reservable(Long id, Details details) {
         this.id = id;
         this.details = details;
@@ -26,6 +25,10 @@ public abstract class Reservable {
 
     public Reservable() {
 
+    }
+
+    public Reservable(Details details) {
+        this.details = details;
     }
 
     public Details getDetails() {

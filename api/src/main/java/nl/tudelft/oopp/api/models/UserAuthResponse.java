@@ -5,6 +5,9 @@ public class UserAuthResponse {
     String alertType;
     User user;
 
+    public UserAuthResponse() {
+    }
+
     /**
      * A Response object sent after a login attempt by a user.
      *

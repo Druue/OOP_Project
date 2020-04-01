@@ -16,15 +16,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.Details;
+import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.ReservationResponse;
-import nl.tudelft.oopp.api.models.User;
-import nl.tudelft.oopp.api.models.UserKind;
 
 
 
 public class HomepageController<E> implements Initializable {
+
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     ObservableList<E> list = FXCollections.observableArrayList();
 
@@ -47,11 +47,11 @@ public class HomepageController<E> implements Initializable {
         /*
          * This block makes three rooms and tree reservations.
          */
-        User exampleUser = new User(
-                new Details(null, "first last", null, null),
-                "example@mail.com",
-                "flast",
-                "badpass", UserKind.Student);
+        //        User exampleUser = new User(
+        //                new Details(null, "first last", null, null),
+        //                "example@mail.com",
+        //                "flast",
+        //                "badpass", UserKind.Student);
         //TODO: Add proper connection to backend.
 
         //        Room a = new Room("Example room a", false, false);
@@ -71,16 +71,20 @@ public class HomepageController<E> implements Initializable {
         //        }
 
         // Set to true / remove the condition once the actual reservations controller is ready.
-        boolean doRest = false;
+        boolean doRest = true;
 
         if (doRest) {
 
             List<Reservation> reservationList = new ArrayList<>();
             try {
-                ReservationResponse response = HttpRequestHandler.get("reservations/all", ReservationResponse.class);
-                reservationList = response.getReservationList();
-                for (Reservation s : reservationList) {
-                    todayRes.getItems().add(s.reservable.details.name);
+                ReservationResponse response =
+                    httpRequestHandler.get("reservations/admin/all", ReservationResponse.class);
+                if (response != null) {
+                    reservationList = response.getReservationList();
+                    for (Reservation s : reservationList) {
+                        todayRes.getItems().add("Room " + s.reservable.details.name
+                            + " reserved by " + s.getUser().getName());
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -101,7 +105,7 @@ public class HomepageController<E> implements Initializable {
             Scene mainScene = new Scene(mainParent);
 
             Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
             primaryStage.setScene(mainScene);
@@ -124,7 +128,7 @@ public class HomepageController<E> implements Initializable {
             Scene resScene = new Scene(resParent);
 
             Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
             primaryStage.setScene(resScene);

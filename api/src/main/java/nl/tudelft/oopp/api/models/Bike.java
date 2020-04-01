@@ -5,6 +5,10 @@ package nl.tudelft.oopp.api.models;
  */
 public class Bike extends Reservable {
 
+    public Bike() {
+        super();
+    }
+
     /**
      * Initialises a new instance of {@link Bike}.
      *

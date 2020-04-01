@@ -18,11 +18,20 @@ import nl.tudelft.oopp.api.models.UserAuthResponse;
 
 public class LoginSceneController {
 
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     // the TextField object(s) from mainScene.fxml
     @FXML
     public TextField inputusername;
     @FXML
     public TextField inputPassword;
+
+    public AlertsController alertsController;
+
+    public UserAuthResponse sendLoginRequest(String username, String password) {
+        LoginRequest loginRequest = new LoginRequest(username, password);
+        return httpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
+    }
 
 
     /**
@@ -30,45 +39,51 @@ public class LoginSceneController {
      */
     public void tryLogin() {
 
+        alertsController = new AlertsController();
+
         String username = inputusername.getText();
         String password = inputPassword.getText();
         if (username.isEmpty() || password.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please provide a username and password.");
-            alert.showAndWait();
-        } else {
-            LoginRequest loginRequest = new LoginRequest(username, password);
-            UserAuthResponse response =
-                    HttpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
 
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setTitle("Response");
-            alert.setHeaderText(null);
+            alertsController.show(
+                    Alert.AlertType.WARNING,
+                    "Warning",
+                    null,
+                    "Please provide a username and password."
+
+            );
+        } else {
+            // Try sending a request to the server.
+            UserAuthResponse response = sendLoginRequest(username, password);
+
             if (response != null) {
                 if (response.getAlertType().equals("CONFIRMATION")) {
 
                     // Saves the user gotten from the UserAuthResponse.
-                    // This includes the user's id and details for a more personalized experience,
-                    // and to make queries easier later on.
                     HttpRequestHandler.saveUser(response.getUser());
 
-                    // Show an alert with the server response message.
-                    alert.setAlertType(Alert.AlertType.CONFIRMATION);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+                    // After that, show the confirmation message retrieved from the backend.
+                    alertsController.show(
+                            Alert.AlertType.CONFIRMATION,
+                            response.getMessage()
+                    );
 
-                    // For now, goes back to the homepage.
+                    // After that, go to the homepage.
                     goToHomepage();
                 } else {
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+
+                    //
+                    alertsController.show(
+                            Alert.AlertType.ERROR,
+                            response.getMessage()
+                    );
+
                 }
             } else {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid response from server.");
+                alertsController.show(
+                        Alert.AlertType.ERROR,
+                        "Invalid response from server."
+                );
             }
         }
     }

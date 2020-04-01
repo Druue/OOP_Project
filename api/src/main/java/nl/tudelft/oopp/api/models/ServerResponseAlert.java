@@ -15,6 +15,8 @@ public class ServerResponseAlert {
         this.alertType = alertType;
     }
 
+    public ServerResponseAlert() {}
+
     public String getMessage() {
         return this.message;
     }

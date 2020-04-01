@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.server.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,6 +12,7 @@ import javax.persistence.Table;
 @Table(name = "room")
 public class Room extends Reservable {
 
+    @JsonCreator
     public Room() {
         super();
     }
