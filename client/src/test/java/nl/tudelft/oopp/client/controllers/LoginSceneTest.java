@@ -1,13 +1,12 @@
 package nl.tudelft.oopp.client.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import java.io.IOException;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.User;
@@ -16,10 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-
-import java.io.IOException;
-import java.net.http.HttpClient;
-import java.net.http.HttpResponse;
 
 @PrepareForTest(LoginSceneController.class)
 public class LoginSceneTest {
@@ -82,7 +77,7 @@ public class LoginSceneTest {
         response = scene.sendLoginRequest(
                 "doesnt", "exist"
         );
-        
+
         assertEquals(response.getMessage(), "invalid login");
     }
 }

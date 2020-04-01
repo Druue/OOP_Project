@@ -1,9 +1,7 @@
 package nl.tudelft.oopp.api.models;
 
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Objects;
 
 public class Details {
