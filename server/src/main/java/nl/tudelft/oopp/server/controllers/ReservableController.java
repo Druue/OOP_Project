@@ -86,70 +86,52 @@ public class ReservableController {
         return ResponseEntity.ok(new RoomResponse(responseList));
     }
 
-    /** Receives a GET request for all rooms or bikes of a particular building. First authenticates
-     *      the user by his username using the {@link AuthorizationService} bean and then uses the
+    /** Receives a GET request for all rooms or bikes of a particular building. First uses the
      *      {@link nl.tudelft.oopp.server.services.ReservableService} to fetch all rooms or bikes
-     *      of the building with the provided id as a request parameter. Sends the list wrapped in
-     *      a {@link ResponseEntity} object.
+     *      of the building with the provided id as a request parameter. Then sends the list wrapped
+     *      in a {@link ResponseEntity} object.
      *
-     * @param request   The client request containing the username to be authenticated.
-     * @param id        The id of the building to fetch the rooms of.
+     * @param number        The id of the building to fetch the rooms of.
      * @param type      The type of reservable to retrieve - rooms or bikes.
      * @return          A {@link ResponseEntity} object containing a list of the building's rooms.
      */
     @GetMapping("/{role:(?:user|admin)}/all/{type}/building")
     public ResponseEntity<List<Reservable>> getAllReservablesOfBuilding(
-        @RequestBody ClientRequest<String> request,
-        @RequestParam Long id,
+        @RequestParam Long number,
         @PathVariable String type) {
 
         logger.info("Received GET requests for all " + type
-            + " of building " + id + ". Processing ...");
+            + " of building " + number + ". Processing ...");
 
-        try {
-            authorizationService.authenticateUser(request.getUsername());
-        } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
-            return ResponseEntity.badRequest().build();
-        }
-
-        logger.info("Fetching all + " + type + " of building " + id + " ...");
+        logger.info("Fetching all + " + type + " of building " + number + " ...");
 
         List<Reservable> reservablesToSend;
 
         try {
-            reservablesToSend = reservableService.getAllReservablesForBuilding(id, type);
+            reservablesToSend = reservableService.getAllReservablesForBuilding(number, type);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(null);
         }
 
-        logger.info("Sending the " + type + " of building " + id +  " ...");
+        logger.info("Sending the " + type + " of building " + number +  " ...");
         return ResponseEntity.ok(reservablesToSend);
     }
 
     /** Receives a GET request for all rooms filtered by a certain capacity provided as a request
-     *      parameter. First it authenticates the user via the {@link AuthorizationService} bean,
-     *      then fetches all rooms from the database with the required capacity.
-     * @param request   The {@link ClientRequest} object containing the user username.
+     *      parameter. First fetches all rooms from the database with the required capacity using
+     *      the {@link RoomFilteringService} bean, and then sends the fetched list wrapped in a
+     *      {@link ResponseEntity} object.
      * @param group     The partition of rooms with respect to the provided capacity.
      * @param capacity  The provided by the user capacity for filtering.
      * @return          A {@link ResponseEntity} containing a list of {@link Room} objects.
      */
     @GetMapping("/{role:(?:user|admin)}/filter/capacity/{group}")
     public ResponseEntity<List<Room>> getAllRoomsByFilterCapacity(
-        @RequestBody ClientRequest<Integer> request,
         @PathVariable String group,
         @RequestParam Integer capacity) {
 
         logger.info("Received GET request for all available rooms "
-                + "with capacity " + group + " than " + request.getBody());
-
-        try {
-            authorizationService.authenticateUser(request.getUsername());
-        } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
-            return ResponseEntity.badRequest().build();
-        }
+                + "with capacity " + group + " than " + capacity);
 
         List<Room> reservablesToBeSend = roomService.findAllByCapacity(group, capacity);
 
