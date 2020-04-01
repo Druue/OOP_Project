@@ -51,10 +51,10 @@ public class Building {
     public TimeSlot openingHours;
 
     /**
-     * List of all rooms and bikes
+     * List of all rooms and bikes.
      */
     @JsonIgnore
-//    @OneToMany(cascade = CascadeType.ALL)
+    // @OneToMany(cascade = CascadeType.ALL)
     @ElementCollection
     List<Reservable> reservables;
 

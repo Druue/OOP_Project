@@ -57,6 +57,10 @@ public class Building {
         reservables = new ArrayList<>();
     }
 
+    /** Create a new building with the provided data.
+     * @param number    The unique number of the building.
+     * @param details   The details of the building, including its name, description, image.
+     */
     public Building(Long number, Details details) {
         this.number = number;
         this.details = details;
