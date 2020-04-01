@@ -45,7 +45,7 @@ public class LoginRequest {
             return false;
         }
         LoginRequest that = (LoginRequest) o;
-        return Objects.equals(getUsername(), that.getUsername()) &&
-               Objects.equals(getPassword(), that.getPassword());
+        return Objects.equals(getUsername(), that.getUsername())
+               && Objects.equals(getPassword(), that.getPassword());
     }
 }
