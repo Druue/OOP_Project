@@ -20,11 +20,6 @@ public class Building {
     public Details details;
 
     /**
-     * The foodcourt within the building.
-     */
-    public Foodcourt foodcourt;
-
-    /**
      * The hours during which the building is open during the week.
      */
     public TimeSlot openingHours;
@@ -85,14 +80,6 @@ public class Building {
         this.details = details;
     }
 
-    public Foodcourt getFoodcourt() {
-        return foodcourt;
-    }
-
-    public void setFoodcourt(Foodcourt foodcourt) {
-        this.foodcourt = foodcourt;
-    }
-
     public TimeSlot getOpeningHours() {
         return openingHours;
     }
@@ -120,7 +107,6 @@ public class Building {
         Building building = (Building) o;
         return Objects.equals(getNumber(), building.getNumber())
                && Objects.equals(getDetails(), building.getDetails())
-               && Objects.equals(getFoodcourt(), building.getFoodcourt())
                && Objects.equals(getOpeningHours(), building.getOpeningHours());
     }
 
