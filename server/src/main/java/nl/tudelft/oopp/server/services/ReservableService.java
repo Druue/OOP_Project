@@ -59,16 +59,16 @@ public class ReservableService {
      *
      * @return a list of rooms
      */
-    public List<Reservable> getAllRooms() {
+    public List<Room> getAllRooms() {
         List<Reservable> reservables = getAllReservables();
 
         logger.info("Finding al rooms from the fetched reservables");
 
-        List<Reservable> rooms = new ArrayList<>();
+        List<Room> rooms = new ArrayList<>();
 
         for (Reservable reservable : reservables) {
             if (reservable instanceof Room) {
-                rooms.add(reservable);
+                rooms.add((Room)reservable);
             }
         }
 
@@ -80,12 +80,12 @@ public class ReservableService {
      *
      * @return a list of bikes
      */
-    public List<Reservable> getAllBikes() {
+    public List<Bike> getAllBikes() {
         List<Reservable> reservables = getAllReservables();
-        List<Reservable> bikes = new ArrayList<>();
+        List<Bike> bikes = new ArrayList<>();
         for (Reservable reservable : reservables) {
             if (reservable instanceof Bike) {
-                bikes.add(reservable);
+                bikes.add((Bike)reservable);
             }
         }
         return bikes;
@@ -114,19 +114,10 @@ public class ReservableService {
 
         logger.info("Building " + number + " found. Fetching all its rooms ...");
 
-        List<Reservable> rooms = new ArrayList<>();
-        Map<Reservable, TimeSlot> reservables = buildingContainer.get().getAvailableTimeslots();
-        for (Reservable reservable : reservables.keySet()) {
-            if (type.equals("rooms")) {
-                if (reservable instanceof Room) {
-                    rooms.add(reservable);
-                }
-            } else if (reservable instanceof Bike) {
-                rooms.add(reservable);
-            }
-        }
+        List<Reservable> rooms = buildingContainer.get().getReservables();
 
         logger.info("Constructing of list of building rooms completed.");
+
         return rooms;
     }
 
@@ -169,12 +160,12 @@ public class ReservableService {
         logger.info("Saving of new reservable successful. Adding the reservable to the map of"
             + " building " + number + " and generating timeslots for it.");
 
-        Map<Reservable, TimeSlot> map = buildingContainer.get().getAvailableTimeslots();
+        buildingContainer.get().getReservables().add(reservable);
 
         /* TODO
         *   1) Create a Timeslots object containing all the timeslots that would be available
         *       for the new reservable in the next 2 weeks.
-        *   2) Use map.put(reservable, list)*/
+        *   2) Add the list of timeslots to the reservable*/
 
     }
 
@@ -185,10 +176,10 @@ public class ReservableService {
     /**
      * Deletes a Topic.
      *
-     * @param id that identifies a reservable to be deleted
+     * @param number that identifies a reservable to be deleted
      */
-    public void deleteReservable(Long id) {
-        reservableRepository.deleteById(id);
+    public void deleteReservable(Long number) {
+        reservableRepository.deleteById(number);
     }
 
 }
