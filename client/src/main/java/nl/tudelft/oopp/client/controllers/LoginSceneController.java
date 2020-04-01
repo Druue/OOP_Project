@@ -28,6 +28,14 @@ public class LoginSceneController {
 
     public AlertsController alertsController;
 
+    public LoginSceneController() {
+        this.alertsController = new AlertsController();
+    }
+
+    public LoginSceneController(AlertsController alertsController) {
+        this.alertsController = alertsController;
+    }
+
     public UserAuthResponse sendLoginRequest(String username, String password) {
         LoginRequest loginRequest = new LoginRequest(username, password);
         return httpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
@@ -35,14 +43,22 @@ public class LoginSceneController {
 
 
     /**
-     * Sends a login request to the backend, using the information stored in the text fields.
+     * Entry function that gets called through the client.
+     * Gets the input from the text fields and calls tryLogin().
      */
-    public void tryLogin() {
-
-        alertsController = new AlertsController();
-
+    public void tryLoginEntry() {
         String username = inputusername.getText();
         String password = inputPassword.getText();
+
+        tryLogin(username, password);
+    }
+
+    /**
+     * Sends a login request to the backend, using the information stored in the text fields.
+     */
+    public void tryLogin(String username, String password) {
+
+
         if (username.isEmpty() || password.isEmpty()) {
 
             alertsController.show(
@@ -89,27 +105,6 @@ public class LoginSceneController {
     }
 
     /**
-     * Handles going back to the Homepage.
-     *
-     * @param event the event from where the function was called.
-     */
-    public void goToHomepage(ActionEvent event) {
-        try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
-        } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
-        }
-    }
-
-    /**
-     * >>>>>>>
-     * master:client/src/main/java/nl/tudelft/oopp/demo/controllers/LoginSceneController.java
      * Handles going the the homepage, without any event occurring.
      */
     public void goToHomepage() {
