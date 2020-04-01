@@ -22,6 +22,8 @@ import nl.tudelft.oopp.api.models.TestTimeSlot;
 
 public class RoomsListController implements Initializable {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     @FXML
     ListView<RoomEntryComponent> roomEntriesContainer;
 
@@ -62,7 +64,8 @@ public class RoomsListController implements Initializable {
      *              was generated from.
      */
     public void generateInitialRooms(MouseEvent event) {
-        RoomResponse roomResponse = HttpRequestHandler.get("reservables/all/rooms", RoomResponse.class);
+        RoomResponse roomResponse = httpRequestHandler.get("reservables/all/rooms",
+                RoomResponse.class);
         if (waitForResponse(roomResponse)) {
             List<Room> roomsList = roomResponse.getRoomList();
             TestOpeningTimes myOpeningTimes = generateTestOpeningTimes();

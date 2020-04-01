@@ -24,6 +24,8 @@ import nl.tudelft.oopp.api.models.ReservationResponse;
 
 public class HomepageController<E> implements Initializable {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     ObservableList<E> list = FXCollections.observableArrayList();
 
     @FXML
@@ -76,7 +78,7 @@ public class HomepageController<E> implements Initializable {
             List<Reservation> reservationList = new ArrayList<>();
             try {
                 ReservationResponse response =
-                    HttpRequestHandler.get("reservations/admin/all", ReservationResponse.class);
+                    httpRequestHandler.get("reservations/admin/all", ReservationResponse.class);
                 if (response != null) {
                     reservationList = response.getReservationList();
                     for (Reservation s : reservationList) {
