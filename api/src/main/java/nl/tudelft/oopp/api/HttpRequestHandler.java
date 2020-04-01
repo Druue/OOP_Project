@@ -1,8 +1,6 @@
 package nl.tudelft.oopp.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -63,9 +61,10 @@ public class HttpRequestHandler {
 
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
-        return null;
+
     }
 
     /**
@@ -86,8 +85,8 @@ public class HttpRequestHandler {
             return objectMapper.readValue(r, responseType);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     /**
@@ -106,9 +105,8 @@ public class HttpRequestHandler {
             return responseType.cast(result);
         } catch (Exception e) {
             System.out.println("ObjectMapper is a pain in the ass");
+            return null;
         }
-
-        return null;
     }
 
     /** This method converts an object from one class to another by serializing into JSON
