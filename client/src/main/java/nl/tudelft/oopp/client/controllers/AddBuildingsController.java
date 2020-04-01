@@ -30,14 +30,24 @@ public class AddBuildingsController {
     public TextField buildingClosingTimeInput;
     public TextField buildingDescriptionInput;
 
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
+    public AlertsController alertsController;
+
+
+    public AddBuildingsController() {
+        alertsController = new AlertsController();
+    }
+
+    public AddBuildingsController(AlertsController alertsController) {
+        this.alertsController = alertsController;
+    }
 
     /**
      * Handles going to the homepage.
      *
-     * @param event the scene from where the function was called.
      */
-    public void goToAdmin(ActionEvent event) {
+    public void goToAdmin() {
         try {
             Parent homeParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
             Scene homeScene = new Scene(homeParent);
@@ -55,38 +65,9 @@ public class AddBuildingsController {
     }
 
     /**
-     * An example alert function, to showcase the use of the new API.
+     * Entry function for the client, that gets called on hitting submit.
      */
-    public void getBuildings() {
-
-        // Make a standard alert
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("A response");
-        alert.setHeaderText(null);
-
-        //TODO: Add a proper connection to the backend.
-
-        // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
-        BuildingResponse buildingResponse = httpRequestHandler.get("getbuildings",
-                BuildingResponse.class);
-
-        // Add all of the building names into a string
-        StringBuilder s = new StringBuilder("Building names: ");
-        if (buildingResponse != null) {
-            for (Building b : buildingResponse.getBuildingList()) {
-                s.append(b.getDetails().getName()).append(", ");
-            }
-        }
-
-        // Show the alert with all the building names
-        alert.setContentText(s.toString());
-        alert.showAndWait();
-    }
-
-    /**
-     * Sends a request to the backend to add a Building to the database.
-     */
-    public void addBuilding() {
+    public void addBuildingEntry() {
 
         //TODO: Input validation.
 
@@ -95,6 +76,16 @@ public class AddBuildingsController {
         String buildingDescription = buildingDescriptionInput.getText();
         int openingHour = Integer.parseInt(buildingOpeningTimeInput.getText());
         int closingHour = Integer.parseInt(buildingClosingTimeInput.getText());
+
+        addBuilding(buildingName, buildingNumber, buildingDescription, openingHour, closingHour);
+
+    }
+
+    /**
+     * Sends a request to the backend to add a Building to the database.
+     */
+    public void addBuilding(String buildingName, Long buildingNumber, String buildingDescription,
+            int openingHour, int closingHour) {
 
         Timestamp openingTime = new Timestamp(
                 0, 0, 0,
@@ -125,15 +116,9 @@ public class AddBuildingsController {
                 ServerResponseAlert.class
         );
 
-        Alert alert;
-        try {
-            alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
-        } catch (Exception e) {
-            alert = new Alert(Alert.AlertType.INFORMATION);
-        }
-        alert.setTitle("Response");
-        alert.setHeaderText(null);
-        alert.setContentText(response.getMessage());
-        alert.showAndWait();
+        alertsController.show(
+                Alert.AlertType.INFORMATION,
+                response.getMessage()
+        );
     }
 }

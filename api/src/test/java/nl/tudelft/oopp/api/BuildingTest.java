@@ -102,6 +102,14 @@ public class BuildingTest {
         response.setBuildingList(new ArrayList<>());
         assertTrue(response.getBuildingList().isEmpty());
 
+        testBuilding.setOpeningHours(
+                new TimeSlot(
+                        new Timestamp(42L),
+                        new Timestamp(52L)
+                )
+        );
+        assertEquals(testBuilding.getOpeningHours().getStartTime().getTime(), 42L);
+
     }
 
     @Test
