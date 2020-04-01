@@ -51,6 +51,7 @@ public class HttpRequestHandler {
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(parameters))).build();
             String r = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
             return objectMapper.readValue(r, responseType);
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
