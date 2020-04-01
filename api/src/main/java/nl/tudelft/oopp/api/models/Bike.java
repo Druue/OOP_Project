@@ -9,6 +9,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 public class Bike extends Reservable {
 
+    public Bike() {
+        super();
+    }
+
     /**
      * Initialises a new instance of {@link Bike}.
      *
