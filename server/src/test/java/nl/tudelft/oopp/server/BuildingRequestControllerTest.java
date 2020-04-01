@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.server;
 
 
+
 import nl.tudelft.oopp.server.controllers.BuildingRequestController;
 import nl.tudelft.oopp.server.models.*;
 import nl.tudelft.oopp.server.services.BuildingService;
@@ -23,12 +24,13 @@ import org.springframework.web.context.WebApplicationContext;
 import java.sql.Timestamp;
 import java.util.*;
 
-//import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+
 
 
 
@@ -87,9 +89,9 @@ class BuildingRequestControllerTest {
         detailsCollection.add(details);
         Collection<String> foodCollection = new ArrayList<>();
         foodCollection.add("apple");
-        Foodcourt foodcourt = new Foodcourt(36, detailsCollection, foodCollection);
-        Reservable reservable = new Bike(456L, details);
-        Map<Reservable, TimeSlot> availableTimeslots = new HashMap<>();
+        foodcourt = new Foodcourt(36, detailsCollection, foodCollection);
+        reservable = new Bike(456L, details);
+        availableTimeslots = new HashMap<>();
         availableTimeslots.put(reservable, timeSlot);
         mockBuilding1 = new Building(36L, details, foodcourt, timeSlot, availableTimeslots);
         mockBuilding2 = new Building(28L, details, foodcourt, timeSlot, availableTimeslots);
@@ -120,6 +122,8 @@ class BuildingRequestControllerTest {
                 verifyNoMoreInteractions(buildingServiceMock);
 
     }
+
+
 
 }
 
