@@ -123,7 +123,12 @@ public class AddBuildingsController {
                 ServerResponseAlert.class
         );
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert;
+        try {
+            alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
+        } catch (Exception e) {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+        }
         alert.setTitle("Response");
         alert.setHeaderText(null);
         alert.setContentText(response.getMessage());

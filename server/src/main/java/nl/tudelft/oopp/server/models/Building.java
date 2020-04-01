@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.server.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -50,13 +51,12 @@ public class Building {
     public TimeSlot openingHours;
 
     /**
-     * Move this to the reservable table model.
+     * List of all rooms and bikes
      */
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
+//    @OneToMany(cascade = CascadeType.ALL)
     @ElementCollection
-    @CollectionTable(name = "available_TimeSlots")
-    Map<Reservable, TimeSlot> availableTimeslots;
+    List<Reservable> reservables;
 
     /**
      * Initialises a new instance of {@link Building}.
@@ -72,15 +72,15 @@ public class Building {
      * @param details            {@link Details} about the building.
      * @param foodcourt          The building's {@link Foodcourt}.
      * @param openingHours       The building's {@link TimeSlot}.
-     * @param availableTimeslots the buidling's map.
+     * @param reservables the buidling's map.
      */
     public Building(Long number, Details details, Foodcourt foodcourt, TimeSlot openingHours,
-                    Map<Reservable, TimeSlot> availableTimeslots) {
+                    List<Reservable> reservables) {
         this.number = number;
         this.details = details;
         this.foodcourt = foodcourt;
         this.openingHours = openingHours;
-        this.availableTimeslots = availableTimeslots;
+        this.reservables = reservables;
     }
 
     /**returns the map of the building.
@@ -88,8 +88,8 @@ public class Building {
      * @return the map
      */
     @JsonIgnore
-    public Map<Reservable, TimeSlot> getMap() {
-        return this.availableTimeslots;
+    public List<Reservable> getMap() {
+        return this.reservables;
     }
 
     public Long getNumber() {
@@ -124,11 +124,11 @@ public class Building {
         this.openingHours = openingHours;
     }
 
-    public Map<Reservable, TimeSlot> getAvailableTimeslots() {
-        return availableTimeslots;
+    public List<Reservable> getReservables() {
+        return reservables;
     }
 
-    public void setAvailableTimeslots(Map<Reservable, TimeSlot> availableTimeslots) {
-        this.availableTimeslots = availableTimeslots;
+    public void setReservables(List<Reservable> reservables) {
+        this.reservables = reservables;
     }
 }

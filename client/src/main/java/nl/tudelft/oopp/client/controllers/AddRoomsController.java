@@ -31,6 +31,7 @@ public class AddRoomsController {
     public CheckBox roomForEmployee;
     public TextField roomDescriptionInput;
     public TextField roomIdInput;
+    public TextField buildingNumber;
 
 
     /**
