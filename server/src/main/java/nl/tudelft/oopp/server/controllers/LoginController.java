@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 // This class contains the method to answer to a login request from the client
 // It receives as input the provided by the user username and a hashed password.
+
 @RestController
 public class LoginController {
 

@@ -15,37 +15,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import nl.tudelft.oopp.server.controllers.BuildingRequestController;
-import nl.tudelft.oopp.server.models.Bike;
-import nl.tudelft.oopp.server.models.Building;
-import nl.tudelft.oopp.server.models.Details;
-import nl.tudelft.oopp.server.models.Reservable;
-import nl.tudelft.oopp.server.models.TimeSlot;
+import nl.tudelft.oopp.server.controllers.LoginController;
+import nl.tudelft.oopp.server.models.*;
+import nl.tudelft.oopp.server.repositories.BuildingRepository;
+import nl.tudelft.oopp.server.repositories.DetailsRepository;
+import nl.tudelft.oopp.server.repositories.UserRepository;
+import nl.tudelft.oopp.server.services.AuthorizationService;
 import nl.tudelft.oopp.server.services.BuildingService;
+import nl.tudelft.oopp.server.services.LoginService;
+import nl.tudelft.oopp.server.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 
 
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = BuildingRequestController.class)
-@ContextConfiguration(classes = {TestContext.class, WebApplicationContext.class})
+@AutoConfigureMockMvc
+@ContextConfiguration(classes = {BuildingService.class, BuildingRequestController.class})
+@SpringBootTest
 class BuildingRequestControllerTest {
 
     /**
@@ -54,6 +56,13 @@ class BuildingRequestControllerTest {
      */
     @Mock
     BuildingService buildingServiceMock;
+
+    @MockBean
+    UserService userService;
+
+    @MockBean
+    AuthorizationService authorizationService;
+
     Timestamp openingTime;
     Timestamp closingTime;
     TimeSlot timeSlot;
@@ -63,11 +72,21 @@ class BuildingRequestControllerTest {
     Building mockBuilding1;
     Building mockBuilding2;
 
+    @MockBean
+    BuildingRepository buildingRepository;
+
+    @MockBean
+    DetailsRepository detailsRepository;
+
+    @MockBean
+    UserRepository userRepository;
+
     /**
      * This is the main entry point for server side tests
      * it will perform a request and return a type that
      * allows for chain reactions.
      */
+    @Autowired
     private MockMvc mockMvc;
     /**
      * This is injects mock data into tested objects.
@@ -99,7 +118,7 @@ class BuildingRequestControllerTest {
     }
 
     @Test
-    public void sendAllBuildingsSuccess() throws Exception {
+    void sendAllBuildingsSuccess() throws Exception {
         System.out.println(mockBuilding1.toString());
         List<Building> buildings = Arrays.asList(
                 mockBuilding1,
