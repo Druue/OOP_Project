@@ -82,7 +82,7 @@ public class HomepageController<E> implements Initializable {
                 if (response != null) {
                     reservationList = response.getReservationList();
                     for (Reservation s : reservationList) {
-                        todayRes.getItems().add("Room " + s.reservable.details.name
+                        todayRes.getItems().add("Room " + s.getReservable().getDetails().getName()
                             + " reserved by " + s.getUser().getName());
                     }
                 }

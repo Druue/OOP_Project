@@ -9,12 +9,12 @@ public class Details {
     /**
      * This is the id of the detail that is a randomly generated value.
      */
-    public Long id;
+    private Long id;
 
     /**
      * This is the name of the detail.
      */
-    public String name;
+    private String name;
 
     /**
      * This is the description of the detail.

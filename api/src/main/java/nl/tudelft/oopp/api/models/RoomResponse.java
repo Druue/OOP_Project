@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RoomResponse {
 
-    List<Room> roomList;
+    private List<Room> roomList;
 
     public RoomResponse() {
     }

@@ -114,8 +114,8 @@ public class AddBuildingsController {
         );
 
         ClientRequest<Building> request = new ClientRequest<>(
-                HttpRequestHandler.user.username,
-                HttpRequestHandler.user.userKind,
+                HttpRequestHandler.user.getUsername(),
+                HttpRequestHandler.user.getUserKind(),
                 requestBuilding
         );
 
@@ -125,7 +125,12 @@ public class AddBuildingsController {
                 ServerResponseAlert.class
         );
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert;
+        try {
+            alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
+        } catch (Exception e) {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+        }
         alert.setTitle("Response");
         alert.setHeaderText(null);
         alert.setContentText(response.getMessage());

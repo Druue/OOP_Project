@@ -4,7 +4,9 @@ import java.util.List;
 
 public class ReservableResponse {
 
-    List<Reservable> reservableList;
+    private List<Reservable> reservableList;
+
+    public ReservableResponse() {}
 
     public ReservableResponse(List<Reservable> reservableList) {
         this.reservableList = reservableList;

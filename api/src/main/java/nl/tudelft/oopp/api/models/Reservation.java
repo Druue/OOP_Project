@@ -11,22 +11,22 @@ public class Reservation {
     /**
      * The reservation's unique ID.
      */
-    public Long reservationID;
+    private Long reservationID;
 
     /**
      * The ID of the user who made the reservation.
      */
-    public User user;
+    private User user;
 
     /**
      * This is a reservation of a specific reservable.
      */
-    public Reservable reservable;
+    private Reservable reservable;
 
     /**
      * This shows the timeslot of a reservation.
      */
-    public TimeSlot timeslot;
+    private TimeSlot timeslot;
 
     /**
      * Initialises a new instance of {@link Reservation}.

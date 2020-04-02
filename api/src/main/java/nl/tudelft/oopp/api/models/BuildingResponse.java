@@ -4,7 +4,7 @@ import java.util.List;
 
 public class BuildingResponse {
 
-    public List<Building> buildingList;
+    private List<Building> buildingList;
 
     public BuildingResponse(List<Building> buildingList) {
         this.buildingList = buildingList;
