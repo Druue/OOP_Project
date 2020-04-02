@@ -3,6 +3,8 @@ package nl.tudelft.oopp.api.models;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 /**
  * Initialises a new isntance of {@link Reservation}.
  */
@@ -100,5 +102,20 @@ public class Reservation {
 
     public void setTimeslot(TimeSlot timeslot) {
         this.timeslot = timeslot;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Reservation that = (Reservation) o;
+        return Objects.equals(getReservationID(), that.getReservationID()) &&
+               Objects.equals(getUser(), that.getUser()) &&
+               Objects.equals(getReservable(), that.getReservable()) &&
+               Objects.equals(getTimeslot(), that.getTimeslot());
     }
 }

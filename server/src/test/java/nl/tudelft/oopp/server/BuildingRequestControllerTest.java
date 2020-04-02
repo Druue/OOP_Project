@@ -59,7 +59,7 @@ class BuildingRequestControllerTest {
     TimeSlot timeSlot;
     Details details;
     Reservable reservable;
-    Map<Reservable, TimeSlot> availableTimeslots;
+    List<Reservable> reservableList;
     Building mockBuilding1;
     Building mockBuilding2;
 
@@ -87,8 +87,8 @@ class BuildingRequestControllerTest {
 
         openingTime = Timestamp.valueOf("2020-02-04 09:30:00");
         closingTime = Timestamp.valueOf("2020-04-09 22:30:00");
-        timeSlot = new TimeSlot(39832L, openingTime, closingTime);
-        details = new Details(39832L, "EECMS",
+        timeSlot = new TimeSlot(openingTime, closingTime);
+        details = new Details("EECMS",
                 "This is the faculty of computer science, mathematics and electrical engineering", "EECMS.png");
         reservable = new Bike(456L, details);
         List<Reservable> reservablesList = new ArrayList<>();
