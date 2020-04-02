@@ -13,6 +13,8 @@ public abstract class Reservable {
      */
     private Details details;
 
+    private Building building;
+
     public Reservable(Long id, Details details) {
         this.id = id;
         this.details = details;
@@ -42,5 +44,11 @@ public abstract class Reservable {
         this.id = id;
     }
 
+    public Building getBuilding() {
+        return building;
+    }
 
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
 }
