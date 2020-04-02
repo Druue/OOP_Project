@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RegistrationController {
-    public static final Gson gson = new Gson();
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     final RegistrationService registrationService;
     final UserService userService;
 
@@ -41,10 +42,21 @@ public class RegistrationController {
 
         //checks if a user already exists with this email.
         User test = userService.getUserByEmail(userRequest.email);
-        if (test != null) {
+        User test2 = userService.getUserUserName(userRequest.username);
+        if (test != null && test2 == null) {
             LoggerService.info(RegistrationController.class, "User already exists with this email");
             return ResponseEntity.badRequest().body(
                     new UserAuthResponse("User already exists with this email", "ERROR", null));
+        }
+        if (test == null && test2 != null) {
+            LoggerService.info(RegistrationController.class, "User already exists with this username");
+            return ResponseEntity.badRequest().body(
+                    new UserAuthResponse("User already exists with this username", "ERROR", null));
+        }
+        if (test != null) {
+            LoggerService.info(RegistrationController.class, "User already exists with this email/username");
+            return ResponseEntity.badRequest().body(
+                    new UserAuthResponse("User already exists with this email/username", "ERROR", null));
         }
         try {
             // Attempts to add the user to the database.
@@ -52,7 +64,7 @@ public class RegistrationController {
 
             // Converts the user into an API model User.
             // This has to be done via their email, as they don't know their ID during registration.
-            nl.tudelft.oopp.api.models.User user = HttpRequestHandler.convertModel(
+            nl.tudelft.oopp.api.models.User user = httpRequestHandler.convertModel(
                     registrationService.getUserByEmail(userRequest.email),   //from
                     nl.tudelft.oopp.api.models.User.class);             //to
 

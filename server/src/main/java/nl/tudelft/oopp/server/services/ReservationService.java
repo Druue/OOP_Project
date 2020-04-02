@@ -9,12 +9,15 @@ import nl.tudelft.oopp.server.models.TimeslotAlreadyReservedException;
 import nl.tudelft.oopp.server.models.UserReservationsIntersectionException;
 import nl.tudelft.oopp.server.repositories.ReservationRepository;
 import nl.tudelft.oopp.server.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
     public ReservationService(ReservationRepository reservationRepository,
                               UserRepository userRepository) {
@@ -31,6 +34,7 @@ public class ReservationService {
      * @return a list with reservations
      */
     public List<Reservation> getAllReservations() {
+        logger.info("Querying for all reservations in the database ...");
         return reservationRepository.findAll();
     }
 
@@ -42,6 +46,7 @@ public class ReservationService {
      * @return A {@link List} of all current reservations
      */
     public List<Reservation> getAllCurrentReservations() {
+        logger.info("Querying for all current reservations in the database ...");
         return reservationRepository.findAllCurrent(getCurrentTimestamp());
     }
 
@@ -53,6 +58,7 @@ public class ReservationService {
      * @return A List of all the reservations of user with id = userID
      */
     public List<Reservation> getReservationsByUserID(Long userID) {
+        logger.info("Querying for all existing reservations of user: " + userID);
         return reservationRepository.findAllByUser_Id(userID);
     }
 
@@ -63,6 +69,7 @@ public class ReservationService {
      * @return A {@link List} of the current user reservations.
      */
     public List<Reservation> getCurrentUserReservations(Long userID) {
+        logger.info("Querying for all current reservations of user: " + userID + " ...");
         return reservationRepository.findAllCurrentByUser(userID, getCurrentTimestamp());
     }
 
@@ -74,10 +81,12 @@ public class ReservationService {
      */
     public boolean checkExistUserReservationsForPeriod(Long userID, Timestamp startTime,
                                                        Timestamp endTime) {
+        logger.info("Checking the period of the reservation for other user reservations ...");
+
         List<Reservation> list = reservationRepository.findAllForUserForPeriod(userID,
             startTime, endTime);
 
-        return list == null || list.isEmpty();
+        return !list.isEmpty();
     }
 
     /**
@@ -87,6 +96,8 @@ public class ReservationService {
      * @return A {@link List} of the current reservations having the given reservable as a field.
      */
     public List<Reservation> getCurrentReservableReservations(Reservable reservable) {
+        logger.info("Querying for all current reservations for reservable "
+            + reservable.getId() + " ...");
         return reservationRepository.findAllCurrentForReservable(reservable, getCurrentTimestamp());
     }
 
@@ -99,10 +110,14 @@ public class ReservationService {
     public boolean checkExistReservableReservationsForPeriod(Reservable reservable,
                                                              Timestamp startTime,
                                                              Timestamp endTime) {
+        logger.info("Checking the period of the reservation for other reservations for "
+            + " reservable" + reservable.getId() + " ...");
+
         List<Reservation> list = reservationRepository.findAllForReservableForPeriod(reservable,
             startTime, endTime);
 
-        return list == null || list.isEmpty();
+        return !list.isEmpty();
+
     }
 
     /**
@@ -116,18 +131,10 @@ public class ReservationService {
         checkReservableAlreadyReserved(reservation, reservation.reservable);
         checkReservationIntersection(reservation, reservation.user.id);
 
+        logger.info("No intersections or other reservations found for the new reservation. "
+            + "Adding the new reservation ...");
         reservationRepository.save(reservation);
 
-    }
-
-    /**
-     * methods that updates this reservation id to the one in the parameter.
-     *
-     * @param id          linked to a reservation
-     * @param reservation to be updated
-     */
-    public void updateReservation(Long id, Reservation reservation) {
-        reservationRepository.save(reservation);
     }
 
     /**
@@ -136,6 +143,7 @@ public class ReservationService {
      * @param id linked to a reservation
      */
     public void deleteReservation(Long id) {
+        logger.info("Deleting reservation : " + id);
         reservationRepository.deleteById(id);
     }
 
@@ -157,11 +165,13 @@ public class ReservationService {
         Timestamp newReservationEndTime = reservation.timeslot.endTime;
 
         if (checkExistUserReservationsForPeriod(userID,
-            newReservationEndTime, newReservationEndTime)) {
+            newReservationStartTime, newReservationEndTime)) {
             LoggerService.error(ReservationService.class,
                 "Intersection found. Cannot add new user reservations.");
             throw new UserReservationsIntersectionException();
         }
+
+        logger.info("No intersections with other reservations of user " + userID + " found.");
 
     }
 
@@ -183,6 +193,8 @@ public class ReservationService {
                 "Intersection found. Cannot add new reservation for this reservable.");
             throw new TimeslotAlreadyReservedException();
         }
+
+        logger.info("No other reservations for this reservable " + reservable.getId() + " found");
     }
 
 

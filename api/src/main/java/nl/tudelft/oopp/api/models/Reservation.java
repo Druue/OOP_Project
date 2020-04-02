@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.api.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Initialises a new isntance of {@link Reservation}.
  */
@@ -8,22 +11,22 @@ public class Reservation {
     /**
      * The reservation's unique ID.
      */
-    public Long reservationID;
+    private Long reservationID;
 
     /**
      * The ID of the user who made the reservation.
      */
-    public User user;
+    private User user;
 
     /**
      * This is a reservation of a specific reservable.
      */
-    public Reservable reservable;
+    private Reservable reservable;
 
     /**
      * This shows the timeslot of a reservation.
      */
-    public TimeSlot timeslot;
+    private TimeSlot timeslot;
 
     /**
      * Initialises a new instance of {@link Reservation}.
@@ -40,13 +43,32 @@ public class Reservation {
      * @param reservable    The entity being reserved.
      * @param timeslot      The time during which the entity will be reserved.
      */
-    public Reservation(Long reservationID, User user, Reservable reservable,
-                       TimeSlot timeslot) {
+    @JsonCreator
+    public Reservation(
+        @JsonProperty("reservationID") Long reservationID,
+        @JsonProperty("user") User user,
+        @JsonProperty("reservable") Room reservable,
+        @JsonProperty("timeslot") TimeSlot timeslot) {
         this.user = user;
         this.reservable = reservable;
         this.timeslot = timeslot;
         this.reservationID = reservationID;
     }
+
+    /**
+     * Initialises a new instance of {@link Reservation} without ID.
+     *
+     * @param user          The user holding the reservation.
+     * @param reservable    The entity being reserved.
+     * @param timeslot      The time during which the entity will be reserved.
+     */
+    public Reservation(User user, Reservable reservable,
+                       TimeSlot timeslot) {
+        this.user = user;
+        this.reservable = reservable;
+        this.timeslot = timeslot;
+    }
+
 
     public Long getReservationID() {
         return reservationID;

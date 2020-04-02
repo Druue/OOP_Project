@@ -1,9 +1,12 @@
 package nl.tudelft.oopp.api.models;
 
 public class UserAuthResponse {
-    String message;
-    String alertType;
-    User user;
+    private String message;
+    private String alertType;
+    private User user;
+
+    public UserAuthResponse() {
+    }
 
     /**
      * A Response object sent after a login attempt by a user.

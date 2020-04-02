@@ -1,8 +1,8 @@
 package nl.tudelft.oopp.api.models;
 
 public class ServerResponseAlert {
-    String message;
-    String alertType;
+    private String message;
+    private String alertType;
 
     /**
      * A Response object sent after a login attempt by a user.
@@ -14,6 +14,8 @@ public class ServerResponseAlert {
         this.message = message;
         this.alertType = alertType;
     }
+
+    public ServerResponseAlert() {}
 
     public String getMessage() {
         return this.message;

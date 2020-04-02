@@ -30,9 +30,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping("/buildings")
 public class BuildingRequestController {
+
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     private static final String NOT_ADMIN =
         "Unauthorized request. The requesting user is not an administrator.";
@@ -71,7 +74,7 @@ public class BuildingRequestController {
 
         List<nl.tudelft.oopp.api.models.Building> buildingsResponse = new ArrayList<>();
         for (Building queryBuilding : buildings) {
-            buildingsResponse.add(HttpRequestHandler.convertModel(queryBuilding,
+            buildingsResponse.add(httpRequestHandler.convertModel(queryBuilding,
                 nl.tudelft.oopp.api.models.Building.class));
         }
 
@@ -125,7 +128,7 @@ public class BuildingRequestController {
      * @param requestBuilding A {@link ClientRequest} object containing the new Building to insert.
      * @return A {@link ResponseEntity} object indicating the success of the operation.
      */
-    @PutMapping(value = "/admin/add", consumes = "application/json", produces = "application/json")
+    @PutMapping(value = "/admin/add")
     ResponseEntity<ServerResponseAlert> addBuilding(
         @RequestBody ClientRequest<Building> requestBuilding) {
 
@@ -151,7 +154,7 @@ public class BuildingRequestController {
 
         logger.info("Adding of new building done successfully");
         return ResponseEntity.ok(new ServerResponseAlert("Adding successful",
-            "Success"));
+            "INFORMATION"));
     }
 
     /**

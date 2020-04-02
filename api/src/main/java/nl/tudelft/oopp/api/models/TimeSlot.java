@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.api.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Timestamp;
 
 /**
@@ -10,17 +11,19 @@ public class TimeSlot {
     /**
      * This is the timeslot id.
      */
-    public Long id;
+    private Long id;
 
     /**
      * This is the index? What did you guys mean buy this?.
      */
-    public Timestamp startTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Timestamp startTime;
 
     /**
      * This tells us whether or not the timeslot is available.
      */
-    public Timestamp endTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Timestamp endTime;
 
     /**
      * Initialises a new instance of {@link TimeSlot}.
@@ -75,9 +78,5 @@ public class TimeSlot {
     public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
-
-
-    
-
 
 }

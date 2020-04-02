@@ -1,6 +1,9 @@
 package nl.tudelft.oopp.api.models;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Room.
  */
@@ -9,16 +12,16 @@ public class Room extends Reservable {
     /**
      * This denotes how many people can be in a room.
      */
-    public int capacity;
+    private int capacity;
     /**
      * This lets the user know which room has a projector.
      */
-    public boolean hasProjector;
+    private boolean hasProjector;
 
     /**
      * Whether the room is only reservable by staff or not.
      */
-    public boolean forEmployee;
+    private boolean forEmployee;
 
     /**
      * Empty Room constructor.
@@ -35,7 +38,13 @@ public class Room extends Reservable {
      * @param hasProjector The boolean stating whether or not the room has a projector.
      * @param forEmployee The boolean stating whether or not the room is for employees only.
      */
-    public Room(Long id, Details details, int capacity, boolean hasProjector, boolean forEmployee) {
+    @JsonCreator
+    public Room(
+        @JsonProperty("id") Long id,
+        @JsonProperty("details") Details details,
+        @JsonProperty("capacity") int capacity,
+        @JsonProperty("hasProjector") boolean hasProjector,
+        @JsonProperty("forEmployee") boolean forEmployee) {
         super(id, details);
         this.capacity = capacity;
         this.hasProjector = hasProjector;

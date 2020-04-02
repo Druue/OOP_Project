@@ -35,9 +35,9 @@ import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
-
-
 public class ReservationsSceneController implements Initializable {
+
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     public static final int MAX_DAYS_IN_ADVANCE = 14;
     public static final int RESPONSE_TIMEOUT = 5;
@@ -61,11 +61,13 @@ public class ReservationsSceneController implements Initializable {
     /**
      * Adds GUI that can only be generated at the moment of loading the page.
      * The parameter descriptions are from the official fxml javadoc.
+     * @param location
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
      *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  {@code null} if the location is not known.
-     * @param resources The resources used to localize the root object, or {@code null} if
-     *                  the root object was not localized.
+     * @param resources
+     * The resources used to localize the root object, or {@code null} if
+     *              the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,6 +76,20 @@ public class ReservationsSceneController implements Initializable {
         populateBuildingsScrollBox();
 
         //        roomsListWrapper.setVisible(false);
+
+        try {
+            //FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomsList.fxml"));
+            RoomsListController controller = new RoomsListController();
+            loader.setController(controller);
+            VBox tabContent = loader.load();
+            roomsListWrapper.setVisible(true);
+            roomsListTab.setContent(tabContent);
+
+            controller.generateInitialRooms(null);
+        } catch (IOException e) {
+            System.out.println("File Not Found");
+        }
     }
 
     /**
@@ -97,9 +113,10 @@ public class ReservationsSceneController implements Initializable {
      * Generates boxes for each building and adds them to the GUI.
      */
     private void populateBuildingsScrollBox() {
-        BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/all", BuildingResponse.class);
+        BuildingResponse buildingResponse = httpRequestHandler.get("buildings/user/all",
+                BuildingResponse.class);
 
-        DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0, 0, 0, 0.1), 2, 4, 2, 2);
+        DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0,0,0,0.1), 2,4,2, 2);
         buildingSearchField.setEffect(dropShadow);
 
         List<Building> buildingList;
@@ -111,7 +128,7 @@ public class ReservationsSceneController implements Initializable {
                 buildingEntry.getStyleClass().add("buildingEntry");
                 Label buildingName = new Label(building.getNumber() + "," + building.getDetails().getName());
                 buildingName.getStyleClass().add("buildingName");
-                Label buildingOpeningTime = new Label("09:00 - 22:00 //hardcoded");
+                Label buildingOpeningTime = new Label("08:30 - 23:00 //hardcoded");
                 buildingOpeningTime.getStyleClass().add("buildingOpeningTime");
 
                 buildingEntry.getChildren().add(buildingName);
@@ -154,14 +171,13 @@ public class ReservationsSceneController implements Initializable {
     /**
      * Polls each second whether the buildingList was received by the BuildingResponse
      * until success or timeout.
-     *
      * @param buildingResponse The response object.
      * @return boolean whether a (non-null)response was received
      */
     private boolean waitForResponse(BuildingResponse buildingResponse) {
         int i = 0;
         while (i != RESPONSE_TIMEOUT) {
-            if (buildingResponse.getBuildingList() != null) {
+            if (buildingResponse != null && buildingResponse.getBuildingList() != null) {
                 return true;
             }
             try {
@@ -178,22 +194,20 @@ public class ReservationsSceneController implements Initializable {
 
     /**
      * Generates a user friendly date string from a LocalDate.
-     *
      * @param date The {@link LocalDate} that needs to be transformed.
      * @return String shows day of month, month and day of week
      */
     private String getDateString(LocalDate date) {
         return date.getDayOfMonth() + " "
-                + date.getMonth().name().substring(0, 1)
-                + date.getMonth().name().substring(1, 3).toLowerCase()
-                + " - "
-                + date.getDayOfWeek().name().substring(0, 1)
-                + date.getDayOfWeek().name().substring(1).toLowerCase();
+               + date.getMonth().name().substring(0,1)
+               + date.getMonth().name().substring(1,3).toLowerCase()
+               + " - "
+               + date.getDayOfWeek().name().substring(0,1)
+               + date.getDayOfWeek().name().substring(1,3).toLowerCase();
     }
 
     /**
      * Handles going back to the Homepage.
-     *
      * @param event the event from where the function was called.
      */
     public void goToHomepage(ActionEvent event) {
@@ -220,6 +234,7 @@ public class ReservationsSceneController implements Initializable {
                 1L,
                 new Details("Test name", null, null)
         );
-        HttpRequestHandler.put("buildings/insert/new_building", testBuilding, ServerResponseAlert.class);
+        httpRequestHandler.put("buildings/insert/new_building", testBuilding,
+                ServerResponseAlert.class);
     }
 }

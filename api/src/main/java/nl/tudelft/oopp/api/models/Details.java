@@ -1,17 +1,20 @@
 package nl.tudelft.oopp.api.models;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Details {
 
     /**
      * This is the id of the detail that is a randomly generated value.
      */
-    public Long id;
+    private Long id;
 
     /**
      * This is the name of the detail.
      */
-    public String name;
+    private String name;
 
     /**
      * This is the description of the detail.
@@ -38,7 +41,12 @@ public class Details {
      * @param description A description of the object.
      * @param image       An image of the object.
      */
-    public Details(Long id, String name, String description, String image) {
+    @JsonCreator
+    public Details(
+        @JsonProperty("id") Long id,
+        @JsonProperty("name") String name,
+        @JsonProperty("description") String description,
+        @JsonProperty("image") String image) {
         this.id = id;
         this.name = name;
         this.description = description;

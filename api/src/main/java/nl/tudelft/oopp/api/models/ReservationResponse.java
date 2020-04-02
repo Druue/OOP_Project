@@ -4,11 +4,13 @@ import java.util.List;
 
 public class ReservationResponse {
 
-    List<Reservation> reservationList;
+    private List<Reservation> reservationList;
 
     public ReservationResponse(List<Reservation> reservationList) {
         this.reservationList = reservationList;
     }
+
+    public ReservationResponse(){}
 
     public List<Reservation> getReservationList() {
         return reservationList;

@@ -1,12 +1,12 @@
 package nl.tudelft.oopp.server.controllers;
 
-import com.google.gson.Gson;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.LoginService;
+import nl.tudelft.oopp.server.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,11 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     private final LoginService service;
+    private final UserService userService;
 
     @Autowired
-    public LoginController(LoginService service) {
+    public LoginController(LoginService service, UserService userService) {
         this.service = service;
+        this.userService = userService;
     }
 
     /**
@@ -37,12 +41,20 @@ public class LoginController {
     @PostMapping(value = "login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<UserAuthResponse> validateAuthentication(@RequestBody LoginRequest loginRequest) {
 
+        nl.tudelft.oopp.server.models.User test = userService.getUserUserName(loginRequest.getUsername());
+        if (test != null) {
+            if (!test.password.equals(loginRequest.getPassword())) {
+                LoggerService.info(RegistrationController.class, "username/password combination wrong");
+                return ResponseEntity.badRequest().body(
+                        new UserAuthResponse("username/password combination wrong", "ERROR", null));
+            }
+        }
         try {
             // Gets a complete User entity from the database, to send back to the client for later use.
-            User user = HttpRequestHandler.convertModel(service.getUserInformation(loginRequest),
+            User user = httpRequestHandler.convertModel(service.getUserInformation(loginRequest),
                     User.class);
             LoggerService.info(LoginController.class, "User successfully authenticated.");
-            LoggerService.info(LoginController.class, user.username + user.email);
+            LoggerService.info(LoginController.class, user.getUsername() + user.getEmail());
 
             // Send a response containing a success message, and the user's type.
             UserAuthResponse response = new UserAuthResponse("Successful login!", "CONFIRMATION", user);
@@ -63,3 +75,4 @@ public class LoginController {
 
 
 }
+

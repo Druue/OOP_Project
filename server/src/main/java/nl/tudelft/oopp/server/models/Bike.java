@@ -11,12 +11,19 @@ import javax.persistence.Table;
 public class Bike extends Reservable {
 
     /**
+     * A basic no-arg constructor for Bike.
+     */
+    public Bike() {
+    }
+
+    /**
      * Initialises a new instance of {@link Bike}.
-     * 
+     *
      * @param id      The bike's ID.
      * @param details Details about the bike.
      */
     public Bike(Long id, Details details) {
         super(id, details);
     }
+
 }
