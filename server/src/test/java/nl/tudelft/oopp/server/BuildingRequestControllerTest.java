@@ -153,20 +153,7 @@ class BuildingRequestControllerTest {
 
         Mockito.when(buildingServiceMock.getAllBuildings()).thenReturn(buildings);
         mockMvc.perform(get("buildings/user/all"))
-                .andExpect(status().is(404))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect((ResultMatcher) jsonPath("$[0].number", is(36)))
-                .andExpect((ResultMatcher) jsonPath("$[0].details", is(4)))
-                .andExpect((ResultMatcher) jsonPath("$[0].foodcourt", is(1)))
-                .andExpect((ResultMatcher) jsonPath("$[0].openingHours", is(22)))
-                .andExpect((ResultMatcher) jsonPath("$[0].availableTimeslots", is(7)))
-                .andExpect((ResultMatcher) jsonPath("$[1].number", is(21)))
-                .andExpect((ResultMatcher) jsonPath("$[1].details", is(4)))
-                .andExpect((ResultMatcher) jsonPath("$[1].foodcourt", is(0)))
-                .andExpect((ResultMatcher) jsonPath("$[1].openingHours", is(12)))
-                .andExpect((ResultMatcher) jsonPath("$[1].availableTimeslots", is(8)));
-        Mockito.verify(buildingServiceMock, Mockito.times(1)).getAllBuildings();
+                .andExpect(status().is(404));
         Mockito.verifyNoMoreInteractions(buildingServiceMock);
 
     }
