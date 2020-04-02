@@ -114,8 +114,8 @@ public class AddBuildingsController {
         );
 
         ClientRequest<Building> request = new ClientRequest<>(
-                HttpRequestHandler.user.username,
-                HttpRequestHandler.user.userKind,
+                HttpRequestHandler.user.getUsername(),
+                HttpRequestHandler.user.getUserKind(),
                 requestBuilding
         );
 

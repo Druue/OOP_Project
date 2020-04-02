@@ -10,31 +10,31 @@ public class User {
     /**
      * The user's ID.
      */
-    public Long id;
+    private Long id;
 
     /**
      * The user's email.
      */
-    public String email;
+    private String email;
 
     /**
      * The user's username.
      */
-    public String username;
+    private String username;
 
     /**
      * The user's password.
      */
-    public String password;
+    private String password;
     /**
      * A collection of the user's current reservations.
      */
-    public Details details;
+    private Details details;
 
     /**
      * The {@link UserKind} of user.
      */
-    public UserKind userKind;
+    private UserKind userKind;
 
     /**
      * Initialises a new {@link User}.
@@ -59,14 +59,6 @@ public class User {
         this.userKind = userKind;
     }
 
-    public String getName() {
-        return details.getName();
-    }
-
-    public void setName(String name) {
-        details.setName(name);
-    }
-
     /**
      * Creates a user from a provided registration details object.
      *
@@ -77,6 +69,14 @@ public class User {
         this.email = registrationDetails.getEmail();
         this.username = registrationDetails.getusername();
         this.password = registrationDetails.getPassword();
+    }
+
+    public String getName() {
+        return details.getName();
+    }
+
+    public void setName(String name) {
+        details.setName(name);
     }
 
     public Long getId() {

@@ -90,8 +90,8 @@ public class AddRoomsController {
         );
 
         ClientRequest<Room> request = new ClientRequest<>(
-                HttpRequestHandler.user.username,
-                HttpRequestHandler.user.userKind,
+                HttpRequestHandler.user.getUsername(),
+                HttpRequestHandler.user.getUserKind(),
                 requestRoom
         );
         ServerResponseAlert response = httpRequestHandler.put(

@@ -54,7 +54,7 @@ public class LoginController {
             User user = httpRequestHandler.convertModel(service.getUserInformation(loginRequest),
                     User.class);
             LoggerService.info(LoginController.class, "User successfully authenticated.");
-            LoggerService.info(LoginController.class, user.username + user.email);
+            LoggerService.info(LoginController.class, user.getUsername() + user.getEmail());
 
             // Send a response containing a success message, and the user's type.
             UserAuthResponse response = new UserAuthResponse("Successful login!", "CONFIRMATION", user);

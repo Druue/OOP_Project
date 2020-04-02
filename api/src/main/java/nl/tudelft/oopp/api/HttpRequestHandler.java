@@ -20,6 +20,9 @@ public class HttpRequestHandler {
         user = input;
     }
 
+    /**
+     * For testing purposes, this class isn't static, but instead has this.
+     */
     public HttpRequestHandler() {
         this.client = HttpClient.newHttpClient();
         this.host = "http://localhost:8080";

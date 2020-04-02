@@ -87,8 +87,8 @@ public class BuildingService {
      *                                          given number or if the details name already exists.
      */
     public void addBuilding(Building building) throws InstanceAlreadyExistsException {
-        if (buildingRepository.existsByNumber(building.number)
-            || detailsRepository.existsByName(building.details.name)) {
+        if (buildingRepository.existsByNumber(building.getNumber())
+            || detailsRepository.existsByName(building.getDetails().getName())) {
             throw new InstanceAlreadyExistsException();
         }
         buildingRepository.save(building);

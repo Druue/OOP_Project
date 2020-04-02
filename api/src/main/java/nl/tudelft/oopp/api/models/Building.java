@@ -13,17 +13,12 @@ public class Building {
     /**
      * The building's campus number works as a building id in the database.
      */
-    public Long number;
+    private Long number;
 
     /**
      * The details of the building.
      */
-    public Details details;
-
-    /**
-     * The foodcourt within the building.
-     */
-    public Foodcourt foodcourt;
+    private Details details;
 
     /**
      * The hours during which the building is open during the week.
@@ -57,6 +52,12 @@ public class Building {
         reservables = new ArrayList<>();
     }
 
+    /**
+     * Initialises a new instance of {@link Building}.
+     *
+     * @param number       The building's number.
+     * @param details      {@link Details} about the building.
+     */
     public Building(Long number, Details details) {
         this.number = number;
         this.details = details;
@@ -85,14 +86,6 @@ public class Building {
 
     public void setDetails(Details details) {
         this.details = details;
-    }
-
-    public Foodcourt getFoodcourt() {
-        return foodcourt;
-    }
-
-    public void setFoodcourt(Foodcourt foodcourt) {
-        this.foodcourt = foodcourt;
     }
 
     public TimeSlot getOpeningHours() {

@@ -52,7 +52,7 @@ public class ReservableController {
                 try {
                     LoggerService.info(ReservableController.class, (httpRequestHandler.convertModel(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
-                    ).details.name));
+                    ).getDetails().getName()));
                 } catch (NullPointerException npe) {
                     LoggerService.info(ReservableController.class, "Name of room is null");
                 }

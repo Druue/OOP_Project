@@ -12,16 +12,16 @@ public class Room extends Reservable {
     /**
      * This denotes how many people can be in a room.
      */
-    public int capacity;
+    private int capacity;
     /**
      * This lets the user know which room has a projector.
      */
-    public boolean hasProjector;
+    private boolean hasProjector;
 
     /**
      * Whether the room is only reservable by staff or not.
      */
-    public boolean forEmployee;
+    private boolean forEmployee;
 
     /**
      * Empty Room constructor.
