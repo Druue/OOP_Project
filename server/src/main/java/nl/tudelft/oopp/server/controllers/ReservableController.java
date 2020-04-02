@@ -155,10 +155,10 @@ public class ReservableController {
      * @return          A {@link ResponseEntity} object indicating whether the operation was
      *                  successful.
      */
-    @PutMapping("/insert/{type}")
+    @PutMapping("/insert/{type}/{id}")
     public ResponseEntity<ServerResponseAlert> addNewReservable(
-        @RequestBody ClientRequest<Reservable> request,
-        @RequestParam Long id,
+        @RequestBody ClientRequest<Room> request,
+        @PathVariable Long id,
         @PathVariable String type) {
 
         logger.info("Received PUT request for adding a new " + type + " to building " + id
