@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,9 +18,11 @@ import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.api.models.UserKind;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class LoginSceneController {
+    private static final Logger LOGGER = Logger.getLogger(LoginSceneController.class.getName());
 
     // the TextField object(s) from mainScene.fxml
     @FXML
@@ -98,10 +101,7 @@ public class LoginSceneController {
         try {
             Parent homepageParent = FXMLLoader.load(getClass().getResource("/homepage.fxml"));
             Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) (inputusername.getScene().getWindow());
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
+            MainApp.getPrimaryStage().setScene(homepageScene);
         } catch (IOException e) {
             System.out.println("IOException in ReservationsController");
         }
