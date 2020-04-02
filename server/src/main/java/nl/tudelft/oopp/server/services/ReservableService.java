@@ -135,7 +135,7 @@ public class ReservableService {
      *      and generates a list of timeslots for the next two weeks for the new reservable.
      * @param number        The number of the building to add the reservable to.
      */
-    public void addReservable(Room room, Long number)
+    public void addReservable(Reservable reservable, Long number)
         throws InstanceAlreadyExistsException {
 
         Optional<Building> buildingContainer = buildingService.getBuilding(number);
@@ -147,17 +147,18 @@ public class ReservableService {
 
         logger.info("Building " + number + " successfully found. Saving new reservable ...");
 
-        if (detailsRepository.existsByName(room.getDetails().getName())) {
+        if (detailsRepository.existsByName(reservable.getDetails().getName())) {
             logger.info("Cannot add new reservable. Details with that name already exists.");
             throw new InstanceAlreadyExistsException();
         }
 
-        room.setBuilding(buildingContainer.get());
-        room.getBuilding().getReservables().add(room);
-        reservableRepository.save(room);
-
-        logger.info("Saving of new reservable successful. Adding the reservable to the map of"
+        logger.info("Saving of new reservable successful. Adding the reservable to the list of"
             + " building " + number + " and generating timeslots for it.");
+
+        reservable.setBuilding(buildingContainer.get());
+        reservable.getBuilding().getReservables().add(reservable);
+        reservableRepository.save(reservable);
+
 
 
         /* TODO
