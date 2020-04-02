@@ -97,7 +97,7 @@ public class AdminController implements Initializable {
      */
     public void goToAddBuildings(ActionEvent event) {
         try {
-            Parent roomParent = FXMLLoader.load(getClass().getResource("/addBuildings.fxml"));
+            Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-addBuilding.fxml"));
             Scene roomScene = new Scene(roomParent);
 
             Stage primaryStage =
@@ -119,11 +119,11 @@ public class AdminController implements Initializable {
      */
     public void goToAddRooms(ActionEvent event) {
         try {
-            Parent roomParent = FXMLLoader.load(getClass().getResource("/addRooms.fxml"));
+            Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-AddRoom.fxml"));
             Scene roomScene = new Scene(roomParent);
 
             Stage primaryStage =
-                    (Stage) btn.getScene().getWindow();
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
             primaryStage.setScene(roomScene);

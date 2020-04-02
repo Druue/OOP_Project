@@ -14,11 +14,14 @@ import nl.tudelft.oopp.server.repositories.BuildingRepository;
 import nl.tudelft.oopp.server.repositories.BuildingsDetails;
 import nl.tudelft.oopp.server.repositories.DetailsName;
 import nl.tudelft.oopp.server.repositories.DetailsRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BuildingService {
 
+    Logger logger = LoggerFactory.getLogger(BuildingService.class);
     private final BuildingRepository buildingRepository;
     private final DetailsRepository detailsRepository;
 
@@ -34,6 +37,7 @@ public class BuildingService {
      * @return a list of all buildings
      */
     public List<Building> getAllBuildings() {
+        logger.info("Fetching all buildings from the database ...");
         return buildingRepository.findAll();
     }
 
@@ -45,6 +49,7 @@ public class BuildingService {
      *      number, name, description, image, and opening hours.
      */
     public List<BuildingsDetails> getBuildingsDetails() {
+        logger.info("Fetching the numbers, names, and opening hours of all buildings ...");
         return buildingRepository.findAllBy();
     }
 
@@ -52,7 +57,9 @@ public class BuildingService {
      * @return A {@link ListPair} object containing two lists - the numbers and the names.
      */
     public ListPair<Long, String> getBuildingNumbersAndNames() {
+        logger.info("Fetching the numbers of all buildings ...");
         List<BuildingNumber> queriedNumbers = buildingRepository.getAllBy();
+        logger.info("Fetching all names from the database table details ...");
         List<DetailsName> queriedNames = detailsRepository.findAllBy();
 
         List<Long> sentNumbers = new ArrayList<>();
@@ -64,7 +71,7 @@ public class BuildingService {
         for (DetailsName name: queriedNames) {
             sentNames.add(name.getName());
         }
-
+        logger.info("Constructing of ListPair object successful. ");
         return new ListPair<>(sentNumbers, sentNames);
     }
 
@@ -75,6 +82,7 @@ public class BuildingService {
      * @return the building with that exact id if it exists or null if not
      */
     public Optional<Building> getBuilding(Long id) {
+        logger.info("Searching and fetching for building " + id);
         return buildingRepository.findById(id);
     }
 
@@ -87,10 +95,15 @@ public class BuildingService {
      *                                          given number or if the details name already exists.
      */
     public void addBuilding(Building building) throws InstanceAlreadyExistsException {
+        logger.info("Checking existence of building with number " + building.getNumber()
+                + " and details with name " + building.getDetails().getName());
         if (buildingRepository.existsByNumber(building.getNumber())
             || detailsRepository.existsByName(building.getDetails().getName())) {
+            logger.info("Found building with number " + building.getNumber()
+                + " or details with name " + building.getDetails().getName());
             throw new InstanceAlreadyExistsException();
         }
+        logger.info("No existing name or building with number " + building.number + " found.");
         buildingRepository.save(building);
 
     }
@@ -123,9 +136,12 @@ public class BuildingService {
      * @param number Number of the building to be deleted from the database.
      */
     public void delete(Long number) throws EntityNotFoundException {
+        logger.info("Checking whether building " + number + " still exists ...");
         if (!buildingRepository.existsByNumber(number)) {
+            logger.error("Building " + number + " was not found.");
             throw new EntityNotFoundException();
         } else {
+            logger.info("Building " + number + " found. Deleting ...");
             buildingRepository.deleteById(number);
         }
     }
@@ -144,12 +160,15 @@ public class BuildingService {
 
         Optional<Building> optional = getBuilding(number);
         if (optional.isEmpty()) {
+            logger.info("Building " + number + " not found. Cannot be updated.");
             throw new EntityNotFoundException();
         } else {
             Building building = optional.get();
             if (fieldToBeChanged instanceof TimeSlot) {
+                logger.info("Updating the opening hours of building " + number + " ...");
                 building.openingHours = (TimeSlot) fieldToBeChanged;
             } else {
+                logger.info("Updating the details of building " + number + " ...");
                 building.details = (Details) fieldToBeChanged;
             }
             buildingRepository.save(building);

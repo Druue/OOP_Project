@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/reservations")
 public class ReservationsController {
 
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     private static final String NOT_ADMIN =
         "Unauthorized request. The requesting user is not an administrator.";
@@ -67,16 +67,6 @@ public class ReservationsController {
     public ResponseEntity<ReservationResponse> getAllReservations() {
         logger.info("Received GET request for all reservations");
 
-        //        try {
-        //            authorizationService.checkAuthorization(HttpRequestHandler.user.getUsername());
-        //        } catch (AuthorizationException e) {
-        //            logger.error(NOT_ADMIN);
-        //            return ResponseEntity.badRequest().build();
-        //        } catch (AuthenticationException e) {
-        //            logger.error(NO_USER_FOUND);
-        //            return ResponseEntity.badRequest().build();
-        //        }
-
         List<nl.tudelft.oopp.api.models.Reservation> responseList = new ArrayList<>();
         for (Reservation responseReservation : reservationService.getAllReservations()) {
             try {
@@ -99,23 +89,14 @@ public class ReservationsController {
      *
      * @return A {@link ResponseEntity} object containing the list of current reservations.
      */
-    @GetMapping("/admin/current")
-    public ResponseEntity<List<Reservation>> getCurrentReservations(
-        @RequestBody ClientRequest<String> request) {
+    @PostMapping("/admin/current")
+    public ResponseEntity<List<Reservation>> getCurrentReservations() {
 
         logger.info("Received GET request for all current reservations. Processing ...");
 
-        try {
-            authorizationService.checkAuthorization(request.getUsername());
-        } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
-            return ResponseEntity.badRequest().build();
-        } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
-            return ResponseEntity.badRequest().build();
-        }
-
         List<Reservation> responseList = reservationService.getAllCurrentReservations();
+
+        logger.info("Sending all current reservations ...");
         return ResponseEntity.ok(responseList);
     }
 
@@ -127,11 +108,11 @@ public class ReservationsController {
      * @param request The request object containing the username to be used.
      * @return A List of Reservations object representing all the current reservations of the user.
      */
-    @GetMapping("/user/all")
+    @PostMapping("/user/all")
     public ResponseEntity<List<Reservation>> getUserReservations(
         @RequestBody ClientRequest<String> request) {
 
-        logger.info("Received GET request for user reservations. Processing ...");
+        logger.info("Received POST request for user reservations. Processing ...");
 
         String username = request.getUsername();
         User foundUser;
@@ -152,16 +133,16 @@ public class ReservationsController {
     }
 
     /**
-     * Receive a GET request for the current reservations of a user.
+     * Receive a POST request for the current reservations of a user.
      *
      * @param request The request containing the username of the user to get the reservations of.
      * @return A {@link ResponseEntity} object containing a list of {@link Reservation} objects
      *      that represent the current reservations of the user.
      */
-    @GetMapping("/user/current")
+    @PostMapping("/user/current")
     public ResponseEntity<List<Reservation>> getCurrentUserReservations(
         @RequestBody ClientRequest<String> request) {
-        logger.info("Received GET request for current user reservations. Processing ...");
+        logger.info("Received POST request for current user reservations. Processing ...");
 
         String username = request.getUsername();
         User foundUser;

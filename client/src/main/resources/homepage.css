@@ -1,6 +1,5 @@
 #title {
     -fx-alignment: center;
-    -fx-text-alignment: cm;
     -fx-font-family: Impact;
     -fx-text-fill: #00A6D6;
     -fx-background-color: white;
@@ -21,7 +20,7 @@
 
 }
 
-.menu-bar, .menu-bar {
+.menu-bar {
     -fx-background: black;
     -fx-opacity: 0.5;
     -fx-text-fill: white;
