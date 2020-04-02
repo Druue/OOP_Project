@@ -17,7 +17,8 @@ configurations {
 }
 
 dependencies {
-	compile project(":api")
+
+	implementation project(":api")
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile group: 'mysql', name: 'mysql-connector-java'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -33,9 +34,8 @@ dependencies {
 	}
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
 
-	testCompile("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.6.0")
 
 //	test {
 //
@@ -50,9 +50,6 @@ dependencies {
 
 }
 
-test {
-	useJUnitPlatform()
-}
 
 asciidoctor {
 	inputs.dir snippetsDir
