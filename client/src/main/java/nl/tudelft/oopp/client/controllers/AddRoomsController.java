@@ -80,6 +80,7 @@ public class AddRoomsController {
         boolean hasProjector = roomHasProjectorInput.isSelected();
         boolean forEmployee = roomForEmployee.isSelected();
         String description = roomDescriptionInput.getText();
+        Long buildingId = Long.parseLong(buildingNumber.getText());
 
         Room requestRoom = new Room(
                 id,
@@ -95,7 +96,7 @@ public class AddRoomsController {
                 requestRoom
         );
         ServerResponseAlert response = httpRequestHandler.put(
-                "reservables/insert/new_room",
+                "reservables/insert/room/" + buildingId,
                 request,
                 ServerResponseAlert.class
         );

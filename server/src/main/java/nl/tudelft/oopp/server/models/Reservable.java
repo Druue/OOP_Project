@@ -33,8 +33,8 @@ public abstract class Reservable {
     @JoinColumn(name = "details")
     private Details details;
 
-    @ManyToOne(cascade = CascadeType.MERGE) // This way, the building is automatically updated if a change is made to it
-                                            // through the reservable
+    @ManyToOne(cascade = CascadeType.MERGE) /* This way, the building is automatically updated if a change is made to it
+                                            through the reservable*/
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
