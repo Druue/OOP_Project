@@ -57,7 +57,7 @@ public class AdminController implements Initializable {
      */
     public void goToMain() {
         try {
-            MainApp.goToPage("/mainScene.fxml", null);
+            MainApp.goToPage("mainScene", null);
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToMain()");
         }
@@ -68,7 +68,7 @@ public class AdminController implements Initializable {
      */
     public void goToAdminRoom() {
         try {
-            MainApp.goToPage("/mainScene.fxml", null);
+            MainApp.goToPage("admin-room", null);
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAdminRoom()");
         }
@@ -103,7 +103,7 @@ public class AdminController implements Initializable {
         try {
             MainApp.goToPage("reservations", "reservations");
         } catch (IOException e) {
-            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToMain()");
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
 }
