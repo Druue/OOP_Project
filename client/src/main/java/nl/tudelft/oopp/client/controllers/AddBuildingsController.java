@@ -30,6 +30,7 @@ public class AddBuildingsController {
     public TextField buildingClosingTimeInput;
     public TextField buildingDescriptionInput;
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     /**
      * Handles going to the homepage.
@@ -66,7 +67,8 @@ public class AddBuildingsController {
         //TODO: Add a proper connection to the backend.
 
         // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
-        BuildingResponse buildingResponse = HttpRequestHandler.get("getbuildings", BuildingResponse.class);
+        BuildingResponse buildingResponse = httpRequestHandler.get("getbuildings",
+                BuildingResponse.class);
 
         // Add all of the building names into a string
         StringBuilder s = new StringBuilder("Building names: ");
@@ -112,12 +114,12 @@ public class AddBuildingsController {
         );
 
         ClientRequest<Building> request = new ClientRequest<>(
-                HttpRequestHandler.user.username,
-                HttpRequestHandler.user.userKind,
+                HttpRequestHandler.user.getUsername(),
+                HttpRequestHandler.user.getUserKind(),
                 requestBuilding
         );
 
-        ServerResponseAlert response = HttpRequestHandler.put(
+        ServerResponseAlert response = httpRequestHandler.put(
                 "buildings/admin/add",
                 request,
                 ServerResponseAlert.class

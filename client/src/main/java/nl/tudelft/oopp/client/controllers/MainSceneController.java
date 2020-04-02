@@ -16,6 +16,8 @@ import nl.tudelft.oopp.api.models.BuildingResponse;
 
 public class MainSceneController {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
 
     // the TextField object from mainScene.fxml
     @FXML
@@ -166,7 +168,8 @@ public class MainSceneController {
         alert.setHeaderText(null);
 
         // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
-        BuildingResponse buildingResponse = HttpRequestHandler.get("buildings/all", BuildingResponse.class);
+        BuildingResponse buildingResponse = httpRequestHandler.get("buildings/all",
+                BuildingResponse.class);
 
         // Add all of the building names into a string
         StringBuilder s = new StringBuilder("Building names: ");

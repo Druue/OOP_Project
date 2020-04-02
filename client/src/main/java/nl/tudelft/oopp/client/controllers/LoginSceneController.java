@@ -24,6 +24,7 @@ public class LoginSceneController {
     @FXML
     public TextField inputPassword;
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     /**
      * Sends a login request to the backend, using the information stored in the text fields.
@@ -41,7 +42,7 @@ public class LoginSceneController {
         } else {
             LoginRequest loginRequest = new LoginRequest(username, password);
             UserAuthResponse response =
-                    HttpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
+                    httpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
 
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.setTitle("Response");

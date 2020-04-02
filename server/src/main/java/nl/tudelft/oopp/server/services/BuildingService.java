@@ -95,12 +95,12 @@ public class BuildingService {
      *                                          given number or if the details name already exists.
      */
     public void addBuilding(Building building) throws InstanceAlreadyExistsException {
-        logger.info("Checking existence of building with number " + building.number
-                + " and details with name " + building.details.name);
-        if (buildingRepository.existsByNumber(building.number)
-            || detailsRepository.existsByName(building.details.name)) {
-            logger.info("Found building with number " + building.number
-                + " or details with name " + building.details.name);
+        logger.info("Checking existence of building with number " + building.getNumber()
+                + " and details with name " + building.getDetails().getName());
+        if (buildingRepository.existsByNumber(building.getNumber())
+            || detailsRepository.existsByName(building.getDetails().getName())) {
+            logger.info("Found building with number " + building.getNumber()
+                + " or details with name " + building.getDetails().getName());
             throw new InstanceAlreadyExistsException();
         }
         logger.info("No existing name or building with number " + building.number + " found.");

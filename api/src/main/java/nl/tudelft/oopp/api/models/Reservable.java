@@ -6,12 +6,12 @@ public abstract class Reservable {
      * The reservable's unique Id.
      */
 
-    public Long id;
+    private Long id;
 
     /**
      * This is a details entity that tells you information about a reservable.
      */
-    public Details details;
+    private Details details;
 
     public Reservable(Long id, Details details) {
         this.id = id;

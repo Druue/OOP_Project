@@ -35,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/buildings")
 public class BuildingRequestController {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     private static final String NOT_ADMIN =
         "Unauthorized request. The requesting user is not an administrator.";
     private static final String NO_USER_FOUND =
@@ -72,7 +74,7 @@ public class BuildingRequestController {
 
         List<nl.tudelft.oopp.api.models.Building> buildingsResponse = new ArrayList<>();
         for (Building queryBuilding : buildings) {
-            buildingsResponse.add(HttpRequestHandler.convertModel(queryBuilding,
+            buildingsResponse.add(httpRequestHandler.convertModel(queryBuilding,
                 nl.tudelft.oopp.api.models.Building.class));
         }
 

@@ -97,7 +97,7 @@ public class ReservationService {
      */
     public List<Reservation> getCurrentReservableReservations(Reservable reservable) {
         logger.info("Querying for all current reservations for reservable "
-            + reservable.id + " ...");
+            + reservable.getId() + " ...");
         return reservationRepository.findAllCurrentForReservable(reservable, getCurrentTimestamp());
     }
 
@@ -111,7 +111,7 @@ public class ReservationService {
                                                              Timestamp startTime,
                                                              Timestamp endTime) {
         logger.info("Checking the period of the reservation for other reservations for "
-            + " reservable" + reservable.id + " ...");
+            + " reservable" + reservable.getId() + " ...");
 
         List<Reservation> list = reservationRepository.findAllForReservableForPeriod(reservable,
             startTime, endTime);
@@ -194,7 +194,7 @@ public class ReservationService {
             throw new TimeslotAlreadyReservedException();
         }
 
-        logger.info("No other reservations for this reservable " + reservable.id + " found");
+        logger.info("No other reservations for this reservable " + reservable.getId() + " found");
     }
 
 

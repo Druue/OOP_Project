@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("reservables")
 public class ReservableController {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
     private Logger logger = LoggerFactory.getLogger(ReservableController.class);
 
     private static final String NOT_ADMIN =
@@ -74,10 +76,14 @@ public class ReservableController {
         List<nl.tudelft.oopp.api.models.Room> responseList = new ArrayList<>();
         for (Reservable responseReservable: reservableService.getAllReservables()) {
             if (responseReservable instanceof Room) {
-                LoggerService.info(ReservableController.class, (HttpRequestHandler.convertModel(
+                try {
+                    LoggerService.info(ReservableController.class, (httpRequestHandler.convertModel(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
-                ).details.name));
-                responseList.add(HttpRequestHandler.convertModel(
+                    ).getDetails().getName()));
+                } catch (NullPointerException npe) {
+                    LoggerService.info(ReservableController.class, "Name of room is null");
+                }
+                responseList.add(httpRequestHandler.convertModel(
                         responseReservable, nl.tudelft.oopp.api.models.Room.class
                 ));
             }

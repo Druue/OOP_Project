@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.server.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.CascadeType;
@@ -37,13 +38,6 @@ public class Building {
     public Details details;
 
     /**
-     * The foodcourt within the building.
-     */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "foodCourt", referencedColumnName = "id")
-    public Foodcourt foodcourt;
-
-    /**
      * The hours during which the building is open during the week.
      */
     @OneToOne(cascade = CascadeType.ALL)
@@ -54,7 +48,7 @@ public class Building {
      * List of all rooms and bikes.
      */
     @JsonIgnore
-    // @OneToMany(cascade = CascadeType.ALL)
+    //    @OneToMany(cascade = CascadeType.ALL)
     @ElementCollection
     List<Reservable> reservables;
 
@@ -70,26 +64,29 @@ public class Building {
      *
      * @param number             The building's number.
      * @param details            {@link Details} about the building.
-     * @param foodcourt          The building's {@link Foodcourt}.
      * @param openingHours       The building's {@link TimeSlot}.
-     * @param reservables the buidling's map.
      */
-    public Building(Long number, Details details, Foodcourt foodcourt, TimeSlot openingHours,
+    public Building(Long number, Details details, TimeSlot openingHours) {
+        this.number = number;
+        this.details = details;
+        this.openingHours = openingHours;
+        this.reservables = new ArrayList<>();
+    }
+
+    /**
+     * Initialises a new instance of {@link Building}.
+     *
+     * @param number             The building's number.
+     * @param details            {@link Details} about the building.
+     * @param openingHours       The building's {@link TimeSlot}.
+     * @param reservables        The buidling's {@link Room} and {@link Bike}.
+     */
+    public Building(Long number, Details details, TimeSlot openingHours,
                     List<Reservable> reservables) {
         this.number = number;
         this.details = details;
-        this.foodcourt = foodcourt;
         this.openingHours = openingHours;
         this.reservables = reservables;
-    }
-
-    /**returns the map of the building.
-     *
-     * @return the map
-     */
-    @JsonIgnore
-    public List<Reservable> getMap() {
-        return this.reservables;
     }
 
     public Long getNumber() {
@@ -106,14 +103,6 @@ public class Building {
 
     public void setDetails(Details details) {
         this.details = details;
-    }
-
-    public Foodcourt getFoodcourt() {
-        return foodcourt;
-    }
-
-    public void setFoodcourt(Foodcourt foodcourt) {
-        this.foodcourt = foodcourt;
     }
 
     public TimeSlot getOpeningHours() {

@@ -61,17 +61,4 @@ public class User {
     public User() {
 
     }
-
-    /**
-     * Creates a user from a provided registration details object.
-     *
-     * @param registrationDetails The registration details from which to create a new user
-     */
-    public User(RegistrationDetails registrationDetails) {
-        this.details =
-                HttpRequestHandler.convertModel(registrationDetails.getDetails(), Details.class);
-        this.email = registrationDetails.getEmail();
-        this.username = registrationDetails.getusername();
-        this.password = registrationDetails.getPassword();
-    }
 }

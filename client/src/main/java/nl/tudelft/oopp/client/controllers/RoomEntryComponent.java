@@ -2,7 +2,6 @@ package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,14 +17,13 @@ import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
-import nl.tudelft.oopp.api.models.TestHourAndMinutes;
-import nl.tudelft.oopp.api.models.TestOpeningTimes;
-import nl.tudelft.oopp.api.models.TestTimeSlot;
 import nl.tudelft.oopp.api.models.TimeSlot;
 
 
 
 public class RoomEntryComponent extends Pane {
+
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     RoomEntryController controller;
     Room room;
@@ -46,7 +44,7 @@ public class RoomEntryComponent extends Pane {
 
             setRoomDetails(room);
 
-            controller.generateTimeline(generateTestOpeningTimes(), generateTestTimeSlots());
+            //            controller.generateTimeline(generateTestOpeningTimes(), generateTestTimeSlots());
             controller.getReserveButton().setOnAction(//TODO: replace with lambda expression
                 new EventHandler<>() {
                     @Override
@@ -110,13 +108,14 @@ public class RoomEntryComponent extends Pane {
                 }
 
                 ClientRequest<Reservation> reservationRequest = new ClientRequest<>(
-                    HttpRequestHandler.user.username,
-                    HttpRequestHandler.user.userKind,
+                    HttpRequestHandler.user.getUsername(),
+                    HttpRequestHandler.user.getUserKind(),
                     new Reservation(HttpRequestHandler.user, room, new TimeSlot(startTime, endTime))
                 );
 
                 ServerResponseAlert response =
-                    HttpRequestHandler.post("reservations/user/add", reservationRequest, ServerResponseAlert.class);
+                    httpRequestHandler.post("reservations/user/add", reservationRequest,
+                            ServerResponseAlert.class);
                 try {
                     Alert alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
                     alert.setTitle("Response");
@@ -136,22 +135,6 @@ public class RoomEntryComponent extends Pane {
                 alert.showAndWait();
             }
         }
-    }
-
-    private static List<TestTimeSlot> generateTestTimeSlots() {
-        List<TestTimeSlot> result = new ArrayList<>();
-        for (int i = 0; i != 29; i++) {
-            TestTimeSlot myTimeSlot = new TestTimeSlot(i, true);
-            result.add(myTimeSlot);
-        }
-        return result;
-    }
-
-    private static TestOpeningTimes generateTestOpeningTimes() {
-        TestHourAndMinutes openingTime = new TestHourAndMinutes(8, 30);
-        TestHourAndMinutes closingTime = new TestHourAndMinutes(23, 0);
-
-        return new TestOpeningTimes(openingTime, closingTime);
     }
 
     public VBox getRoomBackground() {

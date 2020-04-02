@@ -22,6 +22,7 @@ import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
 public class AddRoomsController {
 
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     // the TextField object from mainScene.fxml
     @FXML
@@ -47,7 +48,8 @@ public class AddRoomsController {
         //TODO: Add a proper connection to the backend.
 
         // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
-        BuildingResponse buildingResponse = HttpRequestHandler.get("getbuildings", BuildingResponse.class);
+        BuildingResponse buildingResponse = httpRequestHandler.get("getbuildings",
+                BuildingResponse.class);
 
         // Add all of the building names into a string
         StringBuilder s = new StringBuilder("Building names: ");
@@ -88,11 +90,11 @@ public class AddRoomsController {
         );
 
         ClientRequest<Room> request = new ClientRequest<>(
-                HttpRequestHandler.user.username,
-                HttpRequestHandler.user.userKind,
+                HttpRequestHandler.user.getUsername(),
+                HttpRequestHandler.user.getUserKind(),
                 requestRoom
         );
-        ServerResponseAlert response = HttpRequestHandler.put(
+        ServerResponseAlert response = httpRequestHandler.put(
                 "reservables/insert/new_room",
                 request,
                 ServerResponseAlert.class
