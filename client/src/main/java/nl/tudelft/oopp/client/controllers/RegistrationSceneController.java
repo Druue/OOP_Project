@@ -31,16 +31,14 @@ public class RegistrationSceneController {
 
     /**
      * Handles going to the login page.
-     *
-     * @param event the event from where the function was called.
      */
-    public void goToLogin(MouseEvent event) {
+    public void goToLogin() {
         try {
             Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
             Scene loginScene = new Scene(loginParent);
             loginScene.getStylesheets()
                     .addAll(this.getClass().getResource("/login.css").toExternalForm());
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage primaryStage = (Stage) registrationEmailInput.getScene().getWindow();
 
 
             primaryStage.hide();
@@ -127,7 +125,7 @@ public class RegistrationSceneController {
                     alert.setContentText(response.getMessage());
                     alert.showAndWait();
                     // For now, goes back to the homepage.
-                    goToHomepage();
+                    goToLogin();
                 } else {
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setContentText(response.getMessage());

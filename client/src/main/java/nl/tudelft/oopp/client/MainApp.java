@@ -25,10 +25,11 @@ public class MainApp extends Application {
         URL xmlUrl = getClass().getResource("/login.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
-        Scene homepage = new Scene(root);
+        Scene startScene = new Scene(root);
+        startScene.getStylesheets().addAll(this.getClass().getResource("/login.css").toExternalForm());
 
         primaryStage.setTitle("ReserveTUDelft");
-        primaryStage.setScene(homepage);
+        primaryStage.setScene(startScene);
 
         primaryStage.show();
     }

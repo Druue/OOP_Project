@@ -63,8 +63,12 @@ public class LoginSceneController {
                     alert.setContentText(response.getMessage());
                     alert.showAndWait();
 
-                    // For now, goes back to the homepage.
-                    goToHomepage();
+                    // Goes to the appropriate homepage based on type of user
+                    if (response.getUser().getUserKind().equals(UserKind.Admin)) {
+                        goToAdmin();
+                    } else {
+                        goToHomepage();
+                    }
                 } else {
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setContentText(response.getMessage());
@@ -79,7 +83,7 @@ public class LoginSceneController {
 
 
     /**
-     * Saves the current user as guest and continues to homepage
+     * Saves the current user as guest and continues to homepage.
      */
     public void continueAsGuest(ActionEvent event) {
         HttpRequestHandler.saveUser(new User(new Details("guest", null, null),
@@ -92,7 +96,23 @@ public class LoginSceneController {
      */
     public void goToHomepage() {
         try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
+            Parent homepageParent = FXMLLoader.load(getClass().getResource("/homepage.fxml"));
+            Scene homepageScene = new Scene(homepageParent);
+            Stage primaryStage = (Stage) (inputusername.getScene().getWindow());
+            primaryStage.hide();
+            primaryStage.setScene(homepageScene);
+            primaryStage.show();
+        } catch (IOException e) {
+            System.out.println("IOException in ReservationsController");
+        }
+    }
+
+    /**
+     * Handles going to the admin homepage.
+     */
+    public void goToAdmin() {
+        try {
+            Parent homepageParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
             Scene homepageScene = new Scene(homepageParent);
             Stage primaryStage = (Stage) (inputusername.getScene().getWindow());
             primaryStage.hide();
