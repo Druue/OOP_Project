@@ -36,6 +36,8 @@ public class HttpRequestHandler {
      */
     public HttpRequestHandler(HttpClient client) {
         this.client = client;
+        this.host = "http://localhost:8080";
+        this.objectMapper = new ObjectMapper();
     }
 
 

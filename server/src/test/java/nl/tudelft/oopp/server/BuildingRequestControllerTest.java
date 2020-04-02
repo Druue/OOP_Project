@@ -18,8 +18,6 @@ import nl.tudelft.oopp.server.controllers.BuildingRequestController;
 import nl.tudelft.oopp.server.models.Bike;
 import nl.tudelft.oopp.server.models.Building;
 import nl.tudelft.oopp.server.models.Details;
-import nl.tudelft.oopp.server.models.Food;
-import nl.tudelft.oopp.server.models.Foodcourt;
 import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.TimeSlot;
 import nl.tudelft.oopp.server.services.BuildingService;
@@ -60,10 +58,8 @@ class BuildingRequestControllerTest {
     Timestamp closingTime;
     TimeSlot timeSlot;
     Details details;
-    Foodcourt foodcourt;
     Reservable reservable;
     Map<Reservable, TimeSlot> availableTimeslots;
-    Food food;
     Building mockBuilding1;
     Building mockBuilding2;
 
@@ -94,17 +90,11 @@ class BuildingRequestControllerTest {
         timeSlot = new TimeSlot(39832L, openingTime, closingTime);
         details = new Details(39832L, "EECMS",
                 "This is the faculty of computer science, mathematics and electrical engineering", "EECMS.png");
-        food = new Food();
-        Collection<Details> detailsCollection = new ArrayList<>();
-        detailsCollection.add(details);
-        Collection<String> foodCollection = new ArrayList<>();
-        foodCollection.add("apple");
-        foodcourt = new Foodcourt(36, detailsCollection, foodCollection);
         reservable = new Bike(456L, details);
-        availableTimeslots = new HashMap<>();
-        availableTimeslots.put(reservable, timeSlot);
-        mockBuilding1 = new Building(36L, details, foodcourt, timeSlot, availableTimeslots);
-        mockBuilding2 = new Building(28L, details, foodcourt, timeSlot, availableTimeslots);
+        List<Reservable> reservablesList = new ArrayList<>();
+        reservablesList.add(reservable);
+        mockBuilding1 = new Building(36L, details, timeSlot, reservablesList);
+        mockBuilding2 = new Building(28L, details,  timeSlot, reservablesList);
 
     }
 

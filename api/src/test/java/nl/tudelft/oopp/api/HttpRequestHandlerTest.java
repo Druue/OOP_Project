@@ -429,43 +429,6 @@ public class HttpRequestHandlerTest {
 
     }
 
-    @Test
-    void anotherConvertModelTest() {
-        Room testRoom = new Room(
-                8L,
-                new Details(
-                        "Broom",
-                        "description",
-                        "image url"
-                ),
-                40,
-                false,
-                false
-        );
-
-        // Unfortunately, importing server models is not possible.
-        // That's why conversion is done between two API models.
-        Room convertedTestRoom = httpRequestHandler.convertBetweenServerAndApi(testRoom, Room.class);
-        assertNotNull(convertedTestRoom);
-
-        // To test the conversion, see if the id's are the same.
-        assertEquals(convertedTestRoom.getCapacity(), 40);
-
-        // An object converted into the same type should be equal to itself.
-        convertedTestRoom = httpRequestHandler.convertBetweenServerAndApi(testRoom, Room.class);
-        assertEquals(testRoom, convertedTestRoom);
-
-
-        // Force an error to occur within the method, and see if it gets caught.
-        try {
-            Bike wonkyBike = httpRequestHandler.convertBetweenServerAndApi(testRoom, Bike.class);
-            fail("conversion should throw an error.");
-        } catch (IllegalArgumentException ignored) {
-            // Do nothing - Test succeeded
-        }
-
-    }
-
     /**
      * Checks if the default constructor works,
      * and if the new {@link HttpRequestHandler} has the same user as the static one.
