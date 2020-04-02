@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("reservables")
 public class ReservableController {
 
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     private Logger logger = LoggerFactory.getLogger(ReservableController.class);
 

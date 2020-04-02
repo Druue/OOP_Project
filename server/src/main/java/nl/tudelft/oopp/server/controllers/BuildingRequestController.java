@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/buildings")
 public class BuildingRequestController {
 
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     private static final String NOT_ADMIN =
         "Unauthorized request. The requesting user is not an administrator.";
