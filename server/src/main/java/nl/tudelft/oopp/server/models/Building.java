@@ -61,8 +61,7 @@ public class Building {
 
     /**
      * Initialises a new instance of {@link Building}.
-     *
-     * @param number             The building's number.
+     *  @param number             The building's number.
      * @param details            {@link Details} about the building.
      * @param openingHours       The building's {@link TimeSlot}.
      */

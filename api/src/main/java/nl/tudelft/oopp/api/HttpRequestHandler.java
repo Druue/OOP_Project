@@ -35,12 +35,12 @@ public class HttpRequestHandler {
      * @param client The (mock) HttpClient.
      */
     public HttpRequestHandler(HttpClient client) {
+        this.host = "http://localhost:8080";
+        this.objectMapper = new ObjectMapper();
         this.client = client;
         this.host = "http://localhost:8080";
         this.objectMapper = new ObjectMapper();
     }
-
-
 
     /**
      * Sends a POST request with some given parameters.

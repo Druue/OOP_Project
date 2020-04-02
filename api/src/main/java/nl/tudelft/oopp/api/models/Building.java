@@ -19,7 +19,7 @@ public class Building {
     /**
      * The details of the building.
      */
-    private Details details;
+    public Details details;
 
     /**
      * The hours during which the building is open during the week.
