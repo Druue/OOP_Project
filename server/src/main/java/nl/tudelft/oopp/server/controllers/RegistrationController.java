@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RegistrationController {
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     final RegistrationService registrationService;
     final UserService userService;

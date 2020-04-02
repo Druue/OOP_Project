@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/buildings")
 public class BuildingRequestController {
 
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     private static final String NOT_ADMIN =
         "Unauthorized request. The requesting user is not an administrator.";
@@ -101,20 +101,9 @@ public class BuildingRequestController {
     }
 
     @GetMapping("/admin/all/uniquevalues")
-    ResponseEntity<ListPair<Long, String>> sendAllBuildingsNumbersAndNames(
-        @RequestBody ClientRequest<String> request) {
+    ResponseEntity<ListPair<Long, String>> sendAllBuildingsNumbersAndNames() {
 
         logger.info("Received a GET request for all buildings numbers and database names.");
-
-        try {
-            authorizationService.checkAuthorization(request.getUsername());
-        } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
-            return ResponseEntity.badRequest().build();
-        } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
-            return ResponseEntity.badRequest().build();
-        }
 
         ListPair<Long, String> responseListPair = buildingService.getBuildingNumbersAndNames();
         logger.info("Numbers and names successfully retrieved from the database. Sending ...");
