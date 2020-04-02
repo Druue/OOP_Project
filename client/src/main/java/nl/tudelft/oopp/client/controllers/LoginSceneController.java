@@ -12,8 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.LoginRequest;
+import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
+import nl.tudelft.oopp.api.models.UserKind;
 
 
 public class LoginSceneController {
@@ -74,28 +77,17 @@ public class LoginSceneController {
         }
     }
 
-    /**
-     * Handles going back to the Homepage.
-     *
-     * @param event the event from where the function was called.
-     */
-    public void goToHomepage(ActionEvent event) {
-        try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
-        } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
-        }
+    /**
+     * Saves the current user as guest and continues to homepage
+     */
+    public void continueAsGuest(ActionEvent event) {
+        HttpRequestHandler.saveUser(new User(new Details("guest", null, null),
+            null, "guest", null, UserKind.Guest));
+        goToHomepage();
     }
 
     /**
-     * >>>>>>>
-     * master:client/src/main/java/nl/tudelft/oopp/demo/controllers/LoginSceneController.java
      * Handles going the the homepage, without any event occurring.
      */
     public void goToHomepage() {

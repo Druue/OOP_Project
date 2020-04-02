@@ -22,12 +22,12 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        URL xmlUrl = getClass().getResource("/mainScene.fxml");
+        URL xmlUrl = getClass().getResource("/login.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
         Scene homepage = new Scene(root);
 
-        primaryStage.setTitle("Test");
+        primaryStage.setTitle("ReserveTUDelft");
         primaryStage.setScene(homepage);
 
         primaryStage.show();
