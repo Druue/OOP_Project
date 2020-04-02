@@ -103,7 +103,7 @@ public class BuildingService {
                 + " or details with name " + building.getDetails().getName());
             throw new InstanceAlreadyExistsException();
         }
-        logger.info("No existing name or building with number " + building.number + " found.");
+        logger.info("No existing name or building with number " + building.getNumber() + " found.");
         buildingRepository.save(building);
 
     }
@@ -166,10 +166,10 @@ public class BuildingService {
             Building building = optional.get();
             if (fieldToBeChanged instanceof TimeSlot) {
                 logger.info("Updating the opening hours of building " + number + " ...");
-                building.openingHours = (TimeSlot) fieldToBeChanged;
+                building.setOpeningHours((TimeSlot) fieldToBeChanged);
             } else {
                 logger.info("Updating the details of building " + number + " ...");
-                building.details = (Details) fieldToBeChanged;
+                building.setDetails((Details) fieldToBeChanged);
             }
             buildingRepository.save(building);
         }
