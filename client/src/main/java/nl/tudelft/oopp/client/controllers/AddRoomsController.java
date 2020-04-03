@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.client.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,9 +17,9 @@ import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Details;
+import nl.tudelft.oopp.api.models.Reservable;
 import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
-
 
 
 public class AddRoomsController {
@@ -49,7 +51,7 @@ public class AddRoomsController {
 
         // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
         BuildingResponse buildingResponse = httpRequestHandler.get("getbuildings",
-                BuildingResponse.class);
+            BuildingResponse.class);
 
         // Add all of the building names into a string
         StringBuilder s = new StringBuilder("Building names: ");
@@ -82,29 +84,47 @@ public class AddRoomsController {
         String description = roomDescriptionInput.getText();
         Long buildingId = Long.parseLong(buildingNumber.getText());
 
-        Room requestRoom = new Room(
-                id,
-                new Details(name, description, null),
-                capacity,
-                hasProjector,
-                forEmployee
+        Reservable requestRoom = new Room(
+            id,
+            new Details(name, description, null),
+            capacity,
+            hasProjector,
+            forEmployee
         );
 
-        ClientRequest<Room> request = new ClientRequest<>(
+        ClientRequest<String> request;
+        ServerResponseAlert response;
+
+        try {
+
+            // Construct the request containing a string representing json-serialized Reservable
+            request = new ClientRequest<>(
                 HttpRequestHandler.user.getUsername(),
                 HttpRequestHandler.user.getUserKind(),
-                requestRoom
-        );
-        ServerResponseAlert response = httpRequestHandler.put(
+                new ObjectMapper().writeValueAsString(requestRoom)
+            );
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            System.out.println("Reservable: " + new ObjectMapper().writeValueAsString(requestRoom));
+            System.out.println("Request: " + new ObjectMapper().writeValueAsString(request));
+
+            // Send the request and
+            response = httpRequestHandler.put(
                 "reservables/insert/room/" + buildingId,
                 request,
                 ServerResponseAlert.class
-        );
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Room added.");
-        alert.setHeaderText(null);
-        alert.setContentText(response.getMessage());
-        alert.showAndWait();
+            );
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Room added.");
+            alert.setHeaderText(null);
+            alert.setContentText(response.getMessage());
+            alert.showAndWait();
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -118,7 +138,7 @@ public class AddRoomsController {
             Scene homeScene = new Scene(homeParent);
 
             Stage primaryStage =
-                    (Stage) (roomNameInput.getScene().getWindow());
+                (Stage) (roomNameInput.getScene().getWindow());
 
             primaryStage.hide();
             primaryStage.setScene(homeScene);
