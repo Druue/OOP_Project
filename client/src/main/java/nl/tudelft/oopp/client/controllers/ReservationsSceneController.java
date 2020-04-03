@@ -2,6 +2,7 @@ package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +129,8 @@ public class ReservationsSceneController implements Initializable {
                 buildingEntry.getStyleClass().add("buildingEntry");
                 Label buildingName = new Label(building.getNumber() + "," + building.getDetails().getName());
                 buildingName.getStyleClass().add("buildingName");
-                Label buildingOpeningTime = new Label("08:30 - 23:00 //hardcoded");
+                Label buildingOpeningTime = new Label(hourAndMinutesString(building.getOpeningHours().getStartTime())
+                    + " - " + hourAndMinutesString(building.getOpeningHours().getEndTime()));
                 buildingOpeningTime.getStyleClass().add("buildingOpeningTime");
 
                 buildingEntry.getChildren().add(buildingName);
@@ -165,6 +167,15 @@ public class ReservationsSceneController implements Initializable {
                 ObservableList<Node> observableListOfEntries = FXCollections.observableArrayList(listOfEntries);
                 buildingsList.setItems(observableListOfEntries);
             }
+        }
+    }
+
+    public String hourAndMinutesString(Timestamp timestamp) {
+        String result = timestamp.getHours() + ":";
+        if(timestamp.getMinutes()<10) {
+            return result + "0" + timestamp.getMinutes();
+        } else {
+            return result + timestamp.getMinutes();
         }
     }
 
