@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.server.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.management.InstanceAlreadyExistsException;
@@ -157,7 +159,7 @@ public class ReservableController {
      */
     @PutMapping("/insert/{type}/{id}")
     public ResponseEntity<ServerResponseAlert> addNewReservable(
-        @RequestBody ClientRequest<Room> request,
+        @RequestBody ClientRequest<String> request,
         @PathVariable Long id,
         @PathVariable String type) {
 
@@ -174,11 +176,15 @@ public class ReservableController {
         logger.info("Adding new " + type + " to building " + id);
 
         try {
-            reservableService.addReservable(request.getBody(), id);
+            Reservable reservableToAdd = new ObjectMapper().readValue(
+                request.getBody(),
+                Reservable.class);
+            reservableService.addReservable(reservableToAdd, id);
+
         } catch (EntityNotFoundException e) {
             logger.error("Building " + id + " not found!");
             return ResponseEntity.badRequest().build();
-        } catch (InstanceAlreadyExistsException e) {
+        } catch (InstanceAlreadyExistsException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(new ServerResponseAlert(
                "Reservable with that name already exists",
                 "ERROR"

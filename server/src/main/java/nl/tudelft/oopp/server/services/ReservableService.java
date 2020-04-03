@@ -152,13 +152,12 @@ public class ReservableService {
             throw new InstanceAlreadyExistsException();
         }
 
-        logger.info("Saving of new reservable successful. Adding the reservable to the list of"
-            + " building " + number + " and generating timeslots for it.");
-
         reservable.setBuilding(buildingContainer.get());
         reservable.getBuilding().getReservables().add(reservable);
         reservableRepository.save(reservable);
 
+        logger.info("Saving of new reservable successful. Adding the reservable to the map of"
+            + " building " + number + " and generating timeslots for it.");
 
 
         /* TODO
