@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.server.models;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Reservable")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Room.class),
+    @JsonSubTypes.Type(value = Bike.class)
+})
 public abstract class Reservable {
 
     /**

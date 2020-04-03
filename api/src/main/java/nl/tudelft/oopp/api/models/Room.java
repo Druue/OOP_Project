@@ -3,10 +3,13 @@ package nl.tudelft.oopp.api.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  * Room.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 public class Room extends Reservable {
 
     /**
