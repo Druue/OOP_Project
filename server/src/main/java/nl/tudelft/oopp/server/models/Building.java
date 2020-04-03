@@ -28,29 +28,28 @@ public class Building {
      */
     @Id
     @Column(name = "id")
-    public Long number;
+    private Long number;
 
     /**
      * The details of the building.
      */
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details", referencedColumnName = "id")
-    public Details details;
+    private Details details;
 
     /**
      * The hours during which the building is open during the week.
      */
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "opening_hours", referencedColumnName = "id")
-    public TimeSlot openingHours;
+    private TimeSlot openingHours;
 
     /**
      * List of all rooms and bikes.
      */
     @JsonIgnore
-    //    @OneToMany(cascade = CascadeType.ALL)
-    @ElementCollection
-    List<Reservable> reservables;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "building")
+    private List<Reservable> reservables;
 
     /**
      * Initialises a new instance of {@link Building}.
@@ -112,6 +111,7 @@ public class Building {
         this.openingHours = openingHours;
     }
 
+    @JsonIgnore
     public List<Reservable> getReservables() {
         return reservables;
     }

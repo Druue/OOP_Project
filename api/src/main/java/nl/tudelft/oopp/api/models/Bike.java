@@ -1,8 +1,12 @@
 package nl.tudelft.oopp.api.models;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 /**
  * Initialises a new {@link Bike}.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 public class Bike extends Reservable {
 
     public Bike() {

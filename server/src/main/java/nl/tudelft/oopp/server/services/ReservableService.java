@@ -2,7 +2,6 @@ package nl.tudelft.oopp.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import javax.management.InstanceAlreadyExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -10,8 +9,6 @@ import nl.tudelft.oopp.server.models.Bike;
 import nl.tudelft.oopp.server.models.Building;
 import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.Room;
-import nl.tudelft.oopp.server.models.TimeSlot;
-import nl.tudelft.oopp.server.repositories.BuildingRepository;
 import nl.tudelft.oopp.server.repositories.DetailsRepository;
 import nl.tudelft.oopp.server.repositories.ReservableRepository;
 import org.slf4j.Logger;
@@ -136,7 +133,6 @@ public class ReservableService {
      *      reservable exists and if so, saves the reservable using the bean
      *      {@link ReservableRepository}. Then adds the new reservable to the map of the building
      *      and generates a list of timeslots for the next two weeks for the new reservable.
-     * @param reservable    The {@link Reservable} object to add to the database.
      * @param number        The number of the building to add the reservable to.
      */
     public void addReservable(Reservable reservable, Long number)
@@ -151,16 +147,18 @@ public class ReservableService {
 
         logger.info("Building " + number + " successfully found. Saving new reservable ...");
 
-        if (detailsRepository.existsByName(reservable.details.name)) {
+        if (detailsRepository.existsByName(reservable.getDetails().getName())) {
             logger.info("Cannot add new reservable. Details with that name already exists.");
             throw new InstanceAlreadyExistsException();
         }
+
+        reservable.setBuilding(buildingContainer.get());
+        reservable.getBuilding().getReservables().add(reservable);
         reservableRepository.save(reservable);
 
         logger.info("Saving of new reservable successful. Adding the reservable to the map of"
             + " building " + number + " and generating timeslots for it.");
 
-        buildingContainer.get().getReservables().add(reservable);
 
         /* TODO
         *   1) Create a Timeslots object containing all the timeslots that would be available
