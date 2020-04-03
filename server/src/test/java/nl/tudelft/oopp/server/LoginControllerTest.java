@@ -1,5 +1,10 @@
 package nl.tudelft.oopp.server;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+
 import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.server.controllers.LoginController;
@@ -10,7 +15,6 @@ import nl.tudelft.oopp.server.repositories.UserRepository;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.LoginService;
 import nl.tudelft.oopp.server.services.UserService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -24,10 +28,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
 
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {LoginController.class, UserService.class, LoginService.class})
@@ -55,6 +55,10 @@ public class LoginControllerTest {
     @InjectMocks
     LoginController loginController;
 
+    /**
+     * Function that gets called before each unit test.
+     * Used for initializing variables.
+     */
     @BeforeEach
     public void beforeEach() {
 

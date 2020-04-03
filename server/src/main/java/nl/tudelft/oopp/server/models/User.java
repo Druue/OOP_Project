@@ -62,6 +62,15 @@ public class User {
 
     }
 
+    /**
+     * Initializes a new {@link User} with all possible attributes.
+     * @param id The user's id.
+     * @param email The user's email address.
+     * @param username The user's username.
+     * @param password The user's password.
+     * @param details The user's details. Used for storing the user's name.
+     * @param userKind The user's {@link UserKind}.
+     */
     public User(Long id, String email, String username, String password, Details details,
                 UserKind userKind) {
         this.id = id;

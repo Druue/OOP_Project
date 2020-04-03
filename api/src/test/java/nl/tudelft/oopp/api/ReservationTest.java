@@ -1,12 +1,15 @@
 package nl.tudelft.oopp.api;
 
-import nl.tudelft.oopp.api.models.*;
+import java.sql.Timestamp;
+import nl.tudelft.oopp.api.models.Details;
+import nl.tudelft.oopp.api.models.Reservation;
+import nl.tudelft.oopp.api.models.Room;
+import nl.tudelft.oopp.api.models.TimeSlot;
+import nl.tudelft.oopp.api.models.User;
+import nl.tudelft.oopp.api.models.UserKind;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Timestamp;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ReservationTest {
 
@@ -87,22 +90,22 @@ public class ReservationTest {
     @Test
     void getterSettersTest() {
         testReservation.setReservationID(2L);
-        assertEquals(testReservation.getReservationID(), 2L);
+        Assertions.assertEquals(testReservation.getReservationID(), 2L);
 
         testReservation.setReservable(otherRoom);
-        assertEquals(testReservation.getReservable(), otherRoom);
+        Assertions.assertEquals(testReservation.getReservable(), otherRoom);
 
         testReservation.setUser(otherUser);
-        assertEquals(testReservation.getUser(), otherUser);
+        Assertions.assertEquals(testReservation.getUser(), otherUser);
 
         testReservation.setTimeslot(otherTimeSlot);
-        assertEquals(testReservation.getTimeslot(), otherTimeSlot);
+        Assertions.assertEquals(testReservation.getTimeslot(), otherTimeSlot);
     }
 
     @Test
     void constructorTest() {
         Reservation emptyReservation = new Reservation();
-        assertNull(emptyReservation.getUser());
+        Assertions.assertNull(emptyReservation.getUser());
 
         Reservation nearlyEmptyReservation = new Reservation(
                 user,
@@ -110,15 +113,15 @@ public class ReservationTest {
                 timeSlot
         );
 
-        assertNull(nearlyEmptyReservation.getReservationID());
+        Assertions.assertNull(nearlyEmptyReservation.getReservationID());
     }
 
     @Test
     void equalityTest() {
-        assertEquals(testReservation, identicalReservation);
-        assertEquals(testReservation, testReservation);
+        Assertions.assertEquals(testReservation, identicalReservation);
+        Assertions.assertEquals(testReservation, testReservation);
 
-        assertNotEquals(testReservation, otherReservation);
-        assertNotEquals(testReservation, null);
+        Assertions.assertNotEquals(testReservation, otherReservation);
+        Assertions.assertNotEquals(testReservation, null);
     }
 }
