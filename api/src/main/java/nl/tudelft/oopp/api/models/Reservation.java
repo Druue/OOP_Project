@@ -47,7 +47,7 @@ public class Reservation {
     public Reservation(
         @JsonProperty("reservationID") Long reservationID,
         @JsonProperty("user") User user,
-        @JsonProperty("reservable") Room reservable,
+        @JsonProperty("reservable") Reservable reservable,
         @JsonProperty("timeslot") TimeSlot timeslot) {
         this.user = user;
         this.reservable = reservable;

@@ -50,7 +50,7 @@ public class HttpRequestHandler {
             String s = objectMapper.writeValueAsString(parameters);
             request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
                     .setHeader("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(parameters))).build();
+                    .POST(HttpRequest.BodyPublishers.ofString(s)).build();
             String r = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
             return objectMapper.readValue(r, responseType);
         } catch (Exception e) {
