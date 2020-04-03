@@ -423,9 +423,15 @@ public class HttpRequestHandlerTest {
         assertEquals(testRoom, convertedTestRoom);
 
 
+        Bike wonkyBike = null;
         // Force an error to occur within the method, and see if it gets caught.
-        Bike wonkyBike = httpRequestHandler.convertModel(testRoom, Bike.class);
-        assertNull(wonkyBike);
+        try {
+            wonkyBike = httpRequestHandler.convertModel(testRoom, Bike.class);
+        } catch (IllegalArgumentException e) {
+            // Do nothing: Exception thrown due to ObjectMapper.
+            assertNull(wonkyBike);
+        }
+
 
     }
 
