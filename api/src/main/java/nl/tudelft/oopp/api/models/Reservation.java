@@ -2,7 +2,6 @@ package nl.tudelft.oopp.api.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Objects;
 
 /**
@@ -113,9 +112,9 @@ public class Reservation {
             return false;
         }
         Reservation that = (Reservation) o;
-        return Objects.equals(getReservationID(), that.getReservationID()) &&
-               Objects.equals(getUser(), that.getUser()) &&
-               Objects.equals(getReservable(), that.getReservable()) &&
-               Objects.equals(getTimeslot(), that.getTimeslot());
+        return Objects.equals(getReservationID(), that.getReservationID())
+               && Objects.equals(getUser(), that.getUser())
+               && Objects.equals(getReservable(), that.getReservable())
+               && Objects.equals(getTimeslot(), that.getTimeslot());
     }
 }

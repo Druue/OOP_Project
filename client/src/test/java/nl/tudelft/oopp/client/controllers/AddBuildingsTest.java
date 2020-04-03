@@ -1,17 +1,19 @@
 package nl.tudelft.oopp.client.controllers;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import javafx.scene.control.Alert;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.*;
+import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.Details;
+import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.api.models.User;
+import nl.tudelft.oopp.api.models.UserKind;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-
-import java.io.IOException;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class AddBuildingsTest {
 
@@ -43,7 +45,8 @@ public class AddBuildingsTest {
                                 "Message retrieved from the backend",
                                 "INFORMATION"
                         )
-                );
+            );
+
         HttpRequestHandler.saveUser(
                 new User(
                         new Details(),
