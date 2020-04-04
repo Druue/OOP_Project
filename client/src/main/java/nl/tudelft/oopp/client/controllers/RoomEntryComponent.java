@@ -44,13 +44,11 @@ public class RoomEntryComponent extends Pane {
 
             setRoomDetails(room);
 
-            //            controller.generateTimeline(generateTestOpeningTimes(), generateTestTimeSlots());
-            controller.getReserveButton().setOnAction(//TODO: replace with lambda expression
-                new EventHandler<>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        reserveRoom();
-                    }
+            //controller.generateTimeline(controller.getStartTimeInput().getText(), controller.getEndTimeInput().getText());
+
+            controller.getReserveButton().setOnAction(
+                (ActionEvent event) -> {
+                    reserveRoom();
                 }
             );
 
