@@ -3,7 +3,6 @@ package nl.tudelft.oopp.api;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -444,7 +443,7 @@ public class HttpRequestHandlerTest {
         HttpRequestHandler newHandler = new HttpRequestHandler();
         assertNotNull(newHandler);
 
-        newHandler.saveUser(new User(
+        HttpRequestHandler.saveUser(new User(
                 new Details(),
                 "email",
                 "",
@@ -452,7 +451,7 @@ public class HttpRequestHandlerTest {
                 UserKind.Admin)
         );
 
-        assertEquals(newHandler.user, HttpRequestHandler.user);
+        assertEquals(HttpRequestHandler.user, HttpRequestHandler.user);
     }
 
 }
