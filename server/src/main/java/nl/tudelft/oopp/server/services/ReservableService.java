@@ -109,13 +109,13 @@ public class ReservableService {
             throw new EntityNotFoundException();
         }
 
-        logger.info("Building " + number + " found. Fetching all its rooms ...");
+        logger.info("Building " + number + " found. Fetching all its reservables ...");
 
-        List<Reservable> rooms = buildingContainer.get().getReservables();
+        List<Reservable> reservables = buildingContainer.get().getReservables();
 
-        logger.info("Constructing of list of building rooms completed.");
+        logger.info("Constructing of list of building reservables completed.");
 
-        return rooms;
+        return reservables;
     }
 
     /**

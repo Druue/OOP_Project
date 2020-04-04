@@ -9,6 +9,7 @@ import javax.naming.AuthenticationException;
 import javax.persistence.EntityNotFoundException;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.ReservableResponse;
 import nl.tudelft.oopp.api.models.RoomResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.Reservable;
@@ -103,9 +104,9 @@ public class ReservableController {
      * @param type      The type of reservable to retrieve - rooms or bikes.
      * @return          A {@link ResponseEntity} object containing a list of the building's rooms.
      */
-    @GetMapping("/{role:(?:user|admin)}/all/{type}/building")
-    public ResponseEntity<List<Reservable>> getAllReservablesOfBuilding(
-        @RequestParam Long number,
+    @GetMapping("/{role:(?:user|admin)}/all/{type}/building/{number}")
+    public ResponseEntity<ReservableResponse> getAllReservablesOfBuilding(
+        @PathVariable Long number,
         @PathVariable String type) {
 
         logger.info("Received GET requests for all " + type
@@ -113,16 +114,22 @@ public class ReservableController {
 
         logger.info("Fetching all + " + type + " of building " + number + " ...");
 
-        List<Reservable> reservablesToSend;
+        List<Reservable> reservables;
 
         try {
-            reservablesToSend = reservableService.getAllReservablesForBuilding(number, type);
+            reservables = reservableService.getAllReservablesForBuilding(number, type);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(null);
         }
 
+        List<nl.tudelft.oopp.api.models.Reservable> reservablesToSend = new ArrayList<>();
+
+        for (Reservable reservable:reservables) {
+            reservablesToSend.add(httpRequestHandler.convertModel(reservable, nl.tudelft.oopp.api.models.Reservable.class));
+        }
+
         logger.info("Sending the " + type + " of building " + number +  " ...");
-        return ResponseEntity.ok(reservablesToSend);
+        return ResponseEntity.ok(new ReservableResponse(reservablesToSend));
     }
 
     /** Receives a GET request for all rooms filtered by a certain capacity provided as a request

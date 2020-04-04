@@ -76,21 +76,7 @@ public class ReservationsSceneController implements Initializable {
 
         populateBuildingsScrollBox();
 
-        //        roomsListWrapper.setVisible(false);
-
-        try {
-            //FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomsList.fxml"));
-            RoomsListController controller = new RoomsListController();
-            loader.setController(controller);
-            VBox tabContent = loader.load();
-            roomsListWrapper.setVisible(true);
-            roomsListTab.setContent(tabContent);
-
-            controller.generateInitialRooms(null);
-        } catch (IOException e) {
-            System.out.println("File Not Found");
-        }
+        roomsListWrapper.setVisible(false);
     }
 
     /**
@@ -155,7 +141,7 @@ public class ReservationsSceneController implements Initializable {
                             roomsListWrapper.setVisible(true);
                             roomsListTab.setContent(tabContent);
 
-                            controller.generateInitialRooms(event);
+                            controller.generateInitialRooms(building);
                         } catch (IOException e) {
                             System.out.println("File Not Found");
                         }
@@ -170,9 +156,14 @@ public class ReservationsSceneController implements Initializable {
         }
     }
 
-    public String hourAndMinutesString(Timestamp timestamp) {
+    /**
+     * Gets the hour and minutes from a {@link Timestamp} in the format (H)H:MM.
+     * @param timestamp The timestamp used.
+     * @return a String of format (H)H:MM (e.g. 9:13 or 12:00).
+     */
+    public static String hourAndMinutesString(Timestamp timestamp) {
         String result = timestamp.getHours() + ":";
-        if(timestamp.getMinutes()<10) {
+        if (timestamp.getMinutes() < 10) {
             return result + "0" + timestamp.getMinutes();
         } else {
             return result + timestamp.getMinutes();
