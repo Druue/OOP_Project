@@ -32,7 +32,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("select res "
         + " from Reservation res "
-        + " where res not in "
+        + " where res.user.id = ?1 and res not in "
         + " (select res from Reservation WHERE res.user.id = ?1 and"
         + " res.timeslot.endTime <= ?2 or res.timeslot.startTime >= ?3 )")
     List<Reservation> findAllForUserForPeriod(Long userID, Timestamp start, Timestamp end);
@@ -44,7 +44,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("select res "
         + " from Reservation res "
-        + " where res not in "
+        + " where res.reservable = ?1 and res not in "
         + " (select res from Reservation WHERE res.reservable = ?1 and"
         + " res.timeslot.endTime <= ?2 or res.timeslot.startTime >= ?3 )")
     List<Reservation> findAllForReservableForPeriod(Reservable reservable, Timestamp start,
