@@ -10,9 +10,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.Building;
+import nl.tudelft.oopp.api.models.Reservable;
+import nl.tudelft.oopp.api.models.ReservableResponse;
 import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.RoomResponse;
 
@@ -21,7 +26,11 @@ public class RoomsListController implements Initializable {
     private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     @FXML
-    ListView<RoomEntryComponent> roomEntriesContainer;
+    private ListView<RoomEntryComponent> roomEntriesContainer;
+    @FXML
+    private Label startTimeLabel;
+    @FXML
+    private Label endTimeLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,26 +46,27 @@ public class RoomsListController implements Initializable {
     //    }
 
     /**
-     * This will get all the rooms of the selected building and create GUI for them, as well as the
+     * This will get all the rooms of the selected {@link Building} and create GUI for them, as well as the
      * initial tab layout.
      *
-     * @param event The event that called the function. Used to find out what Building the request
-     *              was generated from.
+     * @param building The {@link Building} from which to take the rooms (and opening hours)
      */
-    public void generateInitialRooms(MouseEvent event) {
-        RoomResponse roomResponse = httpRequestHandler.get("reservables/all/rooms",
-                RoomResponse.class);
-        if (waitForResponse(roomResponse)) {
-            List<Room> roomsList = roomResponse.getRoomList();
+    public void generateInitialRooms(Building building) {
+        startTimeLabel.setText(ReservationsSceneController.hourAndMinutesString(building.getOpeningHours().getStartTime()));
+        endTimeLabel.setText(ReservationsSceneController.hourAndMinutesString(building.getOpeningHours().getEndTime()));
+        ReservableResponse reservableResponse =
+            httpRequestHandler.get("reservables/user/all/room/building/" + building.getNumber(), ReservableResponse.class);
+        if (reservableResponse.getReservableList() != null) {
             ObservableList<RoomEntryComponent> roomEntries = FXCollections.observableArrayList();
-
-            for (Room myRoom : roomsList) {
-                RoomEntryComponent roomEntry = new RoomEntryComponent(myRoom);
-                roomEntries.add(roomEntry);
+            for (Reservable reservable:reservableResponse.getReservableList()) {
+                if (reservable instanceof Room) {
+                    Room myRoom = (Room) reservable;
+                    RoomEntryComponent roomEntry = new RoomEntryComponent(myRoom);
+                    roomEntries.add(roomEntry);
+                }
             }
             roomEntriesContainer.setItems(roomEntries);
         }
-
     }
 
     /**

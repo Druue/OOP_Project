@@ -19,8 +19,8 @@
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </padding>
                         </Label>
-                        <Label text="8:00" GridPane.columnIndex="1"/>
-                        <Label text="23:00" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Label fx:id="startTimeLabel" GridPane.columnIndex="1"/>
+                        <Label fx:id="endTimeLabel" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                     </children>
                     <columnConstraints>
                         <ColumnConstraints/>
