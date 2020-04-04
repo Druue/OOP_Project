@@ -3,6 +3,7 @@ package nl.tudelft.oopp.server;
 import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,6 +38,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -117,28 +119,13 @@ class BuildingRequestControllerTest {
 
     @Test
     void sendAllBuildingsSuccess() throws Exception {
-        System.out.println(mockBuilding1.toString());
-        List<Building> buildings = Arrays.asList(
-                mockBuilding1,
-                mockBuilding2);
-        Mockito.when(buildingServiceMock.getAllBuildings()).thenReturn(buildings);
-        mockMvc.perform(get("/buildings/admin/all")
-                .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-                .andExpect(status().is(200))
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect((ResultMatcher) jsonPath("$[0].number", is(36)))
-                .andExpect((ResultMatcher) jsonPath("$[0].details", is(4)))
-                .andExpect((ResultMatcher) jsonPath("$[0].foodcourt", is(1)))
-                .andExpect((ResultMatcher) jsonPath("$[0].openingHours", is(22)))
-                .andExpect((ResultMatcher) jsonPath("$[0].availableTimeslots", is(7)))
-                .andExpect((ResultMatcher) jsonPath("$[1].number", is(21)))
-                .andExpect((ResultMatcher) jsonPath("$[1].details", is(4)))
-                .andExpect((ResultMatcher) jsonPath("$[1].foodcourt", is(0)))
-                .andExpect((ResultMatcher) jsonPath("$[1].openingHours", is(12)))
-                .andExpect((ResultMatcher) jsonPath("$[1].availableTimeslots", is(8)));
-        Mockito.verify(buildingServiceMock, Mockito.times(1)).getAllBuildings();
-        Mockito.verifyNoMoreInteractions(buildingServiceMock);
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/buildings/user/all")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.buildingList").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.*").isNotEmpty());
 
     }
 
