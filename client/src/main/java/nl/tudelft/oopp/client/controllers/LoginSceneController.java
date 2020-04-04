@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,11 +13,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.LoginRequest;
+import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
+import nl.tudelft.oopp.api.models.UserKind;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class LoginSceneController {
+    private static final Logger LOGGER = Logger.getLogger(LoginSceneController.class.getName());
 
     // the TextField object(s) from mainScene.fxml
     @FXML
@@ -60,8 +66,12 @@ public class LoginSceneController {
                     alert.setContentText(response.getMessage());
                     alert.showAndWait();
 
-                    // For now, goes back to the homepage.
-                    goToHomepage();
+                    // Goes to the appropriate homepage based on type of user
+                    if (response.getUser().getUserKind().equals(UserKind.Admin)) {
+                        goToAdmin();
+                    } else {
+                        goToHomepage();
+                    }
                 } else {
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setContentText(response.getMessage());
@@ -74,33 +84,35 @@ public class LoginSceneController {
         }
     }
 
-    /**
-     * Handles going back to the Homepage.
-     *
-     * @param event the event from where the function was called.
-     */
-    public void goToHomepage(ActionEvent event) {
-        try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
+    /**
+     * Saves the current user as guest and continues to homepage.
+     */
+    public void continueAsGuest(ActionEvent event) {
+        HttpRequestHandler.saveUser(new User(new Details("guest", null, null),
+            null, "guest", null, UserKind.Guest));
+        goToHomepage();
+    }
+
+    /**
+     * Handles going the the homepage, without any event occurring.
+     */
+    public void goToHomepage() {
+        try {
+            Parent homepageParent = FXMLLoader.load(getClass().getResource("/homepage.fxml"));
+            Scene homepageScene = new Scene(homepageParent);
+            MainApp.getPrimaryStage().setScene(homepageScene);
         } catch (IOException e) {
             System.out.println("IOException in ReservationsController");
         }
     }
 
     /**
-     * >>>>>>>
-     * master:client/src/main/java/nl/tudelft/oopp/demo/controllers/LoginSceneController.java
-     * Handles going the the homepage, without any event occurring.
+     * Handles going to the admin homepage.
      */
-    public void goToHomepage() {
+    public void goToAdmin() {
         try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
+            Parent homepageParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
             Scene homepageScene = new Scene(homepageParent);
             Stage primaryStage = (Stage) (inputusername.getScene().getWindow());
             primaryStage.hide();
