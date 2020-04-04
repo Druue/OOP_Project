@@ -1,12 +1,15 @@
 package nl.tudelft.oopp.client.controllers;
 
+import com.sun.tools.javac.Main;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -18,7 +21,7 @@ import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.TimeSlot;
-
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class RoomEntryComponent extends Pane {
@@ -87,23 +90,8 @@ public class RoomEntryComponent extends Pane {
             if (HttpRequestHandler.user != null) {
                 String startTimeString = getStartTimeInput().getText();
                 String endTimeString = getEndTimeInput().getText();
-                Timestamp startTime;
-                Timestamp endTime;
-                if (startTimeString.matches("\\d{1,2}(:00)?")) {
-                    startTime = new Timestamp(0, 0, 0, Integer.parseInt(startTimeString.split(":")[0]),
-                        0, 0, 0);
-                } else {
-                    startTime = new Timestamp(0, 0, 0, Integer.parseInt(startTimeString.split(":")[0]),
-                        Integer.parseInt(startTimeString.split(":")[1]), 0, 0);
-                }
-
-                if (endTimeString.matches("\\d{1,2}(:00)?")) {
-                    endTime = new Timestamp(0, 0, 0, Integer.parseInt(endTimeString.split(":")[0]),
-                        0, 0, 0);
-                } else {
-                    endTime = new Timestamp(0, 0, 0, Integer.parseInt(endTimeString.split(":")[0]),
-                        Integer.parseInt(endTimeString.split(":")[1]), 0, 0);
-                }
+                Timestamp startTime = constructTimestamp(startTimeString);
+                Timestamp endTime = constructTimestamp(endTimeString);
 
                 ClientRequest<Reservation> reservationRequest = new ClientRequest<>(
                     HttpRequestHandler.user.getUsername(),
@@ -135,6 +123,24 @@ public class RoomEntryComponent extends Pane {
         }
     }
 
+    /**
+     * Gets the timeString and finds the chosen {@link LocalDate} from the {@link ChoiceBox} in ReservationsScene,
+     * and constructs a {@link Timestamp} from it.
+     * @param timeString A string in the format (H)H:MM (e.g. 12:00 or 9 or 13:30).
+     * @return the timestamp for the wanted date and time.
+     */
+    public Timestamp constructTimestamp(String timeString) {
+        ChoiceBox<LocalDate> dates = (ChoiceBox<LocalDate>) MainApp.getPrimaryStage().getScene().lookup("#datesList");
+        LocalDate chosenDate = dates.getValue();
+        if (timeString.matches("\\d{1,2}(:00)?")) {
+            return new Timestamp(chosenDate.getYear() - 1900, chosenDate.getMonthValue() - 1, chosenDate.getDayOfMonth(),
+                Integer.parseInt(timeString.split(":")[0]), 0, 0, 0);
+        } else {
+            return new Timestamp(chosenDate.getYear() - 1900, chosenDate.getMonthValue() - 1, chosenDate.getDayOfMonth(),
+                Integer.parseInt(timeString.split(":")[0]), Integer.parseInt(timeString.split(":")[1]), 0, 0);
+        }
+    }
+
     public VBox getRoomBackground() {
         return controller.getBackground();
     }
@@ -149,14 +155,6 @@ public class RoomEntryComponent extends Pane {
 
     public Label getCapacity() {
         return controller.getCapacity();
-    }
-
-    public Rectangle getTimeslot(int index) {
-        return controller.getTimeslot(index);
-    }
-
-    public List<Rectangle> getTimeslots() {
-        return controller.getTimeslots();
     }
 
     public TextField getStartTimeInput() {

@@ -30,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
@@ -47,7 +48,7 @@ public class ReservationsSceneController implements Initializable {
     ListView<Node> buildingsList;
 
     @FXML
-    ChoiceBox<String> datesList;
+    ChoiceBox<LocalDate> datesList;
 
     @FXML
     TextField buildingSearchField;
@@ -86,13 +87,14 @@ public class ReservationsSceneController implements Initializable {
     private void populateDatesChoiceBox() {
         LocalDate date = LocalDate.now();
 
-        String today = getDateString(date) + " (Today)";
 
-        datesList.setValue(today);
-        datesList.getItems().add(today);
+        datesList.setConverter(generateDateConverter());
+        datesList.setValue(date);
+        datesList.getItems().add(date);
 
         for (int i = 1; i != MAX_DAYS_IN_ADVANCE; i++) {
-            datesList.getItems().add(getDateString(date.plusDays(i)));
+            date = date.plusDays(1);
+            datesList.getItems().add(date);
         }
     }
 
@@ -206,6 +208,32 @@ public class ReservationsSceneController implements Initializable {
                + " - "
                + date.getDayOfWeek().name().substring(0,1)
                + date.getDayOfWeek().name().substring(1,3).toLowerCase();
+    }
+
+    private StringConverter<LocalDate> generateDateConverter() {
+        return new StringConverter<LocalDate>() {
+            @Override
+            public String toString(LocalDate date) {
+                String result = date.getDayOfMonth() + "/"
+                    + date.getMonth().getValue()
+                    + "/" + date.getYear() + " - "
+                    + date.getDayOfWeek().name().substring(0,1)
+                    + date.getDayOfWeek().name().substring(1,3).toLowerCase();
+                if (date.equals(LocalDate.now())) {
+                    return result + " (Today)";
+                } else {
+                    return result;
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String dateString) {
+                String[] splitString = dateString.split("/");
+                return LocalDate.of(Integer.parseInt(splitString[0]),
+                    Integer.parseInt(splitString[1]),
+                    Integer.parseInt(splitString[2].substring(0,3)));
+            }
+        };
     }
 
     /**

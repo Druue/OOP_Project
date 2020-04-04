@@ -28,9 +28,6 @@ public class RoomEntryController {
     Label capacity;
 
     @FXML
-    StackPane timeline;
-
-    @FXML
     TextField startTimeInput;
 
     @FXML
@@ -39,12 +36,7 @@ public class RoomEntryController {
     @FXML
     Button reserveButton;
 
-    private List<Rectangle> timeSlots;
-
-    public RoomEntryController() {
-        timeSlots = new ArrayList<Rectangle>();
-
-    }
+    public RoomEntryController() { }
 
     //    /**
     //     * Generates a new timeline.
@@ -83,7 +75,7 @@ public class RoomEntryController {
     //                hour.setFont(Font.font(11));
     //
     //                fullHourMark.heightProperty().bind(timeSlot.heightProperty().multiply(1.2));
-    //                fullHourMark.setWidth(2);
+    //                fullHour
     //                fullHourMark.translateXProperty().bind(timeSlot.widthProperty().multiply(i)
     //                        .subtract(timeline.getPrefWidth() / numTimeSlots / 2));
     //                fullHourMark.setFill(Color.valueOf("000000")); //TODO: Set it as a string constant
@@ -199,14 +191,6 @@ public class RoomEntryController {
 
     public Label getCapacity() {
         return capacity;
-    }
-
-    public Rectangle getTimeslot(int index) {
-        return timeSlots.get(index);
-    }
-
-    public List<Rectangle> getTimeslots() {
-        return timeSlots;
     }
 
     public TextField getStartTimeInput() {
