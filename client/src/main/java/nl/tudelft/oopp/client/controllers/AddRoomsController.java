@@ -72,17 +72,69 @@ public class AddRoomsController {
      * @param event The event that called the function.
      */
     public void addRoom(ActionEvent event) {
-
-
-        //TODO: Proper input validation.
-
+        //validates the input for room capacity field
+        char[] capactiyInput = roomCapacityInput.getText().toCharArray();
+        for (char characters : capactiyInput) {
+            if (!Character.isDigit(characters)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("capacity field must only have numbers");
+                alert.showAndWait();
+                return;
+            }
+        }
+        //validates the input for roomId field
+        char[] idInput = roomIdInput.getText().toCharArray();
+        for (char character : idInput) {
+            if (!Character.isDigit(character)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("id field must only have numbers");
+                alert.showAndWait();
+                return;
+            }
+        }
+        //validates the input for buildingId field
+        char[] buildingIdInput = buildingNumber.getText().toCharArray();
+        for (char character : buildingIdInput) {
+            if (!Character.isDigit(character)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("building id field must only have numbers");
+                alert.showAndWait();
+                return;
+            }
+        }
         String name = roomNameInput.getText();
         Long id = Long.parseLong(roomIdInput.getText());
         int capacity = Integer.parseInt(roomCapacityInput.getText());
+        //checks if the capacity was between 5 and 20
+        if (capacity < 5 || capacity > 20) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText(null);
+            alert.setContentText("capacity should be between 5-20");
+            alert.showAndWait();
+            return;
+        }
         boolean hasProjector = roomHasProjectorInput.isSelected();
         boolean forEmployee = roomForEmployee.isSelected();
         String description = roomDescriptionInput.getText();
-        Long buildingId = Long.parseLong(buildingNumber.getText());
+        char[] buidlingIdNumber = buildingNumber.getText().toCharArray();
+        for (char character : buidlingIdNumber) {
+            if (!Character.isDigit(character)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("building number field must have numbers only");
+                alert.showAndWait();
+                return;
+            }
+        }
+        long buildingId = Long.parseLong(buildingNumber.getText());
 
         Reservable requestRoom = new Room(
             id,
@@ -114,7 +166,14 @@ public class AddRoomsController {
                 request,
                 ServerResponseAlert.class
             );
-
+            if (response.getMessage().equals("Building not found with this number")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText(response.getMessage());
+                alert.showAndWait();
+                return;
+            }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Room added.");
             alert.setHeaderText(null);
