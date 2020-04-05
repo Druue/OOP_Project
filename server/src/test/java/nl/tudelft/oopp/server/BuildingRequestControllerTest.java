@@ -1,13 +1,16 @@
 package nl.tudelft.oopp.server;
 
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +40,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -45,8 +47,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
 
+
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = {BuildingService.class, BuildingRequestController.class})
+@ContextConfiguration(classes = {BuildingService.class, BuildingRequestController.class, AuthorizationService.class})
 @SpringBootTest
 class BuildingRequestControllerTest {
 
@@ -62,6 +65,9 @@ class BuildingRequestControllerTest {
 
     @MockBean
     AuthorizationService authorizationService;
+
+
+    ObjectMapper mapper;
 
     Timestamp openingTime;
     Timestamp closingTime;
@@ -136,7 +142,7 @@ class BuildingRequestControllerTest {
                 mockBuilding2,
                 mockBuilding1);
 
-        Mockito.when(buildingServiceMock.getAllBuildings()).thenReturn(buildings);
+        when(buildingServiceMock.getAllBuildings()).thenReturn(buildings);
         mockMvc.perform(get("buildings/user/all"))
                 .andExpect(status().is(404));
         Mockito.verifyNoMoreInteractions(buildingServiceMock);
@@ -148,12 +154,48 @@ class BuildingRequestControllerTest {
         List<Building> buildings = Arrays.asList(
                 mockBuilding2,
                 mockBuilding1);
-        Mockito.when(buildingServiceMock.getAllBuildings()).thenReturn(buildings);
+        when(buildingServiceMock.getAllBuildings()).thenReturn(buildings);
         mockMvc.perform(get("/buildings/user/all/information")
                 .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andExpect(status().is(200))
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"));
 
+
+    }
+
+    @Test
+    public void sendAllBuildingsNumbersAndNamesTest() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/buildings/admin/all/uniquevalues")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.[0]").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0]").isNotEmpty());
+    }
+
+    @Test
+    public void addBuildingTest() throws Exception {
+
+        Building building = new Building(36L, details, timeSlot);
+
+        when(buildingServiceMock.getBuilding(36L)).thenReturn(java.util.Optional.of(building));
+
+        doNothing().when(buildingServiceMock).addBuilding(building);
+
+        mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(building);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/buildings/admin/add")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("building", "http:/localhost:8080/buildings/admin/add"));
+
+        verify(buildingServiceMock, times(1)).getBuilding(28L);
+        verify(buildingServiceMock, times(1)).addBuilding(building);
+        verifyNoMoreInteractions(buildingServiceMock);
 
     }
 

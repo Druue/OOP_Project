@@ -38,10 +38,10 @@ public class ReservableController {
     private Logger logger = LoggerFactory.getLogger(ReservableController.class);
 
     private static final String NOT_ADMIN =
-        "Unauthorized request. The requesting user is not an administrator.";
+            "Unauthorized request. The requesting user is not an administrator.";
 
     private static final String NO_USER_FOUND =
-        "Authentication for user failed. No administrator with that name found.";
+            "Authentication for user failed. No administrator with that name found.";
 
     /**
      * Importing the methods from the service class.
@@ -80,7 +80,7 @@ public class ReservableController {
             if (responseReservable instanceof Room) {
                 try {
                     LoggerService.info(ReservableController.class, (httpRequestHandler.convertModel(
-                        responseReservable, nl.tudelft.oopp.api.models.Room.class
+                            responseReservable, nl.tudelft.oopp.api.models.Room.class
                     ).getDetails().getName()));
                 } catch (NullPointerException npe) {
                     LoggerService.info(ReservableController.class, "Name of room is null");
@@ -103,26 +103,30 @@ public class ReservableController {
      * @param type      The type of reservable to retrieve - rooms or bikes.
      * @return          A {@link ResponseEntity} object containing a list of the building's rooms.
      */
-    @GetMapping("/{role:(?:user|admin)}/all/{type}/building")
+    @GetMapping(value = "/{role:(?:user|admin)}/all/{type}/building")
     public ResponseEntity<List<Reservable>> getAllReservablesOfBuilding(
-        @RequestParam Long number,
-        @PathVariable String type) {
+            @RequestParam(value = "number", required = false) Long number,
+            @PathVariable("type") String type) {
+        ResponseEntity<List<Reservable>> result = null;
 
         logger.info("Received GET requests for all " + type
-            + " of building " + number + ". Processing ...");
+                + " of building " + number + ". Processing ...");
 
         logger.info("Fetching all + " + type + " of building " + number + " ...");
 
-        List<Reservable> reservablesToSend;
+        List<Reservable> reservablesToSend = null;
 
         try {
             reservablesToSend = reservableService.getAllReservablesForBuilding(number, type);
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.badRequest().body(null);
+            result = ResponseEntity.badRequest().body(null);
+        }
+        if (result == null) {
+            logger.info("Sending the " + type + " of building " + number + " ...");
+            result = ResponseEntity.ok(reservablesToSend);
         }
 
-        logger.info("Sending the " + type + " of building " + number +  " ...");
-        return ResponseEntity.ok(reservablesToSend);
+        return result;
     }
 
     /** Receives a GET request for all rooms filtered by a certain capacity provided as a request
@@ -135,8 +139,8 @@ public class ReservableController {
      */
     @GetMapping("/{role:(?:user|admin)}/filter/capacity/{group}")
     public ResponseEntity<List<Room>> getAllRoomsByFilterCapacity(
-        @PathVariable String group,
-        @RequestParam Integer capacity) {
+            @PathVariable String group,
+            @RequestParam(value = "capacity", required = false) Integer capacity) {
 
         logger.info("Received GET request for all available rooms "
                 + "with capacity " + group + " than " + capacity);
@@ -159,12 +163,12 @@ public class ReservableController {
      */
     @PutMapping("/insert/{type}/{id}")
     public ResponseEntity<ServerResponseAlert> addNewReservable(
-        @RequestBody ClientRequest<String> request,
-        @PathVariable Long id,
-        @PathVariable String type) {
+            @RequestBody ClientRequest<String> request,
+            @PathVariable Long id,
+            @PathVariable String type) {
 
         logger.info("Received PUT request for adding a new " + type + " to building " + id
-            + ". Processing ...");
+                + ". Processing ...");
 
         try {
             authorizationService.authenticateUser(request.getUsername());
@@ -177,8 +181,8 @@ public class ReservableController {
 
         try {
             Reservable reservableToAdd = new ObjectMapper().readValue(
-                request.getBody(),
-                Reservable.class);
+                    request.getBody(),
+                    Reservable.class);
             reservableService.addReservable(reservableToAdd, id);
 
         } catch (EntityNotFoundException e) {
@@ -186,14 +190,14 @@ public class ReservableController {
             return ResponseEntity.badRequest().build();
         } catch (InstanceAlreadyExistsException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(new ServerResponseAlert(
-               "Reservable with that name already exists",
-                "ERROR"
+                    "Reservable with that name already exists",
+                    "ERROR"
             ));
         }
 
         logger.info("Adding of " + type + " to building " + id + " successful. ");
         return ResponseEntity.ok(new ServerResponseAlert("Adding of " + type
-            + "successful.", "SUCCESS"));
+                + "successful.", "SUCCESS"));
     }
 
 
@@ -206,7 +210,7 @@ public class ReservableController {
     public void update(@RequestBody Reservable newReservable, @PathVariable Long id) {
         reservableService.updateReservable(id, newReservable);
     }
-    
+
     /**
      * Deletes a specific reservable from the database.
      *
