@@ -1,12 +1,17 @@
 package nl.tudelft.oopp.server.services;
 
+import java.util.List;
 import javassist.NotFoundException;
 import nl.tudelft.oopp.server.models.User;
 import nl.tudelft.oopp.server.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+
+    Logger logger = LoggerFactory.getLogger(UserService.class);
 
     final UserRepository userRepository;
 
@@ -46,5 +51,10 @@ public class UserService {
      */
     public User getUserUserName(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public List<User> getAllUsers() {
+        logger.info("Fetching all users in the database ...");
+        return userRepository.findAll();
     }
 }
