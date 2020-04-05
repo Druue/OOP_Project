@@ -63,24 +63,23 @@ public class ReservationsController {
      * @return A {@link ResponseEntity} object containing all the current
      *      reservations in the database.
      */
-    @GetMapping("/admin/all")
-    public ResponseEntity<ReservationResponse> getAllReservations() {
+    @PostMapping("/admin/all")
+    public ResponseEntity<List<Reservation>> getAllReservations(
+        @RequestBody ClientRequest<String> request) {
         logger.info("Received GET request for all reservations");
 
-        List<nl.tudelft.oopp.api.models.Reservation> responseList = new ArrayList<>();
-        for (Reservation responseReservation : reservationService.getAllReservations()) {
-            try {
-                LoggerService.info(ReservationsController.class, (httpRequestHandler.convertModel(
-                    responseReservation, nl.tudelft.oopp.api.models.Reservation.class
-                ).getReservable().getDetails().getName() + " <- room for which a reservation is received "));
-            } catch (NullPointerException npe) {
-                LoggerService.info(ReservableController.class, "Name of room is null");
-            }
-            responseList.add(httpRequestHandler.convertModel(
-                responseReservation, nl.tudelft.oopp.api.models.Reservation.class
-            ));
+        try {
+            authorizationService.checkAuthorization(request.getUsername());
+        } catch (AuthorizationException e) {
+            logger.error(NOT_ADMIN);
+            return ResponseEntity.badRequest().build();
+        } catch (AuthenticationException e) {
+            logger.error(NO_USER_FOUND);
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(new ReservationResponse(responseList));
+
+        List<Reservation> responseList = reservationService.getAllReservations();
+        return ResponseEntity.ok(responseList);
     }
 
 
