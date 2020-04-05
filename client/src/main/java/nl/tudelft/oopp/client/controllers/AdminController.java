@@ -3,6 +3,8 @@ package nl.tudelft.oopp.client.controllers;
 import com.sun.javafx.binding.Logging;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,15 +19,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.Reservation;
+import nl.tudelft.oopp.api.models.ReservationResponse;
 import nl.tudelft.oopp.client.MainApp;
 
 
 public class AdminController implements Initializable {
+
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
     private static final Logger LOGGER = Logger.getLogger(AdminController.class.getName());
     private static final String BAD_RESOURCE_ERROR = "Faulty resource input at AdminController";
-
-    public Button btn;
-    ObservableList list = FXCollections.observableArrayList();
 
     @FXML
     private ListView<String> todayRes;
@@ -35,22 +40,64 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadData();
+        loadTodayReservations();
+        loadAllReservations();
     }
 
     /**
-     * Handles loading the reserved rooms to the ListView item in homepage.fxml
+     * Handles loading all the reservations of all users to the ListView tab with all reservations in admin.fxml
      */
-    private void loadData() {
-
-        //        List<Reservation> reservationList = HttpRequestHandler.get("reservations/all",
-        //        ReservationResponse.class).getReservationList();
-        //
-        //        for (Reservation s : reservationList) {
-        //            todayRes.getItems().add(s.getReservationID().toString());
-        //        }
-
+    private void loadAllReservations() {
+        try {
+            ClientRequest<String> userDetails = new ClientRequest<>(
+                HttpRequestHandler.user.getUsername(),
+                HttpRequestHandler.user.getUserKind(),
+                null
+            );
+            List<Reservation> reservationList =
+                httpRequestHandler.postList("reservations/admin/all", userDetails, Reservation.class);
+            if (reservationList != null) {
+                for (Reservation s : reservationList) {
+                    allRes.getItems().add("Room " + s.getReservable().getDetails().getName() + "in"
+                        + s.getReservable().getBuilding().getName() + " reserved from "
+                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
+                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime()) + " on "
+                        + s.getTimeslot().getStartTime().getDate() + "/" + (s.getTimeslot().getStartTime().getMonth() + 1)
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    /**
+     * Handles loading the reservations of all users for current day to the ListView tab with
+     * today's reservations in admin.fxml
+     */
+    private void loadTodayReservations() {
+        try {
+            ClientRequest<String> userDetails = new ClientRequest<>(
+                HttpRequestHandler.user.getUsername(),
+                HttpRequestHandler.user.getUserKind(),
+                null
+            );
+            List<Reservation> reservationList =
+                httpRequestHandler.postList("reservations/admin/current", userDetails, Reservation.class);
+            if (reservationList != null) {
+                for (Reservation s : reservationList) {
+                    todayRes.getItems().add("Room " + s.getReservable().getDetails().getName() + "in"
+                        + s.getReservable().getBuilding().getName() + " reserved from "
+                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
+                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime())
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Handles going to the mainScene.
