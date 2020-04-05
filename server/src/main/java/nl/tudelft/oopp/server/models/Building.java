@@ -120,4 +120,6 @@ public class Building {
     public void setReservables(List<Reservable> reservables) {
         this.reservables = reservables;
     }
+
+
 }
