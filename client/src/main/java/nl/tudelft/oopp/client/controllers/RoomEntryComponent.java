@@ -4,6 +4,7 @@ import com.sun.tools.javac.Main;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,7 +22,7 @@ import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.TimeSlot;
-import nl.tudelft.oopp.client.AlertService;
+import nl.tudelft.oopp.api.models.UserKind;
 import nl.tudelft.oopp.client.MainApp;
 
 
@@ -80,20 +81,25 @@ public class RoomEntryComponent extends Pane {
      * input from startTimeInput and endTimeInput text fields.
      */
     public void reserveRoom() {
-        if (!getStartTimeInput().getText().matches("\\d{1,2}(:00|:30)?")
-            || !getEndTimeInput().getText().matches("\\d{1,2}(:00|:30)?")) {
+        if (isInputValid()) {
+            String startTimeString = getStartTimeInput().getText();
+            String endTimeString = getEndTimeInput().getText();
+            Timestamp startTime = constructTimestamp(startTimeString);
+            Timestamp endTime = constructTimestamp(endTimeString);
 
-            AlertService.alertWarning(
-                "Warning",
-                "Please fill in all time input fields and as either whole or half hour.");
-
-        } else {
-            if (HttpRequestHandler.user != null) {
-                String startTimeString = getStartTimeInput().getText();
-                String endTimeString = getEndTimeInput().getText();
-                Timestamp startTime = constructTimestamp(startTimeString);
-                Timestamp endTime = constructTimestamp(endTimeString);
-
+            if (!startTime.before(endTime)) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill in a start time that is before the end time.");
+                alert.showAndWait();
+            } else if (!startTime.toLocalDateTime().isAfter(LocalDateTime.now())) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill in a time in the future as a start for the reservation.");
+                alert.showAndWait();
+            } else {
                 ClientRequest<Reservation> reservationRequest = new ClientRequest<>(
                     HttpRequestHandler.user.getUsername(),
                     HttpRequestHandler.user.getUserKind(),
@@ -102,30 +108,72 @@ public class RoomEntryComponent extends Pane {
 
                 ServerResponseAlert response =
                     httpRequestHandler.post("reservations/user/add", reservationRequest,
-                            ServerResponseAlert.class);
+                        ServerResponseAlert.class);
                 try {
-
-                    AlertService.alert(
-                        Alert.AlertType.valueOf(response.getAlertType()),
-                        "Response",
-                        response.getMessage());
-
+                    Alert alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
+                    alert.setTitle("Response");
+                    alert.setHeaderText(null);
+                    alert.setContentText(response.getMessage());
+                    alert.showAndWait();
                 } catch (NullPointerException npe) {
                     //Do nothing
                 }
-
-            } else {
-                AlertService.alertError(
-                    "ERROR",
-                    "You must login before you can make a reservation");
             }
         }
+    }
+
+    private boolean isInputValid() {
+        if (HttpRequestHandler.user == null || HttpRequestHandler.user.getUserKind() == UserKind.Guest) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText(null);
+            alert.setContentText("You must login before you can make a reservation");
+            // TODO: Add a button that leads to login here
+            alert.showAndWait();
+        } else if (!isBetweenOpeningHours(getStartTimeInput().getText())
+            || !isBetweenOpeningHours(getEndTimeInput().getText())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill in all time input fields between the building's opening times.");
+            alert.showAndWait();
+        } else if (!getStartTimeInput().getText().matches("\\d{1,2}(:00|:30)?")
+            || !getEndTimeInput().getText().matches("\\d{1,2}(:00|:30)?")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill in all time input fields and as either whole or half hour.");
+            alert.showAndWait();
+        } else {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether the given string representing hour and minutes is between the opening and closing time of the
+     * building.
+     * @param timeString A string in the format (H)H(:MM) (e.g. 7:00 or 9 or 13:30).
+     * @return whether the hour is between the opening hours of the building.
+     */
+    private boolean isBetweenOpeningHours(String timeString) {
+        Timestamp hourTimestamp;
+        if (timeString.matches("\\d{1,2}(:00)?")) {
+            hourTimestamp = new Timestamp(0,0,0,
+                Integer.parseInt(timeString.split(":")[0]), 0, 0, 0);
+        } else {
+            hourTimestamp = new Timestamp(0,0,0,
+                Integer.parseInt(timeString.split(":")[0]), Integer.parseInt(timeString.split(":")[1]), 0, 0);
+        }
+        Timestamp startTime = room.getBuilding().getOpeningHours().getStartTime();
+        Timestamp endTime = room.getBuilding().getOpeningHours().getEndTime();
+        return hourTimestamp.before(endTime) && hourTimestamp.after(startTime);
     }
 
     /**
      * Gets the timeString and finds the chosen {@link LocalDate} from the {@link ChoiceBox} in ReservationsScene,
      * and constructs a {@link Timestamp} from it.
-     * @param timeString A string in the format (H)H:MM (e.g. 12:00 or 9 or 13:30).
+     * @param timeString A string in the format (H)H(:MM) (e.g. 7:00 or 9 or 13:30).
      * @return the timestamp for the wanted date and time.
      */
     public Timestamp constructTimestamp(String timeString) {
