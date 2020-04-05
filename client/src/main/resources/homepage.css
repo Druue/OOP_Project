@@ -41,6 +41,10 @@
     -fx-background-color: #94b3ff;
 }
 
+#inactiveMenu:hover, #inactiveMenu:focused, #inactiveMenu:showing {
+    -fx-background-color: #00a6d6;
+}
+
 .context-menu {
     -fx-background-color: #00a6d6;
     -fx-border-width: 0px;

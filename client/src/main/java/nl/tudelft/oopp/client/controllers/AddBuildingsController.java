@@ -2,6 +2,8 @@ package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.logging.Level;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.TimeSlot;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class AddBuildingsController {
@@ -55,11 +58,31 @@ public class AddBuildingsController {
     }
 
     /**
+     * Handles going to the page for adding reservations.
+     */
+    public void goToRes() {
+        try {
+            Parent homeParent = FXMLLoader.load(getClass().getResource("/reservations.fxml"));
+            Scene homeScene = new Scene(homeParent);
+
+            Stage primaryStage =
+                    (Stage) (buildingNameInput.getScene().getWindow());
+
+            primaryStage.hide();
+            primaryStage.setScene(homeScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AddBuildingsController");
+        }
+    }
+
+    /**
      * Handles going to the add rooms page.
      *
      * @param event the scene from where the function was called.
      */
-    public void goToAddRoom(ActionEvent event) {
+    public void goToAddRooms(ActionEvent event) {
         try {
             Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-addRoom.fxml"));
             Scene roomScene = new Scene(roomParent);
@@ -81,7 +104,7 @@ public class AddBuildingsController {
      *
      * @param event the scene from where the function was called.
      */
-    public void goToAddBuilding(ActionEvent event) {
+    public void goToAddBuildings(ActionEvent event) {
         try {
             Parent buildingParent = FXMLLoader.load(getClass().getResource("/admin-addBuilding.fxml"));
             Scene buildingScene = new Scene(buildingParent);

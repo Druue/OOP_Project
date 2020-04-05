@@ -59,8 +59,8 @@
                         <Font name="System Bold" size="16.0"/>
                     </font>
                 </Button>
-                <MenuBar id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                         AnchorPane.topAnchor="0.0">
+                <MenuBar id="menuBar" style="-fx-background-color: #00A6D6;" AnchorPane.leftAnchor="0.0"
+                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <menus>
                         <Menu mnemonicParsing="false" text="Reserve">
                             <items>
@@ -68,16 +68,29 @@
                                 <MenuItem mnemonicParsing="false" text="Bike"/>
                             </items>
                         </Menu>
+                        <Menu id="inactiveMenu" mnemonicParsing="false"
+                              text="                                                                                                                                           ">
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="more..">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Log out"/>
+                                <MenuItem mnemonicParsing="false" text="Copyrights"/>
+                            </items>
+                        </Menu>
                     </menus>
                 </MenuBar>
-                <ImageView fitHeight="100.0" fitWidth="100.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true"
-                           AnchorPane.rightAnchor="1.5" AnchorPane.topAnchor="1.5">
-                    <image>
-                        <Image url="@images/Logo.png"/>
-                    </image>
-                </ImageView>
-                <Button id="logo" onAction="#goToMain" prefWidth="100.0" AnchorPane.rightAnchor="1.5"
-                        AnchorPane.topAnchor="1.5"/>
+                <Button id="logo" onAction="#goToMain" prefWidth="100.0" AnchorPane.rightAnchor="80.0"
+                        AnchorPane.topAnchor="0.0"/>
+                <HBox layoutY="2.0" prefHeight="30.0" prefWidth="100.0" AnchorPane.rightAnchor="80.0"
+                      AnchorPane.topAnchor="2.0">
+                    <children>
+                        <ImageView fitHeight="26.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/Logo.png"/>
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
             </children>
         </AnchorPane>
     </children>
