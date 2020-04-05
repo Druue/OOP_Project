@@ -58,7 +58,7 @@ public class AdminController implements Initializable {
                 httpRequestHandler.postList("reservations/admin/all", userDetails, Reservation.class);
             if (reservationList != null) {
                 for (Reservation s : reservationList) {
-                    allRes.getItems().add("Room " + s.getReservable().getDetails().getName() + "in"
+                    allRes.getItems().add("Room " + s.getReservable().getDetails().getName() + " in "
                         + s.getReservable().getBuilding().getName() + " reserved from "
                         + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
                         + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime()) + " on "
