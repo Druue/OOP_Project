@@ -1,6 +1,8 @@
 package nl.tudelft.oopp.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 import nl.tudelft.oopp.api.models.User;
 
 public class HttpRequestHandler {
@@ -53,6 +56,33 @@ public class HttpRequestHandler {
                     .POST(HttpRequest.BodyPublishers.ofString(s)).build();
             String r = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
             return objectMapper.readValue(r, responseType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Sends a POST request with some given parameters that gets a list back.
+     *
+     * @param path       the path on the server where the request should be sent.
+     * @param parameters a map containing all parameters in the request, mapped as 'name,value'.
+     * @return An HttpResponse object.
+     */
+    public <T, E> List<E> postList(String path, T parameters, Class<E> responseType) {
+        // Build HTTP request
+        HttpRequest request = null;
+
+        try {
+            String s = objectMapper.writeValueAsString(parameters);
+            request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
+                .setHeader("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(s)).build();
+            String r = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            TypeFactory factory = objectMapper.getTypeFactory();
+            CollectionType listType = factory.constructCollectionType(List.class, responseType);
+            return objectMapper.readValue(r, listType);
         } catch (Exception e) {
             e.printStackTrace();
         }
