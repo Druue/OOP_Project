@@ -124,32 +124,6 @@ class BuildingRequestControllerTest {
     }
 
     @Test
-    void sendAllBuildingsSuccess() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/buildings/user/all")
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.buildingList").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.*").isNotEmpty());
-
-    }
-
-
-    @Test
-    public void sendAllBuildingsFail() throws Exception {
-        List<Building> buildings = Arrays.asList(
-                mockBuilding2,
-                mockBuilding1);
-
-        when(buildingServiceMock.getAllBuildings()).thenReturn(buildings);
-        mockMvc.perform(get("buildings/user/all"))
-                .andExpect(status().is(404));
-        Mockito.verifyNoMoreInteractions(buildingServiceMock);
-
-    }
-
-    @Test
     public void sendAllBuildingsInfoSuccess() throws Exception {
         List<Building> buildings = Arrays.asList(
                 mockBuilding2,
