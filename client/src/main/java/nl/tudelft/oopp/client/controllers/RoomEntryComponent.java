@@ -23,6 +23,7 @@ import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.TimeSlot;
 import nl.tudelft.oopp.api.models.UserKind;
+import nl.tudelft.oopp.client.AlertService;
 import nl.tudelft.oopp.client.MainApp;
 
 
@@ -88,17 +89,9 @@ public class RoomEntryComponent extends Pane {
             Timestamp endTime = constructTimestamp(endTimeString);
 
             if (!startTime.before(endTime)) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill in a start time that is before the end time.");
-                alert.showAndWait();
+                AlertService.alertWarning("Warning", "Please fill in a start time that is before the end time.");
             } else if (!startTime.toLocalDateTime().isAfter(LocalDateTime.now())) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill in a time in the future as a start for the reservation.");
-                alert.showAndWait();
+                AlertService.alertWarning("Warning", "Please fill in a time in the future as a start for the reservation.");
             } else {
                 ClientRequest<Reservation> reservationRequest = new ClientRequest<>(
                     HttpRequestHandler.user.getUsername(),
@@ -110,11 +103,10 @@ public class RoomEntryComponent extends Pane {
                     httpRequestHandler.post("reservations/user/add", reservationRequest,
                         ServerResponseAlert.class);
                 try {
-                    Alert alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
-                    alert.setTitle("Response");
-                    alert.setHeaderText(null);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+                    AlertService.alert(Alert.AlertType.valueOf(
+                        response.getAlertType()),
+                        "Response",
+                        response.getMessage());
                 } catch (NullPointerException npe) {
                     //Do nothing
                 }
@@ -124,26 +116,24 @@ public class RoomEntryComponent extends Pane {
 
     private boolean isInputValid() {
         if (HttpRequestHandler.user == null || HttpRequestHandler.user.getUserKind() == UserKind.Guest) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText(null);
-            alert.setContentText("You must login before you can make a reservation");
-            // TODO: Add a button that leads to login here
-            alert.showAndWait();
+
+            AlertService.alertError("ERROR", "You must login before you can make a reservation");
+
         } else if (!isBetweenOpeningHours(getStartTimeInput().getText())
             || !isBetweenOpeningHours(getEndTimeInput().getText())) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all time input fields between the building's opening times.");
-            alert.showAndWait();
+
+            AlertService.alertWarning(
+                "Warning",
+                "Please fill in all time input fields between the building's opening times.");
+
         } else if (!getStartTimeInput().getText().matches("\\d{1,2}(:00|:30)?")
             || !getEndTimeInput().getText().matches("\\d{1,2}(:00|:30)?")) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all time input fields and as either whole or half hour.");
-            alert.showAndWait();
+
+            AlertService.alertWarning(
+                "Warning",
+                "Please fill in all time input fields and as either whole or half hour.");
+
+
         } else {
             return true;
         }
