@@ -60,7 +60,7 @@ public class HomepageController<E> implements Initializable {
                 null
             );
             List<Reservation> reservationList =
-                httpRequestHandler.postList("reservations/user/all", userDetails, Reservation.class);
+                httpRequestHandler.postList("reservations/user/current", userDetails, Reservation.class);
             if (reservationList != null) {
                 for (Reservation s : reservationList) {
                     allRes.getItems().add("Room " + s.getReservable().getDetails().getName() + "in"
@@ -88,10 +88,10 @@ public class HomepageController<E> implements Initializable {
                 null
             );
             List<Reservation> reservationList =
-                httpRequestHandler.postList("reservations/user/current", userDetails, Reservation.class);
+                httpRequestHandler.postList("reservations/user/today", userDetails, Reservation.class);
             if (reservationList != null) {
                 for (Reservation s : reservationList) {
-                    todayRes.getItems().add("Room " + s.getReservable().getDetails().getName() + "in"
+                    todayRes.getItems().add("Room " + s.getReservable().getDetails().getName() + " in "
                         + s.getReservable().getBuilding().getName() + " reserved from "
                         + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
                         + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime())
