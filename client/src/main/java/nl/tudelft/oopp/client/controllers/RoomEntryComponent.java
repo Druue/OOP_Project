@@ -21,6 +21,7 @@ import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.TimeSlot;
+import nl.tudelft.oopp.client.AlertService;
 import nl.tudelft.oopp.client.MainApp;
 
 
@@ -81,11 +82,11 @@ public class RoomEntryComponent extends Pane {
     public void reserveRoom() {
         if (!getStartTimeInput().getText().matches("\\d{1,2}(:00|:30)?")
             || !getEndTimeInput().getText().matches("\\d{1,2}(:00|:30)?")) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all time input fields and as either whole or half hour.");
-            alert.showAndWait();
+
+            AlertService.alertWarning(
+                "Warning",
+                "Please fill in all time input fields and as either whole or half hour.");
+
         } else {
             if (HttpRequestHandler.user != null) {
                 String startTimeString = getStartTimeInput().getText();
@@ -103,22 +104,20 @@ public class RoomEntryComponent extends Pane {
                     httpRequestHandler.post("reservations/user/add", reservationRequest,
                             ServerResponseAlert.class);
                 try {
-                    Alert alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
-                    alert.setTitle("Response");
-                    alert.setHeaderText(null);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+
+                    AlertService.alert(
+                        Alert.AlertType.valueOf(response.getAlertType()),
+                        "Response",
+                        response.getMessage());
+
                 } catch (NullPointerException npe) {
                     //Do nothing
                 }
 
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("You must login before you can make a reservation");
-                // TODO: Add a button that leads to login here
-                alert.showAndWait();
+                AlertService.alertError(
+                    "ERROR",
+                    "You must login before you can make a reservation");
             }
         }
     }

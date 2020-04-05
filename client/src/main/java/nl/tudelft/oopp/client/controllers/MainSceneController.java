@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
 import nl.tudelft.oopp.api.models.BuildingResponse;
+import nl.tudelft.oopp.client.AlertService;
 
 
 public class MainSceneController {
@@ -162,11 +163,6 @@ public class MainSceneController {
      */
     public void getBuildings() {
 
-        // Make a standard alert
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("A response");
-        alert.setHeaderText(null);
-
         // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
         BuildingResponse buildingResponse = httpRequestHandler.get("buildings/all",
                 BuildingResponse.class);
@@ -180,7 +176,6 @@ public class MainSceneController {
         }
 
         // Show the alert with all the building names
-        alert.setContentText(s.toString());
-        alert.showAndWait();
+        AlertService.alertInformation("Response", s.toString());
     }
 }
