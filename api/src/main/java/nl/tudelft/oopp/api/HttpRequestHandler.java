@@ -127,7 +127,7 @@ public class HttpRequestHandler {
             Object result = objectMapper.readValue(httpResponse.body(), responseType);
             return responseType.cast(result);
         } catch (Exception e) {
-            System.out.println("ObjectMapper is a pain in the ass");
+            e.printStackTrace();
         }
 
         return null;
