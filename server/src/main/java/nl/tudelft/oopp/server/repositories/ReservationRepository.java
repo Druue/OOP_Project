@@ -26,9 +26,21 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAllCurrent(Timestamp startSearchTime);
 
     @Query("select res "
+        + " from Reservation res"
+        + " WHERE res.timeslot.startTime >= ?1 and res.timeslot.endTime <= ?2 ")
+    List<Reservation> findAllReservationsInsideAPeriod(Timestamp start, Timestamp end);
+
+    @Query("select res "
         + " from Reservation res "
         + " where res.user.id=?1 and res.timeslot.endTime > ?2")
     List<Reservation> findAllCurrentByUser(Long userID, Timestamp startSearchTime);
+
+    @Query("SELECT res"
+        + " from Reservation res "
+        + " WHERE res.user.id=?1 and res.timeslot.startTime >= ?2 and res.timeslot.endTime <= ?3")
+    List<Reservation> findAllUserReservationsInsideAPeriod(Long userID,
+                                                      Timestamp start,
+                                                      Timestamp end);
 
     @Query("select res "
         + " from Reservation res "
