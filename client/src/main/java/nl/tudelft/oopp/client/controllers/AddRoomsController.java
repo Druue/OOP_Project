@@ -123,17 +123,6 @@ public class AddRoomsController {
         boolean hasProjector = roomHasProjectorInput.isSelected();
         boolean forEmployee = roomForEmployee.isSelected();
         String description = roomDescriptionInput.getText();
-        char[] buidlingIdNumber = buildingNumber.getText().toCharArray();
-        for (char character : buidlingIdNumber) {
-            if (!Character.isDigit(character)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("building number field must have numbers only");
-                alert.showAndWait();
-                return;
-            }
-        }
         long buildingId = Long.parseLong(buildingNumber.getText());
 
         Reservable requestRoom = new Room(
