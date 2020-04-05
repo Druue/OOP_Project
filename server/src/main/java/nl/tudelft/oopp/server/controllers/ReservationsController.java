@@ -66,7 +66,7 @@ public class ReservationsController {
     @PostMapping("/admin/all")
     public ResponseEntity<List<Reservation>> getAllReservations(
         @RequestBody ClientRequest<String> request) {
-        logger.info("Received GET request for all reservations");
+        logger.info("Received POST request for all reservations");
 
         try {
             authorizationService.checkAuthorization(request.getUsername());
@@ -91,9 +91,27 @@ public class ReservationsController {
     @PostMapping("/admin/current")
     public ResponseEntity<List<Reservation>> getCurrentReservations() {
 
-        logger.info("Received GET request for all current reservations. Processing ...");
+        logger.info("Received POST request for all current reservations. Processing ...");
 
         List<Reservation> responseList = reservationService.getAllCurrentReservations();
+
+        logger.info("Sending all current reservations ...");
+        return ResponseEntity.ok(responseList);
+    }
+
+    /**     Receives a POST request for all reservations for today. Then uses the
+     *      {@link ReservationService} bean to fetch all reservations within the bounds
+     *      of today and sends them encapsulated in a {@link ResponseEntity} object.
+     *
+     * @return  ResponseEntity object containing {@link List} of {@link Reservation} objects
+     *          representing today's reservations.
+     */
+    @PostMapping("/admin/today")
+    public ResponseEntity<List<Reservation>> getTodaysReservations() {
+
+        logger.info("Received POST request for today's reservations. Processing ...");
+
+        List<Reservation> responseList = reservationService.getAllReservationsForToday();
 
         logger.info("Sending all current reservations ...");
         return ResponseEntity.ok(responseList);
@@ -160,6 +178,41 @@ public class ReservationsController {
             reservationService.getCurrentUserReservations(userId);
 
         return ResponseEntity.ok(foundReservations);
+    }
+
+    /**     This method resceives a POST request for all today's reservations of a particular user.
+     *      It first authenticates the user using the authorizationService bean and then uses the id
+     *      of the user to find his/her reservations for today using the {@link ReservationService}
+     *      bean. Find all it sends back the fetched {@link List} of {@link Reservation} objects.
+     * @param request   A {@link ClientRequest} object containing the username of the user whose
+     *                  reservations should be fetched.
+     * @return          A {@link ResponseEntity} object containing the list of the user's
+     *                  reservations for today.
+     */
+    @PostMapping("/user/today")
+    public ResponseEntity<List<Reservation>> getTodaysUserReservations(
+        @RequestBody ClientRequest<String> request) {
+
+        logger.info("Received POST request for today's reservations of user: "
+            + request.getUsername() + ". Processing ...");
+
+        String username = request.getUsername();
+        User foundUser;
+
+        try {
+            foundUser = authorizationService.authenticateUser(username);
+        } catch (AuthenticationException e) {
+            logger.error("User with username: " + username + " not found.");
+            return ResponseEntity.badRequest().build();
+        }
+
+        logger.info("User with username: " + username + " successfully found.");
+
+        Long userId = foundUser.id;
+        List<Reservation> responseList = reservationService.getUserReservationsForToday(userId);
+
+        return ResponseEntity.ok(responseList);
+
     }
 
     /**
