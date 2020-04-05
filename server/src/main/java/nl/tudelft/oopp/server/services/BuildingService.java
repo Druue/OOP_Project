@@ -53,28 +53,6 @@ public class BuildingService {
         return buildingRepository.findAllBy();
     }
 
-    /** Gets all the buildings numbers and existing names in the database.
-     * @return A {@link ListPair} object containing two lists - the numbers and the names.
-     */
-    public ListPair<Long, String> getBuildingNumbersAndNames() {
-        logger.info("Fetching the numbers of all buildings ...");
-        List<BuildingNumber> queriedNumbers = buildingRepository.getAllBy();
-        logger.info("Fetching all names from the database table details ...");
-        List<DetailsName> queriedNames = detailsRepository.findAllBy();
-
-        List<Long> sentNumbers = new ArrayList<>();
-        List<String> sentNames = new ArrayList<>();
-
-        for (BuildingNumber number: queriedNumbers) {
-            sentNumbers.add(number.getNumber());
-        }
-        for (DetailsName name: queriedNames) {
-            sentNames.add(name.getName());
-        }
-        logger.info("Constructing of ListPair object successful. ");
-        return new ListPair<>(sentNumbers, sentNames);
-    }
-
     /**
      * Gets a building.
      *
