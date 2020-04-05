@@ -38,12 +38,6 @@ public class ReservableController {
 
     private Logger logger = LoggerFactory.getLogger(ReservableController.class);
 
-    private static final String NOT_ADMIN =
-        "Unauthorized request. The requesting user is not an administrator.";
-
-    private static final String NO_USER_FOUND =
-        "Authentication for user failed. No administrator with that name found.";
-
     /**
      * Importing the methods from the service class.
      */
@@ -176,7 +170,7 @@ public class ReservableController {
         try {
             authorizationService.authenticateUser(request.getUsername());
         } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
+            logger.error(AuthorizationService.NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
         }
 
