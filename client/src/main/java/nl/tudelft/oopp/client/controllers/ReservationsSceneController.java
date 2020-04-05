@@ -32,10 +32,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.Building;
-import nl.tudelft.oopp.api.models.BuildingResponse;
-import nl.tudelft.oopp.api.models.Details;
-import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.api.models.*;
 
 public class ReservationsSceneController implements Initializable {
 
@@ -237,12 +234,42 @@ public class ReservationsSceneController implements Initializable {
     }
 
     /**
-     * Handles going back to the Homepage.
+     * Handles going back to the Homepage based on type of user
      * @param event the event from where the function was called.
      */
     public void goToHomepage(ActionEvent event) {
+        if (HttpRequestHandler.user.getUserKind().equals(UserKind.Admin)) {
+            goToAdmin(event);
+        } else {
+            goToHome(event);
+        }
+    }
+
+    /**
+     * Handles going to the admin homepage
+     * @param event the event from where the function was called.
+     */
+    public void goToAdmin(ActionEvent event) {
         try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
+            Parent homepageParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
+            Scene homepageScene = new Scene(homepageParent);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            primaryStage.hide();
+            primaryStage.setScene(homepageScene);
+            primaryStage.show();
+        } catch (IOException e) {
+            System.out.println("IOException in ReservationsController");
+        }
+    }
+
+    /**
+     * Handles going to the homepage
+     * @param event the event from where the function was called.
+     */
+    public void goToHome(ActionEvent event) {
+        try {
+            Parent homepageParent = FXMLLoader.load(getClass().getResource("/homepage.fxml"));
             Scene homepageScene = new Scene(homepageParent);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
