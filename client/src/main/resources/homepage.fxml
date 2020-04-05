@@ -24,7 +24,7 @@
                 </Label>
                 <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE"
                          AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0"
-                         AnchorPane.topAnchor="160.0">
+                         AnchorPane.topAnchor="160.0" fx:id="viewReservations">
                     <tabs>
                         <Tab text="Today's reservation">
                             <content>
@@ -52,6 +52,10 @@
                         </Tab>
                     </tabs>
                 </TabPane>
+                <VBox fx:id="guestInfo" visible="false">
+                    <Label text="As a guest, you can't reserve rooms"/>
+                    <Button text="Login"/>
+                </VBox>
                 <Button id="resButton" onAction="#goToRes" prefWidth="200.0" style="-fx-background-color: #287E40;"
                         text="Reserve" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="95.0"
                         AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0">
