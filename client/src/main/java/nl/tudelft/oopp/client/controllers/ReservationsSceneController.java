@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
-import nl.tudelft.oopp.api.models.BuildingResponse;
+import nl.tudelft.oopp.api.models.BuildingBasicInfo;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 
@@ -102,17 +102,15 @@ public class ReservationsSceneController implements Initializable {
      * Generates boxes for each building and adds them to the GUI.
      */
     private void populateBuildingsScrollBox() {
-        BuildingResponse buildingResponse = httpRequestHandler.get("buildings/user/all",
-                BuildingResponse.class);
+        List<BuildingBasicInfo> buildingBasicInfos = httpRequestHandler.getList("buildings/user/all/information",
+                BuildingBasicInfo.class);
 
         DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0,0,0,0.1), 2,4,2, 2);
         buildingSearchField.setEffect(dropShadow);
 
-        List<Building> buildingList;
-        if (waitForResponse(buildingResponse)) {
-            buildingList = buildingResponse.getBuildingList(); //NullPointer handled in waitForResponse()
+        if (waitForResponse(buildingBasicInfos)) {
             List<Node> listOfEntries = new ArrayList<Node>();
-            for (Building building : buildingList) {
+            for (BuildingBasicInfo building : buildingBasicInfos) {
                 VBox buildingEntry = new VBox();
                 buildingEntry.getStyleClass().add("buildingEntry");
                 Label buildingName = new Label(building.getNumber() + "," + building.getDetails().getName());
@@ -143,7 +141,7 @@ public class ReservationsSceneController implements Initializable {
                             roomsListWrapper.setVisible(true);
                             roomsListTab.setContent(tabContent);
 
-                            controller.generateInitialRooms(building);
+                            controller.initialize(building);
                         } catch (IOException e) {
                             System.out.println("File Not Found");
                         }
@@ -175,24 +173,25 @@ public class ReservationsSceneController implements Initializable {
     /**
      * Polls each second whether the buildingList was received by the BuildingResponse
      * until success or timeout.
-     * @param buildingResponse The response object.
+     * @param buildings The response object.
      * @return boolean whether a (non-null)response was received
      */
-    private boolean waitForResponse(BuildingResponse buildingResponse) {
+    private boolean waitForResponse(List<BuildingBasicInfo> buildings) {
         int i = 0;
         while (i != RESPONSE_TIMEOUT) {
-            if (buildingResponse != null && buildingResponse.getBuildingList() != null) {
+            if (buildings != null) {
                 return true;
             }
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (Exception e) {
-                System.out.println("Problems with BuildingResponse in ReservationsSceneController.waitForResponse()");
+                System.out.println("Problems with getting BuildingsDetails in "
+                    + "ReservationsSceneController.waitForResponse()");
                 return false;
             }
             i++;
         }
-        System.out.println("BuildingResponse timed out in ReservationsSceneController");
+        System.out.println("ReservationsSceneController: Getting BuildingsDetails timed out or there are no buildings");
         return false;
     }
 

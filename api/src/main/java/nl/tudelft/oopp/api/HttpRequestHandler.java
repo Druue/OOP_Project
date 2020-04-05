@@ -124,14 +124,36 @@ public class HttpRequestHandler {
                 .setHeader("Content-Type", "application/json").GET().build();
         try {
             HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Object result = objectMapper.readValue(httpResponse.body(), responseType);
-            return responseType.cast(result);
+            return objectMapper.readValue(httpResponse.body(), responseType);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
     }
+
+    /**
+     * Sends a GET request that returns a list with responseType.
+     *
+     * @param path the path on the server where the request should be sent.
+     * @return An HttpResponse object.
+     */
+    public <E> List<E> getList(String path, Class<E> responseType) {
+        // Build HTTP request
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
+            .setHeader("Content-Type", "application/json").GET().build();
+        try {
+            TypeFactory factory = objectMapper.getTypeFactory();
+            CollectionType listType = factory.constructCollectionType(List.class, responseType);
+            HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return objectMapper.readValue(httpResponse.body(), listType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     /** This method converts an object from one class to another by serializing into JSON
      *      and then deserializing into the target class.
