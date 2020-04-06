@@ -12,7 +12,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -37,6 +39,12 @@ public class HomepageController<E> implements Initializable {
     @FXML
     private TabPane viewReservations;
     @FXML
+    private Button reserveButton;
+    @FXML
+    private Menu reserveMenu;
+    @FXML
+    private Button guestButton;
+    @FXML
     private VBox guestInfo;
 
     @Override
@@ -46,6 +54,9 @@ public class HomepageController<E> implements Initializable {
             loadAllReservations();
         } else {
             viewReservations.setVisible(false);
+            reserveButton.setVisible(false);
+            reserveMenu.setVisible(false);
+            guestButton.setVisible(true);
             guestInfo.setVisible(true);
         }
     }
