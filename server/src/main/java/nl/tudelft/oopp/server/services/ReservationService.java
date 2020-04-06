@@ -1,6 +1,9 @@
 package nl.tudelft.oopp.server.services;
 
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import nl.tudelft.oopp.server.models.Reservable;
@@ -28,6 +31,24 @@ public class ReservationService {
         return new Timestamp(new Date(System.currentTimeMillis()).getTime());
     }
 
+    /** A method to find the end of today represented as a {@link Timestamp} object.
+     * @return  The {@link Timestamp} object representing the end of today's day.
+     */
+    public static Timestamp getEndOfToday() {
+        LocalDate date = LocalDate.now();
+        LocalDateTime endOfToday = date.atStartOfDay().plusDays(1);
+        return Timestamp.valueOf(endOfToday);
+    }
+
+    /** A method to find the start of today represented as a {@link Timestamp} object.
+     * @return  The {@link Timestamp} object representing the start of today's day.
+     */
+    public static Timestamp getStartOfToday() {
+        LocalDate date = LocalDate.now();
+        LocalDateTime startOfToday = date.atStartOfDay();
+        return Timestamp.valueOf(startOfToday);
+    }
+
     /**
      * returns a list with all reservations in the table.
      *
@@ -40,14 +61,26 @@ public class ReservationService {
 
     /**
      * Uses the reservationRepository bean to find the currently ongoing reservations.
-     * It uses a timestamp half an hour ago as a starting point to make sure some
-     * currently started reservations are not missed.
+     * It uses the current timestamp as an ending point.
      *
-     * @return A {@link List} of all current reservations
+     * @return A {@link List} of all current reservations.
      */
     public List<Reservation> getAllCurrentReservations() {
         logger.info("Querying for all current reservations in the database ...");
         return reservationRepository.findAllCurrent(getCurrentTimestamp());
+    }
+
+    /**  Uses the reservationRepository bean to find all reservations for today.
+     *      It uses the static methods getStartOfToday() and getEndOfToday() to get the timestamps
+     *      representing the start and the end of today's day and use them as boundaries for all
+     *      reservations to be found.
+     * @return A {@link List} of all reservations for today.
+     */
+    public List<Reservation> getAllReservationsForToday() {
+        logger.info("Querying for all today's reservations in the database ...");
+        return reservationRepository.findAllReservationsInsideAPeriod(
+            getStartOfToday(),
+            getEndOfToday());
     }
 
     /**
@@ -71,6 +104,19 @@ public class ReservationService {
     public List<Reservation> getCurrentUserReservations(Long userID) {
         logger.info("Querying for all current reservations of user: " + userID + " ...");
         return reservationRepository.findAllCurrentByUser(userID, getCurrentTimestamp());
+    }
+
+    /**     This method finds today's reservations of a user with a provided id using the static
+     *          methods getCurrentTimestamp() and getEndOfToday() of {@link ReservationService}.
+     * @param userID    The id of the user whose reservations should be found.
+     * @return          The list of today's user reservations.
+     */
+    public List<Reservation> getUserReservationsForToday(Long userID) {
+        logger.info("Querying for today's reservations of user: " + userID + " ...");
+        return reservationRepository.findAllUserReservationsInsideAPeriod(
+            userID,
+            getStartOfToday(),
+            getEndOfToday());
     }
 
     /** Checks whether there exist a reservation of the provided user in the given period.

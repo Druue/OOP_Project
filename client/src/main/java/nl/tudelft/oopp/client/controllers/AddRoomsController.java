@@ -115,7 +115,7 @@ public class AddRoomsController {
             System.out.println("Reservable: " + new ObjectMapper().writeValueAsString(requestRoom));
             System.out.println("Request: " + new ObjectMapper().writeValueAsString(request));
 
-            // Send the request and
+            // Send the request and get the response
             response = httpRequestHandler.put(
                 "reservables/insert/room/" + buildingId,
                 request,
