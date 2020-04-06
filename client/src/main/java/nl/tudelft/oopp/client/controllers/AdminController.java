@@ -63,7 +63,7 @@ public class AdminController implements Initializable {
      */
     public void goToDeleteBuildings() {
         try {
-            MainApp.goToPage("admin-deleteBuilding", null);
+            MainApp.goToPage("admin-deleteBuilding");
         }  catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteBuildings()");
         }
@@ -74,7 +74,7 @@ public class AdminController implements Initializable {
      */
     public void goToBuildings() {
         try {
-            MainApp.goToPage("admin-viewBuilding", null);
+            MainApp.goToPage("admin-viewBuilding");
         }  catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToBuildings()");
         }
@@ -96,7 +96,7 @@ public class AdminController implements Initializable {
      */
     public void goToDeleteRooms() {
         try {
-            MainApp.goToPage("admin-deleteRoom", null);
+            MainApp.goToPage("admin-deleteRoom");
         }  catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteRooms()");
         }

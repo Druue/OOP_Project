@@ -89,7 +89,7 @@ public class DeletionController {
      */
     public void goToAdminRoom() {
         try {
-            MainApp.goToPage("admin-room", null);
+            MainApp.goToPage("admin-room");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAdminRoom()");
         }
@@ -101,7 +101,7 @@ public class DeletionController {
      */
     public void goToAdmin() {
         try {
-            MainApp.goToPage("admin", "homepage");
+            MainApp.goToPage("admin");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAdmin()");
         }
@@ -112,7 +112,7 @@ public class DeletionController {
      */
     public void goToAddBuildings() {
         try {
-            MainApp.goToPage("admin-addBuilding", null);
+            MainApp.goToPage("admin-addBuilding");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddBuildings()");
         }
@@ -123,7 +123,7 @@ public class DeletionController {
      */
     public void goToDeleteBuildings() {
         try {
-            MainApp.goToPage("admin-deleteBuilding", null);
+            MainApp.goToPage("admin-deleteBuilding");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteBuildings()");
         }
@@ -134,7 +134,7 @@ public class DeletionController {
      */
     public void goToBuildings() {
         try {
-            MainApp.goToPage("admin-viewBuilding", null);
+            MainApp.goToPage("admin-viewBuilding");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToBuildings()");
         }
@@ -145,7 +145,7 @@ public class DeletionController {
      */
     public void goToAddRooms() {
         try {
-            MainApp.goToPage("admin-addRoom", null);
+            MainApp.goToPage("admin-addRoom");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddRooms()");
         }
@@ -156,7 +156,7 @@ public class DeletionController {
      */
     public void goToRes() {
         try {
-            MainApp.goToPage("reservations", "reservations");
+            MainApp.goToPage("reservations");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
@@ -167,7 +167,7 @@ public class DeletionController {
      */
     public void goToLogIn() {
         try {
-            MainApp.goToPage("login", "login");
+            MainApp.goToPage("login");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
