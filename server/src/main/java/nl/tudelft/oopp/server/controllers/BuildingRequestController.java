@@ -224,12 +224,12 @@ public class BuildingRequestController {
     }
 
     /**
-     * Receives a DELETE request for deleting a specific building from the database.
+     * Receives a POST request for deleting a specific building from the database.
      *
      * @param request The {@link ClientRequest} object containg the building to delete.
      * @return A {@link ResponseEntity} object indicating the success of the operation.
      */
-    @DeleteMapping("/admin/delete")
+    @PostMapping("/admin/delete")
     ResponseEntity<ServerResponseAlert> deleteBuilding(
         @RequestBody ClientRequest<Building> request, @RequestParam Long number) {
 
