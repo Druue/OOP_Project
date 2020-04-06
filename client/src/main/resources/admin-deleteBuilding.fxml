@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Box?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@homepage.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.AddBuildingsController">
+<VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@homepage.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.DeletionController">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
@@ -61,7 +61,7 @@
                                         </VBox>
                                         <VBox prefHeight="36.0" prefWidth="463.0">
                                             <children>
-                                                <TextField fx:id="buildingNumberInput" prefHeight="30.0" prefWidth="404.0">
+                                                <TextField fx:id="buildNumTextField" prefHeight="30.0" prefWidth="404.0">
                                                     <VBox.margin>
                                                         <Insets left="25.0" />
                                                     </VBox.margin>
@@ -75,7 +75,7 @@
                                 </VBox>
                             </children>
                         </VBox>
-                        <Button onAction="#addBuilding" prefHeight="30.0" style="-fx-background-color: #E80000;" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="320.0">
+                        <Button onAction="#deleteBuilding" prefHeight="30.0" style="-fx-background-color: #E80000;" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="320.0">
                             <font>
                                 <Font name="Helvetica" size="18.0" />
                             </font>

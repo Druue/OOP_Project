@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.client.controllers;
 
 import com.sun.jdi.request.InvalidRequestStateException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -73,5 +74,25 @@ public class DeletionController {
 
     public void deleteRoom() {
         deleteItem(roomNumTextField, "reservables/admin/delete/?number=");
+    }
+
+    public void goToRes(ActionEvent actionEvent) {
+        new AddBuildingsController().goToRes();
+    }
+
+    public void goToAddBuildings(ActionEvent actionEvent) {
+        new AddBuildingsController().goToAddBuildings(actionEvent);
+    }
+
+    public void goToAddRooms(ActionEvent actionEvent) {
+        new AddBuildingsController().goToAddRooms(actionEvent);
+    }
+
+    public void goToAdmin(ActionEvent actionEvent) {
+        new AddBuildingsController().goToAdmin(actionEvent);
+    }
+
+    public void goToLogIn(ActionEvent actionEvent) {
+        new AddBuildingsController().goToLogIn();
     }
 }
