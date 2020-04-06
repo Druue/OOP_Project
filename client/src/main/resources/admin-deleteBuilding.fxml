@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.shape.Box?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@homepage.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.ViewBuildingController">
+<VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@homepage.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.AddBuildingsController">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
@@ -27,27 +28,58 @@
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                     <children>
                         <Box depth="0.0" height="420.0" width="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <Label text="Buildings" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="20.0">
+                        <VBox prefHeight="340.0" prefWidth="665.0" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <VBox prefHeight="114.0" prefWidth="463.0">
+                                    <children>
+                                        <Label text="Delete a Building">
+                                            <font>
+                                                <Font name="Helvetica" size="27.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets left="25.0" top="17.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                    </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                                </VBox>
+                                <VBox prefHeight="109.0" prefWidth="429.0">
+                                    <children>
+                                        <VBox prefHeight="23.0" prefWidth="463.0">
+                                            <children>
+                                                <Label text="Buidling number">
+                                                    <font>
+                                                        <Font name="Helvetica" size="14.0" />
+                                                    </font>
+                                                    <VBox.margin>
+                                                        <Insets left="25.0" />
+                                                    </VBox.margin>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="36.0" prefWidth="463.0">
+                                            <children>
+                                                <TextField fx:id="buildingNumberInput" prefHeight="30.0" prefWidth="404.0">
+                                                    <VBox.margin>
+                                                        <Insets left="25.0" />
+                                                    </VBox.margin>
+                                                </TextField>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                           <padding>
+                              <Insets left="120.0" top="30.0" />
+                           </padding>
+                                </VBox>
+                            </children>
+                        </VBox>
+                        <Button onAction="#addBuilding" prefHeight="30.0" style="-fx-background-color: #E80000;" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="320.0">
                             <font>
-                                <Font name="Helvetica" size="31.0" />
-                            </font>
-                        </Label>
-                        <Button onAction="#goToAddBuildings" prefWidth="150.0" style="-fx-background-color: #287E40;" text="Add" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="100.0">
-                            <font>
-                                <Font name="Helvetica" size="16.0" />
+                                <Font name="Helvetica" size="18.0" />
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #0080D6;" text="Edit" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="325.0">
-                            <font>
-                                <Font name="System Bold" size="16.0" />
-                            </font>
-                        </Button>
-                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #E80100;" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="100.0">
-                            <font>
-                                <Font name="System Bold" size="16.0" />
-                            </font>
-                        </Button>
-                        <ListView fx:id="buildingsList" prefHeight="255.0" prefWidth="595.0" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="70.0" />
                     </children>
                 </AnchorPane>
 
@@ -57,12 +89,10 @@
                             <MenuItem onAction="#goToRes" text="Reserve a Room" />
                         </Menu>
                         <Menu text="Manage buildings">
-                            <MenuItem mnemonicParsing="false" text="View all buildings" />
                             <MenuItem onAction="#goToAddBuildings" text="Add building" />
                         </Menu>
                         <Menu mnemonicParsing="false" text="Manage rooms">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="View all rooms" />
                                 <MenuItem onAction="#goToAddRooms" text="Add a room" />
                             </items>
                         </Menu>

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,6 +38,7 @@ import nl.tudelft.oopp.api.models.BuildingBasicInfo;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.UserKind;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class ReservationsSceneController implements Initializable {
@@ -239,63 +241,35 @@ public class ReservationsSceneController implements Initializable {
 
     /**
      * Handles going back to the Homepage based on type of user.
-     * @param event the event from where the function was called.
      */
-    public void goToHomepage(ActionEvent event) {
+    public void goToHomepage() {
         if (HttpRequestHandler.user.getUserKind().equals(UserKind.Admin)) {
-            goToAdmin(event);
+            goToAdmin();
         } else {
-            goToHome(event);
+            goToHome();
         }
     }
 
     /**
      * Handles going to the admin homepage.
-     * @param event the event from where the function was called.
      */
-    public void goToAdmin(ActionEvent event) {
+    public void goToAdmin() {
         try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
+            MainApp.goToPage("admin");
         } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
+            e.printStackTrace();
         }
     }
 
     /**
-     * Handles going to the homepage.
-     * @param event the event from where the function was called.
+     * Handles going to the user homepage.
      */
-    public void goToHome(ActionEvent event) {
+    public void goToHome() {
         try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/homepage.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
+            MainApp.goToPage("homepage");
         } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
+            e.printStackTrace();
         }
     }
 
-    /**
-     * Adds a test building to the database.
-     * Very barebones right now: It will cause an error if called more than once
-     * due to the hardcoded ID.
-     */
-    public void addTestBuilding() {
-        Building testBuilding = new Building(
-                1L,
-                new Details("Test name", null, null)
-        );
-        httpRequestHandler.put("buildings/insert/new_building", testBuilding,
-                ServerResponseAlert.class);
-    }
 }

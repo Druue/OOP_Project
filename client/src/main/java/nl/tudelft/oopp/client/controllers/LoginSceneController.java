@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ import nl.tudelft.oopp.client.MainApp;
 public class LoginSceneController {
     private static final Logger LOGGER = Logger.getLogger(LoginSceneController.class.getName());
     private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
-    // the TextField object(s) from mainScene.fxml
+
     @FXML
     public TextField inputusername;
     @FXML
@@ -87,15 +88,13 @@ public class LoginSceneController {
     }
 
     /**
-     * Handles going the the homepage, without any event occurring.
+     * Handles going the the user homepage.
      */
     public void goToHomepage() {
         try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/homepage.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            MainApp.getPrimaryStage().setScene(homepageScene);
+            MainApp.goToPage("homepage");
         } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
+            e.printStackTrace();
         }
     }
 
@@ -104,36 +103,20 @@ public class LoginSceneController {
      */
     public void goToAdmin() {
         try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) (inputusername.getScene().getWindow());
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
+            MainApp.goToPage("admin");
         } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
+            e.printStackTrace();
         }
     }
 
     /**
      * Handles going to the registration page.
-     *
-     * @param event the event from where the function was called.
      */
-    public void goToRegistration(MouseEvent event) {
+    public void goToRegistration() {
         try {
-            Parent registrationParent =
-                FXMLLoader.load(getClass().getResource("/registration.fxml"));
-            Scene registrationScene = new Scene(registrationParent);
-            registrationScene.getStylesheets()
-                .addAll(this.getClass().getResource("/registration.css").toExternalForm());
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(registrationScene);
-            primaryStage.show();
+            MainApp.goToPage("registration");
         } catch (IOException e) {
-            System.out.println("IOException in LoginController");
+            e.printStackTrace();
         }
     }
 }

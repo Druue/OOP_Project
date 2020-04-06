@@ -46,7 +46,7 @@
                                     <children>
                                         <VBox prefHeight="23.0" prefWidth="463.0">
                                             <children>
-                                                <Label text="Buidling number">
+                                                <Label text="Building number">
                                                     <font>
                                                         <Font name="Helvetica" size="14.0" />
                                                     </font>
@@ -207,9 +207,6 @@
                     <menus>
                         <Menu text="Reserve">
                             <MenuItem onAction="#goToRes" text="Reserve a Room" />
-                        </Menu>
-                        <Menu text="Manage buildings">
-                            <MenuItem onAction="#goToAddBuildings" text="Add building" />
                         </Menu>
                         <Menu mnemonicParsing="false" text="Manage rooms">
                             <items>
