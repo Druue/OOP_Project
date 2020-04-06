@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,6 +23,7 @@ import nl.tudelft.oopp.server.models.Details;
 import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.TimeSlot;
 import nl.tudelft.oopp.server.repositories.BuildingRepository;
+import nl.tudelft.oopp.server.repositories.BuildingsDetails;
 import nl.tudelft.oopp.server.repositories.DetailsRepository;
 import nl.tudelft.oopp.server.repositories.UserRepository;
 import nl.tudelft.oopp.server.services.AuthorizationService;
@@ -116,63 +118,23 @@ class BuildingRequestControllerTest {
         details = new Details("EECMS",
                 "This is the faculty of computer science, mathematics and electrical engineering", "EECMS.png");
         reservable = new Bike(456L, details);
-        List<Reservable> reservablesList = new ArrayList<>();
-        reservablesList.add(reservable);
-        mockBuilding1 = new Building(36L, details, timeSlot, reservablesList);
-        mockBuilding2 = new Building(28L, details,  timeSlot, reservablesList);
-
-    }
-
-    @Test
-    void sendAllBuildingsSuccess() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/buildings/user/all")
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.buildingList").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.*").isNotEmpty());
-
-    }
-
-
-    @Test
-    public void sendAllBuildingsFail() throws Exception {
-        List<Building> buildings = Arrays.asList(
-                mockBuilding2,
-                mockBuilding1);
-
-        when(buildingServiceMock.getAllBuildings()).thenReturn(buildings);
-        mockMvc.perform(get("buildings/user/all"))
-                .andExpect(status().is(404));
-        Mockito.verifyNoMoreInteractions(buildingServiceMock);
+        reservableList = new ArrayList<>();
+        reservableList.add(reservable);
+        mockBuilding1 = new Building(36L, details, timeSlot, reservableList);
+        mockBuilding2 = new Building(28L, details,  timeSlot, reservableList);
 
     }
 
     @Test
     public void sendAllBuildingsInfoSuccess() throws Exception {
-        List<Building> buildings = Arrays.asList(
-                mockBuilding2,
-                mockBuilding1);
+        List<Building> buildings = Arrays.asList(mockBuilding1, mockBuilding2);
         when(buildingServiceMock.getAllBuildings()).thenReturn(buildings);
         mockMvc.perform(get("/buildings/user/all/information")
-                .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .accept(MediaType.ALL))
                 .andExpect(status().is(200))
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"));
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
 
 
-    }
-
-    @Test
-    public void sendAllBuildingsNumbersAndNamesTest() throws Exception {
-
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/buildings/admin/all/uniquevalues")
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                //.andExpect(MockMvcResultMatchers.jsonPath("$.[0]").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0]").isNotEmpty());
     }
 
     @Test
@@ -187,11 +149,10 @@ class BuildingRequestControllerTest {
         mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(building);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/buildings/admin/add")
-                .content(json)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(header().string("building", "http:/localhost:8080/buildings/admin/add"));
+        mockMvc.perform(put("/buildings/admin/add", building.getDetails())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk());
 
         verify(buildingServiceMock, times(1)).getBuilding(28L);
         verify(buildingServiceMock, times(1)).addBuilding(building);
