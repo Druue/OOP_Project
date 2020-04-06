@@ -115,6 +115,17 @@ public class AdminController implements Initializable {
     }
 
     /**
+     * Handles going to the delete room page for the admin.
+     */
+    public void goToDeleteRooms() {
+        try {
+            MainApp.goToPage("admin-deleteRoom", null);
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteRooms()");
+        }
+    }
+
+    /**
      * Handles going to the page for adding reservations.
      */
     public void goToRes() {

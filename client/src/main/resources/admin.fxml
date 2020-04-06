@@ -86,6 +86,7 @@
                         <Menu mnemonicParsing="false" text="Manage rooms">
                             <items>
                                 <MenuItem onAction="#goToAddRooms" text="Add a room" />
+                                <MenuItem onAction="#goToDeleteRooms" text="Delete a room" />
                             </items>
                         </Menu>
                     </menus>
