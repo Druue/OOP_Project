@@ -86,6 +86,25 @@ public class BuildingService {
 
     }
 
+    /**
+     * Deletes the building with the specified number from the database.
+     *
+     * @param number Number of the building to be deleted from the database.
+     */
+    public void delete(Long number) throws EntityNotFoundException {
+        logger.info("Checking whether building " + number + " still exists ...");
+        if (!buildingRepository.existsByNumber(number)) {
+            logger.error("Building " + number + " was not found.");
+            throw new EntityNotFoundException();
+        } else {
+            logger.info("Building " + number + " found. Deleting ...");
+            buildingRepository.deleteById(number);
+        }
+    }
+
+
+
+
 
 
 }

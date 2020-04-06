@@ -3,6 +3,7 @@ package nl.tudelft.oopp.server.controllers;
 import java.util.List;
 import javax.management.InstanceAlreadyExistsException;
 import javax.naming.AuthenticationException;
+import javax.persistence.EntityNotFoundException;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
@@ -15,12 +16,13 @@ import nl.tudelft.oopp.server.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 
 @RestController
@@ -68,7 +70,7 @@ public class BuildingRequestController {
     }
 
     /**
-     * Receives e PUT request for adding a new building to the database.
+     * Receives a PUT request for adding a new building to the database.
      *
      * @param requestBuilding A {@link ClientRequest} object containing the new Building to insert.
      * @return A {@link ResponseEntity} object indicating the success of the operation.
@@ -101,5 +103,41 @@ public class BuildingRequestController {
         return ResponseEntity.ok(new ServerResponseAlert("Adding successful",
             "INFORMATION"));
     }
+
+    /**
+     * Receives a DELETE request for deleting a specific building from the database.
+     *
+     * @param request The {@link ClientRequest} object containg the building to delete.
+     * @return A {@link ResponseEntity} object indicating the success of the operation.
+     */
+    @DeleteMapping("/admin/delete")
+    ResponseEntity<ServerResponseAlert> deleteBuilding(
+            @RequestBody ClientRequest<Building> request, @RequestParam Long number) {
+
+        logger.info("Received DELETE request for removing building " + number);
+
+        try {
+            authorizationService.checkAuthorization(request.getUsername());
+        } catch (AuthenticationException e) {
+            logger.error(NO_USER_FOUND);
+            return ResponseEntity.badRequest().build();
+        } catch (AuthorizationException e) {
+            logger.error(NOT_ADMIN);
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            buildingService.delete(number);
+        } catch (EntityNotFoundException e) {
+            logger.error("Building " + number + " not found for removal.");
+            return ResponseEntity.badRequest().body(new ServerResponseAlert("FAILURE",
+                    "FAILURE"));
+        }
+
+        logger.info("Building " + number + " was successfully removed.");
+        return ResponseEntity.ok(new ServerResponseAlert("Successful removal",
+                "SUCCESS"));
+    }
+
 
 }
