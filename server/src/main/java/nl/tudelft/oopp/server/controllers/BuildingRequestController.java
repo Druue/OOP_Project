@@ -38,10 +38,6 @@ public class BuildingRequestController {
 
     public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
-    private static final String NOT_ADMIN =
-        "Unauthorized request. The requesting user is not an administrator.";
-    private static final String NO_USER_FOUND =
-        "Authentication for user failed. No administrator with that name found.";
     final BuildingService buildingService;
     final AuthorizationService authorizationService;
     final Logger logger = LoggerFactory.getLogger(BuildingRequestController.class);
@@ -127,10 +123,10 @@ public class BuildingRequestController {
         try {
             authorizationService.checkAuthorization(requestBuilding.getUsername());
         } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
+            logger.error(AuthorizationService.NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
         } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
+            logger.error(AuthorizationService.NOT_ADMIN);
             return ResponseEntity.badRequest().build();
         }
 
@@ -166,10 +162,10 @@ public class BuildingRequestController {
         try {
             authorizationService.checkAuthorization(request.getUsername());
         } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
+            logger.error(AuthorizationService.NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
         } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
+            logger.error(AuthorizationService.NOT_ADMIN);
             return ResponseEntity.badRequest().build();
         }
 
@@ -207,10 +203,10 @@ public class BuildingRequestController {
         try {
             authorizationService.checkAuthorization(request.getUsername());
         } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
+            logger.error(AuthorizationService.NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
         } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
+            logger.error(AuthorizationService.NOT_ADMIN);
             return ResponseEntity.badRequest().build();
         }
 
@@ -243,10 +239,10 @@ public class BuildingRequestController {
         try {
             authorizationService.checkAuthorization(request.getUsername());
         } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
+            logger.error(AuthorizationService.NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
         } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
+            logger.error(AuthorizationService.NOT_ADMIN);
             return ResponseEntity.badRequest().build();
         }
 

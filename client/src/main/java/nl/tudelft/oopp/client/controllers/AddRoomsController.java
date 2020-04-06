@@ -3,6 +3,8 @@ package nl.tudelft.oopp.client.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,13 +22,17 @@ import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.Reservable;
 import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.client.AlertService;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class AddRoomsController {
 
+    private static final Logger LOGGER = Logger.getLogger(AddRoomsController.class.getName());
+    private static final String BAD_RESOURCE_ERROR = "Faulty resource input at AddRoomsController";
+
     private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
-    // the TextField object from mainScene.fxml
     @FXML
     public TextField roomNameInput;
     public TextField roomCapacityInput;
@@ -72,58 +78,17 @@ public class AddRoomsController {
      * @param event The event that called the function.
      */
     public void addRoom(ActionEvent event) {
-        //validates the input for room capacity field
-        char[] capactiyInput = roomCapacityInput.getText().toCharArray();
-        for (char characters : capactiyInput) {
-            if (!Character.isDigit(characters)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("capacity field must only have numbers");
-                alert.showAndWait();
-                return;
-            }
-        }
-        //validates the input for roomId field
-        char[] idInput = roomIdInput.getText().toCharArray();
-        for (char character : idInput) {
-            if (!Character.isDigit(character)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("id field must only have numbers");
-                alert.showAndWait();
-                return;
-            }
-        }
-        //validates the input for buildingId field
-        char[] buildingIdInput = buildingNumber.getText().toCharArray();
-        for (char character : buildingIdInput) {
-            if (!Character.isDigit(character)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("building id field must only have numbers");
-                alert.showAndWait();
-                return;
-            }
-        }
+
+
+        //TODO: Proper input validation.
+
         String name = roomNameInput.getText();
         Long id = Long.parseLong(roomIdInput.getText());
         int capacity = Integer.parseInt(roomCapacityInput.getText());
-        //checks if the capacity was between 5 and 20
-        if (capacity < 5 || capacity > 20) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText(null);
-            alert.setContentText("capacity should be between 5-20");
-            alert.showAndWait();
-            return;
-        }
         boolean hasProjector = roomHasProjectorInput.isSelected();
         boolean forEmployee = roomForEmployee.isSelected();
         String description = roomDescriptionInput.getText();
-        long buildingId = Long.parseLong(buildingNumber.getText());
+        Long buildingId = Long.parseLong(buildingNumber.getText());
 
         Reservable requestRoom = new Room(
             id,
@@ -145,29 +110,14 @@ public class AddRoomsController {
                 new ObjectMapper().writeValueAsString(requestRoom)
             );
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            System.out.println("Reservable: " + new ObjectMapper().writeValueAsString(requestRoom));
-            System.out.println("Request: " + new ObjectMapper().writeValueAsString(request));
-
-            // Send the request and
+            // Send the request and get the response
             response = httpRequestHandler.put(
                 "reservables/insert/room/" + buildingId,
                 request,
                 ServerResponseAlert.class
             );
-            if (response.getMessage().equals("Building not found with this number")) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText(response.getMessage());
-                alert.showAndWait();
-                return;
-            }
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Room added.");
-            alert.setHeaderText(null);
-            alert.setContentText(response.getMessage());
-            alert.showAndWait();
+
+            AlertService.alertConfirmation("Room added.", response.getMessage());
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -176,68 +126,46 @@ public class AddRoomsController {
     }
 
     /**
-     * Handles going to the homepage.
-     *
-     * @param event the scene from where the function was called.
+     * Handles going to the admin homepage.
      */
-    public void goToAdmin(ActionEvent event) {
+    public void goToAdmin() {
         try {
-            Parent homeParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
-            Scene homeScene = new Scene(homeParent);
-
-            Stage primaryStage =
-                (Stage) (roomNameInput.getScene().getWindow());
-
-            primaryStage.hide();
-            primaryStage.setScene(homeScene);
-            primaryStage.show();
-
+            MainApp.goToPage("admin");
         } catch (IOException e) {
-            System.out.println("IOException in AddRoomsController");
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAdmin()");
         }
     }
 
     /**
-     * Handles going to the add rooms page.
-     *
-     * @param event the scene from where the function was called.
+     * Handles going to the add buildings page for the admin.
      */
-    public void goToAddRoom(ActionEvent event) {
+    public void goToAddBuildings() {
         try {
-            Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-addRoom.fxml"));
-            Scene roomScene = new Scene(roomParent);
-
-            Stage primaryStage =
-                    (Stage) (roomNameInput.getScene().getWindow());
-
-            primaryStage.hide();
-            primaryStage.setScene(roomScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            System.out.println("IOException in AddRoomsController");
+            MainApp.goToPage("admin-addBuilding");
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddBuildings()");
         }
     }
 
     /**
-     * Handles going to the add buildings page.
-     *
-     * @param event the scene from where the function was called.
+     * Handles going to the page for adding reservations.
      */
-    public void goToAddBuilding(ActionEvent event) {
+    public void goToRes() {
         try {
-            Parent buildingParent = FXMLLoader.load(getClass().getResource("/admin-addBuilding.fxml"));
-            Scene buildingScene = new Scene(buildingParent);
-
-            Stage primaryStage =
-                    (Stage) (roomNameInput.getScene().getWindow());
-
-            primaryStage.hide();
-            primaryStage.setScene(buildingScene);
-            primaryStage.show();
-
+            MainApp.goToPage("reservations");
         } catch (IOException e) {
-            System.out.println("IOException in AddRoomsController");
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
+        }
+    }
+
+    /**
+     * Handles going back to the login page.
+     */
+    public void goToLogIn() {
+        try {
+            MainApp.goToPage("login");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
 }

@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,7 +17,7 @@ import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.api.models.UserKind;
-
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class RegistrationSceneController {
@@ -40,30 +41,22 @@ public class RegistrationSceneController {
     }
 
     /**
-     * Handles going to the login page.
+     * Handles going back to the login page.
      */
     public void goToLogin() {
         try {
-            Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
-            Scene loginScene = new Scene(loginParent);
-            loginScene.getStylesheets()
-                    .addAll(this.getClass().getResource("/login.css").toExternalForm());
-            Stage primaryStage = (Stage) registrationPasswordInput.getScene().getWindow();
-
-
-            primaryStage.hide();
-            primaryStage.setScene(loginScene);
-            primaryStage.show();
+            MainApp.goToPage("login");
         } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
+            e.printStackTrace();
         }
     }
 
     /**
-     * Entry function that gets called through the client.
-     * Gets the input from the text fields and calls attemptRegistration().
+     * Makes a request to the backend using the information that is present in the client's text
+     * fields.
      */
-    public void attemptRegistrationEntry() {
+    public void attemptRegistration() {
+
         // Get all text from text fields
         String username = registrationUsernameInput.getText();
         String password = registrationPasswordInput.getText();

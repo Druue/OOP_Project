@@ -11,6 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthorizationService {
 
+    public static final String NOT_ADMIN =
+        "Unauthorized request. The requesting user is not an administrator.";
+
+    public static final String NO_USER_FOUND =
+        "Authentication for user failed. No administrator with that name found.";
+
     private final UserService userService;
     Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
 
