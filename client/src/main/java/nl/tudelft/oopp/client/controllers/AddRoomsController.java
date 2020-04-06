@@ -32,7 +32,6 @@ public class AddRoomsController {
 
     private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
-    // the TextField object from mainScene.fxml
     @FXML
     public TextField roomNameInput;
     public TextField roomCapacityInput;
@@ -110,10 +109,6 @@ public class AddRoomsController {
                 new ObjectMapper().writeValueAsString(requestRoom)
             );
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            System.out.println("Reservable: " + new ObjectMapper().writeValueAsString(requestRoom));
-            System.out.println("Request: " + new ObjectMapper().writeValueAsString(request));
-
             // Send the request and get the response
             response = httpRequestHandler.put(
                 "reservables/insert/room/" + buildingId,
@@ -134,90 +129,24 @@ public class AddRoomsController {
     }
 
     /**
-     * Handles going to the homepage.
-     *
-     * @param event the scene from where the function was called.
+     * Handles going to the admin homepage.
      */
-    public void goToAdmin(ActionEvent event) {
+    public void goToAdmin() {
         try {
-            Parent homeParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
-            Scene homeScene = new Scene(homeParent);
-
-            Stage primaryStage =
-                (Stage) (roomNameInput.getScene().getWindow());
-
-            primaryStage.hide();
-            primaryStage.setScene(homeScene);
-            primaryStage.show();
-
+            MainApp.goToPage("admin");
         } catch (IOException e) {
-            System.out.println("IOException in AddRoomsController");
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAdmin()");
         }
     }
 
     /**
-     * Handles going to the add rooms page.
-     *
-     * @param event the scene from where the function was called.
+     * Handles going to the add buildings page for the admin.
      */
-    public void goToAddRooms(ActionEvent event) {
+    public void goToAddBuildings() {
         try {
-            Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-addRoom.fxml"));
-            Scene roomScene = new Scene(roomParent);
-
-            Stage primaryStage =
-                    (Stage) (roomNameInput.getScene().getWindow());
-
-            primaryStage.hide();
-            primaryStage.setScene(roomScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            System.out.println("IOException in AddRoomsController");
-        }
-    }
-
-    /**
-     * Handles going to the add buildings page.
-     *
-     * @param event the scene from where the function was called.
-     */
-    public void goToAddBuildings(ActionEvent event) {
-        try {
-            Parent buildingParent = FXMLLoader.load(getClass().getResource("/admin-addBuilding.fxml"));
-            Scene buildingScene = new Scene(buildingParent);
-
-            Stage primaryStage =
-                    (Stage) (roomNameInput.getScene().getWindow());
-
-            primaryStage.hide();
-            primaryStage.setScene(buildingScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            System.out.println("IOException in AddRoomsController");
-        }
-    }
-
-    /**
-     * Handles going to the view buildings page.
-     *
-     * @param event the scene from where the function was called.
-     */
-    public void goToBuildings(ActionEvent event) {
-        try {
-            Parent buildingParent = FXMLLoader.load(getClass().getResource("/admin-viewBuilding.fxml"));
-            Scene buildingScene = new Scene(buildingParent);
-
-            Stage primaryStage =
-                    (Stage) (roomNameInput.getScene().getWindow());
-
-            primaryStage.hide();
-            primaryStage.setScene(buildingScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            System.out.println("IOException in AddRoomsController");
+            MainApp.goToPage("admin-addBuilding");
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddBuildings()");
         }
     }
 
@@ -226,18 +155,9 @@ public class AddRoomsController {
      */
     public void goToRes() {
         try {
-            Parent homeParent = FXMLLoader.load(getClass().getResource("/reservations.fxml"));
-            Scene homeScene = new Scene(homeParent);
-
-            Stage primaryStage =
-                    (Stage) (roomNameInput.getScene().getWindow());
-
-            primaryStage.hide();
-            primaryStage.setScene(homeScene);
-            primaryStage.show();
-
+            MainApp.goToPage("reservations");
         } catch (IOException e) {
-            System.out.println("IOException in AddRoomsController");
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
 
@@ -246,7 +166,7 @@ public class AddRoomsController {
      */
     public void goToLogIn() {
         try {
-            MainApp.goToPage("login", "login");
+            MainApp.goToPage("login");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }

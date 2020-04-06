@@ -47,48 +47,14 @@ public class AdminController implements Initializable {
         HomepageController.loadReservations(allRes, "admin/all");
     }
 
-
-    /**
-     * Handles going to the mainScene.
-     */
-    public void goToMain() {
-        try {
-            MainApp.goToPage("mainScene", null);
-        } catch (IOException e) {
-            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToMain()");
-        }
-    }
-
-    /**
-     * Handles going to the room page for the admin.
-     */
-    public void goToAdminRoom() {
-        try {
-            MainApp.goToPage("admin-room", null);
-        } catch (IOException e) {
-            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAdminRoom()");
-        }
-    }
-
     /**
      * Handles going to the add buildings page for the admin.
      */
     public void goToAddBuildings() {
         try {
-            MainApp.goToPage("admin-addBuilding", null);
+            MainApp.goToPage("admin-addBuilding");
         }  catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddBuildings()");
-        }
-    }
-
-    /**
-     * Handles going to the view buildings page for the admin.
-     */
-    public void goToBuildings() {
-        try {
-            MainApp.goToPage("admin-viewBuilding", null);
-        }  catch (IOException e) {
-            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToBuildings()");
         }
     }
 
@@ -97,7 +63,7 @@ public class AdminController implements Initializable {
      */
     public void goToAddRooms() {
         try {
-            MainApp.goToPage("admin-addRoom", null);
+            MainApp.goToPage("admin-addRoom");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddRooms()");
         }
@@ -108,7 +74,7 @@ public class AdminController implements Initializable {
      */
     public void goToRes() {
         try {
-            MainApp.goToPage("reservations", "reservations");
+            MainApp.goToPage("reservations");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
@@ -119,7 +85,7 @@ public class AdminController implements Initializable {
      */
     public void goToLogIn() {
         try {
-            MainApp.goToPage("login", "login");
+            MainApp.goToPage("login");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }

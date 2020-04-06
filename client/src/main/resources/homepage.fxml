@@ -90,7 +90,7 @@
                         <Menu fx:id="reserveMenu" mnemonicParsing="false" onAction="#goToRes" text="Reserve" />
                     </menus>
                 </MenuBar>
-                <Button id="logo" onAction="#goToMain" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0" />
+                <Button id="logo" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0" />
                 <HBox layoutY="2.0" prefHeight="30.0" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                     <children>
                         <ImageView fitHeight="26.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
@@ -100,7 +100,7 @@
                         </ImageView>
                     </children>
                 </HBox>
-                <Button id="logo" fx:id="guestButton" layoutX="10.0" layoutY="10.0" onAction="#goToLogIn" prefWidth="80.0" text="Log In" textFill="WHITE" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.5">
+                <Button fx:id="guestButton" layoutX="10.0" layoutY="10.0" onAction="#goToLogIn" prefWidth="80.0" text="Log In" textFill="WHITE" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.5">
                     <font>
                         <Font name="Helvetica" size="15.0" />
                     </font>
