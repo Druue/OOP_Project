@@ -1,7 +1,10 @@
 package nl.tudelft.oopp.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +13,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -45,6 +49,10 @@ public abstract class Reservable {
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservable")
+    private List<Reservation> reservations;
+
     /**
      * Initialises a new instance of {@link Reservable}.
      */
@@ -52,9 +60,14 @@ public abstract class Reservable {
 
     }
 
+    /** Constructs a new {@link Reservable} object.
+     * @param id        The unique id of the reservable.
+     * @param details   The details for the new reservable.
+     */
     public Reservable(Long id, Details details) {
         this.id = id;
         this.details = details;
+        this.reservations = new ArrayList<>();
     }
 
     public Long getId() {
@@ -79,5 +92,13 @@ public abstract class Reservable {
 
     public void setBuilding(Building building) {
         this.building = building;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }
