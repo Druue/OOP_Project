@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sun.jdi.request.InvalidRequestStateException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -152,6 +153,36 @@ public class HttpRequestHandler {
         }
 
         return null;
+    }
+
+    /**     Sends a POST request to the server and gets the response. This method is used only
+     *      for deleting items in the database. It is a POST, not DELETE request to allow a body
+     *      to be sent with the user information to be validated and authorized.
+     *
+     * @param path              The request path.
+     * @param parameters        The request body.
+     * @param responseType      The expected {@link Class} of the response body.
+     * @param <T>               The type parameter for the request body type.
+     * @param <E>               The type parameter for the response body type being expected.
+     * @return                  The object received from deserializing the response body into the
+     *                          expected class.
+     * @throws InvalidRequestStateException     Throws it if the sending of the request fails or
+     *                                          if the response is not of the expected type, which
+     *                                          would mean the operation failed.
+     */
+    public <T, E> E delete(String path, T parameters, Class<E> responseType)
+        throws InvalidRequestStateException {
+        // Build HTTP request
+        HttpRequest request;
+        try {
+            request = HttpRequest.newBuilder().uri(URI.create(host + "/" + path))
+                .setHeader("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(parameters))).build();
+            String r = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            return objectMapper.readValue(r, responseType);
+        } catch (IOException | InterruptedException e) {
+            throw new InvalidRequestStateException();
+        }
     }
 
 
