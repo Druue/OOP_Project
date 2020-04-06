@@ -1,14 +1,19 @@
 package nl.tudelft.oopp.server.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.management.InstanceAlreadyExistsException;
 import javax.naming.AuthenticationException;
 import javax.persistence.EntityNotFoundException;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.BuildingResponse;
 import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.ListPair;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.AuthorizationException;
 import nl.tudelft.oopp.server.models.Building;
+import nl.tudelft.oopp.server.models.Details;
+import nl.tudelft.oopp.server.models.TimeSlot;
 import nl.tudelft.oopp.server.repositories.BuildingsDetails;
 import nl.tudelft.oopp.server.services.AuthorizationService;
 import nl.tudelft.oopp.server.services.BuildingService;
@@ -18,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,10 +37,6 @@ public class BuildingRequestController {
 
     public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
-    private static final String NOT_ADMIN =
-        "Unauthorized request. The requesting user is not an administrator.";
-    private static final String NO_USER_FOUND =
-        "Authentication for user failed. No administrator with that name found.";
     final BuildingService buildingService;
     final AuthorizationService authorizationService;
     final Logger logger = LoggerFactory.getLogger(BuildingRequestController.class);
@@ -60,6 +62,31 @@ public class BuildingRequestController {
      *
      * @return A {@link ResponseEntity} containing he aforementioned list of objects.
      */
+    @GetMapping("/{name:(?:admin|user)}/all")
+    ResponseEntity<BuildingResponse> sendAllBuildings() {
+
+        logger.info("Received GET request for all buildings. Processing...");
+        List<Building> buildings = buildingService.getAllBuildings();
+
+        List<nl.tudelft.oopp.api.models.Building> buildingsResponse = new ArrayList<>();
+        for (Building queryBuilding : buildings) {
+            buildingsResponse.add(httpRequestHandler.convertModel(queryBuilding,
+                nl.tudelft.oopp.api.models.Building.class));
+        }
+
+        BuildingResponse response = new BuildingResponse(buildingsResponse);
+        logger.info("Sending the list of all buildings...");
+        return ResponseEntity.ok(response);
+
+    }
+
+    /**
+     * Receives a GET request for information about all buildings in the database.
+     * Sends back a list of objects, each containing:
+     * - number, name, description, image, opening hours
+     *
+     * @return A {@link ResponseEntity} containing he aforementioned list of objects.
+     */
     @GetMapping("/{name:(?:admin|user)}/all/information")
     ResponseEntity<List<BuildingsDetails>> sendAllBuildingsInformation() {
 
@@ -70,7 +97,7 @@ public class BuildingRequestController {
     }
 
     /**
-     * Receives a PUT request for adding a new building to the database.
+     * Receives e PUT request for adding a new building to the database.
      *
      * @param requestBuilding A {@link ClientRequest} object containing the new Building to insert.
      * @return A {@link ResponseEntity} object indicating the success of the operation.
@@ -84,10 +111,10 @@ public class BuildingRequestController {
         try {
             authorizationService.checkAuthorization(requestBuilding.getUsername());
         } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
+            logger.error(AuthorizationService.NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
         } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
+            logger.error(AuthorizationService.NOT_ADMIN);
             return ResponseEntity.badRequest().build();
         }
 
@@ -112,17 +139,17 @@ public class BuildingRequestController {
      */
     @DeleteMapping("/admin/delete")
     ResponseEntity<ServerResponseAlert> deleteBuilding(
-            @RequestBody ClientRequest<Building> request, @RequestParam Long number) {
+        @RequestBody ClientRequest<Building> request, @RequestParam Long number) {
 
         logger.info("Received DELETE request for removing building " + number);
 
         try {
             authorizationService.checkAuthorization(request.getUsername());
         } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
+            logger.error(AuthorizationService.NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
         } catch (AuthorizationException e) {
-            logger.error(NOT_ADMIN);
+            logger.error(AuthorizationService.NOT_ADMIN);
             return ResponseEntity.badRequest().build();
         }
 
@@ -131,13 +158,11 @@ public class BuildingRequestController {
         } catch (EntityNotFoundException e) {
             logger.error("Building " + number + " not found for removal.");
             return ResponseEntity.badRequest().body(new ServerResponseAlert("FAILURE",
-                    "FAILURE"));
+                "FAILURE"));
         }
 
         logger.info("Building " + number + " was successfully removed.");
         return ResponseEntity.ok(new ServerResponseAlert("Successful removal",
-                "SUCCESS"));
+            "SUCCESS"));
     }
-
-
 }

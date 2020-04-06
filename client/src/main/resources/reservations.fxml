@@ -7,14 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPane" xmlns="http://javafx.com/javafx/8"
-      fx:controller="nl.tudelft.oopp.client.controllers.ReservationsSceneController">
+      fx:controller="nl.tudelft.oopp.client.controllers.ReservationsSceneController"
+      stylesheets="@reservations.css">
     <children>
-        <ToolBar prefHeight="40.0" prefWidth="1080.0" StackPane.alignment="TOP_CENTER">
-            <items>
-                <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#addTestBuilding"
-                        text="Add Test Building"/>
-            </items>
-        </ToolBar>
         <StackPane prefHeight="740.0" prefWidth="1080.0">
             <children>
                 <Pane>
@@ -80,7 +75,7 @@
                                 <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
                             </padding>
                         </VBox>
-                        <TabPane fx:id="roomsListWrapper" HBox.hgrow="ALWAYS">
+                        <TabPane fx:id="roomsListWrapper" HBox.hgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
                             <tabs>
                                 <Tab fx:id="roomsListTab" style="-fx-background-color: white;"/>
                             </tabs>

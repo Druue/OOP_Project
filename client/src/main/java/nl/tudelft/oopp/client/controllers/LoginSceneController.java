@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,19 +19,18 @@ import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.api.models.UserKind;
+import nl.tudelft.oopp.client.AlertService;
 import nl.tudelft.oopp.client.MainApp;
 
 
 public class LoginSceneController {
     private static final Logger LOGGER = Logger.getLogger(LoginSceneController.class.getName());
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
-    // the TextField object(s) from mainScene.fxml
     @FXML
     public TextField inputusername;
     @FXML
     public TextField inputPassword;
-
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     /**
      * Sends a login request to the backend, using the information stored in the text fields.
@@ -40,19 +40,16 @@ public class LoginSceneController {
         String username = inputusername.getText();
         String password = inputPassword.getText();
         if (username.isEmpty() || password.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please provide a username and password.");
-            alert.showAndWait();
+
+            AlertService.alertWarning(
+                "Warning",
+                "Please provide a username and password.");
+
         } else {
             LoginRequest loginRequest = new LoginRequest(username, password);
             UserAuthResponse response =
-                    httpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
+                httpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
 
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setTitle("Response");
-            alert.setHeaderText(null);
             if (response != null) {
                 if (response.getAlertType().equals("CONFIRMATION")) {
 
@@ -62,9 +59,7 @@ public class LoginSceneController {
                     HttpRequestHandler.saveUser(response.getUser());
 
                     // Show an alert with the server response message.
-                    alert.setAlertType(Alert.AlertType.CONFIRMATION);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+                    AlertService.alertConfirmation("Response", response.getMessage());
 
                     // Goes to the appropriate homepage based on type of user
                     if (response.getUser().getUserKind().equals(UserKind.Admin)) {
@@ -73,13 +68,11 @@ public class LoginSceneController {
                         goToHomepage();
                     }
                 } else {
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+                    AlertService.alertError("Response", response.getMessage());
                 }
             } else {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid response from server.");
+                AlertService.alertError("Response", "Invalid response from server!");
+
             }
         }
     }
@@ -95,15 +88,13 @@ public class LoginSceneController {
     }
 
     /**
-     * Handles going the the homepage, without any event occurring.
+     * Handles going the the user homepage.
      */
     public void goToHomepage() {
         try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/homepage.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            MainApp.getPrimaryStage().setScene(homepageScene);
+            MainApp.goToPage("homepage");
         } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
+            e.printStackTrace();
         }
     }
 
@@ -112,36 +103,20 @@ public class LoginSceneController {
      */
     public void goToAdmin() {
         try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) (inputusername.getScene().getWindow());
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
+            MainApp.goToPage("admin");
         } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
+            e.printStackTrace();
         }
     }
 
     /**
      * Handles going to the registration page.
-     *
-     * @param event the event from where the function was called.
      */
-    public void goToRegistration(MouseEvent event) {
+    public void goToRegistration() {
         try {
-            Parent registrationParent =
-                    FXMLLoader.load(getClass().getResource("/registration.fxml"));
-            Scene registrationScene = new Scene(registrationParent);
-            registrationScene.getStylesheets()
-                    .addAll(this.getClass().getResource("/registration.css").toExternalForm());
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(registrationScene);
-            primaryStage.show();
+            MainApp.goToPage("registration");
         } catch (IOException e) {
-            System.out.println("IOException in LoginController");
+            e.printStackTrace();
         }
     }
 }

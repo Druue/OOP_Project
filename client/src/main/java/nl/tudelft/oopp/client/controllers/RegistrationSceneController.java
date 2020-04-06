@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,7 +17,8 @@ import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.api.models.UserKind;
-
+import nl.tudelft.oopp.client.AlertService;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class RegistrationSceneController {
@@ -30,22 +32,13 @@ public class RegistrationSceneController {
     public PasswordField registrationPasswordInput;
 
     /**
-     * Handles going to the login page.
+     * Handles going back to the login page.
      */
     public void goToLogin() {
         try {
-            Parent loginParent = FXMLLoader.load(getClass().getResource("/login.fxml"));
-            Scene loginScene = new Scene(loginParent);
-            loginScene.getStylesheets()
-                    .addAll(this.getClass().getResource("/login.css").toExternalForm());
-            Stage primaryStage = (Stage) registrationEmailInput.getScene().getWindow();
-
-
-            primaryStage.hide();
-            primaryStage.setScene(loginScene);
-            primaryStage.show();
+            MainApp.goToPage("login");
         } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
+            e.printStackTrace();
         }
     }
 
@@ -63,11 +56,9 @@ public class RegistrationSceneController {
 
         // If any of these fields are empty: Send an alert.
         if (username.isEmpty() || password.isEmpty() || name.isEmpty() || email.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all required fields.");
-            alert.showAndWait();
+
+            AlertService.alertWarning("Warning", "Please fill in all required fields.");
+
         } else {
 
             // Checks for the kind of user that is registering
@@ -96,11 +87,7 @@ public class RegistrationSceneController {
                 }
             } catch (Exception e) {
                 // Create an alert, and show it to the user.
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("Invalid email address given.");
-                alert.showAndWait();
+                AlertService.alertError("ERROR", "Invalid email address given");
                 return;
             }
 
@@ -113,44 +100,28 @@ public class RegistrationSceneController {
                     UserAuthResponse.class);
 
             // Create an alert, and show it to the user.
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setTitle("Response");
-            alert.setHeaderText(null);
             if (response != null) {
                 if (response.getAlertType().equals("CONFIRMATION")) {
+
                     HttpRequestHandler.saveUser(response.getUser());
                     // HttpRequestHandler.user.setUserId(response.getUser().getUserId());
                     System.out.println(HttpRequestHandler.user.getId());
-                    alert.setAlertType(Alert.AlertType.CONFIRMATION);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+
+                    AlertService.alertConfirmation("Response", response.getMessage());
+
                     // For now, goes back to the homepage.
                     goToLogin();
+
                 } else {
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+
+                    AlertService.alertError("Response", response.getMessage());
+
                 }
             } else {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid response from server.");
-            }
-        }
-    }
 
-    /**
-     * Handles going back to the Homepage.
-     */
-    public void goToHomepage() {
-        try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) (registrationPasswordInput.getScene().getWindow());
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
-        } catch (IOException e) {
-            System.out.println("IOException in RegistrationController");
+                AlertService.alertError("Response", "Invalid response from server!");
+
+            }
         }
     }
 }

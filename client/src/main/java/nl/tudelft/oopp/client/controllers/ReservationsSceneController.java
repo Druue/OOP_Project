@@ -2,11 +2,13 @@ package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,11 +31,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.Building;
-import nl.tudelft.oopp.api.models.BuildingResponse;
+import nl.tudelft.oopp.api.models.BuildingBasicInfo;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.api.models.UserKind;
+import nl.tudelft.oopp.client.MainApp;
+
 
 public class ReservationsSceneController implements Initializable {
 
@@ -46,7 +52,7 @@ public class ReservationsSceneController implements Initializable {
     ListView<Node> buildingsList;
 
     @FXML
-    ChoiceBox<String> datesList;
+    ChoiceBox<LocalDate> datesList;
 
     @FXML
     TextField buildingSearchField;
@@ -75,21 +81,7 @@ public class ReservationsSceneController implements Initializable {
 
         populateBuildingsScrollBox();
 
-        //        roomsListWrapper.setVisible(false);
-
-        try {
-            //FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomsList.fxml"));
-            RoomsListController controller = new RoomsListController();
-            loader.setController(controller);
-            VBox tabContent = loader.load();
-            roomsListWrapper.setVisible(true);
-            roomsListTab.setContent(tabContent);
-
-            controller.generateInitialRooms(null);
-        } catch (IOException e) {
-            System.out.println("File Not Found");
-        }
+        roomsListWrapper.setVisible(false);
     }
 
     /**
@@ -99,13 +91,14 @@ public class ReservationsSceneController implements Initializable {
     private void populateDatesChoiceBox() {
         LocalDate date = LocalDate.now();
 
-        String today = getDateString(date) + " (Today)";
 
-        datesList.setValue(today);
-        datesList.getItems().add(today);
+        datesList.setConverter(generateDateConverter());
+        datesList.setValue(date);
+        datesList.getItems().add(date);
 
         for (int i = 1; i != MAX_DAYS_IN_ADVANCE; i++) {
-            datesList.getItems().add(getDateString(date.plusDays(i)));
+            date = date.plusDays(1);
+            datesList.getItems().add(date);
         }
     }
 
@@ -113,22 +106,21 @@ public class ReservationsSceneController implements Initializable {
      * Generates boxes for each building and adds them to the GUI.
      */
     private void populateBuildingsScrollBox() {
-        BuildingResponse buildingResponse = httpRequestHandler.get("buildings/user/all",
-                BuildingResponse.class);
+        List<BuildingBasicInfo> buildingBasicInfos = httpRequestHandler.getList("buildings/user/all/information",
+                BuildingBasicInfo.class);
 
         DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0,0,0,0.1), 2,4,2, 2);
         buildingSearchField.setEffect(dropShadow);
 
-        List<Building> buildingList;
-        if (waitForResponse(buildingResponse)) {
-            buildingList = buildingResponse.getBuildingList(); //NullPointer handled in waitForResponse()
+        if (waitForResponse(buildingBasicInfos)) {
             List<Node> listOfEntries = new ArrayList<Node>();
-            for (Building building : buildingList) {
+            for (BuildingBasicInfo building : buildingBasicInfos) {
                 VBox buildingEntry = new VBox();
                 buildingEntry.getStyleClass().add("buildingEntry");
                 Label buildingName = new Label(building.getNumber() + "," + building.getDetails().getName());
                 buildingName.getStyleClass().add("buildingName");
-                Label buildingOpeningTime = new Label("08:30 - 23:00 //hardcoded");
+                Label buildingOpeningTime = new Label(hourAndMinutesString(building.getOpeningHours().getStartTime())
+                    + " - " + hourAndMinutesString(building.getOpeningHours().getEndTime()));
                 buildingOpeningTime.getStyleClass().add("buildingOpeningTime");
 
                 buildingEntry.getChildren().add(buildingName);
@@ -153,7 +145,7 @@ public class ReservationsSceneController implements Initializable {
                             roomsListWrapper.setVisible(true);
                             roomsListTab.setContent(tabContent);
 
-                            controller.generateInitialRooms(event);
+                            controller.initialize(building);
                         } catch (IOException e) {
                             System.out.println("File Not Found");
                         }
@@ -169,26 +161,41 @@ public class ReservationsSceneController implements Initializable {
     }
 
     /**
+     * Gets the hour and minutes from a {@link Timestamp} in the format (H)H:MM.
+     * @param timestamp The timestamp used.
+     * @return a String of format (H)H:MM (e.g. 9:13 or 12:00).
+     */
+    public static String hourAndMinutesString(Timestamp timestamp) {
+        String result = timestamp.getHours() + ":";
+        if (timestamp.getMinutes() < 10) {
+            return result + "0" + timestamp.getMinutes();
+        } else {
+            return result + timestamp.getMinutes();
+        }
+    }
+
+    /**
      * Polls each second whether the buildingList was received by the BuildingResponse
      * until success or timeout.
-     * @param buildingResponse The response object.
+     * @param buildings The response object.
      * @return boolean whether a (non-null)response was received
      */
-    private boolean waitForResponse(BuildingResponse buildingResponse) {
+    private boolean waitForResponse(List<BuildingBasicInfo> buildings) {
         int i = 0;
         while (i != RESPONSE_TIMEOUT) {
-            if (buildingResponse != null && buildingResponse.getBuildingList() != null) {
+            if (buildings != null) {
                 return true;
             }
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (Exception e) {
-                System.out.println("Problems with BuildingResponse in ReservationsSceneController.waitForResponse()");
+                System.out.println("Problems with getting BuildingsDetails in "
+                    + "ReservationsSceneController.waitForResponse()");
                 return false;
             }
             i++;
         }
-        System.out.println("BuildingResponse timed out in ReservationsSceneController");
+        System.out.println("ReservationsSceneController: Getting BuildingsDetails timed out or there are no buildings");
         return false;
     }
 
@@ -206,35 +213,63 @@ public class ReservationsSceneController implements Initializable {
                + date.getDayOfWeek().name().substring(1,3).toLowerCase();
     }
 
-    /**
-     * Handles going back to the Homepage.
-     * @param event the event from where the function was called.
-     */
-    public void goToHomepage(ActionEvent event) {
-        try {
-            Parent homepageParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene homepageScene = new Scene(homepageParent);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    private StringConverter<LocalDate> generateDateConverter() {
+        return new StringConverter<LocalDate>() {
+            @Override
+            public String toString(LocalDate date) {
+                String result = date.getDayOfMonth() + "/"
+                    + date.getMonth().getValue()
+                    + "/" + date.getYear() + " - "
+                    + date.getDayOfWeek().name().substring(0,1)
+                    + date.getDayOfWeek().name().substring(1,3).toLowerCase();
+                if (date.equals(LocalDate.now())) {
+                    return result + " (Today)";
+                } else {
+                    return result;
+                }
+            }
 
-            primaryStage.hide();
-            primaryStage.setScene(homepageScene);
-            primaryStage.show();
-        } catch (IOException e) {
-            System.out.println("IOException in ReservationsController");
+            @Override
+            public LocalDate fromString(String dateString) {
+                String[] splitString = dateString.split("/");
+                return LocalDate.of(Integer.parseInt(splitString[0]),
+                    Integer.parseInt(splitString[1]),
+                    Integer.parseInt(splitString[2].substring(0,3)));
+            }
+        };
+    }
+
+    /**
+     * Handles going back to the Homepage based on type of user.
+     */
+    public void goToHomepage() {
+        if (HttpRequestHandler.user.getUserKind().equals(UserKind.Admin)) {
+            goToAdmin();
+        } else {
+            goToHome();
         }
     }
 
     /**
-     * Adds a test building to the database.
-     * Very barebones right now: It will cause an error if called more than once
-     * due to the hardcoded ID.
+     * Handles going to the admin homepage.
      */
-    public void addTestBuilding() {
-        Building testBuilding = new Building(
-                1L,
-                new Details("Test name", null, null)
-        );
-        httpRequestHandler.put("buildings/insert/new_building", testBuilding,
-                ServerResponseAlert.class);
+    public void goToAdmin() {
+        try {
+            MainApp.goToPage("admin");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    /**
+     * Handles going to the user homepage.
+     */
+    public void goToHome() {
+        try {
+            MainApp.goToPage("homepage");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

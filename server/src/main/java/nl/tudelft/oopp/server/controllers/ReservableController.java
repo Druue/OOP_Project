@@ -9,6 +9,7 @@ import javax.naming.AuthenticationException;
 import javax.persistence.EntityNotFoundException;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.ReservableResponse;
 import nl.tudelft.oopp.api.models.RoomResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.server.models.Reservable;
@@ -36,12 +37,6 @@ public class ReservableController {
 
     private Logger logger = LoggerFactory.getLogger(ReservableController.class);
 
-    private static final String NOT_ADMIN =
-        "Unauthorized request. The requesting user is not an administrator.";
-
-    private static final String NO_USER_FOUND =
-        "Authentication for user failed. No administrator with that name found.";
-
     /**
      * Importing the methods from the service class.
      */
@@ -56,42 +51,77 @@ public class ReservableController {
      *                              and authorizing users and administrators.
      */
     public ReservableController(ReservableService reservableService,
-                                AuthorizationService authorizationService) {
+                                AuthorizationService authorizationService
+    ) {
         this.reservableService = reservableService;
         this.authorizationService = authorizationService;
 
     }
 
     /**
-     * Receives a GET request for all rooms or bikes of a particular building. First uses the
-     * {@link nl.tudelft.oopp.server.services.ReservableService} to fetch all rooms or bikes
-     * of the building with the provided id as a request parameter. Then sends the list wrapped
-     * in a {@link ResponseEntity} object.
-     *
-     * @param number The id of the building to fetch the rooms of.
-     * @param type   The type of reservable to retrieve - rooms or bikes.
-     * @return A {@link ResponseEntity} object containing a list of the building's rooms.
+     * Gets all rooms from the database.
+     * @return A {@link RoomResponse} containing a list of all rooms.
      */
-    @GetMapping("/{role:(?:user|admin)}/all/{type}/building")
-    public ResponseEntity<List<Reservable>> getAllReservablesOfBuilding(
-            @RequestParam Long number,
-            @PathVariable String type) {
+    @GetMapping("/all/rooms")
+    public ResponseEntity<RoomResponse> getAllReservables() {
+        LoggerService.info(ReservationsController.class,
+                "Received request for all reservables");
+
+
+        List<nl.tudelft.oopp.api.models.Room> responseList = new ArrayList<>();
+        for (Reservable responseReservable: reservableService.getAllReservables()) {
+            if (responseReservable instanceof Room) {
+                try {
+                    LoggerService.info(ReservableController.class, (httpRequestHandler.convertModel(
+                        responseReservable, nl.tudelft.oopp.api.models.Room.class
+                    ).getDetails().getName()));
+                } catch (NullPointerException npe) {
+                    LoggerService.info(ReservableController.class, "Name of room is null");
+                }
+                responseList.add(httpRequestHandler.convertModel(
+                        responseReservable, nl.tudelft.oopp.api.models.Room.class
+                ));
+            }
+
+        }
+        return ResponseEntity.ok(new RoomResponse(responseList));
+    }
+
+    /** Receives a GET request for all rooms or bikes of a particular building. First uses the
+     *      {@link nl.tudelft.oopp.server.services.ReservableService} to fetch all rooms or bikes
+     *      of the building with the provided id as a request parameter. Then sends the list wrapped
+     *      in a {@link ResponseEntity} object.
+     *
+     * @param number        The id of the building to fetch the rooms of.
+     * @param type      The type of reservable to retrieve - rooms or bikes.
+     * @return          A {@link ResponseEntity} object containing a list of the building's rooms.
+     */
+    @GetMapping("/{role:(?:user|admin)}/all/{type}/building/{number}")
+    public ResponseEntity<ReservableResponse> getAllReservablesOfBuilding(
+        @PathVariable Long number,
+        @PathVariable String type) {
 
         logger.info("Received GET requests for all " + type
-                + " of building " + number + ". Processing ...");
+            + " of building " + number + ". Processing ...");
 
         logger.info("Fetching all + " + type + " of building " + number + " ...");
 
-        List<Reservable> reservablesToSend;
+        List<Reservable> reservables;
 
         try {
-            reservablesToSend = reservableService.getAllReservablesForBuilding(number, type);
+            reservables = reservableService.getAllReservablesForBuilding(number, type);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(null);
         }
 
-        logger.info("Sending the " + type + " of building " + number + " ...");
-        return ResponseEntity.ok(reservablesToSend);
+        List<nl.tudelft.oopp.api.models.Reservable> reservablesToSend = new ArrayList<>();
+
+        for (Reservable reservable:reservables) {
+            reservablesToSend.add(httpRequestHandler.convertModel(reservable, nl.tudelft.oopp.api.models.Reservable.class));
+        }
+
+        logger.info("Sending the " + type + " of building " + number +  " ...");
+        return ResponseEntity.ok(new ReservableResponse(reservablesToSend));
     }
 
 
@@ -116,7 +146,7 @@ public class ReservableController {
         try {
             authorizationService.authenticateUser(request.getUsername());
         } catch (AuthenticationException e) {
-            logger.error(NO_USER_FOUND);
+            logger.error(AuthorizationService.NO_USER_FOUND);
             return ResponseEntity.badRequest().build();
         }
 
@@ -141,6 +171,17 @@ public class ReservableController {
         logger.info("Adding of " + type + " to building " + id + " successful. ");
         return ResponseEntity.ok(new ServerResponseAlert("Adding of " + type
             + "successful.", "SUCCESS"));
+    }
+
+
+    /**
+     * Updates a room in the database.
+     * @param newReservable the Reservable to replace the old reservable with.
+     * @param id The id of the reservable that should be updated.
+     */
+    @PutMapping("models/Reservable/{id}")
+    public void update(@RequestBody Reservable newReservable, @PathVariable Long id) {
+        reservableService.updateReservable(id, newReservable);
     }
     
     /**
