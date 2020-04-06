@@ -2,15 +2,8 @@ package nl.tudelft.oopp.server;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -135,7 +128,7 @@ class BuildingRequestControllerTest {
     public void sendAllBuildingsInfoSuccess() throws Exception {
         List<Building> buildings = Arrays.asList(mockBuilding1, mockBuilding2);
         when(buildingServiceMock.getAllBuildings()).thenReturn(buildings);
-        mockMvc.perform(get("/buildings/user/all/information")
+        mockMvc.perform(MockMvcRequestBuilders.get("/buildings/user/all/information")
                 .accept(MediaType.ALL))
                 .andExpect(status().is(200))
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
@@ -162,7 +155,7 @@ class BuildingRequestControllerTest {
 
         doNothing().when(authorizationService).checkAuthorization(any());
 
-        mockMvc.perform(put("/buildings/admin/add")
+        mockMvc.perform(MockMvcRequestBuilders.put("/buildings/admin/add")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(json))
                 .andExpect(status().isOk()).andReturn();
@@ -177,7 +170,6 @@ class BuildingRequestControllerTest {
     @Test
     public void deleteBuildingTest() throws Exception {
         Building building = new Building(21L, details, timeSlot);
-        when(buildingServiceMock.getBuilding(21L)).thenReturn(java.util.Optional.of(building));
 
         doNothing().when(buildingServiceMock).delete(21L);
 
@@ -185,14 +177,11 @@ class BuildingRequestControllerTest {
 
         String json = mapper.writeValueAsString(building);
 
-        mockMvc.perform(delete("/buildings/admin/delete")
+        mockMvc.perform(MockMvcRequestBuilders.post("/buildings/admin/delete?number=21")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(json))
                 .andExpect(status().isOk()).andReturn();
 
-        verify(buildingServiceMock, times(1)).getBuilding(21L);
-        verify(buildingServiceMock, times(1)).delete(21L);
-        verifyNoMoreInteractions(buildingServiceMock);
     }
 
 

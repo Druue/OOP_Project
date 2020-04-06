@@ -33,7 +33,13 @@ public class HttpRequestHandler {
         this.objectMapper = new ObjectMapper();
     }
 
+    /**
+     * Creates a new HttpRequestHandler with an HttpClient. Used for unit testing.
+     * @param client the (mock) HttpClient.
+     */
     public HttpRequestHandler(HttpClient client) {
+        this.host = "http://localhost:8080";
+        this.objectMapper = new ObjectMapper();
         this.client = client;
     }
 

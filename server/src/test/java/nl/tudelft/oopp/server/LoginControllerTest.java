@@ -92,6 +92,18 @@ public class LoginControllerTest {
         when(userService.getUserUserName(eq("missing_user"))).thenReturn(
                 null
         );
+
+        when(loginService.getUserInformation(new LoginRequest(
+                "user_one",
+                "pass123"
+        ))).thenReturn(new User(
+                42L,
+                "user_one@mail.com",
+                "user_one",
+                "pass123",
+                new Details(),
+                UserKind.Student
+        ));
     }
 
 
