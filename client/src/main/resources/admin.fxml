@@ -80,12 +80,10 @@
                             <MenuItem onAction="#goToRes" text="Reserve a Room" />
                         </Menu>
                         <Menu text="Manage buildings">
-                            <MenuItem onAction="#goToBuildings" text="View all buildings" />
                             <MenuItem onAction="#goToAddBuildings" text="Add building" />
                         </Menu>
                         <Menu mnemonicParsing="false" text="Manage rooms">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="View all rooms" />
                                 <MenuItem onAction="#goToAddRooms" text="Add a room" />
                             </items>
                         </Menu>
