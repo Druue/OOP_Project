@@ -73,6 +73,39 @@ public class AddBuildingsController {
     }
 
     /**
+     * Handles going to the add rooms page for the admin.
+     */
+    public void goToDeleteRooms() {
+        try {
+            MainApp.goToPage("admin-deleteRoom");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteRooms()");
+        }
+    }
+
+    /**
+     * Handles going to the add buildings page for the admin.
+     */
+    public void goToAddBuildings() {
+        try {
+            MainApp.goToPage("admin-addBuilding");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddBuildings()");
+        }
+    }
+
+    /**
+     * Handles going to the delete buildings page for the admin.
+     */
+    public void goToDeleteBuildings() {
+        try {
+            MainApp.goToPage("admin-deleteBuilding");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteBuildings()");
+        }
+    }
+
+    /**
      * Handles going back to the login page.
      */
     public void goToLogIn() {

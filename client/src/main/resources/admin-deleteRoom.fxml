@@ -90,11 +90,11 @@
                         </Menu>
                         <Menu text="Manage buildings">
                             <MenuItem onAction="#goToAddBuildings" text="Add building" />
+                            <MenuItem onAction="#goToDeleteBuildings" text="Delete building" />
                         </Menu>
                         <Menu mnemonicParsing="false" text="Manage rooms">
-                            <items>
-                                <MenuItem onAction="#goToAddRooms" text="Add a room" />
-                            </items>
+                            <MenuItem onAction="#goToAddRooms" text="Add a room" />
+                            <MenuItem onAction="#goToDeleteRooms" text="Delete a room" />
                         </Menu>
                     </menus>
                 </MenuBar>

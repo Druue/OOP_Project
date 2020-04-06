@@ -152,6 +152,17 @@ public class DeletionController {
     }
 
     /**
+     * Handles going to the delete buildings page for the admin.
+     */
+    public void goToDeleteRooms() {
+        try {
+            MainApp.goToPage("admin-deleteRoom");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteRooms()");
+        }
+    }
+
+    /**
      * Handles going to the page for adding reservations.
      */
     public void goToRes() {
