@@ -37,14 +37,6 @@ public class RoomsListController implements Initializable {
 
     }
 
-    //    private static List<Room> generateTestRooms() {
-    //        List<Room> result = new ArrayList<Room>();
-    //        Details details = new Details(1, "test", "test", "test");
-    //        Room room1 = new Room(Long.parseLong("1"),"Room1",details);
-    //        result.add(room1);
-    //        return result;
-    //    }
-
     /**
      * This will get all the rooms of the selected {@link Building} and create GUI for them, as well as the
      * initial tab layout.
