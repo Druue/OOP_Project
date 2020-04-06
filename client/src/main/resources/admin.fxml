@@ -59,18 +59,6 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab text="All buildings">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <ListView fx:id="allRes1" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #00a6d6;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                        <Button mnemonicParsing="false" onAction="#goToAddBuildings" prefWidth="140.0" style="-fx-background-color: #287e40;" text="Add a building" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="130.0" />
-                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: #EA2E00;" text="Delete a building" textFill="WHITE" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="130.0" />
-                                        <Button onAction="#goToAdminRoom" text="room" />
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </Tab>
                     </tabs>
                 </TabPane>
 
@@ -91,7 +79,7 @@
                         </Menu>
                     </menus>
                 </MenuBar>
-                <Button id="logo" onAction="#goToMain" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0" />
+                <Button id="logo" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0" />
                 <HBox layoutY="2.0" prefHeight="30.0" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                     <children>
                         <ImageView fitHeight="26.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">

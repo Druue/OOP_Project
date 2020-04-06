@@ -113,57 +113,25 @@ public class HomepageController<E> implements Initializable {
     }
 
     /**
-     * Handles going to the mainScene.a
-     *
-     * @param event the scene from where the function was called.
+     * Handles going to the page for adding reservations.
      */
-    public void goToMain(ActionEvent event) {
+    public void goToRes() {
         try {
-            Parent mainParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene mainScene = new Scene(mainParent);
-
-            Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(mainScene);
-            primaryStage.show();
-
+            MainApp.goToPage("reservations");
         } catch (IOException e) {
-            System.out.println("IOException in HomepageController");
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
 
-    /**
-     * Handles going to the reservation page.
-     *
-     * @param event the scene from where the function was called.
-     */
-    public void goToRes(ActionEvent event) {
-        try {
-            Parent resParent = FXMLLoader.load(getClass().getResource("/reservations.fxml"));
-            Scene resScene = new Scene(resParent);
-            resScene.getStylesheets().addAll(this.getClass().getResource("/reservations.css").toExternalForm());
-
-            Stage primaryStage = (Stage) (todayRes.getScene().getWindow());
-
-            primaryStage.hide();
-            primaryStage.setScene(resScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            System.out.println("IOException in HomepageController");
-        }
-    }
 
     /**
      * Handles going back to the login page.
      */
     public void goToLogIn() {
         try {
-            MainApp.goToPage("login", "login");
+            MainApp.goToPage("login");
         } catch (IOException e) {
-            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToLogIn()");
         }
     }
 }

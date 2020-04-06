@@ -97,11 +97,6 @@
                         <Menu text="Manage buildings">
                             <MenuItem onAction="#goToAddBuildings" text="Add building" />
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Manage rooms">
-                            <items>
-                                <MenuItem onAction="#goToAddRooms" text="Add a room" />
-                            </items>
-                        </Menu>
                     </menus>
                 </MenuBar>
                 <HBox layoutY="2.0" prefHeight="30.0" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
