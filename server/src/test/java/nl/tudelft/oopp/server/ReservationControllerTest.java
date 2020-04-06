@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.server;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -9,7 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import nl.tudelft.oopp.server.controllers.BuildingRequestController;
+import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.UserKind;
 import nl.tudelft.oopp.server.controllers.ReservationsController;
 import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.Reservation;
@@ -54,6 +54,7 @@ public class ReservationControllerTest {
     Timestamp start;
     Timestamp end;
     ObjectMapper mapper;
+    UserKind userKind;
 
     @Autowired
     MockMvc mockMvc;
@@ -111,9 +112,11 @@ public class ReservationControllerTest {
         when(reservationService.getAllReservations()).thenReturn(reservations);
         mapper = new ObjectMapper();
 
-        String json = mapper.writeValueAsString(reservations);
-        mockMvc.perform(post("/reservations/admin/all/")
-                .accept(MediaType.ALL)
+        ClientRequest<String> request = new ClientRequest<>("admin", userKind.Admin, dummyReservation1.toString());
+
+        String json = mapper.writeValueAsString(request);
+        mockMvc.perform(post("/reservations/admin/all/").contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().is(200))
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
