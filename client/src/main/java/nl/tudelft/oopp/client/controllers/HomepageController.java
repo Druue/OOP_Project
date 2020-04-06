@@ -1,5 +1,11 @@
 package nl.tudelft.oopp.client.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,12 +22,6 @@ import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.UserKind;
 import nl.tudelft.oopp.client.MainApp;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class HomepageController<E> implements Initializable {
 
@@ -69,8 +69,9 @@ public class HomepageController<E> implements Initializable {
                             + s.getReservable().getBuilding().getName() + " reserved from "
                             + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
                             + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime()) + " on "
-                            + s.getTimeslot().getStartTime().getDate() + "/" + (s.getTimeslot().getStartTime().getMonth() + 1)
                     );
+                    allRes.getItems().add(s.getTimeslot().getStartTime().getDate() + "/"
+                            + (s.getTimeslot().getStartTime().getMonth() + 1));
                 }
             }
         } catch (Exception e) {
@@ -151,8 +152,6 @@ public class HomepageController<E> implements Initializable {
 
     /**
      * Handles going back to the login page.
-     *
-     * @param event the scene from where the function was called.
      */
     public void goToLogIn() {
         try {

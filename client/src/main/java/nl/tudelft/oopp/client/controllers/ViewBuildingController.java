@@ -1,5 +1,10 @@
 package nl.tudelft.oopp.client.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,12 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import nl.tudelft.oopp.client.MainApp;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class ViewBuildingController implements Initializable {
@@ -102,6 +101,9 @@ public class ViewBuildingController implements Initializable {
         }
     }
 
+    /**
+     * Handles going back to the login page.
+     */
     public void goToLogIn() {
         try {
             MainApp.goToPage("login", "login");

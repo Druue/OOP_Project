@@ -238,7 +238,7 @@ public class ReservationsSceneController implements Initializable {
     }
 
     /**
-     * Handles going back to the Homepage based on type of user
+     * Handles going back to the Homepage based on type of user.
      * @param event the event from where the function was called.
      */
     public void goToHomepage(ActionEvent event) {
@@ -250,7 +250,7 @@ public class ReservationsSceneController implements Initializable {
     }
 
     /**
-     * Handles going to the admin homepage
+     * Handles going to the admin homepage.
      * @param event the event from where the function was called.
      */
     public void goToAdmin(ActionEvent event) {
@@ -268,7 +268,7 @@ public class ReservationsSceneController implements Initializable {
     }
 
     /**
-     * Handles going to the homepage
+     * Handles going to the homepage.
      * @param event the event from where the function was called.
      */
     public void goToHome(ActionEvent event) {

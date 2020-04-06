@@ -154,6 +154,9 @@ public class AdminController implements Initializable {
         }
     }
 
+    /**
+     * Handles going back to the login page.
+     */
     public void goToLogIn() {
         try {
             MainApp.goToPage("login", "login");

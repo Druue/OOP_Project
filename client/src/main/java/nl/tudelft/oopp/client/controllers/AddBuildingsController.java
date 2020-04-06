@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -104,8 +103,6 @@ public class AddBuildingsController {
 
     /**
      * Handles going back to the login page.
-     *
-     * @param event the scene from where the function was called.
      */
     public void goToLogIn() {
         try {
