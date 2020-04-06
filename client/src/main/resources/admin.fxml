@@ -80,19 +80,21 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Reserve">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Room"/>
+                                <MenuItem onAction="#goToRes" text="Room"/>
                                 <MenuItem mnemonicParsing="false" text="Bike"/>
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Order food"/>
-                        <Menu mnemonicParsing="false" text="Add reservable">
+                        <Menu text="Manage buildings">
+                            <MenuItem onAction="#goToAddBuildings" text="Add building"/>
+                            <MenuItem mnemonicParsing="false" text="Edit buildings"/>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Manage reservables">
                             <items>
-                                <MenuItem onAction="#goToAddBuildings" text="Building"/>
-                                <MenuItem onAction="#goToAddRooms" text="Room"/>
-                                <MenuItem mnemonicParsing="false" text="Bike"/>
+                                <MenuItem onAction="#goToAddRooms" text="Add a room"/>
+                                <MenuItem mnemonicParsing="false" text="Add a bike"/>
+                                <MenuItem text="Edit reservables"/>
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Manage reservable"/>
                     </menus>
                 </MenuBar>
                 <ImageView fitHeight="100.0" fitWidth="100.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true"

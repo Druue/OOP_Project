@@ -64,11 +64,10 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Reserve">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Room"/>
+                                <MenuItem onAction="#goToRes" text="Room"/>
                                 <MenuItem mnemonicParsing="false" text="Bike"/>
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Order food"/>
                     </menus>
                 </MenuBar>
                 <ImageView fitHeight="100.0" fitWidth="100.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true"

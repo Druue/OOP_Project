@@ -53,28 +53,6 @@ public class BuildingService {
         return buildingRepository.findAllBy();
     }
 
-    /** Gets all the buildings numbers and existing names in the database.
-     * @return A {@link ListPair} object containing two lists - the numbers and the names.
-     */
-    public ListPair<Long, String> getBuildingNumbersAndNames() {
-        logger.info("Fetching the numbers of all buildings ...");
-        List<BuildingNumber> queriedNumbers = buildingRepository.getAllBy();
-        logger.info("Fetching all names from the database table details ...");
-        List<DetailsName> queriedNames = detailsRepository.findAllBy();
-
-        List<Long> sentNumbers = new ArrayList<>();
-        List<String> sentNames = new ArrayList<>();
-
-        for (BuildingNumber number: queriedNumbers) {
-            sentNumbers.add(number.getNumber());
-        }
-        for (DetailsName name: queriedNames) {
-            sentNames.add(name.getName());
-        }
-        logger.info("Constructing of ListPair object successful. ");
-        return new ListPair<>(sentNumbers, sentNames);
-    }
-
     /**
      * Gets a building.
      *
@@ -108,73 +86,6 @@ public class BuildingService {
 
     }
 
-    /**
-     * Updates a building by using the generic method updateBuilding() to set new details for it.
-     *
-     * @param number     The number/id of the building to update.
-     * @param newDetails The new details to set on the building.
-     */
-    public void updateBuildingDetails(Long number, Details newDetails) {
-        updateBuilding(number, newDetails);
-    }
-
-    /**
-     * Updates a building by using the generic method updateBuilding() to set new opening hours
-     * for it.
-     *
-     * @param number          The number/id of the building to change.
-     * @param newOpeningHours The new opening hours to set on the building.
-     */
-    public void updateBuildingOpeningHours(Long number, TimeSlot newOpeningHours) {
-        updateBuilding(number, newOpeningHours);
-    }
-
-
-    /**
-     * Deletes the building with the specified number from the database.
-     *
-     * @param number Number of the building to be deleted from the database.
-     */
-    public void delete(Long number) throws EntityNotFoundException {
-        logger.info("Checking whether building " + number + " still exists ...");
-        if (!buildingRepository.existsByNumber(number)) {
-            logger.error("Building " + number + " was not found.");
-            throw new EntityNotFoundException();
-        } else {
-            logger.info("Building " + number + " found. Deleting ...");
-            buildingRepository.deleteById(number);
-        }
-    }
-
-
-    /**
-     * Generic method to update a building in the database with the given number to
-     * have the given field value.
-     *
-     * @param number           The number of the building to update.
-     * @param fieldToBeChanged The new details to be set on te building.
-     * @throws EntityNotFoundException Throws it if the searched building does not exist.
-     */
-    public <T> void updateBuilding(Long number, T fieldToBeChanged)
-        throws EntityNotFoundException {
-
-        Optional<Building> optional = getBuilding(number);
-        if (optional.isEmpty()) {
-            logger.info("Building " + number + " not found. Cannot be updated.");
-            throw new EntityNotFoundException();
-        } else {
-            Building building = optional.get();
-            if (fieldToBeChanged instanceof TimeSlot) {
-                logger.info("Updating the opening hours of building " + number + " ...");
-                building.setOpeningHours((TimeSlot) fieldToBeChanged);
-            } else {
-                logger.info("Updating the details of building " + number + " ...");
-                building.setDetails((Details) fieldToBeChanged);
-            }
-            buildingRepository.save(building);
-        }
-
-    }
 
 
 }

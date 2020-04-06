@@ -38,7 +38,8 @@
                         <Insets top="15.0" />
                      </FlowPane.margin></Button>
                   <Label id="loginRegisterButton" onMouseClicked="#goToRegistration" text="---------- Don't have an account? Register ----------" />
-                  <Button layoutX="50.0" layoutY="362.0" mnemonicParsing="false" onAction="#goToHomepage" prefHeight="45.0" prefWidth="300.0" styleClass="loginButton" text="Continue as Guest" />
+                  <Button layoutX="50.0" layoutY="362.0" mnemonicParsing="false"
+                          prefHeight="45.0" prefWidth="300.0" styleClass="loginButton" text="Continue as Guest"></Button>
                </children>
 
             </FlowPane>
