@@ -20,7 +20,6 @@ import nl.tudelft.oopp.server.services.BuildingService;
 import nl.tudelft.oopp.server.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,8 +62,8 @@ public class BuildingRequestController {
      *
      * @return A {@link ResponseEntity} containing he aforementioned list of objects.
      */
-    @GetMapping(value = "/{name:(?:admin|user)}/all", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<BuildingResponse> sendAllBuildings() {
+    @GetMapping("/{name:(?:admin|user)}/all")
+    ResponseEntity<BuildingResponse> sendAllBuildings() {
 
         logger.info("Received GET request for all buildings. Processing...");
         List<Building> buildings = buildingService.getAllBuildings();
@@ -95,17 +94,6 @@ public class BuildingRequestController {
         List<BuildingsDetails> buildings = buildingService.getBuildingsDetails();
         return ResponseEntity.ok(buildings);
 
-    }
-
-    @GetMapping("/admin/all/uniquevalues")
-    ResponseEntity<ListPair<Long, String>> sendAllBuildingsNumbersAndNames() {
-
-        logger.info("Received a GET request for all buildings numbers and database names.");
-
-        ListPair<Long, String> responseListPair = buildingService.getBuildingNumbersAndNames();
-        logger.info("Numbers and names successfully retrieved from the database. Sending ...");
-
-        return ResponseEntity.ok(responseListPair);
     }
 
     /**
@@ -141,87 +129,6 @@ public class BuildingRequestController {
         logger.info("Adding of new building done successfully");
         return ResponseEntity.ok(new ServerResponseAlert("Adding successful",
             "INFORMATION"));
-    }
-
-    /**
-     * Receives a POST request for changing the details information of a specific building.
-     * Uses the {@link AuthorizationService} bean to validate the requesting administrator.
-     * Te uses the {@link BuildingService} bean to make the update.
-     *
-     * @param request The {@link ClientRequest} object containing the new {@link Details} object
-     *                to be set in the specified building.
-     * @param number  The id of the building to update.
-     * @return A {@link ResponseEntity} indicating the success of the operation.
-     */
-    @PostMapping("/admin/change/details")
-    public ResponseEntity<ServerResponseAlert> adminChangeBuildingDetails(
-        @RequestBody ClientRequest<Details> request, @RequestParam Long number) {
-
-        logger.info("Received POST request for changing the details of building " + number);
-
-        try {
-            authorizationService.checkAuthorization(request.getUsername());
-        } catch (AuthenticationException e) {
-            logger.error(AuthorizationService.NO_USER_FOUND);
-            return ResponseEntity.badRequest().build();
-        } catch (AuthorizationException e) {
-            logger.error(AuthorizationService.NOT_ADMIN);
-            return ResponseEntity.badRequest().build();
-        }
-
-        try {
-            buildingService.updateBuildingDetails(number, request.getBody());
-        } catch (EntityNotFoundException e) {
-            logger.error("Building " + number + " was not found in the database.");
-            return ResponseEntity.badRequest().body(new ServerResponseAlert("FAILURE",
-                "FAILURE"));
-
-        }
-
-        logger.info("Building " + number + " was successfully updated.");
-        return ResponseEntity.ok(new ServerResponseAlert("Successful update.",
-            "SUCCESS"));
-    }
-
-    /**
-     * Receives a POST request for updating the opening hours of a building to the provided
-     * ones in a {@link ClientRequest} field of type {@link TimeSlot}.
-     * Uses the {@link AuthorizationService} bean to validate the administrator who sent the
-     * request. Then uses the {@link BuildingService} bean to update the building with the
-     * provided in the request parameter number.
-     *
-     * @param request The {@link ClientRequest} object containing the new opening hours to be set.
-     * @param number  The id of the building to update.
-     * @return A {@link ResponseEntity} object indicating the success or failure of the operation.
-     */
-    @PostMapping("/admin/change/hours")
-    public ResponseEntity<ServerResponseAlert> adminChangeBuildingOpeningHours(
-        @RequestBody ClientRequest<TimeSlot> request, @RequestParam Long number) {
-
-        logger.info("Received a POST request for changing the opening hours of building" + number);
-
-        try {
-            authorizationService.checkAuthorization(request.getUsername());
-        } catch (AuthenticationException e) {
-            logger.error(AuthorizationService.NO_USER_FOUND);
-            return ResponseEntity.badRequest().build();
-        } catch (AuthorizationException e) {
-            logger.error(AuthorizationService.NOT_ADMIN);
-            return ResponseEntity.badRequest().build();
-        }
-
-        try {
-            buildingService.updateBuildingOpeningHours(number, request.getBody());
-        } catch (EntityNotFoundException e) {
-            logger.error("Building " + number + " was not found in the database.");
-            return ResponseEntity.badRequest().body(new ServerResponseAlert("FAILURE",
-                "FAILURE"));
-        }
-
-        logger.info("Building " + number + " was successfully updated.");
-        return ResponseEntity.ok(new ServerResponseAlert("Successful update.",
-            "SUCCESS"));
-
     }
 
     /**
