@@ -19,6 +19,7 @@ import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.TimeSlot;
+import nl.tudelft.oopp.client.AlertService;
 import nl.tudelft.oopp.client.MainApp;
 
 
