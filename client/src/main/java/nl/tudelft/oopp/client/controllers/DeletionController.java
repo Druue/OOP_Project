@@ -66,7 +66,7 @@ public class DeletionController {
                 ServerResponseAlert.class);
 
             AlertService.alert(Alert.AlertType.valueOf(response.getAlertType()), "Response",
-                "Delete request send successfully. Server response: " + response.getMessage());
+                "Server response: " + response.getMessage());
 
         } catch (InvalidRequestStateException e) {
             AlertService.alertError("Request error",

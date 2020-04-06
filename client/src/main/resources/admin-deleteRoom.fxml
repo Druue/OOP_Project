@@ -61,7 +61,7 @@
                                         </VBox>
                                         <VBox prefHeight="36.0" prefWidth="463.0">
                                             <children>
-                                                <TextField fx:id="buildNumTextField" prefHeight="30.0" prefWidth="404.0">
+                                                <TextField fx:id="roomNumTextField" prefHeight="30.0" prefWidth="404.0">
                                                     <VBox.margin>
                                                         <Insets left="25.0" />
                                                     </VBox.margin>
@@ -75,7 +75,7 @@
                                 </VBox>
                             </children>
                         </VBox>
-                        <Button onAction="#deleteBuilding" prefHeight="30.0" style="-fx-background-color: #E80000;" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="320.0">
+                        <Button onAction="#deleteRoom" prefHeight="30.0" style="-fx-background-color: #E80000;" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="320.0">
                             <font>
                                 <Font name="Helvetica" size="18.0" />
                             </font>
