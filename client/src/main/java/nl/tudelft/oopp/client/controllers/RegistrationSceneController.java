@@ -16,7 +16,7 @@ import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.User;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.api.models.UserKind;
-
+import nl.tudelft.oopp.client.AlertService;
 
 
 public class RegistrationSceneController {
@@ -63,11 +63,9 @@ public class RegistrationSceneController {
 
         // If any of these fields are empty: Send an alert.
         if (username.isEmpty() || password.isEmpty() || name.isEmpty() || email.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all required fields.");
-            alert.showAndWait();
+
+            AlertService.alertWarning("Warning", "Please fill in all required fields.");
+
         } else {
 
             // Checks for the kind of user that is registering
@@ -96,11 +94,7 @@ public class RegistrationSceneController {
                 }
             } catch (Exception e) {
                 // Create an alert, and show it to the user.
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("Invalid email address given.");
-                alert.showAndWait();
+                AlertService.alertError("ERROR", "Invalid email address given");
                 return;
             }
 
@@ -113,27 +107,27 @@ public class RegistrationSceneController {
                     UserAuthResponse.class);
 
             // Create an alert, and show it to the user.
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setTitle("Response");
-            alert.setHeaderText(null);
             if (response != null) {
                 if (response.getAlertType().equals("CONFIRMATION")) {
+
                     HttpRequestHandler.saveUser(response.getUser());
                     // HttpRequestHandler.user.setUserId(response.getUser().getUserId());
                     System.out.println(HttpRequestHandler.user.getId());
-                    alert.setAlertType(Alert.AlertType.CONFIRMATION);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+
+                    AlertService.alertConfirmation("Response", response.getMessage());
+
                     // For now, goes back to the homepage.
                     goToLogin();
+
                 } else {
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+
+                    AlertService.alertError("Response", response.getMessage());
+
                 }
             } else {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid response from server.");
+
+                AlertService.alertError("Response", "Invalid response from server!");
+
             }
         }
     }

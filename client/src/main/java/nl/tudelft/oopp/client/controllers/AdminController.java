@@ -3,6 +3,8 @@ package nl.tudelft.oopp.client.controllers;
 import com.sun.javafx.binding.Logging;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,40 +19,34 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.ClientRequest;
+import nl.tudelft.oopp.api.models.Reservation;
+import nl.tudelft.oopp.api.models.ReservationResponse;
 import nl.tudelft.oopp.client.MainApp;
 
 
 public class AdminController implements Initializable {
+
+    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
     private static final Logger LOGGER = Logger.getLogger(AdminController.class.getName());
     private static final String BAD_RESOURCE_ERROR = "Faulty resource input at AdminController";
-
-    public Button btn;
-    ObservableList list = FXCollections.observableArrayList();
 
     @FXML
     private ListView<String> todayRes;
     @FXML
     private ListView<String> allRes;
+    @FXML
+    private ListView<String> futureRes;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadData();
+        HomepageController.loadReservations(todayRes, "admin/today");
+        HomepageController.loadReservations(futureRes, "admin/current");
+        HomepageController.loadReservations(allRes, "admin/all");
     }
 
-    /**
-     * Handles loading the reserved rooms to the ListView item in homepage.fxml
-     */
-    private void loadData() {
-
-        //        List<Reservation> reservationList = HttpRequestHandler.get("reservations/all",
-        //        ReservationResponse.class).getReservationList();
-        //
-        //        for (Reservation s : reservationList) {
-        //            todayRes.getItems().add(s.getReservationID().toString());
-        //        }
-
-    }
 
     /**
      * Handles going to the mainScene.
@@ -86,6 +82,17 @@ public class AdminController implements Initializable {
     }
 
     /**
+     * Handles going to the view buildings page for the admin.
+     */
+    public void goToBuildings() {
+        try {
+            MainApp.goToPage("admin-viewBuilding", null);
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToBuildings()");
+        }
+    }
+
+    /**
      * Handles going to the add rooms page for the admin.
      */
     public void goToAddRooms() {
@@ -102,6 +109,17 @@ public class AdminController implements Initializable {
     public void goToRes() {
         try {
             MainApp.goToPage("reservations", "reservations");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
+        }
+    }
+
+    /**
+     * Handles going back to the login page.
+     */
+    public void goToLogIn() {
+        try {
+            MainApp.goToPage("login", "login");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }

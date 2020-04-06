@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Box?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@homepage.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.client.controllers.ViewBuildingController">
+    <children>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <ImageView fitWidth="800" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <image>
+                        <Image url="@images/Rooms-background8x6.png" />
+                    </image>
+                </ImageView>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                    <children>
+                        <Box depth="0.0" height="420.0" width="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label text="Buildings" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="20.0">
+                            <font>
+                                <Font name="Helvetica" size="31.0" />
+                            </font>
+                        </Label>
+                        <Button onAction="#goToAddBuildings" prefWidth="150.0" style="-fx-background-color: #287E40;" text="Add" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="100.0">
+                            <font>
+                                <Font name="Helvetica" size="16.0" />
+                            </font>
+                        </Button>
+                        <Button mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #0080D6;" text="Edit" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="325.0">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Button>
+                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #E80100;" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="100.0">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Button>
+                        <ListView fx:id="buildingsList" prefHeight="255.0" prefWidth="595.0" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="70.0" />
+                    </children>
+                </AnchorPane>
+
+                <MenuBar id="menuBar" style="-fx-background-color: #00A6D6;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <menus>
+                        <Menu text="Reserve">
+                            <MenuItem onAction="#goToRes" text="Reserve a Room" />
+                        </Menu>
+                        <Menu text="Manage buildings">
+                            <MenuItem mnemonicParsing="false" text="View all buildings" />
+                            <MenuItem onAction="#goToAddBuildings" text="Add building" />
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Manage rooms">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="View all rooms" />
+                                <MenuItem onAction="#goToAddRooms" text="Add a room" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <HBox layoutY="2.0" prefHeight="30.0" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                    <children>
+                        <ImageView fitHeight="26.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/Logo.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <Button id="logo" onAction="#goToAdmin" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0" />
+                <MenuButton mnemonicParsing="false" style="-fx-background-color: transparent;" text="more.." textFill="WHITE" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.5">
+                    <items>
+                        <MenuItem onAction="#goToLogIn" text="Log out" />
+                        <MenuItem mnemonicParsing="false" text="Copyrights" />
+                    </items>
+                    <font>
+                        <Font name="Helvetica" size="15.0" />
+                    </font>
+                </MenuButton>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

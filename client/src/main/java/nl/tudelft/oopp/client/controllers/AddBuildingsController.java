@@ -2,6 +2,8 @@ package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +19,13 @@ import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.TimeSlot;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class AddBuildingsController {
 
+    private static final Logger LOGGER = Logger.getLogger(AddBuildingsController.class.getName());
+    private static final String BAD_RESOURCE_ERROR = "Faulty resource input at AddBuildingsController";
 
     // the TextField object from mainScene.fxml
     @FXML
@@ -55,11 +60,31 @@ public class AddBuildingsController {
     }
 
     /**
+     * Handles going to the page for adding reservations.
+     */
+    public void goToRes() {
+        try {
+            Parent homeParent = FXMLLoader.load(getClass().getResource("/reservations.fxml"));
+            Scene homeScene = new Scene(homeParent);
+
+            Stage primaryStage =
+                    (Stage) (buildingNameInput.getScene().getWindow());
+
+            primaryStage.hide();
+            primaryStage.setScene(homeScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AddBuildingsController");
+        }
+    }
+
+    /**
      * Handles going to the add rooms page.
      *
      * @param event the scene from where the function was called.
      */
-    public void goToAddRoom(ActionEvent event) {
+    public void goToAddRooms(ActionEvent event) {
         try {
             Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-addRoom.fxml"));
             Scene roomScene = new Scene(roomParent);
@@ -77,13 +102,46 @@ public class AddBuildingsController {
     }
 
     /**
+     * Handles going back to the login page.
+     */
+    public void goToLogIn() {
+        try {
+            MainApp.goToPage("login", "login");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
+        }
+    }
+
+    /**
      * Handles going to the add buildings page.
      *
      * @param event the scene from where the function was called.
      */
-    public void goToAddBuilding(ActionEvent event) {
+    public void goToAddBuildings(ActionEvent event) {
         try {
             Parent buildingParent = FXMLLoader.load(getClass().getResource("/admin-addBuilding.fxml"));
+            Scene buildingScene = new Scene(buildingParent);
+
+            Stage primaryStage =
+                    (Stage) (buildingNameInput.getScene().getWindow());
+
+            primaryStage.hide();
+            primaryStage.setScene(buildingScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AddBuildingsController");
+        }
+    }
+
+    /**
+     * Handles going to the add buildings page.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToBuildings(ActionEvent event) {
+        try {
+            Parent buildingParent = FXMLLoader.load(getClass().getResource("/admin-viewBuildings.fxml"));
             Scene buildingScene = new Scene(buildingParent);
 
             Stage primaryStage =
@@ -241,4 +299,5 @@ public class AddBuildingsController {
         alert.setContentText(response.getMessage());
         alert.showAndWait();
     }
+
 }

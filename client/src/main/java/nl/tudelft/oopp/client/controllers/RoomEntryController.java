@@ -3,12 +3,15 @@ package nl.tudelft.oopp.client.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 
 public class RoomEntryController {
@@ -25,9 +28,6 @@ public class RoomEntryController {
     Label capacity;
 
     @FXML
-    StackPane timeline;
-
-    @FXML
     TextField startTimeInput;
 
     @FXML
@@ -36,12 +36,7 @@ public class RoomEntryController {
     @FXML
     Button reserveButton;
 
-    private List<Rectangle> timeSlots;
-
-    public RoomEntryController() {
-        timeSlots = new ArrayList<Rectangle>();
-
-    }
+    public RoomEntryController() { }
 
     //    /**
     //     * Generates a new timeline.
@@ -49,26 +44,23 @@ public class RoomEntryController {
     //     * @param openingTimes the opening times.
     //     * @param timeSlots    The list of timeslots to use.
     //     */
-    //    public void generateTimeline(TestOpeningTimes openingTimes, List<TestTimeSlot> timeSlots) {
-    //        boolean startsWithRoundHour;
-    //        startsWithRoundHour = openingTimes.getOpeningHour().getMinutes() > 30
-    //                || openingTimes.getOpeningHour().getMinutes() == 0;
+    //    public void generateTimeline(String startTime, String endTime) {
     //        timeline.maxWidthProperty().bind(roomEntryBackground.widthProperty().multiply(0.8));
     //        timeline.prefWidthProperty().bind(roomEntryBackground.widthProperty().multiply(0.8));
     //        timeline.minWidthProperty().bind(roomEntryBackground.widthProperty().multiply(0.8));
     //        timeline.setTranslateY(timeline.getPrefWidth() * (-1) / 2);
     //        timeline.setAlignment(Pos.TOP_LEFT);
     //
-    //        //        StackPane area = new StackPane();
-    //
+    //        boolean startsWithRoundHour = isCloserToRoundHour(startTime);
     //        if (!startsWithRoundHour) {
-    //            Label hour = new Label((openingTimes.getOpeningHour().getHour() + ":30"));
+    //            Label hour = new Label((startTime.split(":")[0] + ":30"));
     //            hour.setFont(Font.font(10));
     //            hour.setTranslateX(-10);
     //            hour.translateYProperty().bind(timeline.heightProperty().divide(1.9));
     //            timeline.getChildren().add(hour);
     //        }
-    //        int numTimeSlots = timeSlots.size();
+    //
+    //        int numTimeSlots = calculateNumTimeSlots(startTime, endTime);
     //        for (int i = 0; i != numTimeSlots; i++) {
     //            Rectangle timeSlot = new Rectangle();
     //            timeSlot.setId("timeslot" + i);
@@ -83,7 +75,7 @@ public class RoomEntryController {
     //                hour.setFont(Font.font(11));
     //
     //                fullHourMark.heightProperty().bind(timeSlot.heightProperty().multiply(1.2));
-    //                fullHourMark.setWidth(2);
+    //                fullHour
     //                fullHourMark.translateXProperty().bind(timeSlot.widthProperty().multiply(i)
     //                        .subtract(timeline.getPrefWidth() / numTimeSlots / 2));
     //                fullHourMark.setFill(Color.valueOf("000000")); //TODO: Set it as a string constant
@@ -161,6 +153,29 @@ public class RoomEntryController {
     //
     //        //        timeline.getChildren().add(area);
     //    }
+    //
+    //    /**
+    //     * Says if it's closer to half hour or to round.
+    //     * @param time A {@link String} of format (H)H:MM.
+    //     * @return true if minutes are 0 or between 31 and 59. Else false.
+    //     */
+    //    private boolean isCloserToRoundHour(String time) {
+    //        int minutes = Integer.parseInt(time.split(":")[1], 10);
+    //        return minutes == 0 || (minutes < 60 && minutes > 30);
+    //    }
+    //
+    //    private int calculateNumTimeSlots(String startTime, String endTime) {
+    //        int startHour = Integer.parseInt(startTime.split(":")[0]);
+    //        int startMinutes = Integer.parseInt(startTime.split(":")[1], 10);
+    //        int endHour = Integer.parseInt(endTime.split(":")[0]);
+    //        int endMinutes = Integer.parseInt(endTime.split(":")[1], 10);
+    //
+    //        int result = (endHour - startHour) * 2;
+    //        if(startMinutes > 0 && startMinutes < 30 && endMinutes < 30) {
+    //            return result - 1;
+    //        }
+    //
+    //    }
 
     public VBox getBackground() {
         return roomEntryBackground;
@@ -176,14 +191,6 @@ public class RoomEntryController {
 
     public Label getCapacity() {
         return capacity;
-    }
-
-    public Rectangle getTimeslot(int index) {
-        return timeSlots.get(index);
-    }
-
-    public List<Rectangle> getTimeslots() {
-        return timeSlots;
     }
 
     public TextField getStartTimeInput() {

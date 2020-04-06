@@ -5,6 +5,12 @@
     -fx-background-color: white;
 }
 
+#subtitle {
+    -fx-alignment: center;
+    -fx-font-family: Helvetica;
+    -fx-text-fill: black;
+}
+
 .menu-bar {
     -fx-background-color: #00a6d6;
     -fx-opacity: 0.5;
@@ -39,6 +45,10 @@
 
 .menu-item:hover, .menu-button:hover, .menu-button:focused, .menu-button:showing, .menu-item:focused {
     -fx-background-color: #94b3ff;
+}
+
+#inactiveMenu:hover, #inactiveMenu:focused, #inactiveMenu:showing {
+    -fx-background-color: #00a6d6;
 }
 
 .context-menu {
