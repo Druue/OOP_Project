@@ -97,6 +97,7 @@
                             </items>
                         </Menu>
                         <Menu text="Manage buildings">
+                            <MenuItem onAction="#goToBuildings" text="View all buildings" />
                             <MenuItem onAction="#goToAddBuildings" text="Add building" />
                             <MenuItem mnemonicParsing="false" text="Edit buildings" />
                         </Menu>

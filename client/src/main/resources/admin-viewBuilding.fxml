@@ -28,7 +28,7 @@
                                 <Font name="Helvetica" size="31.0"/>
                             </font>
                         </Label>
-                        <Button mnemonicParsing="false" prefWidth="150.0" style="-fx-background-color: #287E40;"
+                        <Button onAction="#goToAddBuildings" prefWidth="150.0" style="-fx-background-color: #287E40;"
                                 text="Add" textFill="WHITE" AnchorPane.bottomAnchor="30.0"
                                 AnchorPane.leftAnchor="100.0">
                             <font>
@@ -49,7 +49,7 @@
                                 <Font name="System Bold" size="16.0"/>
                             </font>
                         </Button>
-                        <ListView fx:id="todayRes" prefHeight="255.0" prefWidth="595.0" AnchorPane.bottomAnchor="95.0"
+                        <ListView fx:id="buildingsList" prefHeight="255.0" prefWidth="595.0" AnchorPane.bottomAnchor="95.0"
                                   AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
                                   AnchorPane.topAnchor="70.0"/>
                     </children>

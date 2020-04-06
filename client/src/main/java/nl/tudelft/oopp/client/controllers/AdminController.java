@@ -133,6 +133,17 @@ public class AdminController implements Initializable {
     }
 
     /**
+     * Handles going to the view buildings page for the admin.
+     */
+    public void goToBuildings() {
+        try {
+            MainApp.goToPage("admin-viewBuilding", null);
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToBuildings()");
+        }
+    }
+
+    /**
      * Handles going to the add rooms page for the admin.
      */
     public void goToAddRooms() {

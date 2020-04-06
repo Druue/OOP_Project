@@ -200,6 +200,28 @@ public class AddRoomsController {
     }
 
     /**
+     * Handles going to the view buildings page.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToBuildings(ActionEvent event) {
+        try {
+            Parent buildingParent = FXMLLoader.load(getClass().getResource("/admin-viewBuilding.fxml"));
+            Scene buildingScene = new Scene(buildingParent);
+
+            Stage primaryStage =
+                    (Stage) (roomNameInput.getScene().getWindow());
+
+            primaryStage.hide();
+            primaryStage.setScene(buildingScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AddRoomsController");
+        }
+    }
+
+    /**
      * Handles going to the page for adding reservations.
      */
     public void goToRes() {
