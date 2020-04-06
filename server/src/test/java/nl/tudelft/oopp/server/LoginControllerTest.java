@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import nl.tudelft.oopp.api.models.LoginRequest;
 import nl.tudelft.oopp.api.models.UserAuthResponse;
 import nl.tudelft.oopp.server.controllers.LoginController;
@@ -15,6 +16,7 @@ import nl.tudelft.oopp.server.repositories.UserRepository;
 import nl.tudelft.oopp.server.services.LoggerService;
 import nl.tudelft.oopp.server.services.LoginService;
 import nl.tudelft.oopp.server.services.UserService;
+import org.apache.coyote.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -63,18 +65,7 @@ public class LoginControllerTest {
     public void beforeEach() {
 
 
-        when(userService.getUserUserName(any())).thenReturn(
-                new User(
-                        42L,
-                        "user_one@mail.com",
-                        "user_one",
-                        "pass123",
-                        new Details(),
-                        UserKind.Student
-                )
-        );
-
-        when(loginService.getUserInformation(any())).thenReturn(
+        when(userService.getUserUserName(eq("user_one"))).thenReturn(
                 new User(
                         42L,
                         "user_one@mail.com",
@@ -129,6 +120,18 @@ public class LoginControllerTest {
 
         assertEquals(response.getBody().getMessage(), "username/password combination wrong");
     }
+
+    @Test
+    public void validateAuthNonExistingUserTest() {
+
+        ResponseEntity<UserAuthResponse> response = loginController.validateAuthentication(
+                new LoginRequest(
+                        "fqwef",
+                        "412412"
+                )
+        );
+        assertEquals(response.getBody().getMessage(),"Invalid user/password combination.");
     }
+}
 
 
