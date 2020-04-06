@@ -9,8 +9,16 @@ import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.client.AlertService;
+import nl.tudelft.oopp.client.MainApp;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DeletionController {
+
+    private static final Logger LOGGER = Logger.getLogger(DeletionController.class.getName());
+    private static final String BAD_RESOURCE_ERROR = "Faulty resource input at DeletionController";
 
     HttpRequestHandler httpRequestHandler;
 
@@ -76,23 +84,92 @@ public class DeletionController {
         deleteItem(roomNumTextField, "reservables/admin/delete/?number=");
     }
 
-    public void goToRes(ActionEvent actionEvent) {
-        new AddBuildingsController().goToRes();
+    /**
+     * Handles going to the room page for the admin.
+     */
+    public void goToAdminRoom() {
+        try {
+            MainApp.goToPage("admin-room", null);
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAdminRoom()");
+        }
     }
 
-    public void goToAddBuildings(ActionEvent actionEvent) {
-        new AddBuildingsController().goToAddBuildings(actionEvent);
+
+    /**
+     * Handles going to the add buildings page for the admin.
+     */
+    public void goToAdmin() {
+        try {
+            MainApp.goToPage("admin", "homepage");
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAdmin()");
+        }
     }
 
-    public void goToAddRooms(ActionEvent actionEvent) {
-        new AddBuildingsController().goToAddRooms(actionEvent);
+    /**
+     * Handles going to the add buildings page for the admin.
+     */
+    public void goToAddBuildings() {
+        try {
+            MainApp.goToPage("admin-addBuilding", null);
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddBuildings()");
+        }
     }
 
-    public void goToAdmin(ActionEvent actionEvent) {
-        new AddBuildingsController().goToAdmin(actionEvent);
+    /**
+     * Handles going to the delete buildings page for the admin.
+     */
+    public void goToDeleteBuildings() {
+        try {
+            MainApp.goToPage("admin-deleteBuilding", null);
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteBuildings()");
+        }
     }
 
-    public void goToLogIn(ActionEvent actionEvent) {
-        new AddBuildingsController().goToLogIn();
+    /**
+     * Handles going to the view buildings page for the admin.
+     */
+    public void goToBuildings() {
+        try {
+            MainApp.goToPage("admin-viewBuilding", null);
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToBuildings()");
+        }
+    }
+
+    /**
+     * Handles going to the add rooms page for the admin.
+     */
+    public void goToAddRooms() {
+        try {
+            MainApp.goToPage("admin-addRoom", null);
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddRooms()");
+        }
+    }
+
+    /**
+     * Handles going to the page for adding reservations.
+     */
+    public void goToRes() {
+        try {
+            MainApp.goToPage("reservations", "reservations");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
+        }
+    }
+
+    /**
+     * Handles going back to the login page.
+     */
+    public void goToLogIn() {
+        try {
+            MainApp.goToPage("login", "login");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
+        }
     }
 }

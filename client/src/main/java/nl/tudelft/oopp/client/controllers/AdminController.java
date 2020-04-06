@@ -82,6 +82,17 @@ public class AdminController implements Initializable {
     }
 
     /**
+     * Handles going to the delete buildings page for the admin.
+     */
+    public void goToDeleteBuildings() {
+        try {
+            MainApp.goToPage("admin-deleteBuilding", null);
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteBuildings()");
+        }
+    }
+
+    /**
      * Handles going to the view buildings page for the admin.
      */
     public void goToBuildings() {
