@@ -12,6 +12,7 @@ import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.ReservableResponse;
 import nl.tudelft.oopp.api.models.RoomResponse;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.server.models.AuthorizationException;
 import nl.tudelft.oopp.server.models.Reservable;
 import nl.tudelft.oopp.server.models.Room;
 import nl.tudelft.oopp.server.services.AuthorizationService;
@@ -24,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -211,11 +213,46 @@ public class ReservableController {
     /**
      * Deletes a specific reservable from the database.
      *
-     * @param id the ID of the reservable to delete.
+     * @param number the ID of the reservable to delete.
      */
-    @DeleteMapping("/Reservable/{id}")
-    public void delete(@PathVariable Long id) {
-        reservableService.deleteReservable(id);
+    @PostMapping("/admin/delete")
+    public ResponseEntity<ServerResponseAlert> delete(@RequestBody ClientRequest<String> request,
+                                                      @RequestParam Long number) {
+
+        logger.info("Received a DELETE request for reservable: " + number + ". Processing ...");
+
+        try {
+            authorizationService.checkAuthorization(request.getUsername());
+        } catch (AuthenticationException e) {
+
+            logger.error(AuthorizationService.NO_USER_FOUND);
+            return ResponseEntity.badRequest().body(new ServerResponseAlert(
+                "Username does not exist in the database!",
+                "ERROR"));
+
+        } catch (AuthorizationException e) {
+
+            logger.error(AuthorizationService.NOT_ADMIN);
+            return ResponseEntity.badRequest().body(new ServerResponseAlert(
+                "You are not an administrator!",
+                "ERROR"
+            ));
+
+        }
+
+        try {
+            reservableService.deleteReservable(number);
+        } catch (EntityNotFoundException e) {
+            logger.error("Reservable " + number + " not found for removal.");
+            return ResponseEntity.badRequest().body(new ServerResponseAlert(
+                "FAILURE",
+                "ERROR"));
+        }
+
+        logger.info("Reservable " + number + " was successfully removed.");
+        return ResponseEntity.ok(new ServerResponseAlert("Successful removal",
+            "CONFIRMATION"));
+
     }
 
 }

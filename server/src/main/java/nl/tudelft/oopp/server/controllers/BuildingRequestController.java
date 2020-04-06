@@ -250,11 +250,11 @@ public class BuildingRequestController {
         } catch (EntityNotFoundException e) {
             logger.error("Building " + number + " not found for removal.");
             return ResponseEntity.badRequest().body(new ServerResponseAlert("FAILURE",
-                "FAILURE"));
+                "ERROR"));
         }
 
         logger.info("Building " + number + " was successfully removed.");
         return ResponseEntity.ok(new ServerResponseAlert("Successful removal",
-            "SUCCESS"));
+            "CONFIRMATION"));
     }
 }
