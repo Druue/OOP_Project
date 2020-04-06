@@ -55,7 +55,7 @@ public class RegistrationSceneController {
      * Makes a request to the backend using the information that is present in the client's text
      * fields.
      */
-    public void attemptRegistration() {
+    public void attemptRegistrationEntry() {
 
         // Get all text from text fields
         String username = registrationUsernameInput.getText();

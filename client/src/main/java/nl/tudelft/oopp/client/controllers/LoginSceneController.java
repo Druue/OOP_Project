@@ -77,9 +77,6 @@ public class LoginSceneController {
             // Try sending a request to the server.
             UserAuthResponse response = sendLoginRequest(username, password);
 
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setTitle("Response");
-            alert.setHeaderText(null);
             if (response != null) {
                 if (response.getAlertType().equals("CONFIRMATION")) {
 
