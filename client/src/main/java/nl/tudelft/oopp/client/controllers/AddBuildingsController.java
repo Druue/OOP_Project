@@ -96,11 +96,7 @@ public class AddBuildingsController {
             }
         }
         if (test) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText(null);
-            alert.setContentText("building number field must have ONLY numbers");
-            alert.showAndWait();
+            AlertService.alertError("ERROR", "Building number field must have ONLY numbers!");
             return;
         }
         //validates the regex of the opening hour time
@@ -109,11 +105,7 @@ public class AddBuildingsController {
             regex = false;
         }
         if (!regex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText(null);
-            alert.setContentText("opening time input field should have this regex eg.06:30");
-            alert.showAndWait();
+            AlertService.alertError("ERROR", "Opening time input field should have this regex eg.06:30 !");
             return;
         }
         //validates the input for closing hour time
@@ -122,11 +114,7 @@ public class AddBuildingsController {
             regex2 = false;
         }
         if (!regex2) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setHeaderText(null);
-            alert.setContentText("closing time input field should have this regex eg. 06:30");
-            alert.showAndWait();
+            AlertService.alertError("ERROR", "Closing time input field should have this regex eg. 06:30 !");
             return;
         }
         int openingHour = 0;
