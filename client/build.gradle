@@ -2,12 +2,27 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
-mainClassName = "nl.tudelft.oopp.client.MainApp"
+application {
+    mainClassName = "nl.tudelft.oopp.client.MainApp"
+}
 
 dependencies {
 
+    testImplementation('org.powermock:powermock-core:2.0.7')
+    testImplementation('org.powermock:powermock-core:2.0.7')
+    testImplementation('org.mockito:mockito-core:3.3.3')
+
+
     compile project(':api')
     implementation('com.fasterxml.jackson.core:jackson-databind:2.10.3')
+
+    test {
+            testLogging.showStandardStreams = true
+            // listen to events in the test execution lifecycle
+           beforeTest {
+              descriptor -> logger.lifecycle("Running test: " + descriptor)
+           }
+        }
 }
 
 javafx {

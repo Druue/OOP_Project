@@ -35,8 +35,18 @@ public class AddBuildingsController {
     public TextField buildingClosingTimeInput;
     public TextField buildingDescriptionInput;
 
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
+    public AlertsController alertsController;
+
+
+    public AddBuildingsController() {
+        alertsController = new AlertsController();
+    }
+
+    public AddBuildingsController(AlertsController alertsController) {
+        this.alertsController = alertsController;
+    }
 
     /**
      * Handles going to the admin homepage.

@@ -54,7 +54,7 @@
                                        prefHeight="40.0" prefWidth="400.0" promptText="Password"
                                        styleClass="registrationInputField"/>
 
-                        <Button layoutX="50.0" layoutY="244.0" mnemonicParsing="false" onAction="#attemptRegistration"
+                        <Button layoutX="50.0" layoutY="244.0" mnemonicParsing="false" onAction="#attemptRegistrationEntry"
                                 prefHeight="45.0" prefWidth="300.0" styleClass="registrationButton"
                                 text="Create account">
                             <FlowPane.margin>

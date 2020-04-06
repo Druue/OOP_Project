@@ -34,7 +34,8 @@
                            <Insets top="10.0" />
                        </FlowPane.margin></PasswordField>
 
-                   <Button layoutX="50.0" layoutY="244.0" mnemonicParsing="false" onAction="#tryLogin" prefHeight="45.0" prefWidth="300.0" styleClass="loginButton" text="Login">
+                   <Button layoutX="50.0" layoutY="244.0" mnemonicParsing="false" onAction="#tryLoginEntry"
+                           prefHeight="45.0" prefWidth="300.0" styleClass="loginButton" text="Login">
                      <FlowPane.margin>
                         <Insets top="15.0" />
                      </FlowPane.margin></Button>

@@ -2,6 +2,7 @@ package nl.tudelft.oopp.api.models;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 @JsonSubTypes({
@@ -59,4 +60,19 @@ public abstract class Reservable {
     public void setBuilding(Building building) {
         this.building = building;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Reservable that = (Reservable) o;
+        return Objects.equals(getId(), that.getId())
+                && Objects.equals(getDetails(), that.getDetails())
+               && Objects.equals(getBuilding(), that.getBuilding());
+    }
+
 }

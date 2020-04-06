@@ -1,6 +1,8 @@
 package nl.tudelft.oopp.api.models;
 
+import java.util.Objects;
 import nl.tudelft.oopp.api.HttpRequestHandler;
+
 
 /**
  * Initialises a new {@link User}.
@@ -126,4 +128,22 @@ public class User {
     public void setUserKind(UserKind userKind) {
         this.userKind = userKind;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId())
+               && Objects.equals(getEmail(), user.getEmail())
+               && Objects.equals(getUsername(), user.getUsername())
+               && Objects.equals(getPassword(), user.getPassword())
+               && Objects.equals(getDetails(), user.getDetails())
+               && getUserKind() == user.getUserKind();
+    }
+
 }

@@ -112,51 +112,47 @@ public class ReservationsSceneController implements Initializable {
         DropShadow dropShadow = new DropShadow(BlurType.ONE_PASS_BOX, new Color(0,0,0,0.1), 2,4,2, 2);
         buildingSearchField.setEffect(dropShadow);
 
-        if (waitForResponse(buildingBasicInfos)) {
-            List<Node> listOfEntries = new ArrayList<Node>();
-            for (BuildingBasicInfo building : buildingBasicInfos) {
-                VBox buildingEntry = new VBox();
-                buildingEntry.getStyleClass().add("buildingEntry");
-                Label buildingName = new Label(building.getNumber() + "," + building.getDetails().getName());
-                buildingName.getStyleClass().add("buildingName");
-                Label buildingOpeningTime = new Label(hourAndMinutesString(building.getOpeningHours().getStartTime())
-                    + " - " + hourAndMinutesString(building.getOpeningHours().getEndTime()));
-                buildingOpeningTime.getStyleClass().add("buildingOpeningTime");
+        List<Node> listOfEntries = new ArrayList<Node>();
+        for (BuildingBasicInfo building : buildingBasicInfos) {
+            VBox buildingEntry = new VBox();
+            buildingEntry.getStyleClass().add("buildingEntry");
+            Label buildingName = new Label(building.getNumber() + "," + building.getDetails().getName());
+            buildingName.getStyleClass().add("buildingName");
+            Label buildingOpeningTime = new Label(hourAndMinutesString(building.getOpeningHours().getStartTime())
+                + " - " + hourAndMinutesString(building.getOpeningHours().getEndTime()));
+            buildingOpeningTime.getStyleClass().add("buildingOpeningTime");
 
-                buildingEntry.getChildren().add(buildingName);
-                buildingEntry.getChildren().add(buildingOpeningTime);
-                buildingEntry.setPrefHeight(60);
-                buildingEntry.prefWidthProperty().bind(buildingsList.widthProperty().subtract(50));
-                //buildingEntry.setMaxWidth(Control.USE_PREF_SIZE);
+            buildingEntry.getChildren().add(buildingName);
+            buildingEntry.getChildren().add(buildingOpeningTime);
+            buildingEntry.setPrefHeight(60);
+            buildingEntry.prefWidthProperty().bind(buildingsList.widthProperty().subtract(50));
 
-                buildingEntry.setEffect(dropShadow);
+            buildingEntry.setEffect(dropShadow);
 
-                listOfEntries.add(buildingEntry);
+            listOfEntries.add(buildingEntry);
 
-                EventHandler<MouseEvent> mouseEventEventHandler = new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        try {
-                            //FlowPane flowPane = FXMLLoader.load(getClass().getResource("/roomsList.fxml"));
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomsList.fxml"));
-                            RoomsListController controller = new RoomsListController();
-                            loader.setController(controller);
-                            VBox tabContent = loader.load();
-                            roomsListWrapper.setVisible(true);
-                            roomsListTab.setContent(tabContent);
+            EventHandler<MouseEvent> mouseEventEventHandler = new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/roomsList.fxml"));
+                        RoomsListController controller = new RoomsListController();
+                        loader.setController(controller);
+                        VBox tabContent = loader.load();
+                        roomsListWrapper.setVisible(true);
+                        roomsListTab.setContent(tabContent);
 
-                            controller.initialize(building);
-                        } catch (IOException e) {
-                            System.out.println("File Not Found");
-                        }
+                        controller.initialize(building);
+                    } catch (IOException e) {
+                        System.out.println("File Not Found");
                     }
-                };
-                buildingEntry.setOnMouseClicked(mouseEventEventHandler);
-            }
-            if (listOfEntries.size() != 0) {
-                ObservableList<Node> observableListOfEntries = FXCollections.observableArrayList(listOfEntries);
-                buildingsList.setItems(observableListOfEntries);
-            }
+                }
+            };
+            buildingEntry.setOnMouseClicked(mouseEventEventHandler);
+        }
+        if (listOfEntries.size() != 0) {
+            ObservableList<Node> observableListOfEntries = FXCollections.observableArrayList(listOfEntries);
+            buildingsList.setItems(observableListOfEntries);
         }
     }
 
@@ -172,45 +168,6 @@ public class ReservationsSceneController implements Initializable {
         } else {
             return result + timestamp.getMinutes();
         }
-    }
-
-    /**
-     * Polls each second whether the buildingList was received by the BuildingResponse
-     * until success or timeout.
-     * @param buildings The response object.
-     * @return boolean whether a (non-null)response was received
-     */
-    private boolean waitForResponse(List<BuildingBasicInfo> buildings) {
-        int i = 0;
-        while (i != RESPONSE_TIMEOUT) {
-            if (buildings != null) {
-                return true;
-            }
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (Exception e) {
-                System.out.println("Problems with getting BuildingsDetails in "
-                    + "ReservationsSceneController.waitForResponse()");
-                return false;
-            }
-            i++;
-        }
-        System.out.println("ReservationsSceneController: Getting BuildingsDetails timed out or there are no buildings");
-        return false;
-    }
-
-    /**
-     * Generates a user friendly date string from a LocalDate.
-     * @param date The {@link LocalDate} that needs to be transformed.
-     * @return String shows day of month, month and day of week
-     */
-    private String getDateString(LocalDate date) {
-        return date.getDayOfMonth() + " "
-               + date.getMonth().name().substring(0,1)
-               + date.getMonth().name().substring(1,3).toLowerCase()
-               + " - "
-               + date.getDayOfWeek().name().substring(0,1)
-               + date.getDayOfWeek().name().substring(1,3).toLowerCase();
     }
 
     private StringConverter<LocalDate> generateDateConverter() {

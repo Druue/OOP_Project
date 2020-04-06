@@ -31,22 +31,19 @@ public class AdminsConfig {
                 "T.Koppelaar@admin.tudelft.nl",
                 "admin1",
                 new Details(
-                    null,
                     "Thomas",
                     "This is the first administrator",
-                    null)
+                        null
+                    )
             );
 
             createAdmin(
                 "dbarantiev",
                 "D.A.Barantiev@admin.tudelft.nl",
                 "admin2",
-                new Details(
-                    null,
-                    "Dimitar",
-                    "This is the second administrator",
-                    null
-                )
+                new Details("Dimitar",
+                        "This is the second administrator",
+                        null)
             );
 
             createAdmin(
@@ -54,10 +51,9 @@ public class AdminsConfig {
                 "n.a.zhlebinkov@student.tudelft.nl",
                 "admin3",
                 new Details(
-                    null,
                     "Nikkolay",
                     "This is the third administartor",
-                    null
+                        null
                 )
             );
         };

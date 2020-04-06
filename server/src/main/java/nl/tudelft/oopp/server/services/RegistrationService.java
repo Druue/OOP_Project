@@ -33,6 +33,10 @@ public class RegistrationService {
         return userRepository.findByEmail(email);
     }
 
+    public User getUserByUserName(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public Optional<User> getUserByID(Long userId) {
         return userRepository.findById(userId);
     }

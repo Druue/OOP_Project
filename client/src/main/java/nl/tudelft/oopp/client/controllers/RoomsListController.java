@@ -37,14 +37,6 @@ public class RoomsListController implements Initializable {
 
     }
 
-    //    private static List<Room> generateTestRooms() {
-    //        List<Room> result = new ArrayList<Room>();
-    //        Details details = new Details(1, "test", "test", "test");
-    //        Room room1 = new Room(Long.parseLong("1"),"Room1",details);
-    //        result.add(room1);
-    //        return result;
-    //    }
-
     /**
      * This will get all the rooms of the selected {@link Building} and create GUI for them, as well as the
      * initial tab layout.
@@ -58,9 +50,7 @@ public class RoomsListController implements Initializable {
             .hourAndMinutesString(buildingBasicInfo.getOpeningHours().getEndTime()));
         ReservableResponse reservableResponse = httpRequestHandler.get(
                 "reservables/user/all/room/building/" + buildingBasicInfo.getNumber(), ReservableResponse.class);
-        if (waitForResponse(reservableResponse)) {
-            generateRooms(reservableResponse.getReservableList());
-        }
+        generateRooms(reservableResponse.getReservableList());
     }
 
     /**
@@ -90,30 +80,5 @@ public class RoomsListController implements Initializable {
             }
         }
         roomEntriesContainer.setItems(roomEntries);
-    }
-
-    /**
-     * Polls each second whether the buildingList was received by the BuildingResponse
-     * until success or timeout.
-     *
-     * @param reservableResponseResponse The response object.
-     * @return boolean whether a (non-null)response was received
-     */
-    private boolean waitForResponse(ReservableResponse reservableResponseResponse) {
-        int i = 0;
-        while (i != RESPONSE_TIMEOUT) {
-            if (reservableResponseResponse != null && reservableResponseResponse.getReservableList() != null) {
-                return true;
-            }
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (Exception e) {
-                System.out.println("Problems with BuildingResponse in ReservationsSceneController.waitForResponse()");
-                return false;
-            }
-            i++;
-        }
-        System.out.println("BuildingResponse timed out in ReservationsSceneController");
-        return false;
     }
 }
