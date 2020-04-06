@@ -203,7 +203,7 @@ public class AddRoomsController {
     }
 
     /**
-     * Handles going to the copyrights
+     * Handles going to the copyrights.
      */
     public void goToCopyrights() {
         try {

@@ -1,5 +1,10 @@
 package nl.tudelft.oopp.client.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -7,13 +12,6 @@ import javafx.scene.control.Menu;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.UserKind;
 import nl.tudelft.oopp.client.MainApp;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 public class CopyrightsController {
 
@@ -88,7 +86,7 @@ public class CopyrightsController {
     }
 
     /**
-     * Handles going to the copyrights
+     * Handles going to the copyrights.
      */
     public void goToCopyrights() {
         try {

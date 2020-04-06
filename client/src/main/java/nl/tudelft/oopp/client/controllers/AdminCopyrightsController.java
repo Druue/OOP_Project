@@ -1,12 +1,11 @@
 package nl.tudelft.oopp.client.controllers;
 
-import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.UserKind;
-import nl.tudelft.oopp.client.MainApp;
-
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import nl.tudelft.oopp.api.HttpRequestHandler;
+import nl.tudelft.oopp.api.models.UserKind;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class AdminCopyrightsController {
@@ -82,7 +81,7 @@ public class AdminCopyrightsController {
     }
 
     /**
-     * Handles going to the copyrights
+     * Handles going to the copyrights.
      */
     public void goToCopyrights() {
         try {
