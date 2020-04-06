@@ -46,7 +46,7 @@
                                     <children>
                                         <VBox prefHeight="23.0" prefWidth="463.0">
                                             <children>
-                                                <Label text="Buidling number">
+                                                <Label text="Building number">
                                                     <font>
                                                         <Font name="Helvetica" size="14.0" />
                                                     </font>
