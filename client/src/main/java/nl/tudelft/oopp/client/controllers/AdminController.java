@@ -36,66 +36,15 @@ public class AdminController implements Initializable {
     private ListView<String> todayRes;
     @FXML
     private ListView<String> allRes;
+    @FXML
+    private ListView<String> futureRes;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadTodayReservations();
-        loadAllReservations();
-    }
-
-    /**
-     * Handles loading all the reservations of all users to the ListView tab with all reservations in admin.fxml
-     */
-    private void loadAllReservations() {
-        try {
-            ClientRequest<String> userDetails = new ClientRequest<>(
-                HttpRequestHandler.user.getUsername(),
-                HttpRequestHandler.user.getUserKind(),
-                null
-            );
-            List<Reservation> reservationList =
-                httpRequestHandler.postList("reservations/admin/all", userDetails, Reservation.class);
-            if (reservationList != null) {
-                for (Reservation s : reservationList) {
-                    allRes.getItems().add("Room " + s.getReservable().getDetails().getName() + " in "
-                        + s.getReservable().getBuilding().getName() + " reserved from "
-                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
-                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime()) + " on "
-                        + s.getTimeslot().getStartTime().getDate() + "/" + (s.getTimeslot().getStartTime().getMonth() + 1)
-                    );
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Handles loading the reservations of all users for current day to the ListView tab with
-     * today's reservations in admin.fxml
-     */
-    private void loadTodayReservations() {
-        try {
-            ClientRequest<String> userDetails = new ClientRequest<>(
-                HttpRequestHandler.user.getUsername(),
-                HttpRequestHandler.user.getUserKind(),
-                null
-            );
-            List<Reservation> reservationList =
-                httpRequestHandler.postList("reservations/admin/current", userDetails, Reservation.class);
-            if (reservationList != null) {
-                for (Reservation s : reservationList) {
-                    todayRes.getItems().add("Room " + s.getReservable().getDetails().getName() + "in"
-                        + s.getReservable().getBuilding().getName() + " reserved from "
-                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
-                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime())
-                    );
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        HomepageController.loadReservations(todayRes, "admin/today");
+        HomepageController.loadReservations(futureRes, "admin/current");
+        HomepageController.loadReservations(allRes, "admin/all");
     }
 
 
@@ -133,6 +82,17 @@ public class AdminController implements Initializable {
     }
 
     /**
+     * Handles going to the view buildings page for the admin.
+     */
+    public void goToBuildings() {
+        try {
+            MainApp.goToPage("admin-viewBuilding", null);
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToBuildings()");
+        }
+    }
+
+    /**
      * Handles going to the add rooms page for the admin.
      */
     public void goToAddRooms() {
@@ -149,6 +109,17 @@ public class AdminController implements Initializable {
     public void goToRes() {
         try {
             MainApp.goToPage("reservations", "reservations");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
+        }
+    }
+
+    /**
+     * Handles going back to the login page.
+     */
+    public void goToLogIn() {
+        try {
+            MainApp.goToPage("login", "login");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }

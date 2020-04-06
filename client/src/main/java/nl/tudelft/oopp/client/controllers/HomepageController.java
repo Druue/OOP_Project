@@ -2,29 +2,36 @@ package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Reservation;
-import nl.tudelft.oopp.api.models.ReservationResponse;
 import nl.tudelft.oopp.api.models.UserKind;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class HomepageController<E> implements Initializable {
+
+    private static final Logger LOGGER = Logger.getLogger(HomepageController.class.getName());
+    private static final String BAD_RESOURCE_ERROR = "Faulty resource input at HomePageController";
 
     private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
@@ -33,26 +40,45 @@ public class HomepageController<E> implements Initializable {
     @FXML
     private ListView<String> allRes;
     @FXML
+    private ListView<String> futureRes;
+    @FXML
     private TabPane viewReservations;
     @FXML
+    private Button reserveButton;
+    @FXML
+    private Menu reserveMenu;
+    @FXML
+    private Button guestButton;
+    @FXML
     private VBox guestInfo;
+    @FXML
+    private MenuButton menuButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (!HttpRequestHandler.user.getUserKind().equals(UserKind.Guest)) {
-            loadTodayReservations();
-            loadAllReservations();
+            loadReservations(todayRes, "user/today");
+            loadReservations(futureRes, "user/current");
+            loadReservations(allRes, "user/all");
+            guestButton.setVisible(false);
+            reserveMenu.setText("Reserve a room");
         } else {
             viewReservations.setVisible(false);
+            reserveButton.setVisible(false);
+            menuButton.setVisible(false);
+            reserveMenu.setText("View rooms");
+            guestButton.setVisible(true);
             guestInfo.setVisible(true);
         }
     }
 
     /**
-     * Handles loading all reservations for the currently logged in user to the ListView in tab today's reservations item in
-     * homepage.fxml
+     * Populates the given listView with reservations taken from the mapping at ("reservations/" + path).
+     * @param listView The ListView to display the reservations.
+     * @param path The partial path, signifying from which mapping in the server ReservationsController to get the
+     *             reservations from.
      */
-    private void loadAllReservations() {
+    public static void loadReservations(ListView<String> listView, String path) {
         try {
             ClientRequest<String> userDetails = new ClientRequest<>(
                 HttpRequestHandler.user.getUsername(),
@@ -60,15 +86,10 @@ public class HomepageController<E> implements Initializable {
                 null
             );
             List<Reservation> reservationList =
-                httpRequestHandler.postList("reservations/user/current", userDetails, Reservation.class);
+                httpRequestHandler.postList("reservations/" + path, userDetails, Reservation.class);
             if (reservationList != null) {
-                for (Reservation s : reservationList) {
-                    allRes.getItems().add("Room " + s.getReservable().getDetails().getName() + "in"
-                        + s.getReservable().getBuilding().getName() + " reserved from "
-                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
-                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime()) + " on "
-                        + s.getTimeslot().getStartTime().getDate() + "/" + (s.getTimeslot().getStartTime().getMonth() + 1)
-                    );
+                for (Reservation r : reservationList) {
+                    listView.getItems().add(generateReservationString(r, path));
                 }
             }
         } catch (Exception e) {
@@ -76,31 +97,19 @@ public class HomepageController<E> implements Initializable {
         }
     }
 
-    /**
-     * Handles loading the current user's reservations for all days to the ListView in the tab all reservations in
-     * homepage.fxml
-     */
-    private void loadTodayReservations() {
-        try {
-            ClientRequest<String> userDetails = new ClientRequest<>(
-                HttpRequestHandler.user.getUsername(),
-                HttpRequestHandler.user.getUserKind(),
-                null
-            );
-            List<Reservation> reservationList =
-                httpRequestHandler.postList("reservations/user/today", userDetails, Reservation.class);
-            if (reservationList != null) {
-                for (Reservation s : reservationList) {
-                    todayRes.getItems().add("Room " + s.getReservable().getDetails().getName() + " in "
-                        + s.getReservable().getBuilding().getName() + " reserved from "
-                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
-                        + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime())
-                    );
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    private static String generateReservationString(Reservation reservation, String path) {
+        String result = "Room " + reservation.getReservable().getDetails().getName() + " in "
+            + reservation.getReservable().getBuilding().getName() + " reserved from "
+            + ReservationsSceneController.hourAndMinutesString(reservation.getTimeslot().getStartTime()) + " to "
+            + ReservationsSceneController.hourAndMinutesString(reservation.getTimeslot().getEndTime());
+
+        if (path.contains("today")) {
+            return result;
+        } else {
+            return result + " on " + reservation.getTimeslot().getStartTime().getDate()
+                + " " + Month.of(reservation.getTimeslot().getStartTime().getMonth() + 1).toString();
         }
+
     }
 
     /**
@@ -114,7 +123,7 @@ public class HomepageController<E> implements Initializable {
             Scene mainScene = new Scene(mainParent);
 
             Stage primaryStage =
-                (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
             primaryStage.hide();
             primaryStage.setScene(mainScene);
@@ -124,7 +133,6 @@ public class HomepageController<E> implements Initializable {
             System.out.println("IOException in HomepageController");
         }
     }
-
 
     /**
      * Handles going to the reservation page.
@@ -145,6 +153,17 @@ public class HomepageController<E> implements Initializable {
 
         } catch (IOException e) {
             System.out.println("IOException in HomepageController");
+        }
+    }
+
+    /**
+     * Handles going back to the login page.
+     */
+    public void goToLogIn() {
+        try {
+            MainApp.goToPage("login", "login");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
 }
