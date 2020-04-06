@@ -59,6 +59,28 @@ public class AdminController implements Initializable {
     }
 
     /**
+     * Handles going to the delete buildings page for the admin.
+     */
+    public void goToDeleteBuildings() {
+        try {
+            MainApp.goToPage("admin-deleteBuilding");
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteBuildings()");
+        }
+    }
+
+    /**
+     * Handles going to the view buildings page for the admin.
+     */
+    public void goToBuildings() {
+        try {
+            MainApp.goToPage("admin-viewBuilding");
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToBuildings()");
+        }
+    }
+
+    /**
      * Handles going to the add rooms page for the admin.
      */
     public void goToAddRooms() {
@@ -66,6 +88,17 @@ public class AdminController implements Initializable {
             MainApp.goToPage("admin-addRoom");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddRooms()");
+        }
+    }
+
+    /**
+     * Handles going to the delete room page for the admin.
+     */
+    public void goToDeleteRooms() {
+        try {
+            MainApp.goToPage("admin-deleteRoom");
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteRooms()");
         }
     }
 

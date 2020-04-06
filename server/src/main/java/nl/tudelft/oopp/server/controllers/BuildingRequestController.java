@@ -224,12 +224,12 @@ public class BuildingRequestController {
     }
 
     /**
-     * Receives a DELETE request for deleting a specific building from the database.
+     * Receives a POST request for deleting a specific building from the database.
      *
      * @param request The {@link ClientRequest} object containg the building to delete.
      * @return A {@link ResponseEntity} object indicating the success of the operation.
      */
-    @DeleteMapping("/admin/delete")
+    @PostMapping("/admin/delete")
     ResponseEntity<ServerResponseAlert> deleteBuilding(
         @RequestBody ClientRequest<Building> request, @RequestParam Long number) {
 
@@ -239,22 +239,28 @@ public class BuildingRequestController {
             authorizationService.checkAuthorization(request.getUsername());
         } catch (AuthenticationException e) {
             logger.error(AuthorizationService.NO_USER_FOUND);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ServerResponseAlert(
+                "Username does not exist in the database!",
+                "ERROR"));
         } catch (AuthorizationException e) {
             logger.error(AuthorizationService.NOT_ADMIN);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ServerResponseAlert(
+                "You are not an administrator!",
+                "ERROR"
+            ));
         }
 
         try {
             buildingService.delete(number);
         } catch (EntityNotFoundException e) {
             logger.error("Building " + number + " not found for removal.");
-            return ResponseEntity.badRequest().body(new ServerResponseAlert("FAILURE",
-                "FAILURE"));
+            return ResponseEntity.badRequest().body(new ServerResponseAlert(
+                "Building not found!",
+                "ERROR"));
         }
 
         logger.info("Building " + number + " was successfully removed.");
         return ResponseEntity.ok(new ServerResponseAlert("Successful removal",
-            "SUCCESS"));
+            "CONFIRMATION"));
     }
 }

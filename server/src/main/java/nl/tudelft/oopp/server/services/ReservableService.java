@@ -159,12 +159,6 @@ public class ReservableService {
         logger.info("Saving of new reservable successful. Adding the reservable to the map of"
             + " building " + number + " and generating timeslots for it.");
 
-
-        /* TODO
-        *   1) Create a Timeslots object containing all the timeslots that would be available
-        *       for the new reservable in the next 2 weeks.
-        *   2) Add the list of timeslots to the reservable*/
-
     }
 
     public void updateReservable(Long id, Reservable reservable) {
@@ -177,7 +171,14 @@ public class ReservableService {
      * @param number that identifies a reservable to be deleted
      */
     public void deleteReservable(Long number) {
-        reservableRepository.deleteById(number);
+        logger.info("Checking whether reservable " + number + " still exists ...");
+        if (!reservableRepository.existsById(number)) {
+            logger.error("Reservable " + number + " was not found.");
+            throw new EntityNotFoundException();
+        } else {
+            logger.info("Reservable " + number + " found. Deleting ...");
+            reservableRepository.deleteById(number);
+        }
     }
 
 }
