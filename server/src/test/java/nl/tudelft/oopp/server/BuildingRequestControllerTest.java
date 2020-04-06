@@ -185,7 +185,7 @@ class BuildingRequestControllerTest {
 
         String json = mapper.writeValueAsString(building);
 
-        mockMvc.perform(delete("/buildings/admin/delete", building.getNumber())
+        mockMvc.perform(delete("/buildings/admin/delete")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(json))
                 .andExpect(status().isOk()).andReturn();

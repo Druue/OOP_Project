@@ -121,7 +121,10 @@ class ReservableControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
-        List<Reservable> expected = reservableService.getAllReservablesForBuilding(36L, "Bike");
+        //List<Reservable> expected = reservableService.getAllReservablesForBuilding(36L, "Bike");
+        doNothing().when(reservableService.getAllReservablesForBuilding(36L, "room"));
+
+        verify(reservableService);
 
     }
 
