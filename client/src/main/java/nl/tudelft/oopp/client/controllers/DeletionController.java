@@ -1,7 +1,9 @@
 package nl.tudelft.oopp.client.controllers;
 
 import com.sun.jdi.request.InvalidRequestStateException;
-import javafx.event.ActionEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -11,16 +13,12 @@ import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.client.AlertService;
 import nl.tudelft.oopp.client.MainApp;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class DeletionController {
 
     private static final Logger LOGGER = Logger.getLogger(DeletionController.class.getName());
     private static final String BAD_RESOURCE_ERROR = "Faulty resource input at DeletionController";
 
-    HttpRequestHandler httpRequestHandler;
+    HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     @FXML
     TextField buildNumTextField;
@@ -28,14 +26,16 @@ public class DeletionController {
     @FXML
     TextField roomNumTextField;
 
-    /** This method parses an input from a {@link TextField} object into {@link Long} and then
-     *      sends it as a request parameter as part of a post request for deletion of an item in
-     *      the database. After successful parsing, the method creates a {@link ClientRequest}
-     *      request object with the credentials of the {@link nl.tudelft.oopp.api.models.User} field
-     *      in {@link HttpRequestHandler} and sends it to the server expecting a {@link ServerResponseAlert}
-     *      object in the response body.
-     * @param textField     The {@link TextField} object from which to get the number to send.
-     * @param requestPath   The path of the request to create.
+    /**
+     * This method parses an input from a {@link TextField} object into {@link Long} and then
+     * sends it as a request parameter as part of a post request for deletion of an item in
+     * the database. After successful parsing, the method creates a {@link ClientRequest}
+     * request object with the credentials of the {@link nl.tudelft.oopp.api.models.User} field
+     * in {@link HttpRequestHandler} and sends it to the server expecting a {@link ServerResponseAlert}
+     * object in the response body.
+     *
+     * @param textField   The {@link TextField} object from which to get the number to send.
+     * @param requestPath The path of the request to create.
      */
     public void deleteItem(TextField textField, String requestPath) {
 
@@ -65,8 +65,8 @@ public class DeletionController {
                 deleteRequest,
                 ServerResponseAlert.class);
 
-            AlertService.alert(Alert.AlertType.valueOf(response.getAlertType()),"Response",
-                "Delete request send successfully. Successful deletion.");
+            AlertService.alert(Alert.AlertType.valueOf(response.getAlertType()), "Response",
+                "Delete request send successfully. Server response: " + response.getMessage());
 
         } catch (InvalidRequestStateException e) {
             AlertService.alertError("Request error",
@@ -102,7 +102,7 @@ public class DeletionController {
     public void goToAdmin() {
         try {
             MainApp.goToPage("admin", "homepage");
-        }  catch (IOException e) {
+        } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAdmin()");
         }
     }
@@ -113,7 +113,7 @@ public class DeletionController {
     public void goToAddBuildings() {
         try {
             MainApp.goToPage("admin-addBuilding", null);
-        }  catch (IOException e) {
+        } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddBuildings()");
         }
     }
@@ -124,7 +124,7 @@ public class DeletionController {
     public void goToDeleteBuildings() {
         try {
             MainApp.goToPage("admin-deleteBuilding", null);
-        }  catch (IOException e) {
+        } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteBuildings()");
         }
     }
@@ -135,7 +135,7 @@ public class DeletionController {
     public void goToBuildings() {
         try {
             MainApp.goToPage("admin-viewBuilding", null);
-        }  catch (IOException e) {
+        } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToBuildings()");
         }
     }
