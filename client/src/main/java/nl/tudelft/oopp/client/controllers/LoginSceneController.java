@@ -22,7 +22,8 @@ import nl.tudelft.oopp.client.MainApp;
 
 
 public class LoginSceneController {
-    private static final Logger LOGGER = Logger.getLogger(LoginSceneController.class.getName());
+
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
     // the TextField object(s) from mainScene.fxml
     @FXML
@@ -30,41 +31,63 @@ public class LoginSceneController {
     @FXML
     public TextField inputPassword;
 
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+    public AlertsController alertsController;
+
+    public LoginSceneController() {
+        this.alertsController = new AlertsController();
+    }
+
+    public LoginSceneController(AlertsController alertsController) {
+        this.alertsController = alertsController;
+    }
+
+    public UserAuthResponse sendLoginRequest(String username, String password) {
+        LoginRequest loginRequest = new LoginRequest(username, password);
+        return httpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
+    }
+
+
+    /**
+     * Entry function that gets called through the client.
+     * Gets the input from the text fields and calls tryLogin().
+     */
+    public void tryLoginEntry() {
+        String username = inputusername.getText();
+        String password = inputPassword.getText();
+
+        tryLogin(username, password);
+    }
 
     /**
      * Sends a login request to the backend, using the information stored in the text fields.
      */
-    public void tryLogin() {
+    public void tryLogin(String username, String password) {
 
-        String username = inputusername.getText();
-        String password = inputPassword.getText();
+
         if (username.isEmpty() || password.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please provide a username and password.");
-            alert.showAndWait();
-        } else {
-            LoginRequest loginRequest = new LoginRequest(username, password);
-            UserAuthResponse response =
-                    httpRequestHandler.post("login", loginRequest, UserAuthResponse.class);
 
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setTitle("Response");
-            alert.setHeaderText(null);
+            alertsController.show(
+                    Alert.AlertType.WARNING,
+                    "Warning",
+                    null,
+                    "Please provide a username and password."
+
+            );
+        } else {
+            // Try sending a request to the server.
+            UserAuthResponse response = sendLoginRequest(username, password);
+
             if (response != null) {
                 if (response.getAlertType().equals("CONFIRMATION")) {
 
                     // Saves the user gotten from the UserAuthResponse.
-                    // This includes the user's id and details for a more personalized experience,
-                    // and to make queries easier later on.
                     HttpRequestHandler.saveUser(response.getUser());
 
-                    // Show an alert with the server response message.
-                    alert.setAlertType(Alert.AlertType.CONFIRMATION);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+                    // After that, show the confirmation message retrieved from the backend.
+                    alertsController.show(
+                            Alert.AlertType.CONFIRMATION,
+                            response.getMessage()
+                    );
 
                     // Goes to the appropriate homepage based on type of user
                     if (response.getUser().getUserKind().equals(UserKind.Admin)) {
@@ -73,13 +96,19 @@ public class LoginSceneController {
                         goToHomepage();
                     }
                 } else {
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setContentText(response.getMessage());
-                    alert.showAndWait();
+
+                    //
+                    alertsController.show(
+                            Alert.AlertType.ERROR,
+                            response.getMessage()
+                    );
+
                 }
             } else {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("Invalid response from server.");
+                alertsController.show(
+                        Alert.AlertType.ERROR,
+                        "Invalid response from server."
+                );
             }
         }
     }

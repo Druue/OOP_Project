@@ -30,14 +30,24 @@ public class AddBuildingsController {
     public TextField buildingClosingTimeInput;
     public TextField buildingDescriptionInput;
 
-    private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+    public HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
+
+    public AlertsController alertsController;
+
+
+    public AddBuildingsController() {
+        alertsController = new AlertsController();
+    }
+
+    public AddBuildingsController(AlertsController alertsController) {
+        this.alertsController = alertsController;
+    }
 
     /**
      * Handles going to the homepage.
      *
-     * @param event the scene from where the function was called.
      */
-    public void goToAdmin(ActionEvent event) {
+    public void goToAdmin() {
         try {
             Parent homeParent = FXMLLoader.load(getClass().getResource("/admin.fxml"));
             Scene homeScene = new Scene(homeParent);
@@ -99,7 +109,7 @@ public class AddBuildingsController {
     }
 
     /**
-     * An example alert function, to showcase the use of the new API.
+     * Entry function for the client, that gets called on hitting submit.
      */
     public void getBuildings() {
 
