@@ -239,17 +239,23 @@ public class BuildingRequestController {
             authorizationService.checkAuthorization(request.getUsername());
         } catch (AuthenticationException e) {
             logger.error(AuthorizationService.NO_USER_FOUND);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ServerResponseAlert(
+                "Username does not exist in the database!",
+                "ERROR"));
         } catch (AuthorizationException e) {
             logger.error(AuthorizationService.NOT_ADMIN);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ServerResponseAlert(
+                "You are not an administrator!",
+                "ERROR"
+            ));
         }
 
         try {
             buildingService.delete(number);
         } catch (EntityNotFoundException e) {
             logger.error("Building " + number + " not found for removal.");
-            return ResponseEntity.badRequest().body(new ServerResponseAlert("FAILURE",
+            return ResponseEntity.badRequest().body(new ServerResponseAlert(
+                "Building not found!",
                 "ERROR"));
         }
 

@@ -245,7 +245,7 @@ public class ReservableController {
         } catch (EntityNotFoundException e) {
             logger.error("Reservable " + number + " not found for removal.");
             return ResponseEntity.badRequest().body(new ServerResponseAlert(
-                "FAILURE",
+                "Reservable not found!",
                 "ERROR"));
         }
 
