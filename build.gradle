@@ -5,9 +5,11 @@ allprojects {
     }
 
     group = 'nl.tudelft.oopp'
-    version = '0.0.1-SNAPSHOT'
+    version = '0.1'
 
 }
+
+
 
 
 subprojects {
@@ -16,6 +18,14 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'checkstyle'
     apply plugin: 'application'
+
+
+    dependencies {
+        implementation 'com.google.code.gson:gson:2.8.6'
+        testCompile("org.junit.jupiter:junit-jupiter-api:5.6.0")
+        testRuntime("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+
+    }
 
     ext {
         set('snippetsDir', file("build/generated-snippets"))
@@ -60,4 +70,5 @@ subprojects {
         }
 
     }
+
 }
