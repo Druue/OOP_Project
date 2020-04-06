@@ -106,4 +106,12 @@ public class AdminController implements Initializable {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
+
+    public void goToLogIn() {
+        try {
+            MainApp.goToPage("login", "login");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
+        }
+    }
 }

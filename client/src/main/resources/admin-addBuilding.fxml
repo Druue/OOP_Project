@@ -231,7 +231,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="more..">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Log out"/>
+                                <MenuItem onAction="#goToLogIn" text="Log out"/>
                                 <MenuItem mnemonicParsing="false" text="Copyrights"/>
                             </items>
                         </Menu>

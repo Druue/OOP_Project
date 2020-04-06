@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,10 +22,13 @@ import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Reservation;
 import nl.tudelft.oopp.api.models.ReservationResponse;
-
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class HomepageController<E> implements Initializable {
+
+    private static final Logger LOGGER = Logger.getLogger(HomepageController.class.getName());
+    private static final String BAD_RESOURCE_ERROR = "Faulty resource input at HomePageController";
 
     private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
@@ -116,7 +122,6 @@ public class HomepageController<E> implements Initializable {
         }
     }
 
-
     /**
      * Handles going to the reservation page.
      *
@@ -136,6 +141,19 @@ public class HomepageController<E> implements Initializable {
 
         } catch (IOException e) {
             System.out.println("IOException in HomepageController");
+        }
+    }
+
+    /**
+     * Handles going back to the login page.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToLogIn() {
+        try {
+            MainApp.goToPage("login", "login");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
 }

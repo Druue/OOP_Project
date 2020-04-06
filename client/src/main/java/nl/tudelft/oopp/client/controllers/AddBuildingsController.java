@@ -3,6 +3,7 @@ package nl.tudelft.oopp.client.controllers;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +25,8 @@ import nl.tudelft.oopp.client.MainApp;
 
 public class AddBuildingsController {
 
+    private static final Logger LOGGER = Logger.getLogger(AddBuildingsController.class.getName());
+    private static final String BAD_RESOURCE_ERROR = "Faulty resource input at AddBuildingsController";
 
     // the TextField object from mainScene.fxml
     @FXML
@@ -96,6 +99,19 @@ public class AddBuildingsController {
 
         } catch (IOException e) {
             System.out.println("IOException in AddBuildingsController");
+        }
+    }
+
+    /**
+     * Handles going back to the login page.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToLogIn() {
+        try {
+            MainApp.goToPage("login", "login");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
 

@@ -3,6 +3,9 @@ package nl.tudelft.oopp.client.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,9 +23,13 @@ import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.Reservable;
 import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class AddRoomsController {
+
+    private static final Logger LOGGER = Logger.getLogger(AddRoomsController.class.getName());
+    private static final String BAD_RESOURCE_ERROR = "Faulty resource input at AddRoomsController";
 
     private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
 
@@ -209,7 +216,20 @@ public class AddRoomsController {
             primaryStage.show();
 
         } catch (IOException e) {
-            System.out.println("IOException in AddBuildingsController");
+            System.out.println("IOException in AddRoomsController");
+        }
+    }
+
+    /**
+     * Handles going back to the login page.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToLogIn() {
+        try {
+            MainApp.goToPage("login", "login");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
 }
