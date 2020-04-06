@@ -58,3 +58,5 @@ Present:
 # Questions for the TA
 	
 Q: Within the assessment rubric "The user can select (at least) fixed timeslots for the reservations" is listed - Is this regarding the custom events a user can add?
+
+Q: Are admin CRUD operations a basic requirement? With regards to buildings, rooms, reservations, users.
