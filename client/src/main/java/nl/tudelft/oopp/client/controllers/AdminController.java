@@ -1,8 +1,11 @@
 package nl.tudelft.oopp.client.controllers;
 
+import com.sun.javafx.binding.Logging;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,18 +17,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.client.MainApp;
 
 
 public class AdminController implements Initializable {
+    private static final Logger LOGGER = Logger.getLogger(AdminController.class.getName());
+    private static final String BAD_RESOURCE_ERROR = "Faulty resource input at AdminController";
 
     public Button btn;
     ObservableList list = FXCollections.observableArrayList();
 
     @FXML
     private ListView<String> todayRes;
-
     @FXML
     private ListView<String> allRes;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,90 +53,57 @@ public class AdminController implements Initializable {
     }
 
     /**
-     * Handles going to the mainScene.a
-     *
-     * @param event the scene from where the function was called.
+     * Handles going to the mainScene.
      */
-    public void goToMain(ActionEvent event) {
+    public void goToMain() {
         try {
-            Parent mainParent = FXMLLoader.load(getClass().getResource("/mainScene.fxml"));
-            Scene mainScene = new Scene(mainParent);
-
-            Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(mainScene);
-            primaryStage.show();
-
+            MainApp.goToPage("mainScene", null);
         } catch (IOException e) {
-            System.out.println("IOException in AdminController");
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToMain()");
         }
     }
 
     /**
      * Handles going to the room page for the admin.
-     *
-     * @param event the scene from where the function was called.
      */
-    public void goToAdminRoom(ActionEvent event) {
+    public void goToAdminRoom() {
         try {
-            Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-room.fxml"));
-            Scene roomScene = new Scene(roomParent);
-
-            Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(roomScene);
-            primaryStage.show();
-
+            MainApp.goToPage("admin-room", null);
         } catch (IOException e) {
-            System.out.println("IOException in AdminController");
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAdminRoom()");
         }
     }
 
     /**
      * Handles going to the add buildings page for the admin.
-     *
-     * @param event the scene from where the function was called.
      */
-    public void goToAddBuildings(ActionEvent event) {
+    public void goToAddBuildings() {
         try {
-            Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-addBuilding.fxml"));
-            Scene roomScene = new Scene(roomParent);
-
-            Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(roomScene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            System.out.println("IOException in AdminController");
+            MainApp.goToPage("admin-addBuilding", null);
+        }  catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddBuildings()");
         }
     }
 
     /**
      * Handles going to the add rooms page for the admin.
-     *
-     * @param event the scene from where the function was called.
      */
-    public void goToAddRooms(ActionEvent event) {
+    public void goToAddRooms() {
         try {
-            Parent roomParent = FXMLLoader.load(getClass().getResource("/admin-AddRoom.fxml"));
-            Scene roomScene = new Scene(roomParent);
-
-            Stage primaryStage =
-                    (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-            primaryStage.hide();
-            primaryStage.setScene(roomScene);
-            primaryStage.show();
-
+            MainApp.goToPage("admin-addRoom", null);
         } catch (IOException e) {
-            System.out.println("IOException in AdminController");
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToAddRooms()");
+        }
+    }
+
+    /**
+     * Handles going to the page for adding reservations.
+     */
+    public void goToRes() {
+        try {
+            MainApp.goToPage("reservations", "reservations");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
 }

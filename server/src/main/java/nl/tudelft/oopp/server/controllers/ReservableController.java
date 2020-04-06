@@ -187,7 +187,7 @@ public class ReservableController {
 
         } catch (EntityNotFoundException e) {
             logger.error("Building " + id + " not found!");
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ServerResponseAlert("Building not found with this number", "ERROR"));
         } catch (InstanceAlreadyExistsException | JsonProcessingException e) {
             return ResponseEntity.badRequest().body(new ServerResponseAlert(
                     "Reservable with that name already exists",

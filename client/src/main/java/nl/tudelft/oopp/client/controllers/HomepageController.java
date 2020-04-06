@@ -126,9 +126,9 @@ public class HomepageController<E> implements Initializable {
         try {
             Parent resParent = FXMLLoader.load(getClass().getResource("/reservations.fxml"));
             Scene resScene = new Scene(resParent);
+            resScene.getStylesheets().addAll(this.getClass().getResource("/reservations.css").toExternalForm());
 
-            Stage primaryStage =
-                (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            Stage primaryStage = (Stage) (todayRes.getScene().getWindow());
 
             primaryStage.hide();
             primaryStage.setScene(resScene);
