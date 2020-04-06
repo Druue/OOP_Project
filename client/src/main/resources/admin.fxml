@@ -26,11 +26,23 @@
                          AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0"
                          AnchorPane.topAnchor="130.0">
                     <tabs>
-                        <Tab text="Today's reservation">
+                        <Tab text="Today's reservations">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
                                         <ListView fx:id="todayRes" prefHeight="200.0" prefWidth="300.0"
+                                                  style="-fx-background-color: #00a6d6;" AnchorPane.bottomAnchor="0.0"
+                                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                  AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Future reservations">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <ListView fx:id="futureRes" prefHeight="200.0" prefWidth="300.0"
                                                   style="-fx-background-color: #00a6d6;" AnchorPane.bottomAnchor="0.0"
                                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                                                   AnchorPane.topAnchor="0.0"/>

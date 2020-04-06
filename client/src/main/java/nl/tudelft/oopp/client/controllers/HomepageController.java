@@ -2,6 +2,8 @@ package nl.tudelft.oopp.client.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -37,6 +39,8 @@ public class HomepageController<E> implements Initializable {
     @FXML
     private ListView<String> allRes;
     @FXML
+    private ListView<String> futureRes;
+    @FXML
     private TabPane viewReservations;
     @FXML
     private Button reserveButton;
@@ -50,39 +54,37 @@ public class HomepageController<E> implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (!HttpRequestHandler.user.getUserKind().equals(UserKind.Guest)) {
-            loadTodayReservations();
-            loadAllReservations();
+            loadReservations(todayRes, "user/today");
+            loadReservations(futureRes, "user/current");
+            loadReservations(allRes, "user/all");
+            reserveMenu.setText("Reserve a room");
         } else {
             viewReservations.setVisible(false);
             reserveButton.setVisible(false);
-            reserveMenu.setVisible(false);
+            reserveMenu.setText("View rooms");
             guestButton.setVisible(true);
             guestInfo.setVisible(true);
         }
     }
 
     /**
-     * Handles loading all reservations for the currently logged in user to the ListView in tab today's reservations item in
-     * homepage.fxml
+     * Populates the given listView with reservations taken from the mapping at ("reservations/" + path).
+     * @param listView The ListView to display the reservations.
+     * @param path The partial path, signifying from which mapping in the server ReservationsController to get the
+     *             reservations from.
      */
-    private void loadAllReservations() {
+    public static void loadReservations(ListView<String> listView, String path) {
         try {
             ClientRequest<String> userDetails = new ClientRequest<>(
-                    HttpRequestHandler.user.getUsername(),
-                    HttpRequestHandler.user.getUserKind(),
-                    null
+                HttpRequestHandler.user.getUsername(),
+                HttpRequestHandler.user.getUserKind(),
+                null
             );
             List<Reservation> reservationList =
-                    httpRequestHandler.postList("reservations/user/current", userDetails, Reservation.class);
+                httpRequestHandler.postList("reservations/" + path, userDetails, Reservation.class);
             if (reservationList != null) {
-                for (Reservation s : reservationList) {
-                    allRes.getItems().add("Room " + s.getReservable().getDetails().getName() + "in"
-                            + s.getReservable().getBuilding().getName() + " reserved from "
-                            + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
-                            + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime()) + " on "
-                    );
-                    allRes.getItems().add(s.getTimeslot().getStartTime().getDate() + "/"
-                            + (s.getTimeslot().getStartTime().getMonth() + 1));
+                for (Reservation r : reservationList) {
+                    listView.getItems().add(generateReservationString(r, path));
                 }
             }
         } catch (Exception e) {
@@ -90,31 +92,19 @@ public class HomepageController<E> implements Initializable {
         }
     }
 
-    /**
-     * Handles loading the current user's reservations for all days to the ListView in the tab all reservations in
-     * homepage.fxml
-     */
-    private void loadTodayReservations() {
-        try {
-            ClientRequest<String> userDetails = new ClientRequest<>(
-                    HttpRequestHandler.user.getUsername(),
-                    HttpRequestHandler.user.getUserKind(),
-                    null
-            );
-            List<Reservation> reservationList =
-                    httpRequestHandler.postList("reservations/user/today", userDetails, Reservation.class);
-            if (reservationList != null) {
-                for (Reservation s : reservationList) {
-                    todayRes.getItems().add("Room " + s.getReservable().getDetails().getName() + " in "
-                            + s.getReservable().getBuilding().getName() + " reserved from "
-                            + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getStartTime()) + " to "
-                            + ReservationsSceneController.hourAndMinutesString(s.getTimeslot().getEndTime())
-                    );
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    private static String generateReservationString(Reservation reservation, String path) {
+        String result = "Room " + reservation.getReservable().getDetails().getName() + " in "
+            + reservation.getReservable().getBuilding().getName() + " reserved from "
+            + ReservationsSceneController.hourAndMinutesString(reservation.getTimeslot().getStartTime()) + " to "
+            + ReservationsSceneController.hourAndMinutesString(reservation.getTimeslot().getEndTime());
+
+        if (path.contains("today")) {
+            return result;
+        } else {
+            return result + " on " + reservation.getTimeslot().getStartTime().getDate()
+                + " " + Month.of(reservation.getTimeslot().getStartTime().getMonth() + 1).toString();
         }
+
     }
 
     /**
