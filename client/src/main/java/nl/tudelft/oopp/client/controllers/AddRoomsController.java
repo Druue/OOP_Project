@@ -201,4 +201,15 @@ public class AddRoomsController {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToRes()");
         }
     }
+
+    /**
+     * Handles going to the copyrights
+     */
+    public void goToCopyrights() {
+        try {
+            MainApp.goToPage("admin-copyrights");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToCopyrights()");
+        }
+    }
 }

@@ -117,6 +117,17 @@ public class AddBuildingsController {
     }
 
     /**
+     * Handles going to the copyrights
+     */
+    public void goToCopyrights() {
+        try {
+            MainApp.goToPage("admin-copyrights");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToCopyrights()");
+        }
+    }
+
+    /**
      * Sends a request to the backend to add a Building to the database.
      */
     public void addBuilding() {
