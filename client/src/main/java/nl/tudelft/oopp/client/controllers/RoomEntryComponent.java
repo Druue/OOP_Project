@@ -157,7 +157,9 @@ public class RoomEntryComponent extends Pane {
         }
         Timestamp startTime = room.getBuilding().getOpeningHours().getStartTime();
         Timestamp endTime = room.getBuilding().getOpeningHours().getEndTime();
-        return hourTimestamp.before(endTime) && hourTimestamp.after(startTime);
+
+        return hourTimestamp.equals(endTime) || hourTimestamp.equals(startTime)
+            || (hourTimestamp.before(endTime) && hourTimestamp.after(startTime));
     }
 
     /**
