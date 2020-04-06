@@ -117,5 +117,18 @@ public class LoginControllerTest {
         assertEquals(response.getBody().getMessage(), "Successful login!");
     }
 
+    @Test
+    public void validateAuthExistingUserWrongPassTest() {
 
-}
+        ResponseEntity<UserAuthResponse> response = loginController.validateAuthentication(
+                new LoginRequest(
+                        "user_two",
+                        "41234"
+                )
+        );
+
+        assertEquals(response.getBody().getMessage(), "username/password combination wrong");
+    }
+    }
+
+

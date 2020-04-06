@@ -121,7 +121,7 @@ class BuildingRequestControllerTest {
         openingTime = Timestamp.valueOf("2020-02-04 09:30:00");
         closingTime = Timestamp.valueOf("2020-04-09 22:30:00");
         timeSlot = new TimeSlot(openingTime, closingTime);
-        details = new Details("EECMS",
+        details = new Details(45L,"EECMS",
                 "This is the faculty of computer science, mathematics and electrical engineering", "EECMS.png");
         reservable = new Bike(456L, details);
         reservableList = new ArrayList<>();

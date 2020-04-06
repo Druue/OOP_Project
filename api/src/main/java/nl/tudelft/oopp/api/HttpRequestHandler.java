@@ -154,7 +154,6 @@ public class HttpRequestHandler {
         return null;
     }
 
-
     /** This method converts an object from one class to another by serializing into JSON
      *      and then deserializing into the target class.
      *

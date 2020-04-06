@@ -46,7 +46,7 @@ public class ReservationsServiceTest {
     public void init() {
         MockitoAnnotations.initMocks(this);
         dummyUser = new User(345L, "test@student.tudelft.nl", "teststudent", "test", dummyDetails, dummyKind);
-        dummyDetails = new Details("Water", "This is a water room.", "water.png");
+        dummyDetails = new Details(45L,"Water", "This is a water room.", "water.png");
         dummyReservable = new Room();
         dummyTimeStamp1 = new Timestamp(2020 - 04 - 03);
         dummyTimestamp2 = new Timestamp(2020 - 04 - 18);

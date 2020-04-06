@@ -105,7 +105,7 @@ class ReservableControllerTest {
         openingTime = Timestamp.valueOf("2020-02-04 09:30:00");
         closingTime = Timestamp.valueOf("2020-04-09 22:30:00");
         timeSlot = new TimeSlot(openingTime, closingTime);
-        details = new Details("EECMS",
+        details = new Details(45L,"EECMS",
                 "This is the faculty of computer science, mathematics and electrical engineering", "EECMS.png");
         reservables.add(reservable1 = new Bike(456L, details));
         reservables.add(reservable2 = new Room());
