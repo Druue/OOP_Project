@@ -186,16 +186,15 @@ public class AddBuildingsController {
                 ServerResponseAlert.class
         );
 
-        Alert alert;
+
         try {
-            alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
+            AlertService.alert(Alert.AlertType.valueOf(
+                response.getAlertType()),
+                "Response",
+                response.getMessage());
         } catch (Exception e) {
-            alert = new Alert(Alert.AlertType.INFORMATION);
+            AlertService.alertInformation("Response", response.getMessage());
         }
-        alert.setTitle("Response");
-        alert.setHeaderText(null);
-        alert.setContentText(response.getMessage());
-        alert.showAndWait();
     }
 
 }
