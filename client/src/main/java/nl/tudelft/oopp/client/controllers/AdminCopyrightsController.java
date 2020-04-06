@@ -1,52 +1,19 @@
 package nl.tudelft.oopp.client.controllers;
 
-import com.sun.javafx.binding.Logging;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
-import nl.tudelft.oopp.api.models.ClientRequest;
-import nl.tudelft.oopp.api.models.Reservation;
-import nl.tudelft.oopp.api.models.ReservationResponse;
 import nl.tudelft.oopp.api.models.UserKind;
 import nl.tudelft.oopp.client.MainApp;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class AdminController implements Initializable {
+
+public class AdminCopyrightsController {
 
     private static final HttpRequestHandler httpRequestHandler = new HttpRequestHandler();
-    private static final Logger LOGGER = Logger.getLogger(AdminController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AdminCopyrightsController.class.getName());
     private static final String BAD_RESOURCE_ERROR = "Faulty resource input at AdminController";
-
-    @FXML
-    private ListView<String> todayRes;
-    @FXML
-    private ListView<String> allRes;
-    @FXML
-    private ListView<String> futureRes;
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        HomepageController.loadReservations(todayRes, "admin/today");
-        HomepageController.loadReservations(futureRes, "admin/current");
-        HomepageController.loadReservations(allRes, "admin/all");
-    }
 
     /**
      * Handles going to the add buildings page for the admin.
@@ -67,17 +34,6 @@ public class AdminController implements Initializable {
             MainApp.goToPage("admin-deleteBuilding");
         }  catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToDeleteBuildings()");
-        }
-    }
-
-    /**
-     * Handles going to the view buildings page for the admin.
-     */
-    public void goToBuildings() {
-        try {
-            MainApp.goToPage("admin-viewBuilding");
-        }  catch (IOException e) {
-            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToBuildings()");
         }
     }
 
@@ -130,9 +86,22 @@ public class AdminController implements Initializable {
      */
     public void goToCopyrights() {
         try {
-            MainApp.goToPage("admin-copyrights");
+            MainApp.goToPage("copyrights");
         } catch (IOException e) {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToCopyrights()");
         }
     }
+
+    /**
+     * Handles going to the admin homepage.
+     */
+    public void goToAdmin() {
+        try {
+            MainApp.goToPage("admin");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

@@ -134,4 +134,15 @@ public class HomepageController<E> implements Initializable {
             LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToLogIn()");
         }
     }
+
+    /**
+     * Handles going to the copyrights
+     */
+    public void goToCopyrights() {
+        try {
+            MainApp.goToPage("copyrights");
+        } catch (IOException e) {
+            LOGGER.log(Level.FINE, BAD_RESOURCE_ERROR + ".goToCopyrights()");
+        }
+    }
 }

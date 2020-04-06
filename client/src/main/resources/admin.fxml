@@ -92,7 +92,7 @@
                 <MenuButton mnemonicParsing="false" style="-fx-background-color: transparent;" text="more.." textFill="WHITE" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.5">
                     <items>
                         <MenuItem onAction="#goToLogIn" text="Log out" />
-                        <MenuItem mnemonicParsing="false" text="Copyrights" />
+                        <MenuItem onAction="#goToCopyrights" text="Copyrights" />
                     </items>
                     <font>
                         <Font name="Helvetica" size="15.0" />
