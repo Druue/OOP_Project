@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -90,35 +91,22 @@
 
                 <MenuBar id="menuBar" style="-fx-background-color: #00A6D6;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <menus>
-                        <Menu mnemonicParsing="false" text="Reserve">
-                            <items>
-                                <MenuItem onAction="#goToRes" text="Room" />
-                                <MenuItem mnemonicParsing="false" text="Bike" />
-                            </items>
+                        <Menu text="Reserve">
+                            <MenuItem onAction="#goToRes" text="Reserve a Room" />
                         </Menu>
                         <Menu text="Manage buildings">
                             <MenuItem onAction="#goToBuildings" text="View all buildings" />
                             <MenuItem onAction="#goToAddBuildings" text="Add building" />
-                            <MenuItem mnemonicParsing="false" text="Edit buildings" />
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Manage reservables">
+                        <Menu mnemonicParsing="false" text="Manage rooms">
                             <items>
+                                <MenuItem mnemonicParsing="false" text="View all rooms" />
                                 <MenuItem onAction="#goToAddRooms" text="Add a room" />
-                                <MenuItem mnemonicParsing="false" text="Add a bike" />
-                                <MenuItem text="Edit reservables" />
-                            </items>
-                        </Menu>
-                        <Menu id="inactiveMenu" mnemonicParsing="false" text="                                                                     ">
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="more..">
-                            <items>
-                                <MenuItem onAction="#goToLogIn" text="Log out" />
-                                <MenuItem mnemonicParsing="false" text="Copyrights" />
                             </items>
                         </Menu>
                     </menus>
                 </MenuBar>
-                <HBox layoutY="2.0" prefHeight="30.0" prefWidth="100.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="2.0">
+                <HBox layoutY="2.0" prefHeight="30.0" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                     <children>
                         <ImageView fitHeight="26.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -127,7 +115,16 @@
                         </ImageView>
                     </children>
                 </HBox>
-                <Button id="logo" onAction="#goToAdmin" prefWidth="100.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0" />
+                <Button id="logo" onAction="#goToAdmin" prefWidth="100.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0" />
+                <MenuButton mnemonicParsing="false" style="-fx-background-color: transparent;" text="more.." textFill="WHITE" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.5">
+                    <items>
+                        <MenuItem onAction="#goToLogIn" text="Log out" />
+                        <MenuItem mnemonicParsing="false" text="Copyrights" />
+                    </items>
+                    <font>
+                        <Font name="Helvetica" size="15.0" />
+                    </font>
+                </MenuButton>
             </children>
         </AnchorPane>
     </children>

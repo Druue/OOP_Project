@@ -135,6 +135,28 @@ public class AddBuildingsController {
     }
 
     /**
+     * Handles going to the add buildings page.
+     *
+     * @param event the scene from where the function was called.
+     */
+    public void goToBuildings(ActionEvent event) {
+        try {
+            Parent buildingParent = FXMLLoader.load(getClass().getResource("/admin-viewBuildings.fxml"));
+            Scene buildingScene = new Scene(buildingParent);
+
+            Stage primaryStage =
+                    (Stage) (buildingNameInput.getScene().getWindow());
+
+            primaryStage.hide();
+            primaryStage.setScene(buildingScene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println("IOException in AddBuildingsController");
+        }
+    }
+
+    /**
      * An example alert function, to showcase the use of the new API.
      */
     public void getBuildings() {
@@ -216,4 +238,5 @@ public class AddBuildingsController {
         alert.setContentText(response.getMessage());
         alert.showAndWait();
     }
+
 }

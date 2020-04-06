@@ -14,10 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.api.HttpRequestHandler;
@@ -50,6 +47,8 @@ public class HomepageController<E> implements Initializable {
     private Button guestButton;
     @FXML
     private VBox guestInfo;
+    @FXML
+    private MenuButton menuButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,10 +56,12 @@ public class HomepageController<E> implements Initializable {
             loadReservations(todayRes, "user/today");
             loadReservations(futureRes, "user/current");
             loadReservations(allRes, "user/all");
+            guestButton.setVisible(false);
             reserveMenu.setText("Reserve a room");
         } else {
             viewReservations.setVisible(false);
             reserveButton.setVisible(false);
+            menuButton.setVisible(false);
             reserveMenu.setText("View rooms");
             guestButton.setVisible(true);
             guestInfo.setVisible(true);
