@@ -3,7 +3,6 @@ package nl.tudelft.oopp.client.controllers;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 import javafx.scene.control.Alert;
 import nl.tudelft.oopp.api.HttpRequestHandler;
 import nl.tudelft.oopp.api.models.LoginRequest;

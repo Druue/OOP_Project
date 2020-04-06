@@ -41,11 +41,9 @@ public class AdminsConfig {
                 "dbarantiev",
                 "D.A.Barantiev@admin.tudelft.nl",
                 "admin2",
-                new Details(
-                    "Dimitar",
-                    "This is the second administrator",
-                        null
-                )
+                new Details("Dimitar",
+                        "This is the second administrator",
+                        null)
             );
 
             createAdmin(

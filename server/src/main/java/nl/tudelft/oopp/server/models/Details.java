@@ -56,6 +56,13 @@ public class Details {
         this.image = image;
     }
 
+    /**
+     * Initialises a new instance of a {@link Details}.
+     *
+     * @param name        The name of the object.
+     * @param description A description of the object.
+     * @param image       An image of the object.
+     */
     public Details(String name, String description, String image) {
         this.name = name;
         this.description = description;
