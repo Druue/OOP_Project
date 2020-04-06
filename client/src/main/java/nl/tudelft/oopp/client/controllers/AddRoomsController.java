@@ -22,6 +22,7 @@ import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.Reservable;
 import nl.tudelft.oopp.api.models.Room;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
+import nl.tudelft.oopp.client.AlertService;
 import nl.tudelft.oopp.client.MainApp;
 
 
@@ -121,11 +122,7 @@ public class AddRoomsController {
                 ServerResponseAlert.class
             );
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Room added.");
-            alert.setHeaderText(null);
-            alert.setContentText(response.getMessage());
-            alert.showAndWait();
+            AlertService.alertConfirmation("Room added.", response.getMessage());
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();

@@ -19,6 +19,7 @@ import nl.tudelft.oopp.api.models.ClientRequest;
 import nl.tudelft.oopp.api.models.Details;
 import nl.tudelft.oopp.api.models.ServerResponseAlert;
 import nl.tudelft.oopp.api.models.TimeSlot;
+import nl.tudelft.oopp.client.AlertService;
 import nl.tudelft.oopp.client.MainApp;
 
 
@@ -161,11 +162,6 @@ public class AddBuildingsController {
      */
     public void getBuildings() {
 
-        // Make a standard alert
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("A response");
-        alert.setHeaderText(null);
-
         //TODO: Add a proper connection to the backend.
 
         // Where the API shines: get a BuildingResponse object directly from the HttpRequestHandler
@@ -180,9 +176,7 @@ public class AddBuildingsController {
             }
         }
 
-        // Show the alert with all the building names
-        alert.setContentText(s.toString());
-        alert.showAndWait();
+        AlertService.alertInformation("Response", s.toString());
     }
 
     /**
@@ -227,16 +221,15 @@ public class AddBuildingsController {
                 ServerResponseAlert.class
         );
 
-        Alert alert;
+
         try {
-            alert = new Alert(Alert.AlertType.valueOf(response.getAlertType()));
+            AlertService.alert(Alert.AlertType.valueOf(
+                response.getAlertType()),
+                "Response",
+                response.getMessage());
         } catch (Exception e) {
-            alert = new Alert(Alert.AlertType.INFORMATION);
+            AlertService.alertInformation("Response", response.getMessage());
         }
-        alert.setTitle("Response");
-        alert.setHeaderText(null);
-        alert.setContentText(response.getMessage());
-        alert.showAndWait();
     }
 
 }
